@@ -1,0 +1,55 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "TravelContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "JustGo",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Place]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[weather]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[fn_seleFoodDistance]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_seleHotelDistance]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_seleSpotDistance]",
+         "ObjectType": 2
+      }
+   ],
+   "UiHint": "CR1-07.Travel",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

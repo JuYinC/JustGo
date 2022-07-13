@@ -1,7 +1,10 @@
 using JustGo.Data;
 using JustGo.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,8 @@ var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelWindows));
+builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelWindows));
 //³s½u¦r¦ê´À´«

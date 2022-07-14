@@ -2,7 +2,25 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@section Style {
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+     <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 700px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
 
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+}
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

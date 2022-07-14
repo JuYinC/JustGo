@@ -26,7 +26,7 @@ namespace JustGo.Models
             }          
         }
 
-        public IEnumerable<Place> getPlaceFilter(string[] placeClass, string[] region, string[] town, int[] Class)
+        public IEnumerable<Place> getPlaceFilter(IList placeClass, IList region, IList town, IList Class)
         {
             using (var con = _con)
             {
@@ -34,7 +34,7 @@ namespace JustGo.Models
                 string sqlStr = $"select * from Place Where ";
                 p p = new p();
                 bool i = true;
-                if (region.Length > 0)
+                if (region.Count > 0)
                 {
                     if (i)
                     {
@@ -43,7 +43,7 @@ namespace JustGo.Models
                     }
                     p.region = region;
                 }
-                if (town.Length > 0)
+                if (town.Count > 0)
                 {
                     if (i)
                     {
@@ -55,7 +55,7 @@ namespace JustGo.Models
                     }
                     p.town = town;
                 }
-                if (Class.Length > 0)
+                if (Class.Count > 0)
                 {
                     if (i)
                     {
@@ -89,8 +89,8 @@ namespace JustGo.Models
 
     public class p
     {
-        public string[]? region { get; set; }
-        public string[]? town { get; set; }
-        public int[]? Class { get; set; }
+        public IList? region { get; set; }
+        public IList? town { get; set; }
+        public IList? Class { get; set; }
     }
 }

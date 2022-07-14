@@ -15,9 +15,8 @@ var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelWindows));
+builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP));
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
-
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelWindows));
 //連線字串替換
 //地端連線字串TravelWindows,雲端連線字串TravelPssP

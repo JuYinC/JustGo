@@ -12,12 +12,19 @@ namespace JustGo.Controllers
 
         public HomeController(ILogger<HomeController> logger, IPlaceWeatherRepostiory pwr)
         {
-            _logger = logger;
+            _logger = logger;            
             _pwr = pwr;
         }
 
+        
         public IActionResult Index()
-        {            
+        {
+            string[] a = new string[] { "a" };
+            string[] b = new string[] {"高雄市","澎湖縣"};
+            string[] c = new string[] {};
+            int[] d = new int[] { 1,2 };
+            ViewBag.Json = JsonConvert.SerializeObject(_pwr.getPlaceFilter(a , b, c, d));
+            //ViewBag.Json = Json(_pwr.getPlaceFilter(a, b, c, d));
             return View();
         }
 

@@ -9,14 +9,28 @@
 </div>
 <button id="a">click</button>
 
-@section Scripts{
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+@section Scripts{    
     <script>
     
-    console.log(@Html.Raw(ViewBag.Json));
+    //console.log(@Html.Raw(ViewBag.Json));
 
-    document.getElementById("a").addEventListener("click",()=>{
+document.getElementById("a").addEventListener("click", () => {
+    console.log("hi")
 
+    //console.log("@Url.Action("axiosTest")");
+    let request = JSON.stringify({ start: 5, quantity: 10 })
+    console.log(request);
+    $.ajax({
+        type:"POST",
+        url:"@Url.Action("axiosTest")",
+        dataType:"json",
+        data: {request},
+    }).done(function(data){
+        console.log(data);
+        console.log(data[20])
+    }).fail(function(err) {
+        console.log(err);
     })
+})
     </script>
 }

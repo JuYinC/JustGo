@@ -7,9 +7,16 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<button id="a">click</button>
 
 @section Scripts{
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-console.log(@Html.Raw(ViewBag.Json));
+    
+    console.log(@Html.Raw(ViewBag.Json));
+
+    document.getElementById("a").addEventListener("click",()=>{
+
+    })
     </script>
 }

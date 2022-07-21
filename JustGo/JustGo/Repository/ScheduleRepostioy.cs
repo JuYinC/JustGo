@@ -50,8 +50,9 @@ namespace JustGo.Repository
             List<ScheduleDetails> delDetails = _context.ScheduleDetails.Where(e => e.ScheduleId == schedule.ScheduleId).ToList();
 
             _context.Remove(delDetails);
-            schedule.ScheduleDetails=scheduleDetails;
-            _context.Update(schedule);
+
+
+            schedule.ScheduleDetails = scheduleDetails;
             _context.SaveChanges();
 
             return true;

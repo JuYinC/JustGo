@@ -67,7 +67,9 @@ namespace JustGo.Models
                     }
                     p.Class = Class;
                 }
-                return con.Query<Place>(sqlStr, p).ToList();
+                List<Place> list = con.Query<Place>(sqlStr, p).ToList();
+                con.Close();
+                return list;
             }
         }
 
@@ -87,7 +89,7 @@ namespace JustGo.Models
         }
     }
 
-    public class p
+    partial class p
     {
         public IList? region { get; set; }
         public IList? town { get; set; }

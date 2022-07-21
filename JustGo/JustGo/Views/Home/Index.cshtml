@@ -25,9 +25,17 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+    @foreach(var item in Model)
+{
+    <h1>@item.Name</h1>
+    <h1>@item.Region</h1>
+}
 
 @section Scripts{
     <script>
-console.log(@Html.Raw(ViewBag.Json));
+        const array = @Html.Raw(ViewBag.Json)
+//console.log(@Html.Raw(ViewBag.Json));
+    console.log(array[0])
+    
     </script>
 }

@@ -1,6 +1,8 @@
 ﻿using JustGo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace JustGo.Controllers
@@ -19,13 +21,15 @@ namespace JustGo.Controllers
         
         public IActionResult Index()
         {
+            Console.WriteLine(1);
             string[] a = new string[] { "a" };
-            string[] b = new string[] {"高雄市","澎湖縣"};
-            string[] c = new string[] {};
-            int[] d = new int[] { 1,2 };
-            ViewBag.Json = JsonConvert.SerializeObject(_pwr.getPlaceFilter(a , b, c, d));
-            //ViewBag.Json = Json(_pwr.getPlaceFilter(a, b, c, d));
-            return View();
+            string[] b = new string[] { "高雄市", "澎湖縣" };
+            string[] c = new string[] { "前金區", "馬公市" };
+            int[] d = new int[] { 2, 3, 4 };
+            IEnumerable list = _pwr.getPlaceFilter(a, b, c, d);
+            ViewBag.Json = JsonConvert.SerializeObject(list);
+            ////ViewBag.Json = Json(_pwr.getPlaceFilter(a, b, c, d));_pwr.getPlace(10,100)
+            return View(list);
         }
 
         public IActionResult Privacy()

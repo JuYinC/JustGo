@@ -18,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelWindows));
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
+builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelWindows));
 //³s½u¦r¦ê´À´«

@@ -14,8 +14,7 @@ namespace JustGo.Models
         public PlaceWeatherRepostiory(TravelContext context, IDbConnection con)
         {
             _con = con;
-            _context = context;
-            testAddBlog();
+            _context = context;            
         }
         public IEnumerable<Place> getPlace(int start, int quantity)
         {

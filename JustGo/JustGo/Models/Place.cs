@@ -7,18 +7,20 @@ namespace JustGo.Models
 {
     public partial class Place
     {
-        public string PlaceId { get; set; }
+        public int PlaceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Tel { get; set; }
         public string Add { get; set; }
-        public double Px { get; set; }
-        public double Py { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Lng { get; set; }
         public string Region { get; set; }
         public string Town { get; set; }
-        public int? Class { get; set; }
+        public int Class { get; set; }
         public string Opentime { get; set; }
+        public int? IntOpentime { get; set; }
         public string Closetime { get; set; }
+        public int? IntClosetime { get; set; }
         public int? Timestay { get; set; }
     }
 }

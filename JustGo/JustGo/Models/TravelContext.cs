@@ -18,22 +18,88 @@ namespace JustGo.Models
         {
         }
 
+        public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<BlogDetails> BlogDetails { get; set; }
         public virtual DbSet<Place> Place { get; set; }
+        public virtual DbSet<Schedule> Schedule { get; set; }
+        public virtual DbSet<ScheduleDetails> ScheduleDetails { get; set; }
+        public virtual DbSet<UserKeep> UserKeep { get; set; }
         public virtual DbSet<Weather> Weather { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Blog>(entity =>
+            {
+                entity.Property(e => e.BlogId).HasColumnName("BlogID");
+
+                entity.Property(e => e.Describe)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.ImageName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+            });
+
+            modelBuilder.Entity<BlogDetails>(entity =>
+            {
+                entity.HasKey(e => e.DetailsId)
+                    .HasName("PK_DetailsID");
+
+                entity.Property(e => e.DetailsId).HasColumnName("DetailsID");
+
+                entity.Property(e => e.BlogId).HasColumnName("BlogID");
+
+                entity.Property(e => e.Describe).HasMaxLength(300);
+
+                entity.Property(e => e.EndtTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Images).HasMaxLength(300);
+
+                entity.Property(e => e.PlaceId).HasColumnName("PlaceID");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Blog)
+                    .WithMany(p => p.BlogDetails)
+                    .HasForeignKey(d => d.BlogId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_BlogDetails_Blog");
+            });
+
             modelBuilder.Entity<Place>(entity =>
             {
-                entity.Property(e => e.PlaceId)
-                    .HasMaxLength(10)
-                    .HasColumnName("PlaceID");
+                entity.Property(e => e.PlaceId).HasColumnName("PlaceID");
 
-                entity.Property(e => e.Add).HasMaxLength(150);
+                entity.Property(e => e.Add)
+                    .IsRequired()
+                    .HasMaxLength(150);
 
                 entity.Property(e => e.Closetime).HasMaxLength(5);
 
                 entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.IntClosetime).HasColumnName("intClosetime");
+
+                entity.Property(e => e.IntOpentime).HasColumnName("intOpentime");
+
+                entity.Property(e => e.Lat)
+                    .HasColumnType("decimal(9, 7)")
+                    .HasColumnName("lat");
+
+                entity.Property(e => e.Lng)
+                    .HasColumnType("decimal(9, 6)")
+                    .HasColumnName("lng");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -50,6 +116,53 @@ namespace JustGo.Models
                 entity.Property(e => e.Town)
                     .IsRequired()
                     .HasMaxLength(4);
+            });
+
+            modelBuilder.Entity<Schedule>(entity =>
+            {
+                entity.Property(e => e.ScheduleId).HasColumnName("ScheduleID");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+            });
+
+            modelBuilder.Entity<ScheduleDetails>(entity =>
+            {
+                entity.HasKey(e => e.DetailsId)
+                    .HasName("PK_DeatisID");
+
+                entity.Property(e => e.DetailsId).HasColumnName("DetailsID");
+
+                entity.Property(e => e.EndtTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PlaceId).HasColumnName("PlaceID");
+
+                entity.Property(e => e.ScheduleId).HasColumnName("ScheduleID");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Town)
+                    .IsRequired()
+                    .HasMaxLength(5);
+
+                entity.HasOne(d => d.Schedule)
+                    .WithMany(p => p.ScheduleDetails)
+                    .HasForeignKey(d => d.ScheduleId)
+                    .HasConstraintName("FK_ScheduleDetails_Schedule");
+            });
+
+            modelBuilder.Entity<UserKeep>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.KeepId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("KeepID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<Weather>(entity =>

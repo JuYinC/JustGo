@@ -14,7 +14,27 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[Blog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BlogDetails]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Place]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Schedule]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ScheduleDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserKeep]",
          "ObjectType": 0
       },
       {

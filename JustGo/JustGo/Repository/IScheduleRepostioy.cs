@@ -1,4 +1,6 @@
-﻿namespace JustGo.Models
+﻿using JustGo.Models;
+
+namespace JustGo.Repository
 {
     public interface IScheduleRepostioy
     {
@@ -8,7 +10,7 @@
         //搜尋行程表細項
         public ICollection<ScheduleDetails> selectSceduleDetails(int SceduleId);
 
-        public bool editScedule(Schedule schedule,ICollection<ScheduleDetails> scheduleDetails);
+        public bool editScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails);
 
         public bool createScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails);
 

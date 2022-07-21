@@ -1,29 +1,30 @@
 ﻿using Dapper;
+using JustGo.Models;
 using Microsoft.Data.SqlClient;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 
-namespace JustGo.Models
+namespace JustGo.Repository
 {
     public class PlaceWeatherRepostiory : IPlaceWeatherRepostiory
     {
         readonly IDbConnection _con;
-        readonly TravelContext _context;        
+        readonly TravelContext _context;
         public PlaceWeatherRepostiory(TravelContext context, IDbConnection con)
         {
             _con = con;
-            _context = context;            
+            _context = context;
         }
         public IEnumerable<Place> getPlace(int start, int quantity)
         {
-            using(var con = _con)
+            using (var con = _con)
             {
                 con.Open();
                 string sqlStr = $"select * from Place order by PlaceID offset @start row fetch next @quantity rows only";
-                return con.Query<Place>(sqlStr,new { start , quantity }).ToList();
-            }          
+                return con.Query<Place>(sqlStr, new { start, quantity }).ToList();
+            }
         }
 
         public IEnumerable<Place> getPlaceFilter(string[] placeClass, string[] region, string[] town, int[] Class)
@@ -92,7 +93,7 @@ namespace JustGo.Models
                 UserId = 1,
                 Title = "a",
                 ImageName = "b.jpg",
-                Describe="s",
+                Describe = "s",
                 Like = 0,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,

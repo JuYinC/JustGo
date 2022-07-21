@@ -1,5 +1,6 @@
 using JustGo.Data;
 using JustGo.Models;
+using JustGo.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

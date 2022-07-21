@@ -14,16 +14,24 @@ namespace JustGo.Controllers
         {
             _logger = logger;
             _pwr = pwr;
+            
         }
 
         public IActionResult Index()
-        {            
+        {
+            ViewBag.Json = "123";
             return View();
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+
+        public IActionResult teatMapData()
+        {
+            return Json(_pwr.getPlace(5000,5));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

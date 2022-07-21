@@ -9,7 +9,10 @@
 </div>
 
 @section Scripts{
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script>
-console.log(@Html.Raw(ViewBag.Json));
+        axios.get("@Url.Action("teatMapData","Home")")
+            .then(res => console.log(JSON.stringify(res.data)))
+            .catch(err => console.log("err"));
     </script>
 }

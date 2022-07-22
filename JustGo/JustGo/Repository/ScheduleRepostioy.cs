@@ -49,8 +49,12 @@ namespace JustGo.Repository
         {
             List<ScheduleDetails> delDetails = _context.ScheduleDetails.Where(e => e.ScheduleId == schedule.ScheduleId).ToList();
 
-            _context.Remove(delDetails);
+            foreach(ScheduleDetails detail in delDetails)
+            {
+                _context.Remove(detail);
+            }
 
+            _context.SaveChanges();
 
             schedule.ScheduleDetails = scheduleDetails;
             _context.SaveChanges();

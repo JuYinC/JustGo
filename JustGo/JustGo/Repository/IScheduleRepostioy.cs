@@ -11,9 +11,9 @@ namespace JustGo.Repository
         //搜尋行程表細項
         public ScheduleVM selectSceduleDetails(int SceduleId);
 
-        public bool editScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails);
+        public bool editScedule(ScheduleVM vm);
 
-        public bool createScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails);
+        public bool createScedule(ScheduleVM vm);
 
         public bool deleteScedule(int SceduleId);
     }

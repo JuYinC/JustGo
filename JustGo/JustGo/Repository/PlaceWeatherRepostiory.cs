@@ -79,7 +79,7 @@ namespace JustGo.Repository
             {
                 con.Open();
                 string sqlStr = $"select * from Place Where PlaceId = @id";
-                return con.Query<Place>(sqlStr, new { id }).FirstOrDefault();
+                return con.Query<Place>(sqlStr, new { id }).FirstOrDefault()??new Place();
             }
         }
 

@@ -25,12 +25,10 @@ namespace JustGo.Repository
             Console.WriteLine(testVM.ScheduleId.ToString());
         }
 
-        public bool createScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails)
-        {
-            schedule.ScheduleDetails=scheduleDetails;
-
+        public bool createScedule(ScheduleVM vm)
+        {            
             try{
-                _context.Add(schedule);
+                _context.Add(viewToModel(vm));
                 _context.SaveChanges();
             }
             catch
@@ -50,9 +48,9 @@ namespace JustGo.Repository
             return true;
         }
 
-        public bool editScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails)
+        public bool editScedule(ScheduleVM vm)
         {
-            List<ScheduleDetails> delDetails = _context.ScheduleDetails.Where(e => e.ScheduleId == schedule.ScheduleId).ToList();
+            List<ScheduleDetails> delDetails = _context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId).ToList();
 
             foreach(ScheduleDetails detail in delDetails)
             {
@@ -61,7 +59,7 @@ namespace JustGo.Repository
 
             _context.SaveChanges();
 
-            schedule.ScheduleDetails = scheduleDetails;
+            Schedule schedule = viewToModel(vm);
             _context.SaveChanges();
 
             return true;
@@ -89,6 +87,10 @@ namespace JustGo.Repository
             {
                 foreach (ScheduleDetailVM item in vm.Details)
                 {
+                    if (item.Place == null)
+                    {
+                        continue;
+                    }
                     ScheduleDetails details = new ScheduleDetails()
                     {
                         StartTime = item.StartTime,
@@ -102,9 +104,7 @@ namespace JustGo.Repository
                     };
                     modelList.Add(details);
                 }
-            }
-            
-
+            }            
             Schedule model = new Schedule()
             {
                 ScheduleId = vm.ScheduleId,
@@ -114,14 +114,9 @@ namespace JustGo.Repository
                 WeatherWarning = vm.WeatherWarning,
 
                 ScheduleDetails = modelList,
-            };            
-
-            
-
+            };                       
             return model;
         }
-
-
 
         ScheduleVM modelToView(Schedule model)
         {
@@ -142,9 +137,7 @@ namespace JustGo.Repository
                     };
                     vmList.Add(vmDetail);
                 }
-            }
-            
-
+            }            
             ScheduleVM vm = new ScheduleVM()
             {
                 ScheduleId=model.ScheduleId,

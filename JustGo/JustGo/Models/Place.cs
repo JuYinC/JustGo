@@ -17,9 +17,9 @@ namespace JustGo.Models
         public string Region { get; set; }
         public string Town { get; set; }
         public int Class { get; set; }
-        public string Opentime { get; set; }
+        public string? Opentime { get; set; }
         public int? IntOpentime { get; set; }
-        public string Closetime { get; set; }
+        public string? Closetime { get; set; }
         public int? IntClosetime { get; set; }
         public int? Timestay { get; set; }
     }

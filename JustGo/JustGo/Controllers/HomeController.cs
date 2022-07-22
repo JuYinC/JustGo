@@ -18,7 +18,7 @@ namespace JustGo.Controllers
             _logger = logger;
             _pwr = pwr;
             _schedule = schedule;
-            testUpdataSedule();
+            //testUpdataSedule();
         }
 
         public IActionResult Index()
@@ -44,39 +44,39 @@ namespace JustGo.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        void testCreateSedule()
-        {
-            testScedule = new Schedule()
-            {
-                UserId = 1,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                WeatherWarning = false,                
-            };
-            List<ScheduleDetails> scheduleDetails = new List<ScheduleDetails>()
-            {
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 22,Town="前金區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 23,Town="左營區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 24,Town="鳳山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 25,Town="岡山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 26,Town="小港區"},
-            };
-            _schedule.createScedule(testScedule,scheduleDetails);
-        }
-        void testUpdataSedule()
-        {
-            List<ScheduleDetails> testListSedule = new List<ScheduleDetails>()
-             {
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 12,Town="岡山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 55,Town="岡山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 15,Town="岡山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 135,Town="岡山區"},
-                    new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 1026,Town="岡山區"}
-             };
-            testScedule = _schedule.selectUserSchedule(1).ToList()[0];
+        //void testCreateSedule()
+        //{
+        //    testScedule = new Schedule()
+        //    {
+        //        UserId = 1,
+        //        StartDate = DateTime.Now,
+        //        EndDate = DateTime.Now,
+        //        WeatherWarning = false,                
+        //    };
+        //    List<ScheduleDetails> scheduleDetails = new List<ScheduleDetails>()
+        //    {
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 22,Town="前金區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 23,Town="左營區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 24,Town="鳳山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 25,Town="岡山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 26,Town="小港區"},
+        //    };
+        //    _schedule.createScedule(testScedule,scheduleDetails);
+        //}
+        //void testUpdataSedule()
+        //{
+        //    List<ScheduleDetails> testListSedule = new List<ScheduleDetails>()
+        //     {
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 12,Town="岡山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 55,Town="岡山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 15,Town="岡山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 135,Town="岡山區"},
+        //            new ScheduleDetails(){StartTime=DateTime.Now,EndtTime=DateTime.Now,PlaceId = 1026,Town="岡山區"}
+        //     };
+        //    testScedule = _schedule.selectUserSchedule(1).ToList()[0];
             
-            _schedule.editScedule(testScedule,testListSedule);
+        //    _schedule.editScedule(testScedule,testListSedule);
 
-        }
+        //}
     }
 }

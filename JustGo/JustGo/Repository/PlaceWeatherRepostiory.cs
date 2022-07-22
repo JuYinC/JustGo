@@ -17,6 +17,7 @@ namespace JustGo.Repository
             _con = con;
             _context = context;
         }
+
         public IEnumerable<Place> getPlace(int start, int quantity)
         {
             using (var con = _con)

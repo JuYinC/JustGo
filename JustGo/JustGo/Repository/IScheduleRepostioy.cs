@@ -1,14 +1,15 @@
 ﻿using JustGo.Models;
+using JustGo.ViewModels;
 
 namespace JustGo.Repository
 {
     public interface IScheduleRepostioy
     {
         //搜尋使用者行程表
-        public ICollection<Schedule> selectUserSchedule(int UserId);
+        public ICollection<ScheduleVM> selectUserSchedule(int UserId);
 
         //搜尋行程表細項
-        public ICollection<ScheduleDetails> selectSceduleDetails(int SceduleId);
+        public ScheduleVM selectSceduleDetails(int SceduleId);
 
         public bool editScedule(Schedule schedule, ICollection<ScheduleDetails> scheduleDetails);
 

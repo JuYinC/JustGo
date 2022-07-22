@@ -4,15 +4,159 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div id="app">
+        @*                <div class="itxst">
+                {{selectPlaces.length}}
+                {{selectPlaces}}
+                <hr>
+                {{selectPlaces2.length}}
+                {{selectPlaces2}}
+        </div>*@
+        <!-- v-for 產生行程天數  -->
+        <div class="itxst">
+            <div class="col" v-for="(day,dayIndex) in travel">
+                <div class="title"></div>
+                <!-- v-for 產生當天行程細項  -->
+                Day{{dayIndex+1}}
+                <hr>
+                旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime(dayIndex)">
+                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                           ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                           @@change="cultime(dayIndex)" class="min">
+                    <transition-group>
+                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                            {{view.starttime}}-{{view.endtime}}<br>
+                            地址:{{view.address}}<br>
+                            景點:{{view.view}}<br>
+                            <button @@click="remove(dayIndex,veiwIndex)">remove</button>
+                        </div>
 
-@section Scripts{
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script>
-        axios.get("@Url.Action("teatMapData","Home")")
-            .then(res => console.log(JSON.stringify(res.data)))
-            .catch(err => console.log("err"));
-    </script>
-}
+                    </transition-group>
+                </draggable>
+
+            </div>
+        </div>
+        <!-- *測試*新增景點 -->
+        <div class="itxst">
+            <div class="col">
+                <div class="title">Search</div>
+                <div v-for="(view,selIndex) in selectPlaces">
+                    <div class="item" v-model="view">
+                        <h2>{{view.name}}</h2>
+                        {{view.description}}<br><br>
+                        電話:{{view.tel}}<br><br>
+                        地址:{{view.add}}<br><br>
+                        營業時間:{{view.opentime}}-{{view.closetime}}<br><br>
+                        建議停留:{{view.timestay}}分鐘<br>
+                        <div>
+                            <button @@click="addview(selIndex)">新增至行程</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+ </div>
+
+    @section Scripts{
+        <script src="https://unpkg.com/axios/dist/axios.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src="https://unpkg.com/vuex@3"></script>  
+        <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
+        <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+
+
+        <script>
+            let id = 0;
+            Vue.component('vuedraggable', window.vuedraggable.name)
+            var app = new Vue({
+                el: '#app',
+                data: {
+                },
+                components: {
+                    vuedraggable,
+                },
+                data() {
+
+                    return {
+                        drag: true,
+                        datetime: ['09:00', '09:00'],
+                        travel: [
+                            [
+                                { id: id++, address: '高雄市桃源區拉芙蘭里拉芙蘭路20號', view: '拉芙蘭藝術村', min: 60, starttime: '9:00', endtime: '10:00' },
+                                { id: id++, address: '高雄市桃源區寶山里寶山巷150號', view: '藤枝國家森林遊樂區', min: 90, starttime: '10:00', endtime: '11:30' }
+                            ],
+
+                            [
+                                { id: id++, address: '高雄市桃源區梅山村三鄰梅山巷44之5號', view: '布農文化展示中心', min: 60, starttime: '9:00', endtime: '10:00' },
+                                { id: id++, address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
+                            ]
+                        ],
+
+                        //selectPlaces2: [{ "placeId": 15000, "name": "臺華窯", "description": "碼頭館為2013年5月最新開幕的店，位於水社最熱鬧的名勝街上，為上下兩層樓雙店面的設計，樓下門口則直達碼頭。店內作品以較現代的商品為主，樓上則多為台灣當代大師手繪瓷器與限量銅雕。而在伊達邵設有三家店面，分別為日月潭館、伊達邵館、華緣館，各館皆有不同的特色藝品，歡迎大家光臨。Line 帳號名稱：台華窯-日月潭碼頭館Line@ID：gbt1903r", "tel": "04-92855608", "add": "南投縣魚池鄉水社村名勝街17號", "lat": 23.86463, "lng": 120.91123, "region": "南投縣", "town": "魚池鄉", "class": 19, "opentime": "06:00", "intOpentime": 6, "closetime": "21:00", "intClosetime": 21, "timestay": 60 }, { "placeId": 15001, "name": "新山味餐廳", "description": "桌菜 $ 3,500，菜色：日月拼盤  ／ 椒香佛手 ／ 鐵板羌  ／ 碧玉雙蔬  ／ 邵族烤肉  ／ 樹子總統魚  ／ 荼酥潭蝦  ／ 福菜筍盅  ／ 山晶美食  ／ 四季鮮果採用邵族傳統的醃製方式，搭配上師傅們精心的改良，當酸酸的檸檬遇上碳烤的山豬肉,配飯、下酒兩相宜。一定要試試看喔~~~", "tel": "04-92855596", "add": "南投縣魚池鄉中山路134號", "lat": 23.86641, "lng": 120.91204, "region": "南投縣", "town": "魚池鄉", "class": 19, "opentime": "06:00", "intOpentime": 6, "closetime": "14:00", "intClosetime": 14, "timestay": 60 }, { "placeId": 15002, "name": "大城黑糖饅頭", "description": "超大饅頭與養生黑糖為特點的饅頭店", "tel": "04-92912898", "add": "南投縣埔里鎮大城路146號", "lat": 23.97212, "lng": 120.95303, "region": "南投縣", "town": "埔里鎮", "class": 19, "opentime": "06:00", "intOpentime": 6, "closetime": "14:00", "intClosetime": 14, "timestay": 60 }, { "placeId": 15003, "name": "黑豆園活魚料理餐廳", "description": "金牌廚師的心路歷程    從廚師變什麼都不懂的農夫，1969年出生的「黃秋田」本來專長是做料理。15歲北上拜師學藝，學成後曾在六條通擔任廚師，後來在員林開平價日式料理店，請了20個廚師，餐廳月入200萬元。五年前，長年種茭白筍導致腳踝拉傷的父親，要求他回鄉。為了照顧父親，他和太太就帶著孩子回到老家，學做農夫。    他坦言，剛開始真的不懂。為了讓筍長快一點，他倒了一大堆肥料到根部，沒想到揠苗助長，只要一下雨，茭白筍就整根浮到水面，變成天空水筍，採收下來又短又肥，咬起來口感也過老，成了名符其實的蘿蔔腿。    可想而知，價錢不會太好。別人1斤賣40多元，黃秋田的頂多25元，全市場最低價，有陣子...", "tel": "04-92915622", "add": "南投縣埔里鎮桃米巷11之12號", "lat": 23.94358, "lng": 120.93724, "region": "南投縣", "town": "埔里鎮", "class": 19, "opentime": "06:00", "intOpentime": 6, "closetime": "14:00", "intClosetime": 14, "timestay": 60 }, { "placeId": 15004, "name": "雅池園餐廳", "description": "質感與蔬食為主題的餐廳", "tel": "04-92911778", "add": "南投縣埔里鎮南環路952號", "lat": 23.96684, "lng": 120.94827, "region": "南投縣", "town": "埔里鎮", "class": 19, "opentime": "06:00", "intOpentime": 6, "closetime": "21:00", "intClosetime": 21, "timestay": 60 }],
+                        selectPlaces: []
+                    };
+
+                },
+                mounted() {
+                    axios.get("@Url.Action("teatMapData","Home")")
+                        .then(res => this.selectPlaces = ((res.data)))
+                        .catch(err => console.log("err"))
+                },
+                methods: {
+                    // 新增景點
+                    addview: function(index) {
+                        this.travel[0].push({ address: this.selectPlaces[index].add, view: this.selectPlaces[index].name, min: this.selectPlaces[index].timestay })
+                        this.cultime(index)
+                    },
+                    //刪除景點
+                    remove: function(day, view) {
+                        this.travel[day].splice(view, 1)
+                        this.cultime(day)
+                    },
+                    //編排時間
+                    cultime(dayIndex) {
+                        for (let j = 0; j < this.travel.length; j++) {
+                            let timestamp = this.datetime[j]
+                            for (let i = 0; i < this.travel[j].length; i++) {
+                                this.travel[j][i].starttime = timestamp
+                                let hr = timestamp.substring(0, 2)
+                                let min = timestamp.substring(3, 5)
+                                let addhr = parseInt((Number(min) + Number(this.travel[j][i].min)) / 60)
+
+                                hr = Number(hr) + Number(addhr)
+                                min = (Number(min) + Number(this.travel[j][i].min)) % 60
+
+                                if (hr < 10) {
+                                    hr = '0' + hr
+                                }
+                                if (min < 10) {
+                                    min = '0' + min
+                                }
+
+                                timestamp = hr + ':' + min
+                                this.travel[j][i].endtime = timestamp
+                            }
+                        }
+                    },
+
+
+
+
+                    //拖曳啟動
+                    onStart() {
+                        this.drag = true;
+                    },
+                    //拖曳結束
+                    onEnd() {
+                        this.drag = false;
+                    }
+
+
+                }
+            });
+
+
+        </script>
+    }

@@ -18,11 +18,7 @@ namespace JustGo.Repository
         public ScheduleRepostioy(TravelContext context, IDbConnection con)
         {
             _con = con;
-            _context = context;
-            Schedule test = viewToModel(new ScheduleVM());
-            ScheduleVM testVM = modelToView(test);
-            Console.WriteLine(test.ScheduleId.ToString());
-            Console.WriteLine(testVM.ScheduleId.ToString());
+            _context = context;            
         }
 
         public bool createScedule(ScheduleVM vm)
@@ -49,14 +45,8 @@ namespace JustGo.Repository
         }
 
         public bool editScedule(ScheduleVM vm)
-        {
-            List<ScheduleDetails> delDetails = _context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId).ToList();
-
-            foreach(ScheduleDetails detail in delDetails)
-            {
-                _context.Remove(detail);
-            }
-
+        {            
+            _context.RemoveRange(_context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId).ToList());
             _context.SaveChanges();
 
             Schedule schedule = viewToModel(vm);

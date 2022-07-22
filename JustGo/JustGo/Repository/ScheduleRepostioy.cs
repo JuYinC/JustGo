@@ -80,7 +80,7 @@ namespace JustGo.Repository
             return vmList;
         }
 
-        Schedule viewToModel(ScheduleVM vm)
+        private Schedule viewToModel(ScheduleVM vm)
         {
             List<ScheduleDetails> modelList = new List<ScheduleDetails>();
             if(vm.Details != null)
@@ -118,7 +118,7 @@ namespace JustGo.Repository
             return model;
         }
 
-        ScheduleVM modelToView(Schedule model)
+        private ScheduleVM modelToView(Schedule model)
         {
             List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
             if(model.ScheduleDetails != null)

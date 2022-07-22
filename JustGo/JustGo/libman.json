@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "gmaps-marker-clusterer@1.2.2",
+      "destination": "wwwroot/gmaps-marker-clusterer/"
+    }
+  ]
+}

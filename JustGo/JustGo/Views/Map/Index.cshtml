@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Place>;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Map</h1>
+
+<div id="map" style="height:100%; width:100%;"></div>
+
+@section Scripts{
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk&callback=initMap&v=weekly"
+        defer></script>
+   
+    <script src="https://unpkg.com/@@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: { lat: 22.638222392604195, lng: 120.33511253253796 },
+            });
+            const infoWindow = new google.maps.InfoWindow({
+                content: "",
+                disableAutoPan: true,
+            });
+            // Create an array of alphabetical characters used to label the markers.            
+            const image = {
+                url: "/img/placeholder_green_Freepik.png",
+                scaledSize: new google.maps.Size(50, 50),
+                labelOrigin: new google.maps.Point(25, 17)
+            };
+
+            const route = new google.maps.Polyline({
+                path: locations,
+                strokeColor: "orange",
+                strokeOpacity: 1.0,
+                strokeWeight: 5,
+                map: map,
+            });
+
+            // Add some markers to the map.
+            const markers = locations.map((position, i) => {
+                const label = `${i + 1}`;
+                console.log('i = ' + label);
+                const marker = new google.maps.Marker({
+                    position,
+                    label,
+                    title: position.title,
+                    icon: image
+                });
+
+                // markers can only be keyboard focusable when they have click listeners
+                // open info window when marker is clicked
+                marker.addListener("click", () => {
+                    infoWindow.setContent(label);
+                    infoWindow.open(map, marker);
+                });
+                return marker;
+            });
+
+            const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+            // Add a marker clusterer to manage the markers.     
+            //new MarkerClusterer({ markers, map });
+        }
+
+
+        const locations = [
+            {
+                lat: 22.64655, lng: 120.28653, title: 'AA'
+            },
+            {
+                lat: 22.65132
+                , lng: 120.30388, title: 'BB'
+            },
+            {
+                lat: 22.63584
+                , lng: 120.29416, title: 'CC'
+            },
+            {
+                lat: 22.65271
+                , lng: 120.30313, title: 'CC'
+            },
+            {
+                lat: 22.63872
+                , lng: 120.29387, title: 'DD'
+            },
+            {
+                lat: 22.63996
+                , lng: 120.32239, title: 'EE'
+            }
+        ];
+
+
+
+        window.initMap = initMap;
+    </script>
+}
+

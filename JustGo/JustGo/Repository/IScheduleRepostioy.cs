@@ -6,10 +6,10 @@ namespace JustGo.Repository
     public interface IScheduleRepostioy
     {
         //搜尋使用者行程表
-        public ICollection<ScheduleVM> selectUserSchedule(int UserId);
+        public IList<ScheduleVM> selectUserSchedule(int UserId);
 
         //搜尋行程表細項
-        public ScheduleVM selectSceduleDetails(int SceduleId);
+        public ScheduleVM selectScedule(int SceduleId);
 
         public bool editScedule(ScheduleVM vm);
 

@@ -50,23 +50,24 @@ namespace JustGo.Repository
             _context.SaveChanges();
 
             Schedule schedule = viewToModel(vm);
+            _context.Update(schedule);
             _context.SaveChanges();
 
             return true;
         }
 
-        public ScheduleVM selectSceduleDetails(int SceduleId)
+        public ScheduleVM selectScedule(int SceduleId)
         {            
-            return modelToView(_context.Schedule.SingleOrDefault(e => e.ScheduleId == SceduleId)??new Schedule());
+            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId)??new Schedule());
         }
 
-        public ICollection<ScheduleVM> selectUserSchedule(int UserId)
+        public IList<ScheduleVM> selectUserSchedule(int UserId)
         {
-            List<ScheduleVM> vmList = new List<ScheduleVM>();
+            List<ScheduleVM> vmList = new List<ScheduleVM>();            
             foreach (Schedule item in _context.Schedule.Where(e => e.UserId == UserId).ToList())
             {
                 vmList.Add(modelToView(item));
-            }
+            }            
             return vmList;
         }
 
@@ -84,7 +85,7 @@ namespace JustGo.Repository
                     ScheduleDetails details = new ScheduleDetails()
                     {
                         StartTime = item.StartTime,
-                        EndtTime = item.EndtTime,
+                        EndtTime = item.EndTime,
                         PlaceId = item.Place.PlaceId,
                         Town = item.Place.Town,
                         WeatherWarning = item.WeatherWarning,
@@ -109,34 +110,35 @@ namespace JustGo.Repository
         }
 
         private ScheduleVM modelToView(Schedule model)
-        {
-            List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
-            if(model.ScheduleDetails != null)
+        {            
+            ScheduleVM vm = new ScheduleVM()
             {
+                ScheduleId = model.ScheduleId,
+                UserId = model.UserId,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                WeatherWarning = model.WeatherWarning,                
+            };
+            if (model.ScheduleDetails.Count>0)
+            {
+                List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
                 foreach (ScheduleDetails item in model.ScheduleDetails)
-                {
+                {                    
                     ScheduleDetailVM vmDetail = new ScheduleDetailVM()
                     {
                         StartTime = item.StartTime,
-                        EndtTime = item.EndtTime,
+                        EndTime = item.EndtTime,
                         WeatherWarning = item.WeatherWarning,
                         Pop = item.Pop,
                         Temperature = item.Temperature,
                         Uvi = item.Uvi,
                         Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId) ?? new Place(),
-                    };
+                    };                    
                     vmList.Add(vmDetail);
                 }
+                vm.Details = vmList;
             }            
-            ScheduleVM vm = new ScheduleVM()
-            {
-                ScheduleId=model.ScheduleId,
-                UserId=model.UserId,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                WeatherWarning=model.WeatherWarning,
-                Details = vmList,
-            };            
+                        
             return vm;
         }
     }

@@ -15,7 +15,7 @@ namespace JustGo.ViewModels
     public class ScheduleDetailVM
     {
         public DateTime StartTime { get; set; }
-        public DateTime EndtTime { get; set; }        
+        public DateTime EndTime { get; set; }        
         public bool? WeatherWarning { get; set; }
         public int? Pop { get; set; }
         public int? Temperature { get; set; }

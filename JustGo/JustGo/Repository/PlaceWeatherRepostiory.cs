@@ -24,7 +24,7 @@ namespace JustGo.Repository
             {
                 con.Open();
                 string sqlStr = $"select * from Place order by PlaceID offset @start row fetch next @quantity rows only";
-                return con.Query<Place>(sqlStr, new { start, quantity }).ToList();
+                return con.Query<Place>(sqlStr, new { start, quantity }).ToList();                
             }
         }
 

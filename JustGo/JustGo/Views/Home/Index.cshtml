@@ -9,10 +9,9 @@
         
     </div>
 
-@*    <div id="app2">
-        <button @@click="axios">click</button>
-        {{travel}}
-    </div>*@
+    <div id="app2">
+        
+    </div>
 </div>
 
 @section Scripts{
@@ -25,86 +24,44 @@
 
     <script>
 
-        //const store = new Vuex.Store({
-        //    state: {
-        //            travel: []
-        //            },
-        //    mutations: {
-        //        updateData(state, status) {
-        //            state.travel = status
-        //        }
-            
-        //    },
-        //    getters: {},
-        //    actions: {
-        //        axiosTest(context,status){
-        //            axios.get("@Url.Action("teatMapData","Home")")
-        //            .then(res => context.commit('updateData',status))
-        //            .catch(err => console.log("err"))
-        //            }
-        //        }
-        //})
-        
-        //Vue.component('vuedraggable', window.vuedraggable.name)
-
-        //new Vue({
-        //    store,
-        //    el:'#app2',
-        //    methods: {           
-        //    },
-        //    components: {vuedraggable},
-        //    data() {
-        //        return {
-        //            drag: true,
-        //        }
-        //    },
-        //    computed: {
-        //        travel() {
-        //            return this.$store.state.travel
-        //        }
-        //    },
-        //    mounted(){
-        //        this.$store.dispatch('axiosTest')
-        //        //console.log("hi")
-        //    }
-        //})
-
-
-
-        let id = 0;
-        Vue.component('vuedraggable', window.vuedraggable.name)
-        var app = new Vue({
-            el: '#app',
-            data: {
-            },
-            components: {
-                vuedraggable,
-            },
-            data() {
-                return {
-                    drag: true,
+        const store = new Vuex.Store({
+            state: {
                     datetime: ['09:00', '09:00'],
                     travel: [
                         [
-                            { id: id++, address: '高雄市桃源區拉芙蘭里拉芙蘭路20號', view: '拉芙蘭藝術村', min: 60, starttime: '9:00', endtime: '10:00' },
-                            { id: id++, address: '高雄市桃源區寶山里寶山巷150號', view: '藤枝國家森林遊樂區', min: 90, starttime: '10:00', endtime: '11:30' }
+                            {address: '高雄市桃源區拉芙蘭里拉芙蘭路20號', view: '拉芙蘭藝術村', min: 60, starttime: '9:00', endtime: '10:00' },
+                            {address: '高雄市桃源區寶山里寶山巷150號', view: '藤枝國家森林遊樂區', min: 90, starttime: '10:00', endtime: '11:30' }
                         ],
-
                         [
-                            { id: id++, address: '高雄市桃源區梅山村三鄰梅山巷44之5號', view: '布農文化展示中心', min: 60, starttime: '9:00', endtime: '10:00' },
-                            { id: id++, address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
+                            {address: '高雄市桃源區梅山村三鄰梅山巷44之5號', view: '布農文化展示中心', min: 60, starttime: '9:00', endtime: '10:00' },
+                            {address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
                         ]
                     ],
-
                     selectPlaces: []
-                };
-
+                    },
+            mutations: {
+                updateData(state, status) {
+                    console.log(state.travel)
+                    this.state.selectPlaces= status
+                    console.log(state.travel)
+                }
+            
             },
-            mounted() {
-                axios.get("@Url.Action("teatMapData","Home")")
-                    .then(res => this.selectPlaces = (res.data))
+            getters: {},
+            actions: {
+                axiosTest(context,status){
+                    axios.get("@Url.Action("teatMapData","Home")")
+                    .then(res => context.commit('updateData',res.data))
                     .catch(err => console.log("err"))
-            },
+                    }
+                }
+        })
+        
+        Vue.component('vuedraggable', window.vuedraggable.name)
+
+        new Vue({
+            store,
+            el:'#app2',
             methods: {
                 // 新增景點
                 addview: function(index) {
@@ -140,7 +97,6 @@
                         }
                     }
                 },
-
                 //拖曳啟動
                 onStart() {
                     this.drag = true;
@@ -150,9 +106,28 @@
                     this.drag = false;
                 }
             },
+            components: {vuedraggable},
+            data() {
+                return {
+                    drag: true,
+                }
+            },
+            mounted(){
+                this.$store.dispatch('axiosTest')
+            },
+            computed: {
+                travel() {
+                    return this.$store.state.travel;
+                },
+                selectPlaces() {
+                    return this.$store.state.selectPlaces
+                },
+                datetime() {
+                    return this.$store.state.datetime
+                },
+            },
             template: 
             `
-
              <div>
                 <div class="itxst">
                     <div class="col" v-for="(day,dayIndex) in travel">
@@ -194,6 +169,6 @@
                     </div>
                 </div>
             `
-        });
+        })
     </script>
     }

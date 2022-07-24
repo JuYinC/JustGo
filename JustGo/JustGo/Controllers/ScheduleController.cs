@@ -25,29 +25,34 @@ namespace JustGo.Controllers
 
 
         //--------------------------------------------------
+        //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
             return Json(_schedule.selectUserSchedule(1));
         }
 
+        //搜尋行程細項
         [HttpPost]
         public IActionResult selectDetail([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.selectScedule(vm.ScheduleId));
         }
 
+        //新增行程
         [HttpPost]
         public IActionResult createSchedule([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.createScedule(vm));
         }
 
+        //刪除行程
         [HttpPost]
         public IActionResult deleteSchedule([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.deleteScedule(vm.ScheduleId));
         }
 
+        //修改行程
         [HttpPost]
         public IActionResult editSchedule([FromBody] ScheduleVM vm)
         {

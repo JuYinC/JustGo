@@ -4,7 +4,7 @@
 }
 
 <div class="text-center">
-        <div id="app">
+    <div id="app">
         <!-- v-for 產生行程天數  -->
         
     </div>
@@ -37,7 +37,8 @@
                             {address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
                         ]
                     ],
-                    selectPlaces: []
+                    selectPlaces: [],
+
                     },
             mutations: {
                 updateData(state, status) {
@@ -61,11 +62,11 @@
 
         new Vue({
             store,
-            el:'#app2',
+            el:'#app',
             methods: {
                 // 新增景點
                 addview: function(index) {
-                    this.travel[0].push({ address: this.selectPlaces[index].add, view: this.selectPlaces[index].name, min: this.selectPlaces[index].timestay })
+                    this.travel[0].push({ address: this.selectPlaces[index].add, view: this.selectPlaces[index].name, min: this.selectPlaces[index].timestay})
                     this.cultime(index)
                 },
                 //刪除景點
@@ -104,9 +105,9 @@
                 //拖曳結束
                 onEnd() {
                     this.drag = false;
-                }
+                },
+
             },
-            components: {vuedraggable},
             data() {
                 return {
                     drag: true,
@@ -125,10 +126,17 @@
                 datetime() {
                     return this.$store.state.datetime
                 },
+                countys() {
+                    return this.$store.state.countys
+                },
+                selectCounty() {
+                    return this.$store.state.selectCounty
+                },
             },
             template: 
             `
              <div>
+                <span>{{selectCounty}}</span>
                 <div class="itxst">
                     <div class="col" v-for="(day,dayIndex) in travel">
                         <div class="title"></div>
@@ -168,6 +176,47 @@
                         </div>
                     </div>
                 </div>
+            `
+        })
+
+         new Vue({
+            store,
+            el:'#app2',
+            data() {
+                return {
+                    countys:[
+                        '基隆市','新北市','台北市','桃園市','新竹縣','新竹市','苗栗市','苗栗縣','台中市','彰化縣',
+                        '彰化市','南投市','南投縣','雲林縣','嘉義縣','嘉義市','台南市','高雄市','屏東縣','屏東市',
+                        '宜蘭縣','宜蘭市','花蓮縣','花蓮市','台東市','台東縣',
+                    ],
+                    selectCounty:[],
+                    acitivitys:['文化','生態','古蹟','廟宇','藝術','小吃特產','國家公園','國家風景區','休閒農業','溫泉','自然風景','遊憩','體育健身','其他'],
+                    selectAcitivity:[],
+                }
+            },
+            methods: {
+
+            },
+            computed: {
+                
+            },
+            template: 
+            `
+            <div>
+                <span v-for="county in countys">
+                    <input type="checkbox" :value="county" v-model="selectCounty">
+                    <label for="county">{{county}}</label>
+                </span>
+                <br><br>
+                <span v-for="(acitivity,index) in acitivitys">
+                    <input type="checkbox" :value="index+1" v-model="selectAcitivity">
+                    <label for="acitivity">{{acitivity}}</label>
+                </span>
+                <br><br>
+                {{selectCounty}}
+                <br>
+                {{selectAcitivity}}
+            </div>
             `
         })
     </script>

@@ -126,12 +126,6 @@
                 datetime() {
                     return this.$store.state.datetime
                 },
-                countys() {
-                    return this.$store.state.countys
-                },
-                selectCounty() {
-                    return this.$store.state.selectCounty
-                },
             },
             template: 
             `
@@ -195,7 +189,11 @@
                 }
             },
             methods: {
-
+               search() {
+                axios.get("@Url.Action("","")",this.selectCounty,this.selectAcitivity)
+                    .then(res => context.commit('updateData',res.data))
+                    .catch(err => console.log("err"))
+                    }
             },
             computed: {
                 
@@ -216,6 +214,8 @@
                 {{selectCounty}}
                 <br>
                 {{selectAcitivity}}
+                <br>
+                <button @@click="search">搜尋</button>
             </div>
             `
         })

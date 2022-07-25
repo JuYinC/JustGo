@@ -15,14 +15,14 @@ var TravelWindows = builder.Configuration.GetConnectionString("TravelWindows");
 var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(TravelWindows));
 builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP));
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
-//³s½u¦r¦ê´À´«
-//¦aºÝ³s½u¦r¦êTravelWindows,¶³ºÝ³s½u¦r¦êTravelPssP
+//ï¿½sï¿½uï¿½rï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½aï¿½Ý³sï¿½uï¿½rï¿½ï¿½TravelWindows,ï¿½ï¿½ï¿½Ý³sï¿½uï¿½rï¿½ï¿½TravelPssP
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

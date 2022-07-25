@@ -19,16 +19,16 @@ body {
 
 <style >
 .ghostClass {
-    background-color: blue !important;
+    background-color: #DCDCDC !important;
 }
 
 .chosenClass {
-    background-color: red !important;
+    background-color: #F5F5F5 !important;
     opacity: 1 !important;
 }
 
 .dragClass {
-    background-color: blueviolet !important;
+    background-color: #FFFAFA !important;
     opacity: 1 !important;
     box-shadow: none !important;
     outline: none !important;

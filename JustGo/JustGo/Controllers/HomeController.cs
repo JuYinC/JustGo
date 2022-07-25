@@ -32,7 +32,14 @@ namespace JustGo.Controllers
             return View();
         }
 
-
+        [HttpPost]
+        public IActionResult selectPlace([FromBody]select select)
+        {
+            Console.WriteLine(select.selectCounty.Length);
+            Console.WriteLine(select.selectAcitivity.Length);
+            return Json("hi");
+        }
+        
         public IActionResult teatMapData()
         {
             return Json(_pwr.getPlace(5000, 5));
@@ -76,4 +83,6 @@ namespace JustGo.Controllers
         }        
         
     }
+    
+
 }

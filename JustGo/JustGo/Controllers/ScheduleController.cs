@@ -25,6 +25,10 @@ namespace JustGo.Controllers
             return Json(_place.getPlace(5000,10));
         }
 
+        public IActionResult selectPlaceFilter(SelectPlaceVM vm)
+        {
+            return View(_place.getPlaceFilter(vm));
+        }
 
         //--------------------------------------------------
         //搜尋使用者行程清單/無細項

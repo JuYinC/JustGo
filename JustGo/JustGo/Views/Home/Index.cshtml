@@ -1,199 +1,393 @@
-﻿@model IEnumerable<Place>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-        <div id="app">
-        <!-- v-for 產生行程天數  -->
-        
-    </div>
+@section Style{
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> 
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-@*    <div id="app2">
-        <button @@click="axios">click</button>
-        {{travel}}
-    </div>*@
-</div>
+
+
+}
 
 @section Scripts{
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/vuex@3"></script>
-    <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
-    <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
-    
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-    <script>
 
-        //const store = new Vuex.Store({
-        //    state: {
-        //            travel: []
-        //            },
-        //    mutations: {
-        //        updateData(state, status) {
-        //            state.travel = status
-        //        }
+
+<script>
+    var typed = new Typed(".auto-type", {
+        strings: ["還在為排行程煩惱嗎?", "旅行也可以很簡單"], typeSpeed: 100, backSpeed: 100, loop: false
+    }); 
+    var navbar = document.getElementById("navbarC");
+    var menu = document.getElementById("navbarC__menu");
+
+    window.onscroll = function () {
+        if (window.pageYOffset >= menu.offsetTop) {
             
-        //    },
-        //    getters: {},
-        //    actions: {
-        //        axiosTest(context,status){
-        //            axios.get("@Url.Action("teatMapData","Home")")
-        //            .then(res => context.commit('updateData',status))
-        //            .catch(err => console.log("err"))
-        //            }
-        //        }
-        //})
-        
-        //Vue.component('vuedraggable', window.vuedraggable.name)
-
-        //new Vue({
-        //    store,
-        //    el:'#app2',
-        //    methods: {           
-        //    },
-        //    components: {vuedraggable},
-        //    data() {
-        //        return {
-        //            drag: true,
-        //        }
-        //    },
-        //    computed: {
-        //        travel() {
-        //            return this.$store.state.travel
-        //        }
-        //    },
-        //    mounted(){
-        //        this.$store.dispatch('axiosTest')
-        //        //console.log("hi")
-        //    }
-        //})
-
-
-
-        let id = 0;
-        Vue.component('vuedraggable', window.vuedraggable.name)
-        var app = new Vue({
-            el: '#app',
-            data: {
-            },
-            components: {
-                vuedraggable,
-            },
-            data() {
-                return {
-                    drag: true,
-                    datetime: ['09:00', '09:00'],
-                    travel: [
-                        [
-                            { id: id++, address: '高雄市桃源區拉芙蘭里拉芙蘭路20號', view: '拉芙蘭藝術村', min: 60, starttime: '9:00', endtime: '10:00' },
-                            { id: id++, address: '高雄市桃源區寶山里寶山巷150號', view: '藤枝國家森林遊樂區', min: 90, starttime: '10:00', endtime: '11:30' }
-                        ],
-
-                        [
-                            { id: id++, address: '高雄市桃源區梅山村三鄰梅山巷44之5號', view: '布農文化展示中心', min: 60, starttime: '9:00', endtime: '10:00' },
-                            { id: id++, address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
-                        ]
-                    ],
-
-                    selectPlaces: []
-                };
-
-            },
-            mounted() {
-                axios.get("@Url.Action("teatMapData","Home")")
-                    .then(res => this.selectPlaces = (res.data))
-                    .catch(err => console.log("err"))
-            },
-            methods: {
-                // 新增景點
-                addview: function(index) {
-                    this.travel[0].push({ address: this.selectPlaces[index].add, view: this.selectPlaces[index].name, min: this.selectPlaces[index].timestay })
-                    this.cultime(index)
-                },
-                //刪除景點
-                remove: function(day, view) {
-                    this.travel[day].splice(view, 1)
-                    this.cultime(day)
-                },
-                //編排時間
-                cultime(dayIndex) {
-                    for (let j = 0; j < this.travel.length; j++) {
-                        let timestamp = this.datetime[j]
-                        for (let i = 0; i < this.travel[j].length; i++) {
-                            this.travel[j][i].starttime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.travel[j][i].min)) / 60)
-
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.travel[j][i].min)) % 60
-
-                            if (hr < 10) {
-                                hr = '0' + hr
-                            }
-                            if (min < 10) {
-                                min = '0' + min
-                            }
-                            timestamp = hr + ':' + min
-                            this.travel[j][i].endtime = timestamp
-                        }
-                    }
-                },
-
-                //拖曳啟動
-                onStart() {
-                    this.drag = true;
-                },
-                //拖曳結束
-                onEnd() {
-                    this.drag = false;
-                }
-            },
-            template: 
-            `
-
-             <div>
-                <div class="itxst">
-                    <div class="col" v-for="(day,dayIndex) in travel">
-                        <div class="title"></div>
-                <!-- v-for 產生當天行程細項  -->
-                Day{{dayIndex+1}}
-                <hr>
-                旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime(dayIndex)">
-                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
-                    ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
-                    @@change="cultime(dayIndex)" class="min">
-                    <transition-group>
-                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                            {{view.starttime}}-{{view.endtime}}<br>
-                            地址:{{view.address}}<br>
-                            景點:{{view.view}}<br>
-                            <button @@click="remove(dayIndex,veiwIndex)">remove</button>
-                        </div>                     
-                    </transition-group>
-                    </draggable>              
-                    </div>
-                </div>
-                <!-- *測試*新增景點 -->
-                <div class="itxst">
-                    <div class="col">
-                        <div class="title">Search</div>
-                            <div v-for="(view,selIndex) in selectPlaces">
-                                <div class="item" v-model="view" >
-                                <h2>{{view.name}}</h2>
-                                    {{view.description}}<br><br>
-                                    電話:{{view.tel}}<br><br>
-                                    地址:{{view.add}}<br><br>
-                                    營業時間:{{view.opentime}}-{{view.closetime}}<br><br>
-                                    建議停留:{{view.timestay}}分鐘<br>
-                                <div>
-                                <button @@click="addview(selIndex)">新增至行程</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `
-        });
-    </script>
+            navbar.classList.add("sticky");
+        }
+        else {
+            navbar.classList.remove("sticky");
+        }
     }
+
+//clock
+// // $('#checkbox').prop('checked', true);
+// if ($('#navi-toggle').prop('checked')===true) {
+//     $("html").addClass("noscroll");
+// }else{
+//     $("html").addClass("fixWindow"); 
+// }
+
+// //unclock
+
+// if ($('#navi-toggle').prop('checked')=== false) {
+//      $("html").removeClass("noscroll");
+//  }else{
+//     $("html").removeClass("fixWindow");
+// }
+
+$(".navbarC__user-logo").click(function (e) {
+  e.preventDefault();
+  $("html,body").animate(
+    {
+      scrollTop: 0,
+    },
+    600
+  );
+});
+
+
+
+
+
+     // AJAX 去後端取得資料庫的產品資訊
+
+        const productDiv = document.querySelector('#product');
+        let myHtml = '';
+
+        for (let i = 0; i < 8; i++) {
+            myHtml += `
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="img-wrap">
+                    <img src="" alt="">
+                </div>
+                <h3>Lounge Tunic / Black</h3>
+                <p>$50.00</p>
+            </div>`
+        }
+</script>
+
+<script>
+var mouse = {
+      X   : 0,
+      Y   : 0,
+      CX  : 0,
+      CY  : 0
+    },
+    block = {
+      X   : mouse.X,
+      Y   : mouse.Y,
+      CX  : mouse.CX,
+      CY  : mouse.CY
+    },
+    imags = [
+      'https://unsplash.it/1800/1600/?random',
+      'https://unsplash.it/1900/1600/?random',
+      'https://unsplash.it/1800/1400/?random',
+      'https://unsplash.it/1800/1500/?random'
+    ];
+
+$('.block').on('mousemove', function(e) {
+  mouse.X   = (e.pageX - $(this).offset().left) - $('.block').width() / 2;
+  mouse.Y   = (e.pageY - $(this).offset().top) - $('.block').height() / 2;
+})
+
+$('.block').on('mouseleave', function(e) {
+  mouse.X   = mouse.CX;
+  mouse.Y   = mouse.CY;
+})
+
+setInterval(function(){
+
+  block.CY   += (mouse.Y - block.CY) / 12;
+  block.CX   += (mouse.X - block.CX) / 12;
+
+  $('.block .circleLight').css('background', 'radial-gradient(circle at ' + mouse.X + 'px ' + mouse.Y + 'px, #fff, transparent)')
+  $('.block').css({
+    transform : 'scale(1.03) translate(' + (block.CX * 0.05) + 'px, ' + (block.CY * 0.05) + 'px) rotateX(' + (block.CY * 0.05) + 'deg) rotateY(' + (block.CX * 0.05) + 'deg)'
+  })
+
+}, 20);
+
+$('.slider .item').each(function(i){
+  
+  if(i == 0){
+    
+    $(this).addClass('active');
+    $(this).next().addClass('next');
+    $(this).prev().addClass('prev');
+  }
+  
+  $(this).attr('id', 'slide-'+i);
+  
+  $(this).prepend(
+    $('<div>', {class: 'blur', style: 'background-image: url(' + imags[i] + ');'}),
+    $('<div>', {class: 'bg', style: 'background-image: url(' + imags[i] + ');'})
+  )
+  
+  $(this).find('.block').css('background-image', 'url(' + imags[i] + ')')
+  
+  $('.navigations .dots').append(
+    $('<li>', {class: i == 0 ? 'active' : '', id: i}).on('click', function(){
+    var cSlide = $('.slider #slide-'+$(this).attr('id'));
+      
+      $('.navigations .dots li').removeClass('active');
+      $(this).addClass('active');
+      
+      $('.slider .item').removeClass('active prev next');
+      cSlide.addClass('active');
+      cSlide.next().addClass('next');
+      cSlide.prev().addClass('prev');
+    })
+  )
+})
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+}
+
+
+<div class="idx__contaim">
+    <div class="index">
+        <video autoplay muted loop plays-inline class="index__bg-video">
+            <source src="~/file/video/beach.mp4" type="video/mp4">
+        </video>
+    </div>
+      <p class="text-center typer"><span class="auto-type"></span></p>
+      <div class="index__home-bt">
+        <a asp-area="" asp-controller="Home" asp-action="itinerary">開始規劃</a>
+    </div>
+</div>
+
+
+ <div class="idx__title">
+    <div  class="idx__title-content">
+        <h3>來一場說走就走的旅行</h3>
+        <p>Go for a trip</p>
+        <div class="idx__title-bt1"></div>
+    </div>
+  
+</div>
+<!-- <div class="idx__carousel">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+        <img src="~/file/photo/1.jpg" class="d-block w-100 " alt="...">
+        <div class="carousel-caption d-none d-md-block txtbox">
+            <h5>First slide label</h5>
+            <p>Some representative placeholder content for the first slide.</p>
+        </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+        <img src="~/file/photo/2.jpg" class="d-block w-100 " alt="...">
+        <div class="carousel-caption d-none d-md-block txtbox">
+            <h5>Second slide label</h5>
+            <p>Some representative placeholder content for the second slide.</p>
+        </div>
+        </div>
+        <div class="carousel-item">
+        <img src="~/file/photo/3.jpg" class="d-block w-100 " alt="...">
+        <div class="carousel-caption d-none d-md-block txtbox">
+            <h5>Third slide label</h5>
+            <p>Some representative placeholder content for the third slide.</p>
+        </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div> -->
+<div class="slider">
+  <div class="items-group">
+    <div class="item">
+      <div class="block">
+        <span class="circleLight"></span>
+        <div class="text">
+          <h2>First</h2>
+          <p>This is slide 1</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="block">
+        <span class="circleLight"></span>
+        <div class="text">
+          <h2>Second</h2>
+          <p>This is slide 2</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="block">
+        <span class="circleLight"></span>
+        <div class="text">
+          <h2>Three</h2>
+          <p>This is slide 3</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="block">
+        <span class="circleLight"></span>
+        <div class="text">
+          <h2>Four</h2>
+          <p>This is slide 4</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigations">
+    <ul class="dots"></ul>
+  </div>
+</div>
+
+</div>
+<div class="idx__title-2">
+    <div  class="idx__title-2-content">
+        <h3>Just go幫你規劃行程</h3>
+        <p>紀錄你的旅行回憶</p>
+        <div class="idx__title-2-bt"></div>
+    </div>
+</div>
+ <div class="wrapper">
+        <div class="card">
+            <img src="~/file/photo/1.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😎帳號</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p3.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+          <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+          <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+          <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+          <div class="card">
+            <img src="../poto/p2.jpg" alt="">
+            <div class="info">
+                <h1>台中</h1>
+                <p>😘好好玩</p>
+                <a href="#" class="btn">read me</a>
+            </div>
+        </div>
+    </div>
+
+
+
+

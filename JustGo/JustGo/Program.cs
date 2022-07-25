@@ -21,8 +21,8 @@ builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>()
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
-//�s�u�r�����
-//�a�ݳs�u�r��TravelWindows,���ݳs�u�r��TravelPssP
+//連線字串替換
+//地端連線字串TravelWindows,雲端連線字串TravelPssP
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

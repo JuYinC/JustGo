@@ -83,6 +83,12 @@ namespace JustGo.Controllers
         }        
         
     }
-    
+    public class select
+    {
+        public string[] selectCounty { get; set; }
+        public int[] selectAcitivity { get; set; }
+
+    }
+
 
 }

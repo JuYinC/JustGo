@@ -24,7 +24,12 @@ namespace JustGo.Controllers
         {
             return Json(_place.getPlace(5000,10));
         }
-
+        [HttpPost]
+        public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
+        {
+            Console.WriteLine(vm.selectCounty.Length);
+            return Json(_place.getPlaceFilter(vm));
+        }
 
         //--------------------------------------------------
         //搜尋使用者行程清單/無細項

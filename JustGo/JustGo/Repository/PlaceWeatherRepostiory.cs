@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using JustGo.Models;
+using JustGo.ViewModels;
 using Microsoft.Data.SqlClient;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,48 +29,33 @@ namespace JustGo.Repository
             }
         }
 
-        public IEnumerable<Place> getPlaceFilter(string[] placeClass, string[] region, string[] town, int[] Class)
+        public IEnumerable<Place> getPlaceFilter(SelectPlaceVM vm)
         {
             using (var con = _con)
             {
                 con.Open();
                 string sqlStr = $"select * from Place Where ";
-                p p = new p();
                 bool i = true;
-                if (region.Length > 0)
+                if (vm.selectCounty.Length>0)
                 {
                     if (i)
                     {
-                        sqlStr += "Region in @region ";
+                        sqlStr += "Region in @selectCounty ";
                         i = false;
-                    }
-                    p.region = region;
-                }
-                if (town.Length > 0)
+                    }                    
+                }               
+                if (vm.selectAcitivity.Length > 0)
                 {
                     if (i)
                     {
-                        sqlStr += " Town in @town";
+                        sqlStr += " Class in @selectAcitivity";
                     }
                     else
                     {
-                        sqlStr += " and Town in @town";
-                    }
-                    p.town = town;
+                        sqlStr += " and Class in @selectAcitivity";
+                    }                    
                 }
-                if (Class.Length > 0)
-                {
-                    if (i)
-                    {
-                        sqlStr += " Class in @Class";
-                    }
-                    else
-                    {
-                        sqlStr += " and Class in @Class";
-                    }
-                    p.Class = Class;
-                }
-                return con.Query<Place>(sqlStr, p).ToList();
+                return con.Query<Place>(sqlStr, vm).ToList();
             }
         }
 

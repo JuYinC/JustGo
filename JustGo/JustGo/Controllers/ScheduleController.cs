@@ -25,9 +25,10 @@ namespace JustGo.Controllers
             return Json(_place.getPlace(5000,10));
         }
 
-        public IActionResult selectPlaceFilter(SelectPlaceVM vm)
+        [HttpPost]
+        public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
         {
-            return View(_place.getPlaceFilter(vm));
+            return Json(_place.getPlaceFilter(vm));
         }
 
         //--------------------------------------------------

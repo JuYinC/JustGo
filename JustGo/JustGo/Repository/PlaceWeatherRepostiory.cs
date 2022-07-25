@@ -40,7 +40,7 @@ namespace JustGo.Repository
                 {
                     if (i)
                     {
-                        sqlStr += "Region in @region ";
+                        sqlStr += "Region in @selectCounty ";
                         i = false;
                     }                    
                 }               
@@ -48,11 +48,11 @@ namespace JustGo.Repository
                 {
                     if (i)
                     {
-                        sqlStr += " Class in @Class";
+                        sqlStr += " Class in @selectAcitivity";
                     }
                     else
                     {
-                        sqlStr += " and Class in @Class";
+                        sqlStr += " and Class in @selectAcitivity";
                     }                    
                 }
                 return con.Query<Place>(sqlStr, vm).ToList();

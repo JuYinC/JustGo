@@ -1,6 +1,8 @@
 ﻿using JustGo.Repository;
 using JustGo.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JustGo.Controllers
 {
@@ -28,7 +30,7 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
-            return Json(_schedule.selectUserSchedule(1));
+            return Json(_schedule.selectUserSchedule("1"));
         }
 
         //搜尋行程細項
@@ -40,9 +42,16 @@ namespace JustGo.Controllers
 
         //新增行程
         [HttpPost]
-        public IActionResult createSchedule([FromBody] ScheduleVM vm)
+        [Authorize]
+        public IActionResult setSchedule([FromBody] ScheduleVM vm)
         {
-            return Json(_schedule.createScedule(vm));
+            if (vm.UserId != null)
+            {
+                vm.UserId = GetUserId();
+                return Json(_schedule.editScedule(vm));
+            }
+            vm.UserId = GetUserId();
+            return Json(_schedule.createScedule(vm));            
         }
 
         //刪除行程
@@ -52,11 +61,11 @@ namespace JustGo.Controllers
             return Json(_schedule.deleteScedule(vm.ScheduleId));
         }
 
-        //修改行程
-        [HttpPost]
-        public IActionResult editSchedule([FromBody] ScheduleVM vm)
+        string GetUserId()
         {
-            return Json(_schedule.editScedule(vm));
+            var user = (ClaimsIdentity)User.Identity;
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return userId.ToString();
         }
     }
 }

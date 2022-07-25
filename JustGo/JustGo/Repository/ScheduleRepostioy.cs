@@ -36,7 +36,7 @@ namespace JustGo.Repository
 
         public bool deleteScedule(int SceduleId)
         {
-            Schedule deleSchedule = _context.Schedule.Where(e=>e.ScheduleId == SceduleId).Include(e=>e.ScheduleDetails).First();
+            Schedule deleSchedule = _context.Schedule.Where(e => e.ScheduleId==SceduleId).Include(e=>e.ScheduleDetails).First();
 
             _context.Remove(deleSchedule);
             _context.SaveChanges();
@@ -61,7 +61,7 @@ namespace JustGo.Repository
             return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId)??new Schedule());
         }
 
-        public IList<ScheduleVM> selectUserSchedule(int UserId)
+        public IList<ScheduleVM> selectUserSchedule(string UserId)
         {
             List<ScheduleVM> vmList = new List<ScheduleVM>();            
             foreach (Schedule item in _context.Schedule.Where(e => e.UserId == UserId).ToList())

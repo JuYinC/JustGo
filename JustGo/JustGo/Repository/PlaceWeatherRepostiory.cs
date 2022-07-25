@@ -91,7 +91,7 @@ namespace JustGo.Repository
         {
             Blog blog = new Blog()
             {
-                UserId = 1,
+                UserId = "ddd",
                 Title = "a",
                 ImageName = "b.jpg",
                 Describe = "s",

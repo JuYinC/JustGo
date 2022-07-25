@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace JustGo.Models
 {
@@ -13,9 +12,8 @@ namespace JustGo.Models
             BlogDetails = new HashSet<BlogDetails>();
         }
 
-        [Key]
         public int BlogId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Title { get; set; }
         public string Describe { get; set; }
         public string ImageName { get; set; }

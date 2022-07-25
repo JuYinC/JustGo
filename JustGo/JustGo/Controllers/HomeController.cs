@@ -23,8 +23,7 @@ namespace JustGo.Controllers
         }
 
         public IActionResult Index()
-        {
-            ViewBag.Json = "123";
+        {            
             return View();
         }
 
@@ -41,8 +40,8 @@ namespace JustGo.Controllers
 
         public IActionResult testGetShedule()
         {            
-            var shedule = _schedule.selectScedule(1);            
-            return Json(shedule);
+                 
+            return Json(_schedule.selectScedule(1));
         }
         [HttpPost]
         public IActionResult testSetShedule([FromBody] ScheduleVM vm)

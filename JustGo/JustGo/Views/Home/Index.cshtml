@@ -41,7 +41,7 @@
                     .catch(err => console.log("err"))
                     },
                 axiosPostTest(context) {                    
-                    axios.post("@Url.Action("testSetShedule","Home")",context.state.schedule).then((res) => { console.log(res.data) })
+                    axios.post("@Url.Action("setSchedule","Schedule")",context.state.schedule).then((res) => { console.log(res.data) })
                 }    
              }
         })

@@ -2,13 +2,11 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace JustGo.Models
 {
     public partial class BlogDetails
     {
-        [Key]
         public int DetailsId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndtTime { get; set; }

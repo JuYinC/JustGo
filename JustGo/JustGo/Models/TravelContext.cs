@@ -48,7 +48,10 @@ namespace JustGo.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("UserID");
             });
 
             modelBuilder.Entity<BlogDetails>(entity =>
@@ -126,7 +129,10 @@ namespace JustGo.Models
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("UserID");
             });
 
             modelBuilder.Entity<ScheduleDetails>(entity =>
@@ -162,7 +168,10 @@ namespace JustGo.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("KeepID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("UserID");
             });
 
             modelBuilder.Entity<Weather>(entity =>

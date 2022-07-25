@@ -8,7 +8,7 @@ namespace JustGo.Models
     public partial class UserKeep
     {
         public int KeepId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int KeepClass { get; set; }
         public int KeepNumber { get; set; }
     }

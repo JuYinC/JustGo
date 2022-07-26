@@ -10,10 +10,12 @@ namespace JustGo.Controllers
     {
         readonly IPlaceWeatherRepostiory _place;
         readonly IScheduleRepostioy _schedule;
-        public ScheduleController(IScheduleRepostioy schedule, IPlaceWeatherRepostiory place)
+        readonly ILogger _logger;
+        public ScheduleController(IScheduleRepostioy schedule, IPlaceWeatherRepostiory place, ILogger<ScheduleController> logger)
         {
             _place = place;
             _schedule = schedule;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -26,8 +28,7 @@ namespace JustGo.Controllers
         }
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
-        {
-            Console.WriteLine(vm.selectCounty.Length);
+        {            
             return Json(_place.getPlaceFilter(vm));
         }
 

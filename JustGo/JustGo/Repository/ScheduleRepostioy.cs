@@ -46,7 +46,7 @@ namespace JustGo.Repository
 
         public bool editScedule(ScheduleVM vm)
         {            
-            _context.RemoveRange(_context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId).ToList());
+            _context.RemoveRange(_context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId));
             _context.SaveChanges();
 
             Schedule schedule = viewToModel(vm);

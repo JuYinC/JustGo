@@ -33,7 +33,7 @@ namespace JustGo.Controllers
         }
 
         [HttpPost]
-        public IActionResult selectPlace([FromBody]select select)
+        public IActionResult selectPlace([FromBody]SelectPlaceVM select)
         {
             Console.WriteLine(select.selectCounty.Length);
             Console.WriteLine(select.selectAcitivity.Length);
@@ -83,12 +83,5 @@ namespace JustGo.Controllers
         }        
         
     }
-    public class select
-    {
-        public string[] selectCounty { get; set; }
-        public int[] selectAcitivity { get; set; }
-
-    }
-
 
 }

@@ -27,6 +27,7 @@
         //Vuex
         const store = new Vuex.Store({
             state: {
+                map:null,
                 datetime: [],
                 travel: [
                     [
@@ -46,7 +47,6 @@
             mutations: {
                 updateData(state, status) {
                     this.state.selectPlaces = status
-                    console.log(this.state.selectPlaces)
                 }
             },
             getters: {},
@@ -65,7 +65,28 @@
                     axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
                         .then(res => { console.log(res.data); context.commit('updateData', res.data) })
                         .catch(err => console.log("err"))
-                }
+                },
+
+                setMarker() {
+                    for (i = 0; i < this.state.travel.length;i++) {
+                        const markers = this.state.travel[i].map((position, j) => {
+                            const marker = new google.maps.Marker({
+                                position: { lat: position.lat, lng: position.lng },
+                                // label: position.title,   //其他屬性，可以先略過
+                                // title: position.title,
+                                map: this.state.map,
+                            });
+                            return marker;
+                        });
+                    }
+                },
+
+                initMap() {
+                    this.state.map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: 22.6397082860113, lng: 120.30264837097221},
+                        zoom: 8,
+                    });
+                },
             }
         })
 
@@ -80,7 +101,6 @@
                 lng: 120.30264837097221,
                 //存放地點
                 locations: [
-
                 ]
             },
             computed: {
@@ -89,12 +109,12 @@
                 },
                 selectPlaces() {
                     return this.$store.state.selectPlaces
-                }
+                },
             },
             mounted() {
-                this.travelmounted();
-                this.initMap();
-                this.setMarker();
+                //this.travelmounted();
+                this.$store.dispatch('initMap')
+                this.$store.dispatch('setMarker')
 
             },
             methods: {
@@ -106,27 +126,13 @@
                         }
                     }
                 },
-                add() {
-                    this.locations.push({ lat: this.travel[0][0].lat, lng: this.travel[0][0].lng });
-                    this.setMarker();
-                },
-                initMap() {
-                    this.map = new google.maps.Map(document.getElementById("map"), {
-                        center: { lat: this.lat, lng: this.lng },
-                        zoom: 14,
-                    });
-                },
-                setMarker() {
-                    const markers = this.locations.forEach((position, i) => {
-                        const marker = new google.maps.Marker({
-                            position,
-                            // label: position.title,   //其他屬性，可以先略過
-                            // title: position.title,
-                            map: this.map,
-                        });
-                        return marker;
-                    });
-                },
+                //add() {
+                //    console.log(this.locations)
+                //    this.locations.push({ lat: this.travel[0][0].lat, lng: this.travel[0][0].lng });
+                //    //this.setMarker();
+                //},
+
+ 
             },
 
         })
@@ -276,6 +282,7 @@
             methods: {
                 search() {
                     this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                    this.$store.dispatch('setMarker')
                 },
                 // 新增景點
                 addview: function(index) {
@@ -293,9 +300,10 @@
                         opentime:this.selectPlaces[index].opentime,
                         closetime:this.selectPlaces[index].closetime,
                         min: this.selectPlaces[index].timestay,
-
-                    })
+                    })              
+                    this.$store.dispatch('setMarker')
                     this.cultime()
+                    
                 },
             },
             computed: {

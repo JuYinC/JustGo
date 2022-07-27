@@ -27,6 +27,11 @@
 
     <script>
         //Vuex
+
+        //axios.post("@Url.Action("setSchedule","Schedule")", payload)
+        //                .then(console.log("success"))
+        //                .catch(err => console.log("err"))
+
         const store = new Vuex.Store({
             state: {
                 map: null,
@@ -237,8 +242,8 @@
                         this.saveData.push([]);
                         for (let j = 0; j < this.travel[i].length; j++) {
                             this.saveData[i].push({
-                                startTime: this.duringDate[i] +' '+ this.travel[i][j].startTime,
-                                endTime: this.duringDate[i] +' '+ this.travel[i][j].endTime,
+                                startTime: new Date(this.duringDate[i] +' '+ this.travel[i][j].startTime),
+                                endTime: new Date(this.duringDate[i] +' '+ this.travel[i][j].endTime),
                                 weatherWarning: null,
                                 pop: null,
                                 temperature: null,
@@ -248,13 +253,13 @@
                         }
                     }
                     console.log(this.saveData)
-                    //this.$store.dispatch('axiosSave',
-                    //    {
-                    //        StartDate: '2022-07-24',
-                    //        EndDate: '2022-07-26',
-                    //        WeatherWarning: null,
-                    //        details: this.travel,
-                    //    })
+                    this.$store.dispatch('axiosSave',
+                        {
+                            StartDate: new Date('2022-07-24'),
+                            EndDate: new Date('2022-07-26'),
+                            WeatherWarning: null,
+                            details: this.saveData,
+                        })
                 },
                 cultime() {
                     this.$store.commit("cultime")

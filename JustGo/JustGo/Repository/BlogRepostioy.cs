@@ -9,10 +9,12 @@ namespace JustGo.Repository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
-        public BlogRepostioy(IDbConnection con, TravelContext context)
+        readonly IPlaceWeatherRepostiory _pr;
+        public BlogRepostioy(IDbConnection con, TravelContext context, IPlaceWeatherRepostiory weatherRepostiory)
         {
             _con = con;
             _context = context;
+            _pr = weatherRepostiory;
         }
 
         public bool createBlog(BlogVM vm)
@@ -79,7 +81,13 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm)
         {
-            throw new NotImplementedException();
+            ICollection<Place> p_list = _pr.getPlaceFilter(vm);
+            List<BlogVM> result = new List<BlogVM>();
+            foreach (Place p in p_list)
+            {
+                var item = _context.Blog.SingleOrDefault();
+            }
+            return result;
         }
 
         public ICollection<BlogVM> getBlogRank()

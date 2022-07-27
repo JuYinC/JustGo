@@ -19,7 +19,7 @@ namespace JustGo.Repository
             _context = context;
         }
 
-        public IEnumerable<Place> getPlace(int start, int quantity)
+        public ICollection<Place> getPlace(int start, int quantity)
         {
             using (var con = _con)
             {
@@ -29,7 +29,7 @@ namespace JustGo.Repository
             }
         }
 
-        public IEnumerable<Place> getPlaceFilter(SelectPlaceVM vm)
+        public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
         {
             using (var con = _con)
             {

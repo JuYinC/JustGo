@@ -48,7 +48,7 @@ namespace JustGo.Repository
         {            
             _context.RemoveRange(_context.ScheduleDetails.Where(e => e.ScheduleId == vm.ScheduleId));
             _context.SaveChanges();
-
+           
             Schedule schedule = viewToModel(vm);
             _context.Update(schedule);
             _context.SaveChanges();

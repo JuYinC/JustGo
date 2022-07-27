@@ -6,8 +6,8 @@ namespace JustGo.Repository
     public interface IPlaceWeatherRepostiory
     {
 
-        public IEnumerable<Place> getPlace(int start, int quantity);
-        public IEnumerable<Place> getPlaceFilter(SelectPlaceVM vm);
+        public ICollection<Place> getPlace(int start, int quantity);
+        public ICollection<Place> getPlaceFilter(SelectPlaceVM vm);
         public Place getPlaceId(string id);
 
         public Weather getWeatherByLocation(string location);

@@ -32,14 +32,15 @@
                 map: null,
                 datetime: [],
                 travel: [
-                    [
-                        { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, starttime: '2022-07-24T22:57:18.597', endtime: '2022-07-24T22:57:18.597', lat: 22.63996, lng: 120.32239 },
-                        { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, starttime: '2022-07-24T22:57:18.597', endtime: '2022-07-24T22:57:18.597', lat: 22.63584, lng: 120.29416 }
-                    ],
-                    [
-                        { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, starttime: '2022-07-24T22:57:18.597', endtime: '2022-07-24T22:57:18.597', lat: 22.65271, lng: 120.30313 },
-                        { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, starttime: '2022-07-24T22:57:18.597', endtime: '2022-07-24T22:57:18.597', lat: 22.63872, lng: 120.29387 }
-                    ]
+                    //測試資料
+                    //[
+                    //    { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime:  '09: 00', lat: 22.63996, lng: 120.32239 },
+                    //    { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime:  '09: 00', lat: 22.63584, lng: 120.29416 }
+                    //],
+                    //[
+                    //    { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, startTime: '09:00', endTime: '09:00', lat: 22.65271, lng: 120.30313 },
+                    //    { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, startTime: '09:00', endTime: '09:00', lat: 22.63872, lng: 120.29387 }
+                    //]
                 ],
                 //存放搜尋景點
                 selectPlaces: [],
@@ -49,7 +50,35 @@
             mutations: {
                 updateData(state, status) {
                     this.state.selectPlaces = status
-                }
+                },
+
+                cultime() {
+                    console.log("cultime")
+                    for (let j = 0; j < this.state.travel.length; j++) {
+                        let timestamp = this.state.datetime[j]
+                        for (let i = 0; i < this.state.travel[j].length; i++) {
+                            this.state.travel[j][i].startTime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
+
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
+                            if (hr > 24) {
+                                hr = hr - 24
+                            }
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+                            timestamp = hr + ':' + min
+                            this.state.travel[j][i].endTime = timestamp
+                        }
+                    }
+
+                },
             },
             getters: {},
             actions: {
@@ -78,7 +107,7 @@
                 },
 
                 //繪製地圖標示
-                setMarker() {           
+                setMarker() {
                     for (i = 0; i < this.state.travel.length; i++) {
                         const markers = this.state.travel[i].map((position, j) => {
                             const marker = new google.maps.Marker({
@@ -161,42 +190,17 @@
                     selectDate: [],
                     selectDateEnd: [],
                     duringDate: [],
+                    saveData: [],
                 }
             },
             methods: {
                 //刪除景點
                 remove: function(day, view) {
                     this.travel[day].splice(view, 1)
-                    this.cultime()
+                    this.$store.commit("cultime")
                 },
                 //編排時間(*)
-                cultime() {
-                    //for (let j = 0; j < this.travel.length; j++) {
-                    //    let timestamp = this.datetime[j]
-                    //    for (let i = 0; i < this.travel[j].length; i++) {
-                    //        this.travel[j][i].starttime = timestamp
-                    //        let hr = timestamp.substring(0, 2)
-                    //        let min = timestamp.substring(3, 5)
-                    //        let addhr = parseInt((Number(min) + Number(this.travel[j][i].min)) / 60)
 
-                    //        hr = Number(hr) + Number(addhr)
-                    //        min = (Number(min) + Number(this.travel[j][i].min)) % 60
-                    //        if (hr > 24) {
-                    //            hr = hr - 24
-                    //        }
-                    //        if (hr < 10) {
-                    //            hr = '0' + hr
-                    //        }
-
-                    //        if (min < 10) {
-                    //            min = '0' + min
-                    //        }
-                    //        timestamp = hr + ':' + min
-                    //        this.travel[j][i].endtime = timestamp
-                    //    }
-                    //}
-
-                },
                 culDate() {
                     this.travel.length = 0
                     this.duringDate.length = 0
@@ -229,14 +233,32 @@
                     this.drag = false;
                 },
                 saveSchedule() {
-                    this.$store.dispatch('axiosSave',
-                        {
-                            StartDate: '2022-07-24',
-                            EndDate: '2022-07-26',
-                            WeatherWarning: null,
-                            details: this.travel,
-                        })
+                    for (let i = 0; i < this.travel.length; i++) {
+                        this.saveData.push([]);
+                        for (let j = 0; j < this.travel[i].length; j++) {
+                            this.saveData[i].push({
+                                startTime: this.duringDate[i] +' '+ this.travel[i][j].startTime,
+                                endTime: this.duringDate[i] +' '+ this.travel[i][j].endTime,
+                                weatherWarning: null,
+                                pop: null,
+                                temperature: null,
+                                uvi: null,
+                                place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
+                            })
+                        }
+                    }
+                    console.log(this.saveData)
+                    //this.$store.dispatch('axiosSave',
+                    //    {
+                    //        StartDate: '2022-07-24',
+                    //        EndDate: '2022-07-26',
+                    //        WeatherWarning: null,
+                    //        details: this.travel,
+                    //    })
                 },
+                cultime() {
+                    this.$store.commit("cultime")
+                }
 
             },
             mounted() {
@@ -256,34 +278,34 @@
             template:
                 //{{view.starttime}}-{{view.endtime}}<br>
                 `
-               <div>
-                    <input type="date" v-model="selectDate"> <input type="date" v-model="selectDateEnd"> <button @@click="culDate">開始</button>
-                    <button @@click="saveSchedule">儲存行程</button>
-                    <span>{{selectCounty}}</span>
-                    <div class="itxst">
-                        <div class="col" v-for="(day,dayIndex) in travel">
-                            <div class="title"></div>
-                    <!-- v-for 產生當天行程細項  -->
-                    {{duringDate[dayIndex]}}
-                    <hr>
+                                       <div>
+                                            <input type="date" v-model="selectDate"> <input type="date" v-model="selectDateEnd"> <button @@click="culDate">開始</button>
+                                            <button @@click="saveSchedule">儲存行程</button>
+                                            <span>{{selectCounty}}</span>
+                                            <div class="itxst">
+                                                <div class="col" v-for="(day,dayIndex) in travel">
+                                                    <div class="title"></div>
+                                            <!-- v-for 產生當天行程細項  -->
+                                            {{duringDate[dayIndex]}}
+                                            <hr>
 
-                    旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime(dayIndex)">
-                    <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
-                        ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
-                        @@change="cultime()" class="min">
-                        <transition-group>
-                            <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                {{view.starttime}}
-                                地址:{{view.add}}<br>
-                                景點:{{view.name}}<br>
-                                <button @@click="remove(dayIndex,veiwIndex)">remove</button>
-                            </div>
-                        </transition-group>
-                        </draggable>
-                        </div>
-                    </div>
-                </div>
-                 `
+                                            旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
+                                            <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                                                ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                                                @@change="cultime()" class="min">
+                                                <transition-group>
+                                                    <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                                        {{view.startTime}}-{{view.endTime}}
+                                                        地址:{{view.add}}<br>
+                                                        景點:{{view.name}}<br>
+                                                        <button @@click="remove(dayIndex,veiwIndex)">remove</button>
+                                                    </div>
+                                                </transition-group>
+                                                </draggable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         `
         })
 
         //搜尋組件
@@ -310,6 +332,8 @@
                 // 新增景點
                 addview: function(index) {
                     this.travel[0].push({
+                        startTime: '',
+                        endTime: '',
                         placeId: this.selectPlaces[index].placeId,
                         name: this.selectPlaces[index].name,
                         description: this.selectPlaces[index].description,
@@ -325,7 +349,7 @@
                         min: this.selectPlaces[index].timestay,
                     })
                     this.$store.dispatch('setMarker')
-                    this.cultime()
+                    this.$store.commit("cultime")
 
                 },
             },
@@ -338,46 +362,46 @@
                 },
             },
             template:
-            //{{view.description}}<br><br>
+                //{{view.description}}<br><br>
                 `
-                                    <div class="itxst">
-                                        <div class="col">
-                                            <span v-for="(county,index) in countys">
-                                                <br v-if="index%5==0">
-                                                <input type="checkbox" :value="county" v-model="selectCounty">
-                                                <label for="county">{{county}}</label>
-                                            </span>
-                                            <br><br>
-                                            <span v-for="(acitivity,index) in acitivitys">
-                                                <br v-if="index%4==0">
-                                                <input type="checkbox" :value="index+1" v-model="selectAcitivity">
-                                                <label for="acitivity">{{acitivity}}</label>
-                                            </span>
-                                            <br><br>
-                                            {{selectCounty}}
-                                            <br>
-                                            {{selectAcitivity}}
-                                            <br>
-                                            <button @@click="search">搜尋</button>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="title">Search</div>
-                                            <div v-for="(view,selIndex) in selectPlaces">
-                                                <div class="item2">
-                                                    <h3>{{view.name}}</h3>
-                                                    
-                                                    電話:{{view.tel}}<br><br>
-                                                    地址:{{view.add}}<br><br>
-                                                    營業時間:{{view.opentime}}-{{view.closetime}}<br><br>
-                                                    建議停留:{{view.timestay}}分鐘<br>
-                                                    <div>
-                                                        <button @@click="addview(selIndex)">新增至行程</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                                `
+                                                            <div class="itxst">
+                                                                <div class="col">
+                                                                    <span v-for="(county,index) in countys">
+                                                                        <br v-if="index%5==0">
+                                                                        <input type="checkbox" :value="county" v-model="selectCounty">
+                                                                        <label for="county">{{county}}</label>
+                                                                    </span>
+                                                                    <br><br>
+                                                                    <span v-for="(acitivity,index) in acitivitys">
+                                                                        <br v-if="index%4==0">
+                                                                        <input type="checkbox" :value="index+1" v-model="selectAcitivity">
+                                                                        <label for="acitivity">{{acitivity}}</label>
+                                                                    </span>
+                                                                    <br><br>
+                                                                    {{selectCounty}}
+                                                                    <br>
+                                                                    {{selectAcitivity}}
+                                                                    <br>
+                                                                    <button @@click="search">搜尋</button>
+                                                                </div>
+                                                                <div class="col2">
+                                                                    <div class="title">Search</div>
+                                                                    <div v-for="(view,selIndex) in selectPlaces">
+                                                                        <div class="item2">
+                                                                            <h3>{{view.name}}</h3>
+
+                                                                            電話:{{view.tel}}<br><br>
+                                                                            地址:{{view.add}}<br><br>
+                                                                            營業時間:{{view.opentime}}-{{view.closetime}}<br><br>
+                                                                            建議停留:{{view.timestay}}分鐘<br>
+                                                                            <div>
+                                                                                <button @@click="addview(selIndex)">新增至行程</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        `
         })
     </script>
     }

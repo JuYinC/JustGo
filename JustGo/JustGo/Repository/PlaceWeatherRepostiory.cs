@@ -72,36 +72,6 @@ namespace JustGo.Repository
         public Weather getWeatherByLocation(string location)
         {
             throw new NotImplementedException();
-        }
-        public void testAddBlog()
-        {
-            Blog blog = new Blog()
-            {
-                UserId = "ddd",
-                Title = "a",
-                ImageName = "b.jpg",
-                Describe = "s",
-                Like = 0,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                BlogDetails = new List<BlogDetails>()
-                {
-                    new BlogDetails() { StartTime = DateTime.Now, EndtTime = DateTime.Now, PlaceId =10000,Describe="adas",Images="s",Score=4.2 },
-                    new BlogDetails() { StartTime = DateTime.Now, EndtTime = DateTime.Now, PlaceId =10000,Describe="aada",Images="s",Score=4.2 },
-                    new BlogDetails() { StartTime = DateTime.Now, EndtTime = DateTime.Now, PlaceId =10000,Describe="aasdda",Images="s",Score=4.2 },
-                    new BlogDetails() { StartTime = DateTime.Now, EndtTime = DateTime.Now, PlaceId =10000,Describe="aass",Images="s",Score=4.2 },
-                }
-            };
-
-            _context.Add(blog);
-            _context.SaveChanges();
-        }
-    }
-
-    public class p
-    {
-        public string[]? region { get; set; }
-        public string[]? town { get; set; }
-        public int[]? Class { get; set; }
-    }
+        }        
+    }    
 }

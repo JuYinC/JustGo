@@ -1,0 +1,228 @@
+﻿@{
+    ViewData["Title"] = "itinerary";
+    <!-- Layout = null; -->
+}
+@section Style{
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<style>.footer__waves{display:none} </style>
+
+}
+
+@section Scripts{
+ <script src="https://unpkg.com/vue@2"></script> 
+
+<script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
+<script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+
+
+
+<script>
+    let days;
+    function myFunction() {
+        let x = new Date(document.getElementById("start").value);
+        let y = new Date(document.getElementById("end").value);
+        days = (y - x) / (1000 * 3600 * 24) + 1;
+    }
+
+
+
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            dayArr: [],
+            dayArr2:[],
+            pagechange: true,
+        },
+        methods: {
+            checkDays() {
+                this.dayArr = [];
+                for (let i = 0; i < days; i++) {
+                    this.dayArr.push('i');
+                }
+            },
+            test(){
+                this.dayArr2=[];
+                this.dayArr2.push('i');
+            },
+            test2(){
+                this.pagechange = !this.pagechange
+            },
+
+        },
+        computed:{
+            changpage(){
+                    if(this.pagechange==true){
+                        return 'map__changePage btnchange'
+                    }
+                    else{
+                        return 'map__changePage'
+                    }
+            },
+        },
+        
+    })
+
+
+    @* Vue.component('vuedraggable', window.vuedraggable.name)
+            var app = new Vue({
+                el: '#app2',
+                data: {
+                    view: null,
+                    address: null,
+
+                },
+                components: {
+                    vuedraggable,
+                },
+                data() {
+
+                    return {
+                        drag: true,
+                        datetime: ['09:00', '09:00'],
+                        travel: [
+                            [
+                                { id: id++, address: '高雄市桃源區拉芙蘭里拉芙蘭路20號', view: '拉芙蘭藝術村', min: 60, starttime: '9:00', endtime: '10:00' },
+                                { id: id++, address: '高雄市桃源區寶山里寶山巷150號', view: '藤枝國家森林遊樂區', min: 90, starttime: '10:00', endtime: '11:30' }
+                            ],
+
+                            [
+                                { id: id++, address: '高雄市桃源區梅山村三鄰梅山巷44之5號', view: '布農文化展示中心', min: 60, starttime: '9:00', endtime: '10:00' },
+                                { id: id++, address: '高雄市桃源區南進巷180號', view: '桃源區原住民文物館', min: 90, starttime: '10:00', endtime: '11:30' }
+                            ]
+                        ],
+                    };
+
+                },
+                methods: {
+                    add: function (day) {
+                        this.travel[day].push({ id: id++, address: this.address, view: this.selected, min: 60 });
+                    },
+                    remove: function (day, view) {
+                        this.travel[day].splice(view, 1)
+                    },
+                    onChange(dayIndex) {
+
+                        for (let j = 0; j < this.travel.length; j++) {
+                            let timestamp = this.datetime[j]
+                            console.log(timestamp)
+                            for (let i = 0; i < this.travel[j].length; i++) {
+                                this.travel[j][i].starttime = timestamp
+                                let hr = timestamp.substring(0, 2)
+                                let min = timestamp.substring(3, 5)
+                                let addhr = parseInt((Number(min) + Number(this.travel[j][i].min)) / 60)
+
+                                hr = Number(hr) + Number(addhr)
+                                min = (Number(min) + Number(this.travel[j][i].min)) % 60
+
+                                if (hr < 10) {
+                                    hr = '0' + hr
+                                }
+                                if (min < 10) {
+                                    min = '0' + min
+                                }
+
+                                timestamp = hr + ':' + min
+                                this.travel[j][i].endtime = timestamp
+                            }
+                        }
+                    },
+                    onStart() {
+                        this.drag = true;
+                    },
+                    onEnd() {
+                        this.drag = false;
+                    },
+                    caltime(dayIndex) {
+                        for (let j = 0; j < this.travel.length; j++) {
+                            let timestamp = this.datetime[j]
+                            console.log(timestamp)
+                            for (let i = 0; i < this.travel[j].length; i++) {
+                                this.travel[j][i].starttime = timestamp
+                                let hr = timestamp.substring(0, 2)
+                                let min = timestamp.substring(3, 5)
+                                let addhr = parseInt((Number(min) + Number(this.travel[j][i].min)) / 60)
+
+                                hr = Number(hr) + Number(addhr)
+                                min = (Number(min) + Number(this.travel[j][i].min)) % 60
+
+                                if (hr < 10) {
+                                    hr = '0' + hr
+                                }
+                                if (min < 10) {
+                                    min = '0' + min
+                                }
+
+                                timestamp = hr + ':' + min
+                                this.travel[j][i].endtime = timestamp
+                            }
+                        }
+                    }
+
+                }
+            }); *@
+
+
+
+
+
+</script>
+}
+
+
+<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> 
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> -->
+<div class="arrange__body" id="app">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content">
+        <p>開始日期</p>
+            <input type="date" id="start">
+              <p>結束日期</p>
+            <input type="date" id="end">
+            <button type="button" class="btn btn-outline-primary" onclick="myFunction()" @@click="checkDays">確定</button>
+            <button type="button" class="btn btn-outline-secondary">取消</button>
+
+
+
+
+
+
+
+
+        </div>
+        <div class="journey__map">
+            <div class="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t">
+                        <ul>
+                            <li v-for="(day, index) in dayArr" class="days" :id="index"  @@click="test" >第{{index+1}}天</li>                       
+                        </ul>
+                    </div>
+                    <div class="grid-item-m">
+                        <ul>
+                            <div v-for="(day ,index) in dayArr2">{{index+1}}</div>
+                        </ul>
+                    </div>
+                    <div class="grid-item-b">button</div>
+                </div>
+            </div>
+            <div class="map">
+                <div :class="changpage"></div>
+                
+
+
+
+                <button class="map__button" @@click="test2"><img src="~/file/photo/map.png" alt=""></button>
+
+
+            </div>
+        </div>
+    </div>
+</div>

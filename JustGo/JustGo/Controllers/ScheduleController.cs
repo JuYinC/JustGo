@@ -51,7 +51,7 @@ namespace JustGo.Controllers
         [HttpPost]
         [Authorize]
         public IActionResult setSchedule([FromBody] ScheduleVM vm)
-        {
+        {            
             if (vm.UserId != null)
             {
                 vm.UserId = GetUserId();

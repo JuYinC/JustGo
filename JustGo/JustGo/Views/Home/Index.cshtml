@@ -242,8 +242,8 @@
                         this.saveData.push([]);
                         for (let j = 0; j < this.travel[i].length; j++) {
                             this.saveData[i].push({
-                                startTime: new Date(this.duringDate[i] +' '+ this.travel[i][j].startTime),
-                                endTime: new Date(this.duringDate[i] +' '+ this.travel[i][j].endTime),
+                                startTime: new Date(this.duringDate[i] +' '+this.travel[i][j].startTime),
+                                endTime: new Date(this.duringDate[i] +' '+this.travel[i][j].endTime),
                                 weatherWarning: null,
                                 pop: null,
                                 temperature: null,
@@ -255,8 +255,8 @@
                     console.log(this.saveData)
                     this.$store.dispatch('axiosSave',
                         {
-                            StartDate: new Date('2022-07-24'),
-                            EndDate: new Date('2022-07-26'),
+                            StartDate: new Date(this.selectDate),
+                            EndDate: new Date(this.selectDateEnd),
                             WeatherWarning: null,
                             details: this.saveData,
                         })

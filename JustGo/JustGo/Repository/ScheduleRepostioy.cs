@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using JustGo.ViewModels;
 using System.Data;
+using System.Diagnostics;
 
 namespace JustGo.Repository
 {
@@ -124,13 +125,13 @@ namespace JustGo.Repository
             };
             if (model.ScheduleDetails.Count > 0)
             {
-                vm.Details = new List<IList<ScheduleDetailVM>>();
+                vm.Details = new List<IList<ScheduleDetailVM>>();                
                 for (int i = 0; i <= (model.EndDate-model.StartDate).Days; i++)
                 {
                     List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
-                    var list = model.ScheduleDetails.Where(e => (model.StartDate - e.StartTime).Days == i);                    
+                    var list = model.ScheduleDetails.Where(e => e.StartTime.Day == model.StartDate.Day+i);                       
                     foreach (ScheduleDetails item in list)
-                    {
+                    {                        
                         ScheduleDetailVM vmDetail = new ScheduleDetailVM()
                         {
                             StartTime = item.StartTime,

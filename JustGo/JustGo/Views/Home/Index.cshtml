@@ -40,9 +40,9 @@
                         { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, starttime: '09:00', endtime: '09:00', lat: 22.65271, lng: 120.30313 },
                         { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, starttime: '09:00', endtime: '09:00', lat: 22.63872, lng: 120.29387 }
                     ]
-                ],
+                        ,
                 //存放搜尋景點
-                selectPlaces: [],
+                        selectPlaces: [],
 
             },
             //由action傳入值,更新state狀態
@@ -337,7 +337,7 @@
                 selectPlaces() {
                     return this.$store.state.selectPlaces
                 },
-            },
+                },
             template:
                 //{{view.description}}<br><br>
                 `

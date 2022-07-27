@@ -10,29 +10,15 @@ namespace JustGo.Models
     public partial class TravelContext
     {
 
-        [DbFunction("fn_seleFoodDistance", "dbo")]
-        public IQueryable<fn_seleFoodDistanceResult> fn_seleFoodDistance(double? MyPx, double? MyPy, double? SeleDis)
+        [DbFunction("fn_selePlaceDistance", "dbo")]
+        public IQueryable<fn_selePlaceDistanceResult> fn_selePlaceDistance(double? Mylat, double? Mylng, double? SeleDis)
         {
-            return FromExpression(() => fn_seleFoodDistance(MyPx, MyPy, SeleDis));
-        }
-
-        [DbFunction("fn_seleHotelDistance", "dbo")]
-        public IQueryable<fn_seleHotelDistanceResult> fn_seleHotelDistance(double? MyPx, double? MyPy, double? SeleDis)
-        {
-            return FromExpression(() => fn_seleHotelDistance(MyPx, MyPy, SeleDis));
-        }
-
-        [DbFunction("fn_seleSpotDistance", "dbo")]
-        public IQueryable<fn_seleSpotDistanceResult> fn_seleSpotDistance(double? MyPx, double? MyPy, double? SeleDis)
-        {
-            return FromExpression(() => fn_seleSpotDistance(MyPx, MyPy, SeleDis));
+            return FromExpression(() => fn_selePlaceDistance(Mylat, Mylng, SeleDis));
         }
 
         protected void OnModelCreatingGeneratedFunctions(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<fn_seleFoodDistanceResult>().HasNoKey();
-            modelBuilder.Entity<fn_seleHotelDistanceResult>().HasNoKey();
-            modelBuilder.Entity<fn_seleSpotDistanceResult>().HasNoKey();
+            modelBuilder.Entity<fn_selePlaceDistanceResult>().HasNoKey();
         }
     }
 }

@@ -5,20 +5,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JustGo.Models
 {
-    public partial class fn_seleFoodDistanceResult
+    public partial class fn_selePlaceDistanceResult
     {
-        public string PlaceID { get; set; }
+        public int PlaceID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Tel { get; set; }
         public string Add { get; set; }
-        public double Px { get; set; }
-        public double Py { get; set; }
+        public decimal lat { get; set; }
+        public decimal lng { get; set; }
         public string Region { get; set; }
         public string Town { get; set; }
+        public int Class { get; set; }
         public string Opentime { get; set; }
+        public int? intOpentime { get; set; }
         public string Closetime { get; set; }
+        public int? intClosetime { get; set; }
         public int? Timestay { get; set; }
-        public double? Distance { get; set; }
     }
 }

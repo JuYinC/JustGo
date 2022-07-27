@@ -18,8 +18,7 @@ namespace JustGo.Controllers
         {
             _logger = logger;
             _pwr = pwr;
-            _schedule = schedule;
-            
+            _schedule = schedule;            
         }
 
         public IActionResult Index()
@@ -37,15 +36,18 @@ namespace JustGo.Controllers
         {
             return Json(_pwr.getPlaceFilter(select));
         }
-        
+
+        [HttpPost]
         public IActionResult teatMapData()
         {
-            return Json(_pwr.getPlace(5000, 5));
+            Console.WriteLine("hi");
+            return Json(_pwr.getPlace(22.6397082860113, 120.30264837097221));
         }
 
+        
         public IActionResult testGetShedule()
-        {            
-                 
+        {
+            Console.WriteLine("hi");
             return Json(_schedule.selectScedule(1));
         }        
 

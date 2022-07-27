@@ -27,9 +27,6 @@
 
     <script>
         //Vuex
-axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId:17 })
-                        .then(res => { console.log(res.data);})
-                        .catch(err => console.log("err"))
         const store = new Vuex.Store({
             state: {
                 map: null,

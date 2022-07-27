@@ -47,32 +47,7 @@ namespace JustGo.Controllers
         {            
                  
             return Json(_schedule.selectScedule(1));
-        }
-        [HttpPost]
-        public IActionResult testSetShedule([FromBody] ScheduleVM vm)
-        {            
-            vm.Details = new List<ScheduleDetailVM>()
-            {
-                new ScheduleDetailVM(){
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                    Place = new Place(){
-                        PlaceId=11000,
-                        Town = "礁溪鄉",
-                    }
-                },
-                new ScheduleDetailVM(){
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                    Place = new Place(){
-                        PlaceId=11001,
-                        Town = "礁溪鄉",
-                    }
-                },
-            };
-            _schedule.editScedule(vm);
-            return Json("HI");
-        }
+        }        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

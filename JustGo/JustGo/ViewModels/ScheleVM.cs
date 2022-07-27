@@ -10,7 +10,7 @@ namespace JustGo.ViewModels
         public DateTime EndDate { get; set; }
         public bool? WeatherWarning { get; set; }
 
-        public IList<ScheduleDetailVM>? Details { get; set; }
+        public IList<IList<ScheduleDetailVM>>? Details { get; set; }
     }
     public class ScheduleDetailVM
     {

@@ -2,6 +2,7 @@
 using JustGo.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace JustGo.Controllers
@@ -16,6 +17,9 @@ namespace JustGo.Controllers
             _place = place;
             _schedule = schedule;
             _logger = logger;
+
+            Console.WriteLine(_schedule.selectScedule(17).Details.Count);
+            //Console.WriteLine(_schedule.selectScedule(17).Details[0].Count);
         }
         public IActionResult Index()
         {

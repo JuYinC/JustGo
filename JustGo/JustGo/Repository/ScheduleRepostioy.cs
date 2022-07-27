@@ -74,28 +74,31 @@ namespace JustGo.Repository
         private Schedule viewToModel(ScheduleVM vm)
         {
             List<ScheduleDetails> modelList = new List<ScheduleDetails>();
-            if(vm.Details != null)
+            if (vm.Details != null)
             {
-                foreach (ScheduleDetailVM item in vm.Details)
+                foreach (List<ScheduleDetailVM> detail in vm.Details)
                 {
-                    if (item.Place == null)
+                    foreach (ScheduleDetailVM item in detail)
                     {
-                        continue;
+                        if (item.Place == null)
+                        {
+                            continue;
+                        }
+                        ScheduleDetails details = new ScheduleDetails()
+                        {
+                            StartTime = item.StartTime,
+                            EndtTime = item.EndTime,
+                            PlaceId = item.Place.PlaceId,
+                            Town = item.Place.Town,
+                            WeatherWarning = item.WeatherWarning,
+                            Pop = item.Pop,
+                            Temperature = item.Temperature,
+                            Uvi = item.Uvi
+                        };
+                        modelList.Add(details);
                     }
-                    ScheduleDetails details = new ScheduleDetails()
-                    {
-                        StartTime = item.StartTime,
-                        EndtTime = item.EndTime,
-                        PlaceId = item.Place.PlaceId,
-                        Town = item.Place.Town,
-                        WeatherWarning = item.WeatherWarning,
-                        Pop = item.Pop,
-                        Temperature = item.Temperature,
-                        Uvi = item.Uvi
-                    };
-                    modelList.Add(details);
                 }
-            }            
+            }
             Schedule model = new Schedule()
             {
                 ScheduleId = vm.ScheduleId,
@@ -105,41 +108,119 @@ namespace JustGo.Repository
                 WeatherWarning = vm.WeatherWarning,
 
                 ScheduleDetails = modelList,
-            };                       
+            };
             return model;
         }
 
         private ScheduleVM modelToView(Schedule model)
-        {            
+        {
             ScheduleVM vm = new ScheduleVM()
             {
                 ScheduleId = model.ScheduleId,
                 UserId = model.UserId,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                WeatherWarning = model.WeatherWarning,                
+                WeatherWarning = model.WeatherWarning,
             };
-            if (model.ScheduleDetails.Count>0)
+            if (model.ScheduleDetails.Count > 0)
             {
-                List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
-                foreach (ScheduleDetails item in model.ScheduleDetails)
-                {                    
-                    ScheduleDetailVM vmDetail = new ScheduleDetailVM()
+                vm.Details = new List<IList<ScheduleDetailVM>>();
+                for (int i = 0; i <= (model.EndDate-model.StartDate).Days; i++)
+                {
+                    List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
+                    var list = model.ScheduleDetails.Where(e => (model.StartDate - e.StartTime).Days == i);                    
+                    foreach (ScheduleDetails item in list)
                     {
-                        StartTime = item.StartTime,
-                        EndTime = item.EndtTime,
-                        WeatherWarning = item.WeatherWarning,
-                        Pop = item.Pop,
-                        Temperature = item.Temperature,
-                        Uvi = item.Uvi,
-                        Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId) ?? new Place(),
-                    };                    
-                    vmList.Add(vmDetail);
-                }
-                vm.Details = vmList;
-            }            
-                        
+                        ScheduleDetailVM vmDetail = new ScheduleDetailVM()
+                        {
+                            StartTime = item.StartTime,
+                            EndTime = item.EndtTime,
+                            WeatherWarning = item.WeatherWarning,
+                            Pop = item.Pop,
+                            Temperature = item.Temperature,
+                            Uvi = item.Uvi,
+                            Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId) ?? new Place(),
+                        };
+                        vmList.Add(vmDetail);
+                    }
+                    vm.Details.Add(vmList);
+                }                
+            }
             return vm;
         }
     }
+    //class vmtomodleTest
+    //{
+    //    private Schedule viewToModel(ScheduleVM vm)
+    //    {
+    //        List<ScheduleDetails> modelList = new List<ScheduleDetails>();
+    //        if (vm.Details != null)
+    //        {
+    //            foreach (ScheduleDetailVM item in vm.Details)
+    //            {
+    //                if (item.Place == null)
+    //                {
+    //                    continue;
+    //                }
+    //                ScheduleDetails details = new ScheduleDetails()
+    //                {
+    //                    StartTime = item.StartTime,
+    //                    EndtTime = item.EndTime,
+    //                    PlaceId = item.Place.PlaceId,
+    //                    Town = item.Place.Town,
+    //                    WeatherWarning = item.WeatherWarning,
+    //                    Pop = item.Pop,
+    //                    Temperature = item.Temperature,
+    //                    Uvi = item.Uvi
+    //                };
+    //                modelList.Add(details);
+    //            }
+    //        }
+    //        Schedule model = new Schedule()
+    //        {
+    //            ScheduleId = vm.ScheduleId,
+    //            UserId = vm.UserId,
+    //            StartDate = vm.StartDate,
+    //            EndDate = vm.EndDate,
+    //            WeatherWarning = vm.WeatherWarning,
+
+    //            ScheduleDetails = modelList,
+    //        };
+    //        return model;
+    //    }
+
+    //    private ScheduleVM modelToView(Schedule model)
+    //    {
+    //        ScheduleVM vm = new ScheduleVM()
+    //        {
+    //            ScheduleId = model.ScheduleId,
+    //            UserId = model.UserId,
+    //            StartDate = model.StartDate,
+    //            EndDate = model.EndDate,
+    //            WeatherWarning = model.WeatherWarning,
+    //        };
+    //        if (model.ScheduleDetails.Count > 0)
+    //        {
+
+    //            List<ScheduleDetailVM> vmList = new List<ScheduleDetailVM>();
+    //            foreach (ScheduleDetails item in model.ScheduleDetails)
+    //            {
+    //                ScheduleDetailVM vmDetail = new ScheduleDetailVM()
+    //                {
+    //                    StartTime = item.StartTime,
+    //                    EndTime = item.EndtTime,
+    //                    WeatherWarning = item.WeatherWarning,
+    //                    Pop = item.Pop,
+    //                    Temperature = item.Temperature,
+    //                    Uvi = item.Uvi,
+    //                    Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId) ?? new Place(),
+    //                };
+    //                vmList.Add(vmDetail);
+    //            }
+    //            vm.Details = vmList;
+    //        }
+
+    //        return vm;
+    //    }
+    //}
 }

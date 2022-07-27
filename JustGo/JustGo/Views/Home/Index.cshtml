@@ -18,6 +18,7 @@
 
 @section Scripts{
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+    <script src="https://unpkg.com/@@googlemaps/markerclusterer/dist/index.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://unpkg.com/vuex@3"></script>
@@ -113,17 +114,36 @@
 
                 //繪製地圖標示
                 setMarker() {
-                    for (i = 0; i < this.state.travel.length; i++) {
-                        const markers = this.state.travel[i].map((position, j) => {
+                    // 產生地點marker
+                    let markers = []
+                    for (i = 0; i < this.travel.length;i++) {
+                        console.log(this.travel[i])
+                        this.travel[i].map((position, j) => {
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
-                                // label: position.title,   //其他屬性，可以先略過
-                                // title: position.title,
-                                map: this.state.map,
+                            // label: position.title,   //其他屬性，可以先略過
+                            // title: position.title,
+                            //map: this.state.map,
                             });
-                            return marker;
-                        });
+                            markers.push(marker);
+                        });                        
                     }
+                    // 地點群組marker Cluster
+                    const markerCluster = new markerClusterer.MarkerClusterer({
+                        map: this.state.map,
+                        markers,
+                    });  
+                    //for (i = 0; i < this.state.travel.length; i++) {
+                    //    const markers = this.state.travel[i].map((position, j) => {
+                    //        const marker = new google.maps.Marker({
+                    //            position: { lat: position.lat, lng: position.lng },
+                    //            // label: position.title,   //其他屬性，可以先略過
+                    //            // title: position.title,
+                    //            map: this.state.map,
+                    //        });
+                    //        return marker;
+                    //    });
+                    //}
                 },
 
                 //載入地圖 設置中心點
@@ -145,9 +165,6 @@
                 //中心點
                 lat: 22.6397082860113,
                 lng: 120.30264837097221,
-                //存放地點
-                locations: [
-                ]
             },
             computed: {
                 travel() {
@@ -158,7 +175,7 @@
                 },
             },
             mounted() {
-                //this.travelmounted();
+ 
                 //載入store action
                 this.$store.dispatch('initMap')
                 this.$store.dispatch('setMarker')
@@ -173,11 +190,7 @@
                         }
                     }
                 },
-                //add() {
-                //    console.log(this.locations)
-                //    this.locations.push({ lat: this.travel[0][0].lat, lng: this.travel[0][0].lng });
-                //    //this.setMarker();
-                //},
+
 
 
             },

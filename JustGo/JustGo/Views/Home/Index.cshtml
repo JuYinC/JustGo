@@ -37,6 +37,7 @@
             state: {
                 map: null,
                 datetime: [],
+                center: {lat: 22.6397082860113, lng: 120.30264837097221},
                 spots: [
                     //測試資料
                     [
@@ -111,17 +112,26 @@
                         .then(res => { console.log(res.data); context.commit('updateData', res.data) })
                         .catch(err => console.log("err"))
                 },
+                
+                //載入地圖 設置中心點
+                initMap() {
+                    console.log(this.state.center)
+                    this.state.map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: this.state.center.lat, lng: this.state.center.lng },
+                        zoom: 14,  // zoom: 0~20
+                    });
+                },
 
                 //繪製地圖標示
                 setMarker() {
                     // 產生地點marker
                     let markers = []
-                    for (i = 0; i < this.spots.length;i++) {
-                        //console.log(this.spots[i])
-                        this.spots[i].map((position, j) => {
+                    for (i = 0; i < this.state.spots.length;i++) {
+                        console.log(this.state.spots[i])
+                        this.state.spots[i].map((position, j) => {
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
-                            // label: position.title,   //其他屬性，可以先略過
+                                label: `${j+1}`,   //其他屬性，可以先略過
                             // title: position.title,
                             //map: this.state.map,
                             });
@@ -145,14 +155,6 @@
                     //    });
                     //}
                 },
-
-                //載入地圖 設置中心點
-                initMap() {
-                    this.state.map = new google.maps.Map(document.getElementById("map"), {
-                        center: { lat: 22.6397082860113, lng: 120.30264837097221 },
-                        zoom: 14,  // zoom: 0~20
-                    });
-                },
             }
         })
 
@@ -161,15 +163,15 @@
             store,
             el: '#app3',
             data: {
-                map: null,
+                //map: null,
                 //中心點
                 lat: 22.6397082860113,
                 lng: 120.30264837097221,
             },
             computed: {
-                spots() {
-                    return this.$store.state.spots
-                },
+                //spots() {
+                //    return this.$store.state.spots
+                //},
                 selectPlaces() {
                     return this.$store.state.selectPlaces
                 },

@@ -37,16 +37,16 @@
             state: {
                 map: null,
                 datetime: [],
-                travel: [
+                spots: [
                     //測試資料
-                    //[
-                    //    { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime:  '09: 00', lat: 22.63996, lng: 120.32239 },
-                    //    { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime:  '09: 00', lat: 22.63584, lng: 120.29416 }
-                    //],
-                    //[
-                    //    { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, startTime: '09:00', endTime: '09:00', lat: 22.65271, lng: 120.30313 },
-                    //    { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, startTime: '09:00', endTime: '09:00', lat: 22.63872, lng: 120.29387 }
-                    //]
+                    [
+                        { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime:  '09: 00', lat: 22.63996, lng: 120.32239 },
+                        { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime:  '09: 00', lat: 22.63584, lng: 120.29416 }
+                    ],
+                    [
+                        { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, startTime: '09:00', endTime: '09:00', lat: 22.65271, lng: 120.30313 },
+                        { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, startTime: '09:00', endTime: '09:00', lat: 22.63872, lng: 120.29387 }
+                    ]
                 ],
                 //存放搜尋景點
                 selectPlaces: [],
@@ -116,9 +116,9 @@
                 setMarker() {
                     // 產生地點marker
                     let markers = []
-                    for (i = 0; i < this.travel.length;i++) {
-                        console.log(this.travel[i])
-                        this.travel[i].map((position, j) => {
+                    for (i = 0; i < this.spots.length;i++) {
+                        //console.log(this.spots[i])
+                        this.spots[i].map((position, j) => {
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
                             // label: position.title,   //其他屬性，可以先略過
@@ -150,7 +150,7 @@
                 initMap() {
                     this.state.map = new google.maps.Map(document.getElementById("map"), {
                         center: { lat: 22.6397082860113, lng: 120.30264837097221 },
-                        zoom: 8,
+                        zoom: 14,  // zoom: 0~20
                     });
                 },
             }
@@ -167,8 +167,8 @@
                 lng: 120.30264837097221,
             },
             computed: {
-                travel() {
-                    return this.$store.state.travel
+                spots() {
+                    return this.$store.state.spots
                 },
                 selectPlaces() {
                     return this.$store.state.selectPlaces
@@ -182,14 +182,7 @@
 
             },
             methods: {
-                //測試
-                travelmounted() {
-                    for (let i = 0; i < this.travel.length; i++) {
-                        for (let j = 0; j < this.travel[i].length; j++) {
-                            this.locations.push({ lat: this.travel[i][j].lat, lng: this.travel[i][j].lng });
-                        }
-                    }
-                },
+                                
 
 
 

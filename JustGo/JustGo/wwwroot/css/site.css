@@ -118,9 +118,24 @@ body {
     flex-direction: column;
     min-height: 100px;
 }
+/*地圖*/
 #map {
     height: 500px;
     width: 100%;
+}
+/*地圖上面的按鈕*/
+#floating-panel {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: "Roboto", "sans-serif";
+    line-height: 30px;
+    padding-left: 10px;
 }
 /*隱藏infowindow的叉叉按鈕*/
 button.gm-ui-hover-effect {

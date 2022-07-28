@@ -6,6 +6,9 @@
 <div class="text-center">
 
     <div id="app3">
+        <div id="floating-panel">
+            <button @@click="changeView">我的行程</button>
+        </div>
         <div id="map"></div>
         @*<button @@click="add">click</button>*@
     </div>
@@ -94,7 +97,9 @@
 
                 },
             },
-            getters: {},
+            getters: {
+                //scheduleMarker(),
+            },
             actions: {
                 //非同步function，由組件呼叫使用
 
@@ -154,7 +159,7 @@
                                 </div>`
                             const infowindow = new google.maps.InfoWindow({
                                 content: contentString,
-                                disableAutoPan: true,
+                                disableAutoPan: false,
                             });
                             // 點marker開啟infowindow
                             marker.addListener("mouseover", () => {
@@ -177,18 +182,36 @@
                     const markerCluster = new markerClusterer.MarkerClusterer({
                         map: this.state.map,
                         markers,
-                    });  
-                    //for (i = 0; i < this.state.travel.length; i++) {
-                    //    const markers = this.state.travel[i].map((position, j) => {
-                    //        const marker = new google.maps.Marker({
-                    //            position: { lat: position.lat, lng: position.lng },
-                    //            // label: position.title,   //其他屬性，可以先略過
-                    //            // title: position.title,
-                    //            map: this.state.map,
-                    //        });
-                    //        return marker;
-                    //    });
-                    //}
+                    });                    
+                },
+                calcRoute() {
+                    console.log(this.seletedspots)
+                    directionsService = new google.maps.DirectionsService();
+                    for (i = 0; i < this.seletedspots.length;i++) {
+                        let request = {
+                            origin: this.seletedspots[i][0],
+                            destination: this.seletedspots[i][this.seletedspots[i].length - 1],
+                            //waypoints: waypts,
+                            travelMode: 'DRIVING',
+                        };
+                        directionsService.route(request, function(result, status) {
+                            if (status == 'OK') {
+                                //directionsRenderer.setDirections(result);
+
+                                console.log(result)
+                                console.log(result.routes)
+                                console.log(result.routes[0].legs)
+                                console.log(result.routes[0].legs[0])
+                                console.log(result.routes[0].legs[0].duration)
+                                console.log(result.routes[0].legs[0].duration.value)
+                                console.log(result.routes[0].legs[1].duration.value)
+                                console.log(result.routes[0].legs[2].duration.value)
+                                console.log(result.routes[0].legs[3].duration.value)
+                                console.log(result.routes[0].legs[4].duration.value)
+
+                            }
+                        });
+                    }
                 },
             }
         })
@@ -210,6 +233,16 @@
                 selectPlaces() {
                     return this.$store.state.selectPlaces
                 },
+                seletedspots() {
+                    return this.$store.state.seletedspots
+                }
+                //getMarker() {
+                //    const markerCluster = new markerClusterer.MarkerClusterer({
+                //        map: this.state.map,
+                //        this.$store.getters.scheduleMarker
+                //    })
+                //    return 'dd'
+                //}
             },
             mounted() {
  
@@ -219,9 +252,9 @@
 
             },
             methods: {
-                                
-
-
+                changeView() {
+                    this.$store.dispatch('calcRoute')
+                },
 
             },
 

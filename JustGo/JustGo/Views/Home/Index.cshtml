@@ -157,13 +157,17 @@
                                 disableAutoPan: true,
                             });
                             // 點marker開啟infowindow
-                            marker.addListener("click", () => {
-                                if (this.state.infowindow) { this.state.infowindow.close() };
+                            marker.addListener("mouseover", () => {
+                                //if (this.state.infowindow) { this.state.infowindow.close() };
                                 infowindow.open({
                                     anchor: marker,
                                     map: this.state.map,
-                                    shouldFocus: true,
+                                    shouldFocus: false,
                                 });
+                                this.state.infowindow = infowindow
+                            });
+                            marker.addListener("mouseout", () => {
+                                infowindow.close();
                                 this.state.infowindow = infowindow
                             });
                             markers.push(marker);

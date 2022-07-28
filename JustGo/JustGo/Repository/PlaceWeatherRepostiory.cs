@@ -22,7 +22,7 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,25)",vm).ToList();            
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10)",vm).ToList();            
             Console.WriteLine(getPlace.GetType());
 
             return getPlace;

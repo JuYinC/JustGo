@@ -38,18 +38,12 @@ namespace JustGo.Controllers
         }
 
         [HttpPost]
-        public IActionResult teatMapData()
+        public IActionResult teatMapData([FromBody] SelectPlaceVM select)
         {
-            Console.WriteLine("hi");
-            return Json(_pwr.getPlace(22.6397082860113, 120.30264837097221));
+            SelectPlaceVM selectPlaceVM = new SelectPlaceVM() { Lat = 22.6397082860113, Lng = 120.30264837097221 };
+            return Json(_pwr.getPlace(select));            
         }
-
-        
-        public IActionResult testGetShedule()
-        {
-            Console.WriteLine("hi");
-            return Json(_schedule.selectScedule(1));
-        }        
+            
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

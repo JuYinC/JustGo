@@ -27,8 +27,8 @@
 
     <script>
         //Vuex
-
         
+axios.post("@Url.Action("teatMapData","Home")", {Lat:22.6397082860113,Lng:120.30264837097221}).then(res=>console.log(res.data)).catch(err=>console.log(err));
 
 
         const store = new Vuex.Store({

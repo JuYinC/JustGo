@@ -20,10 +20,9 @@ namespace JustGo.Repository
             _context = context;
         }
 
-        public IQueryable<fn_selePlaceDistanceResult> getPlace(double centerLat, double centerLng)
+        public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _context.fn_selePlaceDistance(centerLat, centerLng, 25);
-
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,25)",vm).ToList();            
             Console.WriteLine(getPlace.GetType());
 
             return getPlace;

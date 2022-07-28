@@ -119,6 +119,9 @@
                     this.state.map = new google.maps.Map(document.getElementById("map"), {
                         center: { lat: this.state.center.lat, lng: this.state.center.lng },
                         zoom: 14,  // zoom: 0~20
+                        mapTypeControl: false,
+                        streetViewControl: false,
+                        clickableIcons: false,
                     });
                 },
 

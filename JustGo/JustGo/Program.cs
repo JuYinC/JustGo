@@ -10,7 +10,7 @@ using System.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 var TravelWindows = builder.Configuration.GetConnectionString("TravelWindows");
 var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
 

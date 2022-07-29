@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Select";
+}
+
+@section Style{
+    <style>
+        .searchBar{
+            border:1px solid black;
+            margin: 10px;
+            height: 50px;
+        }
+        .searchResult{
+            border:1px solid black;
+            margin: 10px;
+            height: auto;
+        }
+        .searchBlog{
+            border:1px solid black;
+            margin: 10px;
+            height: 100px;
+        }
+    </style>
+}
+
+    <div class="container" id="app">
+        <div class="searchBar">
+
+        </div>
+
+        <div class="searchResult">
+            <div class="searchBlog" v-for="item in 4">
+
+            </div>    
+        </div>
+    </div>
+@section Scripts {
+        <script>
+        new Vue({
+            el:"#app"
+        })
+    </script>
+}

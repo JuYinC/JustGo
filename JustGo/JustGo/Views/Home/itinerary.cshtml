@@ -3,18 +3,14 @@
     <!-- Layout = null; -->
 }
 @section Style{
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
 <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <style>.footer__waves{display:none} </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
 
 }
 
-
-
-<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> 
-<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> -->
 <div class="arrange__body">
     <div class="arrange__contain">
         <video autoplay muted loop plays-inline class="arrange__contain-video">
@@ -46,20 +42,21 @@
                     <div class="grid-item-b">button</div>
                 </div>
             </div>
+             <div class="sidebar-hide"> 
+                <button>></button>
+                <div id="app2"></div>
+             </div>
             <div class="mapbox" id="app3">
                  <div id="map"></div>
                   
-      
             </div>
         </div>
     </div>
 </div>
 
  <div id="app"></div>
-<div id="app2"></div>
-@section Scripts{
- <script src="https://unpkg.com/vue@2"></script> 
 
+@section Scripts{
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -349,34 +346,34 @@
             template:
                 //{{view.starttime}}-{{view.endtime}}<br>
                 `
-                                                               <div>
-                                                                    <input type="date" v-model="selectDate"> <input type="date" v-model="selectDateEnd"> <button @@click="culDate">開始</button>
-                                                                    <button @@click="saveSchedule">儲存行程</button>
-                                                                    <span>{{selectCounty}}</span>
-                                                                    <div class="itxst">
-                                                                        <div class="col" v-for="(day,dayIndex) in travel">
-                                                                            <div class="title"></div>
-                                                                    <!-- v-for 產生當天行程細項  -->
-                                                                    {{duringDate[dayIndex]}}
-                                                                    <hr>
+                    <div>
+                        <input type="date" v-model="selectDate"> <input type="date" v-model="selectDateEnd"> <button @@click="culDate">開始</button>
+                        <button @@click="saveSchedule">儲存行程</button>
+                        <span>{{selectCounty}}</span>
+                        <div class="itxst">
+                            <div class="col" v-for="(day,dayIndex) in travel">
+                                <div class="title"></div>
+                        <!-- v-for 產生當天行程細項  -->
+                        {{duringDate[dayIndex]}}
+                        <hr>
 
-                                                                    旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
-                                                                    <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
-                                                                        ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
-                                                                        @@change="cultime()" class="min">
-                                                                        <transition-group>
-                                                                            <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                                                                {{view.startTime}}-{{view.endTime}}
-                                                                                地址:{{view.add}}<br>
-                                                                                景點:{{view.name}}<br>
-                                                                                <button @@click="remove(dayIndex,veiwIndex)">remove</button>
-                                                                            </div>
-                                                                        </transition-group>
-                                                                        </draggable>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                 `
+                        旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
+                        <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                            ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                            @@change="cultime()" class="min">
+                            <transition-group>
+                                <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                    {{view.startTime}}-{{view.endTime}}
+                                    地址:{{view.add}}<br>
+                                    景點:{{view.name}}<br>
+                                    <button @@click="remove(dayIndex,veiwIndex)">remove</button>
+                                </div>
+                            </transition-group>
+                            </draggable>
+                            </div>
+                        </div>
+                    </div>
+                `
         })
 
         //搜尋組件
@@ -435,44 +432,42 @@
             template:
                 //{{view.description}}<br><br>
                 `
-                                                                                    <div class="itxst">
-                                                                                        <div class="col">
-                                                                                            <span v-for="(county,index) in countys">
-                                                                                                <br v-if="index%5==0">
-                                                                                                <input type="checkbox" :value="county" v-model="selectCounty">
-                                                                                                <label for="county">{{county}}</label>
-                                                                                            </span>
-                                                                                            <br><br>
-                                                                                            <span v-for="(acitivity,index) in acitivitys">
-                                                                                                <br v-if="index%4==0">
-                                                                                                <input type="checkbox" :value="index+1" v-model="selectAcitivity">
-                                                                                                <label for="acitivity">{{acitivity}}</label>
-                                                                                            </span>
-                                                                                            <br><br>
-                                                                                            {{selectCounty}}
-                                                                                            <br>
-                                                                                            {{selectAcitivity}}
-                                                                                            <br>
-                                                                                            <button @@click="search">搜尋</button>
-                                                                                        </div>
-                                                                                        <div class="col2">
-                                                                                            <div class="title">Search</div>
-                                                                                            <div v-for="(view,selIndex) in selectPlaces">
-                                                                                                <div class="item2">
-                                                                                                    <h3>{{view.name}}</h3>
-
-                                                                                                    電話:{{view.tel}}<br><br>
-                                                                                                    地址:{{view.add}}<br><br>
-                                                                                                    營業時間:{{view.opentime}}-{{view.closetime}}<br><br>
-                                                                                                    建議停留:{{view.timestay}}分鐘<br>
-                                                                                                    <div>
-                                                                                                        <button @@click="addview(selIndex)">新增至行程</button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                `
+                    <div class="itxst">
+                        <div class="lbl">
+                            <div class="cy">
+                                <span v-for="(county,index) in countys">
+                                    <input  type="checkbox" :value="county" v-model="selectCounty" :id="county">
+                                    <label :for="county">{{county}}</label>
+                                </span>
+                            </div>
+                            <hr>
+                            <div class="cat">
+                                <span v-for="(acitivity,index) in acitivitys">
+                                
+                                    <input type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
+                                    <label :for="index+1">{{acitivity}}</label>
+                                </span>
+                            </div>
+                            <hr>
+            
+                         
+                            <button @@click="search" class="btn btn-primary">搜尋</button>
+                        </div>
+                        <div class="col2">
+                            <div v-for="(view,selIndex) in selectPlaces">
+                                <div class="item2">
+                                    <h3>{{view.name}}</h3>
+                                    <i class="fa-solid fa-phone">{{view.tel}}</i>
+                                    <i class="fa-solid fa-house-chimney">{{view.add}}</i>
+                                    <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
+                                    <i>建議停留{{view.timestay}}分</i>
+                                    <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
+                                   
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                `
         })
 
 

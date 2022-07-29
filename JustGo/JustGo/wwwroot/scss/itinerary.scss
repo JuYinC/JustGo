@@ -20,20 +20,20 @@
         z-index: -2;
       
     }
-    @media(min-aspect-ratio:16/9) {
-        .arrange__contain-video {
-            width: 100%;
-            height: auto;
-        }
+}
+@media(min-aspect-ratio:16/9) {
+    .arrange__contain-video {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media(max-aspect-ratio:16/9) {
+    .arrange__contain-video {
+        width: auto;
+        height: 100%;
     }
 
-    @media(max-aspect-ratio:16/9) {
-        .arrange__contain-video {
-            width: auto;
-            height: 100%;
-        }
-
-    }
 }
 
 .datepicker{
@@ -99,6 +99,82 @@
     flex-direction: column;
     justify-content: space-between;
     overflow-x: hidden;
+
+    &-hide{
+        flex: 0 0 330px;
+        margin: 1.5rem;
+        overflow-y: scroll;
+
+        & button{
+            width: 20px;
+            height: 20px;
+        }
+
+        & .col2{
+            
+         
+
+        }
+
+        & .lbl{
+         
+            & button{
+                width: 160px;
+            }
+
+            .cy{
+                justify-items: center;
+                width: 100%;
+                display: grid;
+                grid-template-columns: 25% 25% 25% 25%;
+                align-items: center;
+
+                & input[type="checkbox"] {
+                    display: none;
+                }
+
+                & input[type="checkbox"] + label {
+                    border: 1px solid black;
+                    border-radius: 0.7rem ;
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    margin-bottom: 0.2rem;
+                    font-size: 1.7rem;
+                    
+                }
+
+                & input[type="checkbox"]:checked + label {
+                    background-color: #f3d42e;
+                }
+
+            }
+            .cat{
+                justify-items: center;
+                width: 100%;
+                align-items: center;
+
+                & input[type="checkbox"] {
+                    display: none;
+                }
+
+                & input[type="checkbox"] + label {
+                    border: 1px solid black;
+                    border-radius: 0.7rem ;
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    margin-bottom: 0.2rem;
+                    font-size: 1.7rem;
+                    
+                }
+
+                & input[type="checkbox"]:checked + label {
+                    background-color: #f3d42e;
+                }
+
+
+            }
+        }
+    }
 
     &__grid{
         height: 100%;
@@ -193,5 +269,7 @@
 
 
 }
+
+
 
 

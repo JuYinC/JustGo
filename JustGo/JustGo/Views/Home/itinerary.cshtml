@@ -138,10 +138,11 @@
                         .then(res => { console.log(res.data); context.commit('updateData', res.data) })
                         .catch(err => console.log("err"))
                 },
-
+                
                 //繪製地圖標示
                 setMarker() {
                     //marker.setMap(null)
+                    
                     let markers = []
                     let iofSpots = 0
                     for (i = 0; i < this.state.travel.length; i++) {
@@ -278,7 +279,7 @@
                                 weatherWarning: null,
                                 pop: null,
                                 temperature: null,
-                                uvi: null,
+                                uvi: null,                                
                                 place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                             })
                         }
@@ -289,6 +290,7 @@
                             StartDate: new Date(this.duringDate[0]),
                             EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
                             WeatherWarning: null,
+                            title:"123",
                             details: this.saveData,
                         })
                     alert("儲存成功")
@@ -381,7 +383,7 @@
                 remove: function(day, view) {
                     this.travel[day].splice(view, 1)
                     this.$store.commit("cultime")
-                    this.$store.commit("setMarker")
+                    this.$store.dispatch('setMarker')
                 },
 
                 //減少停留時間

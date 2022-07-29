@@ -58,8 +58,8 @@ namespace JustGo.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "確認密碼")]
+            [Compare("Password", ErrorMessage = "密碼和確認密碼不匹配。")]
             public string ConfirmPassword { get; set; }
 
             /// <summary>

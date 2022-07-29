@@ -57,9 +57,7 @@ namespace JustGo.Repository
         }
 
         public Place getPlaceId(string id)
-        {
-            
-                
+        {                            
                 string sqlStr = $"select * from Place Where PlaceId = @id";
                 return _con.Query<Place>(sqlStr, new { id }).FirstOrDefault()??new Place();
             

@@ -30,9 +30,7 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
         {
-            using (var con = _con)
-            {
-                con.Open();
+            
                 string sqlStr = $"select * from Place Where ";
                 bool i = true;
                 if (vm.selectCounty.Length>0)
@@ -54,18 +52,17 @@ namespace JustGo.Repository
                         sqlStr += " and Class in @selectAcitivity";
                     }                    
                 }
-                return con.Query<Place>(sqlStr, vm).ToList();
-            }
+                return _con.Query<Place>(sqlStr, vm).ToList();
+            
         }
 
         public Place getPlaceId(string id)
         {
-            using (var con = _con)
-            {
-                con.Open();
+            
+                
                 string sqlStr = $"select * from Place Where PlaceId = @id";
-                return con.Query<Place>(sqlStr, new { id }).FirstOrDefault()??new Place();
-            }
+                return _con.Query<Place>(sqlStr, new { id }).FirstOrDefault()??new Place();
+            
         }
 
         public Weather getWeatherByLocation(string location)

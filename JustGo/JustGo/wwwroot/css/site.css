@@ -1,124 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/earlyaccess/cwtexyen.css');
 html {
-  font-size: 14px;
+  /* width: 1800px;  */
+  font-size: 10px;
+  font-family: 'Noto Sans TC', sans-serif;;
+  position: relative;
+  
+ /* min-height: 100%;*/
+}
+html.noscroll {
+  position: fixed; 
+  overflow-y: scroll;
+  width: 100%;
+}
+
+html.fixWindow {
+  position: fixed;
+  width: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 10px;
   }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
 }
 
 body {
   margin-bottom: 60px;
-}
-
-<style >
-.ghostClass {
-    background-color: #DCDCDC !important;
-}
-
-.chosenClass {
-    background-color: #F5F5F5 !important;
-    opacity: 1 !important;
-}
-
-.dragClass {
-    background-color: #FFFAFA !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    outline: none !important;
-    background-image: none !important;
-}
-
-.itxst {
-    margin: 10px;
-}
-
-.title {
-    padding: 6px 12px;
-}
-
-.col {
-    width: 20%;
-    flex: 1;
-    min-width: 250px;
-    min-height: 800px;
-    height: auto;
-    padding: 10px;
-    border: solid 1px #eee;
-    border-radius: 5px;
-    float: left;
-    margin: 10px;
-}
-.col2 {
-    width: 30%;
-    flex: 1;
-    min-width: 250px;
-    min-height: 800px;
-    height: auto;
-    padding: 10px;
-    border: solid 1px #eee;
-    border-radius: 5px;
-    float: left;
-    margin: 10px;
-}
-
-    .col + .col {
-        margin-left: 10px;
-    }
-
-.item {
-    min-height: 50px;
-    height: auto;
-    min-width: 200px;
-    width: auto;
-    padding: 6px 12px;
-    margin: 10px 10px 0px 10px;
-    border: solid 1px #eee;
-    background-color: #F5F5DC;
-    border-radius: 10px;
-    text-align: left;
-}
-
-.item2 {
-    min-height: 50px;
-    height: auto;
-    min-width: 200px;
-    width: auto;
-    padding: 6px 12px;
-    margin: 10px 10px 0px 10px;
-    border: solid 1px #eee;
-    background-color: #FAF0E6;
-    border-radius: 10px;
-    text-align: left;
-}
-
-.item:hover {
-    background-color: #FFFDD0;
-    /* height: 150px; */
-    /* transition: 0.5s; */
-    /* cursor: move; */
-}
-
-    .item + .item {
-        border-top: none;
-        margin-top: 6px;
-    }
-
-.min {
-    display: flex;
-    -ms-flex-direction: column;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    flex-direction: column;
-    min-height: 100px;
-}
-#map {
-    height: 500px;
-    width: 100%;
 }

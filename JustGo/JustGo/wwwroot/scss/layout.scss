@@ -1,0 +1,223 @@
+:root {
+    --primary: #F58A07;
+    --primary-light: #F9AB55;
+    --primary-bule: #084887;
+    --primary-bule-light: #909CC2;
+
+}
+
+.navbarC {
+    width: 100%;
+    // position: fixed;
+    position: absolute;
+
+   
+
+  
+    top: 0;
+    left: 0;
+    padding: 20px 8%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    z-index: 3;
+
+
+    // background-color: rgb(25, 99, 99);
+
+    & li{
+       list-style: none;
+    }
+
+    &__logo {
+      height: 110px;
+    }
+
+    & ul li {
+        list-style: none;
+        display: inline-block;
+        margin-left: 20px;
+
+
+    }
+
+    & ul li a {
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        font-size: 2.3rem;
+        font-family:  'cwTeXYen', sans-serif;
+       
+    }
+
+    &__user-logo {
+        border-radius: 100%;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        margin-top: -3rem;
+
+    }
+
+
+
+}
+
+
+
+.footer{
+    border-block: 1rem solid;
+    background-color: #909CC2;
+    height: 100vh;
+    writing-mode: horizontal-tb;
+    direction: rtl;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px 0%;
+    background: rgb(253, 193, 29);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
+    transition: padding 0.7s;
+
+    & ul {
+        width: auto;
+    }
+    
+}
+
+
+
+
+
+
+.footer__waves{
+    position: relative;
+    width: 100%;
+    background-color:#3586ff;
+    min-height: 100px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column ;
+    margin-top: 25rem;
+
+    & .social_icon
+    {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        & li {
+            list-style: none;
+
+            & a { 
+                font-size: 2rem;
+                color: #fff;
+                margin: 0 10px;
+                display: inline-block;
+                transition: 0.5s;
+            }
+            & a:hover{
+                transform: translateY(-10px);
+            }
+        }
+        
+    }
+
+    & .menu
+    {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+
+        & li{
+            list-style: none;
+
+            & a { 
+                font-size: 1rem;
+                color: #fff;
+                margin: 0 10px;
+                display: inline-block;
+                text-decoration: none;
+                opacity: 0.65;
+            }
+            
+            & a:hover { 
+                opacity:1 ;
+               
+            }
+
+        }
+
+        
+    }
+
+
+    & p{
+        color: #fff;
+        text-align: center;
+        margin: 15px 0;
+        font-size: 1.1rem;
+    }
+
+    & .wave{
+        position: absolute;
+        top: -100px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background:url(/file/photo/wave.png);
+        background-size: 1000px 100px;  
+
+    }
+    & .wave#wave1{
+        z-index: 1;
+        opacity: 1;
+        bottom: 0;
+        animation: animateWave 7s linear infinite;
+    }
+    & .wave#wave2{
+        z-index: 2;
+        opacity: 0.2;
+        bottom: 4rem;
+        animation: animateWave_2 4s linear infinite;
+    }
+    & .wave#wave3{
+        z-index: 3;
+        opacity: 0.7;
+        bottom: 2rem;
+        animation: animateWave 6s linear infinite;
+    }
+    & .wave#wave4{
+        z-index: 4;
+        opacity: 0.2;
+        bottom: 10rem;
+        animation: animateWave_2 5s linear infinite;
+    }
+}
+
+
+ @keyframes animateWave{
+    0%{
+        background-position-x: 1000px;
+    } 
+    100%{
+        background-position-x: 0px;
+    }
+ } 
+ 
+ @keyframes animateWave_2{
+    0%{
+        background-position-x: 0px;
+    } 
+    100%{
+        background-position-x:1000px ;
+    }
+ } 
+

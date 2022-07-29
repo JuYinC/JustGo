@@ -1,0 +1,12 @@
+{
+  "name": "justgo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile:scss-main": "node-sass wwwroot/scss/main.scss wwwroot/css/main.css -w",
+    "compile:scss-layout": "node-sass wwwroot/scss/layout.scss wwwroot/css/__layout.css -w"
+  },
+  "author": "",
+  "license": "ISC"
+}

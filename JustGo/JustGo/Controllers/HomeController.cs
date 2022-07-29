@@ -21,8 +21,17 @@ namespace JustGo.Controllers
             _schedule = schedule;
             
         }
-
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Index0728()
+        {
+            return View();
+        }
+
+        public IActionResult itinerary()
         {            
             return View();
         }

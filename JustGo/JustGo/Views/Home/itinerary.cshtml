@@ -1,0 +1,479 @@
+﻿@{
+    ViewData["Title"] = "itinerary";
+    <!-- Layout = null; -->
+}
+@section Style{
+<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<style>.footer__waves{display:none} </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
+
+}
+
+<div class="arrange__body">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content" >
+        <p>開始日期</p>
+            <input type="date" id="start">
+              <p>結束日期</p>
+            <input type="date" id="end">
+            <button type="button" class="btn btn-outline-primary" onclick="myFunction()" @@click="checkDays">確定</button>
+            <button type="button" class="btn btn-outline-secondary">取消</button>
+
+        </div>
+        <div class="journey__map">
+            <div class="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t">
+                        <ul>
+                            <li v-for="(day, index) in dayArr" class="days" :id="index"  @@click="test" >第{{index+1}}天</li>                       
+                        </ul>
+                    </div>
+                    <div class="grid-item-m">
+                        <ul>
+                            <div v-for="(day ,index) in dayArr2">{{index+1}}</div>
+                        </ul>
+                    </div>
+                    <div class="grid-item-b">button</div>
+                </div>
+            </div>
+             <div class="sidebar-hide"> 
+                <button>></button>
+                <div id="app2"></div>
+             </div>
+            <div class="mapbox" id="app3">
+                 <div id="map"></div>
+                  
+            </div>
+        </div>
+    </div>
+</div>
+
+ <div id="app"></div>
+
+@section Scripts{
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vuex@3"></script>
+<script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
+<script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+
+
+
+<script>
+    let days;
+    function myFunction() {
+        let x = new Date(document.getElementById("start").value);
+        let y = new Date(document.getElementById("end").value);
+        days = (y - x) / (1000 * 3600 * 24) + 1;
+    }
+
+    const store = new Vuex.Store({
+            state: {
+                map: null,
+                datetime: [],
+                travel: [
+                    //測試資料
+                    //[
+                    //    { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime:  '09: 00', lat: 22.63996, lng: 120.32239 },
+                    //    { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime:  '09: 00', lat: 22.63584, lng: 120.29416 }
+                    //],
+                    //[
+                    //    { add: '高雄市桃源區梅山村三鄰梅山巷44之5號', name: '布農文化展示中心', min: 60, startTime: '09:00', endTime: '09:00', lat: 22.65271, lng: 120.30313 },
+                    //    { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, startTime: '09:00', endTime: '09:00', lat: 22.63872, lng: 120.29387 }
+                    //]
+                ],
+                //存放搜尋景點
+                selectPlaces: [],
+
+            },
+            //由action傳入值,更新state狀態
+            mutations: {
+                updateData(state, status) {
+                    this.state.selectPlaces = status
+                },
+
+                cultime() {
+                    console.log("cultime")
+                    for (let j = 0; j < this.state.travel.length; j++) {
+                        let timestamp = this.state.datetime[j]
+                        for (let i = 0; i < this.state.travel[j].length; i++) {
+                            this.state.travel[j][i].startTime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
+
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
+                            if (hr > 24) {
+                                hr = hr - 24
+                            }
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+                            timestamp = hr + ':' + min
+                            this.state.travel[j][i].endTime = timestamp
+                        }
+                    }
+
+                },
+            },
+            getters: {},
+            actions: {
+                //非同步function，由組件呼叫使用
+
+                //測試
+                //axiosTest(context, status) {
+                //    axios.get("@Url.Action("teatMapData","Home")")
+                //        .then(res => context.commit('updateData', res.data))
+                //        .catch(err => console.log("err"))
+                //},
+
+                //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
+                axiosSave(context, payload) {
+                    console.log(payload)
+                    axios.post("@Url.Action("setSchedule","Schedule")", payload)
+                        .then(console.log("success"))
+                        .catch(err => console.log("err"))
+                },
+
+                //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
+                axiosSearch(context, payload) {
+                    axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
+                        .then(res => { console.log(res.data); context.commit('updateData', res.data) })
+                        .catch(err => console.log("err"))
+                },
+
+                //繪製地圖標示
+                setMarker() {
+                    for (i = 0; i < this.state.travel.length; i++) {
+                        const markers = this.state.travel[i].map((position, j) => {
+                            const marker = new google.maps.Marker({
+                                position: { lat: position.lat, lng: position.lng },
+                                // label: position.title,   //其他屬性，可以先略過
+                                // title: position.title,
+                                map: this.state.map,
+                            });
+                            return marker;
+                        });
+                    }
+                },
+
+                //載入地圖 設置中心點
+                initMap() {
+                    this.state.map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: 22.6397082860113, lng: 120.30264837097221 },
+                        zoom: 8,
+                    });
+                },
+            }
+        })
+
+        //地圖組件
+        new Vue({
+            store,
+            el: '#app3',
+            data: {
+                map: null,
+                //中心點
+                lat: 22.6397082860113,
+                lng: 120.30264837097221,
+                //存放地點
+                locations: [
+                ]
+            },
+            computed: {
+                travel() {
+                    return this.$store.state.travel
+                },
+                selectPlaces() {
+                    return this.$store.state.selectPlaces
+                },
+            },
+            mounted() {
+                //this.travelmounted();
+                //載入store action
+                this.$store.dispatch('initMap')
+                this.$store.dispatch('setMarker')
+
+            },
+            methods: {
+                //測試
+                travelmounted() {
+                    for (let i = 0; i < this.travel.length; i++) {
+                        for (let j = 0; j < this.travel[i].length; j++) {
+                            this.locations.push({ lat: this.travel[i][j].lat, lng: this.travel[i][j].lng });
+                        }
+                    }
+                },
+                //add() {
+                //    console.log(this.locations)
+                //    this.locations.push({ lat: this.travel[0][0].lat, lng: this.travel[0][0].lng });
+                //    //this.setMarker();
+                //},
+
+
+            },
+
+        })
+
+        //行程組件
+        Vue.component('vuedraggable', window.vuedraggable.name)
+        new Vue({
+            store,
+            el: '#app',
+            data() {
+                return {
+                    drag: true,
+                    selectDate: [],
+                    selectDateEnd: [],
+                    duringDate: [],
+                    saveData: [],
+                }
+            },
+            methods: {
+                //刪除景點
+                remove: function(day, view) {
+                    this.travel[day].splice(view, 1)
+                    this.$store.commit("cultime")
+                },
+                //編排時間(*)
+
+                culDate() {
+                    let startTime = new Date(this.selectDate)
+                    let endTime = new Date(this.selectDateEnd)
+                    let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+
+                    //this.travel.length = 0
+                    this.duringDate.length = 0
+                    this.datetime.length = 0
+
+
+                    if (this.selectDateEnd > this.selectDate || this.selectDateEnd == this.selectDate) {
+
+                        for (let i = 0; i < day; i++) {
+                            this.duringDate.push(startTime.toLocaleDateString())
+                            startTime = startTime.setDate(startTime.getDate() + 1)
+                            startTime = new Date(startTime)
+                            this.datetime.push('09:00')
+                        }
+
+                        if (this.travel.length == 0) {
+                            for (let i = 0; i < day; i++) {
+                                this.travel.push([])
+                            }
+                        } else if (this.travel.length <= day) {
+
+                            for (let i = 0; i < day - this.travel.length; i++) {
+                                this.travel.push([])
+                            }
+
+                        } else if (this.travel.length > day) {
+                            
+                            for (let i = 0; i < this.travel.length - day; i++) {
+                                let lastIndex = this.travel.length - 1
+
+                                for (let j = 0; j < this.travel[lastIndex].length;j++) {
+                                    this.travel[lastIndex-1].push(this.travel[lastIndex][j])
+                                }
+                                this.travel.pop()
+                            }
+                        }
+                    } else {
+                        alert('重新選擇日期')
+                    }
+                },
+                //拖曳啟動
+                onStart() {
+                    this.drag = true;
+                },
+                //拖曳結束
+                onEnd() {
+                    this.drag = false;
+                },
+                saveSchedule() {
+                    for (let i = 0; i < this.travel.length; i++) {
+                        this.saveData.push([]);
+                        for (let j = 0; j < this.travel[i].length; j++) {
+                            this.saveData[i].push({
+                                startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                                endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                                weatherWarning: null,
+                                pop: null,
+                                temperature: null,
+                                uvi: null,
+                                place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
+                            })
+                        }
+                    }
+                    console.log(this.saveData)
+                    this.$store.dispatch('axiosSave',
+                        {
+                            StartDate: new Date(this.selectDate),
+                            EndDate: new Date(this.selectDateEnd),
+                            WeatherWarning: null,
+                            details: this.saveData,
+                        })
+                },
+                cultime() {
+                    this.$store.commit("cultime")
+                }
+
+            },
+            mounted() {
+                //this.$store.dispatch('axiosTest')
+            },
+            computed: {
+                travel() {
+                    return this.$store.state.travel;
+                },
+                selectPlaces() {
+                    return this.$store.state.selectPlaces
+                },
+                datetime() {
+                    return this.$store.state.datetime
+                },
+            },
+            template:
+                //{{view.starttime}}-{{view.endtime}}<br>
+                `
+                    <div>
+                        <input type="date" v-model="selectDate"> <input type="date" v-model="selectDateEnd"> <button @@click="culDate">開始</button>
+                        <button @@click="saveSchedule">儲存行程</button>
+                        <span>{{selectCounty}}</span>
+                        <div class="itxst">
+                            <div class="col" v-for="(day,dayIndex) in travel">
+                                <div class="title"></div>
+                        <!-- v-for 產生當天行程細項  -->
+                        {{duringDate[dayIndex]}}
+                        <hr>
+
+                        旅遊時間:<input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
+                        <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                            ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                            @@change="cultime()" class="min">
+                            <transition-group>
+                                <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                    {{view.startTime}}-{{view.endTime}}
+                                    地址:{{view.add}}<br>
+                                    景點:{{view.name}}<br>
+                                    <button @@click="remove(dayIndex,veiwIndex)">remove</button>
+                                </div>
+                            </transition-group>
+                            </draggable>
+                            </div>
+                        </div>
+                    </div>
+                `
+        })
+
+        //搜尋組件
+        new Vue({
+            store,
+            el: '#app2',
+            data() {
+                return {
+                    countys: [
+                        '基隆市', '新北市', '台北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '台中市', '彰化縣',
+                        '南投縣', '雲林縣', '嘉義縣', '嘉義市', '台南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
+                        '台東縣', '澎湖縣', '連江縣', '金門縣'
+                    ],
+                    acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
+                    selectCounty: [],
+                    selectAcitivity: [],
+                }
+            },
+            methods: {
+                search() {
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                    this.$store.dispatch('setMarker')
+                },
+                // 新增景點
+                addview: function(index) {
+                    this.travel[0].push({
+                        startTime: '',
+                        endTime: '',
+                        placeId: this.selectPlaces[index].placeId,
+                        name: this.selectPlaces[index].name,
+                        description: this.selectPlaces[index].description,
+                        tel: this.selectPlaces[index].tel,
+                        add: this.selectPlaces[index].add,
+                        lat: this.selectPlaces[index].lat,
+                        lng: this.selectPlaces[index].lng,
+                        region: this.selectPlaces[index].region,
+                        town: this.selectPlaces[index].town,
+                        class: this.selectPlaces[index].class,
+                        opentime: this.selectPlaces[index].opentime,
+                        closetime: this.selectPlaces[index].closetime,
+                        min: this.selectPlaces[index].timestay,
+                    })
+                    this.$store.dispatch('setMarker')
+                    this.$store.commit("cultime")
+
+                },
+            },
+            computed: {
+                travel() {
+                    return this.$store.state.travel
+                },
+                selectPlaces() {
+                    return this.$store.state.selectPlaces
+                },
+            },
+            template:
+                //{{view.description}}<br><br>
+                `
+                    <div class="itxst">
+                        <div class="lbl">
+                            <div class="cy">
+                                <span v-for="(county,index) in countys">
+                                    <input  type="checkbox" :value="county" v-model="selectCounty" :id="county">
+                                    <label :for="county">{{county}}</label>
+                                </span>
+                            </div>
+                            <hr>
+                            <div class="cat">
+                                <span v-for="(acitivity,index) in acitivitys">
+                                
+                                    <input type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
+                                    <label :for="index+1">{{acitivity}}</label>
+                                </span>
+                            </div>
+                            <hr>
+            
+                         
+                            <button @@click="search" class="btn btn-primary">搜尋</button>
+                        </div>
+                        <div class="col2">
+                            <div v-for="(view,selIndex) in selectPlaces">
+                                <div class="item2">
+                                    <h3>{{view.name}}</h3>
+                                    <i class="fa-solid fa-phone">{{view.tel}}</i>
+                                    <i class="fa-solid fa-house-chimney">{{view.add}}</i>
+                                    <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
+                                    <i>建議停留{{view.timestay}}分</i>
+                                    <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
+                                   
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                `
+        })
+
+
+
+
+
+</script>
+}
+

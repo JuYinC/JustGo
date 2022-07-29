@@ -276,10 +276,10 @@
                             this.saveData[i].push({
                                 startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
                                 endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
-                                weatherWarning: null,
-                                pop: null,
-                                temperature: null,
-                                uvi: null,                                
+                                weatherWarning: false,
+                                pop: 10,
+                                temperature: 25,
+                                uvi: 5,                                
                                 place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                             })
                         }
@@ -289,7 +289,7 @@
                         {
                             StartDate: new Date(this.duringDate[0]),
                             EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
-                            WeatherWarning: null,
+                            WeatherWarning: false,
                             title:"123",
                             details: this.saveData,
                         })

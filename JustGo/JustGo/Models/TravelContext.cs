@@ -129,6 +129,10 @@ namespace JustGo.Models
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450)

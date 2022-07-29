@@ -104,6 +104,7 @@ namespace JustGo.Repository
             {
                 ScheduleId = vm.ScheduleId,
                 UserId = vm.UserId,
+                Title = vm.Title,
                 StartDate = vm.StartDate,
                 EndDate = vm.EndDate,
                 WeatherWarning = vm.WeatherWarning,
@@ -116,9 +117,10 @@ namespace JustGo.Repository
         private ScheduleVM modelToView(Schedule model)
         {
             ScheduleVM vm = new ScheduleVM()
-            {
+            {                
                 ScheduleId = model.ScheduleId,
                 UserId = model.UserId,
+                Title = model.Title,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 WeatherWarning = model.WeatherWarning,

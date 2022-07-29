@@ -42,13 +42,14 @@
             datetime: [],
             center: { lat: 22.6397082860113, lng: 120.30264837097221 },
             spots: [
-                //測試資料
+                //測試景點資料
                 [
                     { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime: '09: 00', lat: 22.623774700209644, lng: 120.30202019961905 },
                     { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime: '09: 00', lat: 22.62644907643261, lng: 120.31786836365113 },
                     { add: '高雄市桃源區寶山里寶山巷150號', name: '藤枝國家森林遊樂區', min: 90, startTime: '09:00', endTime: '09: 00', lat: 22.65488778982006, lng: 120.29126064308134 },
                 ],
             ],
+            //測試行程
             seletedspots: [
                 [
                     { add: '高雄市桃源區拉芙蘭里拉芙蘭路20號', name: '拉芙蘭藝術村', min: 60, startTime: '09:00', endTime: '09: 00', lat: 22.63996, lng: 120.32239 },
@@ -59,6 +60,7 @@
                     { add: '高雄市桃源區南進巷180號', name: '桃源區原住民文物館', min: 90, startTime: '09:00', endTime: '09:00', lat: 22.63872, lng: 120.29387 }
                 ],
             ],
+            //行程時間陣列
             arrTravelTime: [],
             //存放搜尋景點
             selectPlaces: [],
@@ -97,19 +99,33 @@
                 }
 
             },
-
+            //計算行程時間
             calcRoute(state) {
                 state.arrTravelTime = [];
                 directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
                 //跑形成迴圈，不同天的行程分開
                 for (i = 0; i < state.seletedspots.length; i++) {
-                    //建立行程request
-                    let request = {
-                        origin: state.seletedspots[i][0],  //起點
-                        destination: state.seletedspots[i][state.seletedspots.length - 1],  //終點
-                        // waypoints: state.seletedspots[i].slice(1,state.seletedspots.length - 1), //中途停靠點
-                        travelMode: 'DRIVING', //開車
-                    };
+                    //多個點，加上中間停靠站
+                    if (state.seletedspots[i].length > 2) {
+                        //建立行程request
+                        let request = {
+                            origin: state.seletedspots[i][0],  //起點
+                            destination: state.seletedspots[i][state.seletedspots.length - 1],  //終點
+                            waypoints: state.seletedspots[i].slice(1, state.seletedspots.length - 1), //中途停靠點
+                            travelMode: 'DRIVING', //開車
+                        };
+                        //兩個點，只要給起點和終點就好
+                    } else if (state.seletedspots[i].length == 2) {
+                        let request = {
+                            origin: state.seletedspots[i][0],  //起點
+                            destination: state.seletedspots[i][state.seletedspots.length - 1],  //終點
+                            travelMode: 'DRIVING', //開車
+                        }
+                        //一個點，路線無法計算，跳出
+                    } else {
+                        break;
+                    }
+
                     // request放入Google行程服務，得到結果
                     //state.arrTravelTime[i] = new Array()
                     directionsService.route(request, function (result, status) {
@@ -117,7 +133,7 @@
                             //儲存行程時間陣列                            
                             for (j = 0; j < result.routes[0].legs.length; j++) {
                                 console.log(`迴圈裏面 ${result.routes[0].legs[j].duration.value}`)
-                                state.arrTravelTime[i].push(result.routes[0].legs[j].duration.value) //時間(秒)，number
+                                state.arrTravelTime.push(result.routes[0].legs[j].duration.value) //時間(秒)，number
                                 //result回傳的東西有很多，有興趣可以研究
                             }
                         }

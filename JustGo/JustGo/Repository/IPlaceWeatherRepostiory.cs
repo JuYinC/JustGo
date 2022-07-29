@@ -6,7 +6,7 @@ namespace JustGo.Repository
     public interface IPlaceWeatherRepostiory
     {
 
-        public ICollection<Place> getPlace(int start, int quantity);
+        public ICollection<Place> getPlace(SelectPlaceVM vm);
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm);
         public Place getPlaceId(string id);
 

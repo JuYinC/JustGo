@@ -42,15 +42,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[fn_seleFoodDistance]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[fn_seleHotelDistance]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[fn_seleSpotDistance]",
+         "Name": "[dbo].[fn_selePlaceDistance]",
          "ObjectType": 2
       }
    ],

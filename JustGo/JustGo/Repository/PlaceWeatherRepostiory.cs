@@ -2,6 +2,7 @@
 using JustGo.Models;
 using JustGo.ViewModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,14 +20,12 @@ namespace JustGo.Repository
             _context = context;
         }
 
-        public ICollection<Place> getPlace(int start, int quantity)
+        public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            using (var con = _con)
-            {
-                con.Open();
-                string sqlStr = $"select * from Place order by PlaceID offset @start row fetch next @quantity rows only";
-                return con.Query<Place>(sqlStr, new { start, quantity }).ToList();                
-            }
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10)",vm).ToList();            
+            Console.WriteLine(getPlace.GetType());
+
+            return getPlace;
         }
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)

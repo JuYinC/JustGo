@@ -21,11 +21,12 @@ namespace JustGo.Controllers
         public IActionResult Index()
         {
             return View();
-        }    
-        
-        public IActionResult getPlace()
-        {
-            return Json(_place.getPlace(5000,10));
+        }
+
+        [HttpPost]
+        public IActionResult getPlace([FromBody] SelectPlaceVM select)
+        {            
+            return Json(_place.getPlace(select));
         }
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)

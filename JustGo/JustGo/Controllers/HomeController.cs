@@ -18,8 +18,7 @@ namespace JustGo.Controllers
         {
             _logger = logger;
             _pwr = pwr;
-            _schedule = schedule;
-            
+            _schedule = schedule;            
         }
         public IActionResult Index()
         {
@@ -46,17 +45,14 @@ namespace JustGo.Controllers
         {
             return Json(_pwr.getPlaceFilter(select));
         }
-        
-        public IActionResult teatMapData()
-        {
-            return Json(_pwr.getPlace(5000, 5));
-        }
 
-        public IActionResult testGetShedule()
-        {            
-                 
-            return Json(_schedule.selectScedule(1));
-        }        
+        [HttpPost]
+        public IActionResult teatMapData([FromBody] SelectPlaceVM select)
+        {
+            SelectPlaceVM selectPlaceVM = new SelectPlaceVM() { Lat = 22.6397082860113, Lng = 120.30264837097221 };
+            return Json(_pwr.getPlace(select));            
+        }
+            
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

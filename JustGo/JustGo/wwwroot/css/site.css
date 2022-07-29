@@ -31,6 +31,104 @@ html.fixWindow {
   }
 }
 
+.col {
+    width: 20%;
+    flex: 1;
+    min-width: 250px;
+    min-height: 800px;
+    height: auto;
+    padding: 10px;
+    border: solid 1px #eee;
+    border-radius: 5px;
+    float: left;
+    margin: 10px;
+}
+.col2 {
+    width: 30%;
+    flex: 1;
+    min-width: 250px;
+    min-height: 800px;
+    height: auto;
+    padding: 10px;
+    border: solid 1px #eee;
+    border-radius: 5px;
+    float: left;
+    margin: 10px;
+}
+
+    .col + .col {
+        margin-left: 10px;
+    }
+
+.item {
+    min-height: 50px;
+    height: auto;
+    min-width: 200px;
+    width: auto;
+    padding: 6px 12px;
+    margin: 10px 10px 0px 10px;
+    border: solid 1px #eee;
+    background-color: #F5F5DC;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.item2 {
+    min-height: 50px;
+    height: auto;
+    min-width: 200px;
+    width: auto;
+    padding: 6px 12px;
+    margin: 10px 10px 0px 10px;
+    border: solid 1px #eee;
+    background-color: #FAF0E6;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.item:hover {
+    background-color: #FFFDD0;
+    /* height: 150px; */
+    /* transition: 0.5s; */
+    /* cursor: move; */
+}
+
+    .item + .item {
+        border-top: none;
+        margin-top: 6px;
+    }
+
+.min {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    min-height: 100px;
+}
+/*地圖*/
+#map {
+    height: 500px;
+    width: 100%;
+}
+/*地圖上面的按鈕*/
+#floating-panel {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: "Roboto", "sans-serif";
+    line-height: 30px;
+    padding-left: 10px;
+}
+/*隱藏infowindow的叉叉按鈕*/
+button.gm-ui-hover-effect {
+    visibility: hidden;
+}
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

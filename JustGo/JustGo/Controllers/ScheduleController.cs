@@ -28,6 +28,7 @@ namespace JustGo.Controllers
         {            
             return Json(_place.getPlace(select));
         }
+
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
         {            
@@ -38,7 +39,7 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
-            return Json(_schedule.selectUserSchedule("1"));
+            return Json(_schedule.selectUserSchedule(GetUserId()));
         }
 
         //搜尋行程細項

@@ -7,75 +7,104 @@
 }
 
 @section Style{
-<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
+    <style>
+        .searchBar {
+            border: 1px solid black;
+            margin: 10px;
+            height: 50px;
+        }
 
-<style>
-    .searchBar {
-        border: 1px solid black;
-        margin: 10px;
-        height: 50px;
-    }
+        .searchResult {
+            border: 1px solid black;
+            margin: 10px;
+            height: auto;
+        }
 
-    .searchResult {
-        border: 1px solid black;
-        margin: 10px;
-        height: auto;
-    }
+        .searchBlog {
+            border: 1px solid black;
+            margin: 10px;
+            height: 100px;
+        }
 
-    .searchBlog {
-        border: 1px solid black;
-        margin: 10px;
-        height: 100px;
-    }
-    p{
-        color : black;
-    }
-    body{
-        background-color:grey;
-    }
-    .minHight {
-        height: 300px;
-    }
-</style>
+        p {
+            color: black;
+        }
+
+        body {
+            background-color: rgb(0,0,0,0.1);
+        }
+
+        .minHight {
+            height: 300px;
+        }
+    </style>
 }
 
-<div class="minHight">    
-</div>
-
-<div id="app" class="container minHight">
-    <div class="searchBar">
-    </div>        
-    <button @@click="clicked">click here</button>    
-    <div class="searchResult">
-        <div class="searchBlog" v-for="item in search.results">    
-            <h1>{{item.scheduleId}}</>
-        </div>        
+    <div class="minHight">
     </div>
-</div>
+
+    <div id="app" class="container minHight display-5">
+        <div>
+            <input type="search" class="from-control ds-input" />
+            <button class="btn btn-primary" @@click="Search">搜尋</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                篩選
+            </button>
+        </div>        
+        <div class="collapse" id="collapseExample">
+            <div class="form-check" v-for="(item,index) in countys">
+                <input class="form-check-input" type="checkbox" v-model="select.selectCounty" :value="item" :id="item">
+                <label class="form-check-label" :for="item">
+                    {{item}}
+                </label>
+            </div>
+            <div class="form-check" v-for="(item,index) in acitivitys">
+                <input class="form-check-input" type="checkbox" v-model="select.selectAcitivity" :value="index+1" :id="item">
+                <label class="form-check-label" :for="item">
+                    {{item}}
+                </label>
+            </div>
+        </div>
+        <div class="searchResult">
+            <div class="searchBlog" v-for="item in search.results">
+                <h1>{{item.title}}</h1>
+            </div>
+        </div>
+    </div>
 
 
-@section Scripts {
-<script src="https://unpkg.com/vue@next"></script>
-<script src="https://unpkg.com/axios/dist/axios.js"></script>
-<script>
-    const { reactive,ref } = Vue;
-    const App = {
-        setup() {
+    @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script>
+        const { reactive, ref } = Vue;
+        const App = {
+            setup() {
 
-            const search = reactive({results: []})
-            const filter = ref([])
-            function clicked(){
-                axios.post("@Url.Action("testSearch","Search")").then(res => search.results = res.data )
-            }
-                                   
-            return {
-                search,   
-                clicked
-            }
-        },
-    }
-    Vue.createApp(App).mount("#app")
-</script>
+                const search = reactive({ results: [] })
+                const countys = [
+                    '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
+                    '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
+                    '臺東縣', '澎湖縣', '連江縣', '金門縣']
+                const acitivitys = ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他']
+                const select = reactive({selectCounty:[],selectAcitivity:[]})
+                function Search() {
+                    axios.post("@Url.Action("testSearch","Search")",select).then(res => search.results = res.data)
+                }
+                return {
+                    search,
+                    Search,
+                    countys,
+                    acitivitys,
+                    select
+                }
+            },
+        }
+        Vue.createApp(App).mount("#app")
+    </script>
 }

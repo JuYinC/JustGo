@@ -1,17 +1,99 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "View";
+    //Layout = null;
 }
 
-<div class="container">
-    <div class="block">
-    <div class="titlebar">行程</div>
+@section Style{
+    <style>
+        header{
+            display:none;
+        }
+        .titlebar {
+            margin:20px;
+            color: #2F1000;
+            font-size: 28px;
+            border-bottom: 5px solid transparent;
+            border-image: linear-gradient(to right, #7F534B, transparent) 1;
+        }
+
+        .schedules {
+        }
+
+        .schedule {
+            margin: 20px;
+            border: 2px solid black;
+            height: 200px;
+        }
+
+        .blog {
+            margin: 20px;
+            border: 2px solid black;
+            height: 200px;
+        }
+    </style>
+
+}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+
+
+    <div class="container" id="app">
+        <div class="block">
+            <div class="titlebar">行程</div>
+            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
+                <div class="schedule" v-for="item in showSchedule" v-if="item.startDate>dateNow">
+                <div class="scheduleInfo" >                   
+                    {{item.title}}<br>
+                    {{item.startDate}}<br>
+                    {{item.endDate}}<br>
+                    
+                </div>
+                <div class="buttonBar">
+                    <button class="btn btn-secondary">分享旅程</button>
+                    <button class="btn btn-danger">刪除</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="titlebar">過往行程</div>
+            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
+                <div class="schedule" v-for="item in 4">
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="titlebar">遊記</div>
+            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
+                <div class="blog" v-for="item in 4">
+                </div>
+            </div>
+        </div>
+        <button @@click="testAxios">test</button>
     </div>
-     <div class="block">
-    <div class="titlebar">過往行程</div>
-    </div>
-    <div class="block">
-    <div class="titlebar">遊記</div>
-    </div>
-</div>
+
+    @section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    showSchedule:[],
+                    dateNow:"",
+                }
+            },
+            methods: {
+
+            },
+            mounted(){
+                 axios.post("@Url.Action("selectUserSchedule","Schedule")")
+                        .then(res => this.showSchedule = res.data)
+                        .catch(err => console.log("err"))
+                 this.data = new Date().toDateString();
+            },
+        })
+    </script>
+}
 

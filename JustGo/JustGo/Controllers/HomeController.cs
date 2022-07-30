@@ -23,7 +23,7 @@ namespace JustGo.Controllers
         }
         public IActionResult Index()
         {
-            return View("Search");
+            return View();
         }
 
         public IActionResult Index0728()

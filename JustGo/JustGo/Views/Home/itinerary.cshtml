@@ -3,394 +3,391 @@
     <!-- Layout = null; -->
 }
 @section Style{
-    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        .footer__waves {
-            display: none
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<style>
+    .footer__waves {
+        display: none
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 
 }
 
-    <div class="arrange__body">
-        <div class="arrange__contain">
-            <video autoplay muted loop plays-inline class="arrange__contain-video">
-                <source src="~/file/video/highway-f.mp4" type="video/mp4">
-            </video>
-            <div class="datepicker"></div>
-            <div class="datepicker__content">
+<div class="arrange__body">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content">
 
-                <div id="app">
-                    <input type="date" v-model="selectDatelocal"> <input type="date" v-model="selectDateEndlocal"> <button @@click="culDate">開始</button>
-                    <button @@click="saveSchedule">儲存行程</button>
-                </div>
-
+            <div id="app">
+                <input type="date" v-model="selectDatelocal"> <input type="date" v-model="selectDateEndlocal"> <button
+                    @@click="culDate">開始</button>
+                <button @@click="saveSchedule">儲存行程</button>
             </div>
-            <div class="journey__map">
-                <div class="sidebar">
-                    <div class="sidebar__grid">
-                        <div class="grid-item-t">
-                            <ul>
-                                <li v-for="(day, index) in dayArr" class="days" :id="index" @@click="test">第{{index+1}}天</li>
-                            </ul>
-                        </div>
-                        <div class="grid-item-m">
-                            <ul>
-                                <div v-for="(day ,index) in dayArr2">{{index+1}}</div>
-                            </ul>
-                        </div>
-                        <div class="grid-item-b">button</div>
+
+        </div>
+        <div class="journey__map">
+            <div class="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t">
+                        <ul>
+                            <li v-for="(day, index) in dayArr" class="days" :id="index" @@click="test">第{{index+1}}天
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="sidebar-hide">
-                    <button>></button>
-                    <div id="app2"></div>
-                </div>
-                <div class="mapbox" id="app3">
-                    <div id="map"></div>
-
+                    <div class="grid-item-m">
+                        <ul>
+                            <div v-for="(day ,index) in dayArr2">{{index+1}}</div>
+                        </ul>
+                    </div>
+                    <div class="grid-item-b">button</div>
                 </div>
             </div>
-            <div id="app4">
+            <div class="sidebar-hide">
+                <button>></button>
+                <div id="app2"></div>
+            </div>
+            <div class="mapbox" id="app3">
+                <div id="floating-panel">
+                    <button @@click="changeView">我的行程</button>
+                </div>
+                <div id="map"></div>
             </div>
         </div>
+        <div id="app4">
+        </div>
     </div>
+</div>
 
 
-    @section Scripts{
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/vuex@3"></script>
-    <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
-    <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+@section Scripts{
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vuex@3"></script>
+<script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
+<script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
 
 
 
-    <script>
-        const store = new Vuex.Store({
-            state: {
-                map: null,
-                travel: [],//旅遊行程
-                selectPlaces: [],//搜尋結果
-                datetime: [],//每日時間
-                duringDate: [],//旅遊期間日期
+<script>
+    const store = new Vuex.Store({
+        state: {
+            map: null,
+            travel: [],//旅遊行程
+            selectPlaces: [],//搜尋結果
+            datetime: [],//每日時間
+            duringDate: [],//旅遊期間日期
+        },
+
+        //由action傳入值,更新state狀態
+        mutations: {
+
+            //更新state 搜尋結果
+            updateData(state, status) {
+                this.state.selectPlaces = status
             },
 
-            //由action傳入值,更新state狀態
-            mutations: {
+            //計算行程表時間
+            cultime() {
+                console.log("cultime")
+                for (let j = 0; j < this.state.travel.length; j++) {
+                    let timestamp = this.state.datetime[j]
+                    for (let i = 0; i < this.state.travel[j].length; i++) {
+                        this.state.travel[j][i].startTime = timestamp
+                        let hr = timestamp.substring(0, 2)
+                        let min = timestamp.substring(3, 5)
+                        let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
 
-                //更新state 搜尋結果
-                updateData(state, status) {
-                    this.state.selectPlaces = status
-                },
-
-                //計算行程表時間
-                cultime() {
-                    console.log("cultime")
-                    for (let j = 0; j < this.state.travel.length; j++) {
-                        let timestamp = this.state.datetime[j]
-                        for (let i = 0; i < this.state.travel[j].length; i++) {
-                            this.state.travel[j][i].startTime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
-
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
-                            if (hr > 24) {
-                                hr = hr - 24
-                            }
-                            if (hr < 10) {
-                                hr = '0' + hr
-                            }
-                            if (min < 10) {
-                                min = '0' + min
-                            }
-                            timestamp = hr + ':' + min
-                            this.state.travel[j][i].endTime = timestamp
+                        hr = Number(hr) + Number(addhr)
+                        min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
+                        if (hr > 24) {
+                            hr = hr - 24
                         }
+                        if (hr < 10) {
+                            hr = '0' + hr
+                        }
+                        if (min < 10) {
+                            min = '0' + min
+                        }
+                        timestamp = hr + ':' + min
+                        this.state.travel[j][i].endTime = timestamp
                     }
-                },
+                }
+            },
+        },
+
+        getters: {},
+
+        //非同步function，由組件呼叫使用
+        actions: {
+            //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
+            axiosSave(context, payload) {
+                console.log(payload)
+                axios.post("@Url.Action("setSchedule","Schedule")", payload)
+                    .then(console.log("success"))
+                    .catch(err => console.log("err"))
             },
 
-            getters: {},
+            //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
+            axiosSearch(context, payload) {
+                axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
+                    .then(res => { console.log(res.data); context.commit('updateData', res.data) })
+                    .catch(err => console.log("err"))
+            },
 
-            //非同步function，由組件呼叫使用
-            actions: {
-                //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
-                axiosSave(context, payload) {
-                    console.log(payload)
-                    axios.post("@Url.Action("setSchedule","Schedule")", payload)
-                        .then(console.log("success"))
-                        .catch(err => console.log("err"))
-                },
-
-                //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
-                axiosSearch(context, payload) {
-                    axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
-                        .then(res => { console.log(res.data); context.commit('updateData', res.data) })
-                        .catch(err => console.log("err"))
-                },
-
-                //繪製地圖標示
-                setMarker() {
-                    for (i = 0; i < this.state.travel.length; i++) {
-                        const markers = this.state.travel[i].map((position, j) => {
-                            const marker = new google.maps.Marker({
-                                position: { lat: position.lat, lng: position.lng },
-                                // label: position.title,   //其他屬性，可以先略過
-                                // title: position.title,
-                                map: this.state.map,
-                            });
-                            return marker;
+            //繪製地圖標示
+            setMarker() {
+                for (i = 0; i < this.state.travel.length; i++) {
+                    const markers = this.state.travel[i].map((position, j) => {
+                        const marker = new google.maps.Marker({
+                            position: { lat: position.lat, lng: position.lng },
+                            // label: position.title,   //其他屬性，可以先略過
+                            // title: position.title,
+                            map: this.state.map,
                         });
-                    }
-                },
-
-                //載入地圖 設置中心點
-                initMap() {
-                    this.state.map = new google.maps.Map(document.getElementById("map"), {
-                        center: { lat: 22.6397082860113, lng: 120.30264837097221 },
-                        zoom: 8,
+                        return marker;
                     });
-                },
+                }
+            },
+
+            //載入地圖 設置中心點
+            initMap() {
+                this.state.map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 23.573837, lng: 120.97969 },
+                    zoom: 8,  // 0-20
+                    mapTypeControl: false,  // 換地圖類型
+                    streetViewControl: false,  // 街道檢視
+                    clickableIcons: false,   // 可不可以點地圖上的點
+                });
+            },
+        }
+    })
+
+    //日期、儲存行程vue
+    new Vue({
+        store,
+        el: '#app',
+        data() {
+            return {
+                selectDatelocal: [],
+                selectDateEndlocal: [],
+                saveData: [],
             }
-        })
-
-        //日期、儲存行程vue
-        new Vue({
-            store,
-            el: '#app',
-            data() {
-                return {
-                    selectDatelocal: [],
-                    selectDateEndlocal: [],
-                    saveData: [],
-                }
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
             },
-            computed: {
-                travel() {
-                    return this.$store.state.travel
-                },
-                datetime() {
-                    return this.$store.state.datetime
-                },
-                duringDate() {
-                    return this.$store.state.duringDate
-                },
+            datetime() {
+                return this.$store.state.datetime
             },
-            methods: {
-                //編排日期
-                culDate() {
+            duringDate() {
+                return this.$store.state.duringDate
+            },
+        },
+        methods: {
+            //編排日期
+            culDate() {
 
-                    let startTime = new Date(this.selectDatelocal)
-                    let endTime = new Date(this.selectDateEndlocal)
-                    let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+                let startTime = new Date(this.selectDatelocal)
+                let endTime = new Date(this.selectDateEndlocal)
+                let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
 
-                    this.duringDate.length = 0
-                    this.datetime.length = 0
+                this.duringDate.length = 0
+                this.datetime.length = 0
 
-                    console.log(startTime)
-                    console.log(endTime)
+                console.log(startTime)
+                console.log(endTime)
 
-                    if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
+                if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
 
+                    for (let i = 0; i < day; i++) {
+                        this.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                        this.datetime.push('09:00')
+                    }
+
+                    if (this.travel.length == 0) {
                         for (let i = 0; i < day; i++) {
-                            this.duringDate.push(startTime.toLocaleDateString())
-                            startTime = startTime.setDate(startTime.getDate() + 1)
-                            startTime = new Date(startTime)
-                            this.datetime.push('09:00')
+                            this.travel.push([])
+                        }
+                    } else if (this.travel.length <= day) {
+
+                        for (let i = 0; i < day - this.travel.length; i++) {
+                            this.travel.push([])
                         }
 
-                        if (this.travel.length == 0) {
-                            for (let i = 0; i < day; i++) {
-                                this.travel.push([])
+                    } else if (this.travel.length > day) {
+
+                        for (let i = 0; i < this.travel.length - day; i++) {
+                            let lastIndex = this.travel.length - 1
+
+                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
+                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
                             }
-                        } else if (this.travel.length <= day) {
-
-                            for (let i = 0; i < day - this.travel.length; i++) {
-                                this.travel.push([])
-                            }
-
-                        } else if (this.travel.length > day) {
-
-                            for (let i = 0; i < this.travel.length - day; i++) {
-                                let lastIndex = this.travel.length - 1
-
-                                for (let j = 0; j < this.travel[lastIndex].length; j++) {
-                                    this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
-                                }
-                                this.travel.pop()
-                            }
+                            this.travel.pop()
                         }
-                        this.cultime()
-                    } else {
-                        alert('重新選擇日期')
                     }
-                },
+                    this.cultime()
+                } else {
+                    alert('重新選擇日期')
+                }
+            },
 
-                //儲存行程
-                saveSchedule() {
-                    for (let i = 0; i < this.travel.length; i++) {
-                        this.saveData.push([]);
-                        for (let j = 0; j < this.travel[i].length; j++) {
-                            this.saveData[i].push({
-                                startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
-                                endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
-                                weatherWarning: null,
-                                pop: null,
-                                temperature: null,
-                                uvi: null,
-                                place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
-                            })
-                        }
-
-                    }
-                    this.$store.dispatch('axiosSave',
-                        {
-                            StartDate: new Date(this.duringDate[0]),
-                            EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
-                            WeatherWarning: null,
-                            details: this.saveData,
+            //儲存行程
+            saveSchedule() {
+                for (let i = 0; i < this.travel.length; i++) {
+                    this.saveData.push([]);
+                    for (let j = 0; j < this.travel[i].length; j++) {
+                        this.saveData[i].push({
+                            startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                            endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                            weatherWarning: null,
+                            pop: null,
+                            temperature: null,
+                            uvi: null,
+                            place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                         })
-                    alert("儲存成功")
-                },
-            },
-
-
-        })
-
-        //地圖vue
-        new Vue({
-            store,
-            el: '#app3',
-            data: {
-                map: null,
-                //中心點
-                lat: 22.6397082860113,
-                lng: 120.30264837097221,
-                //存放地點
-                locations: [
-                ]
-            },
-            computed: {
-                travel() {
-                    return this.$store.state.travel
-                },
-                selectPlaces() {
-                    return this.$store.state.selectPlaces
-                },
-            },
-            mounted() {
-                //this.travelmounted();
-                //載入store action
-                this.$store.dispatch('initMap')
-                this.$store.dispatch('setMarker')
-
-            },
-            methods: {
-                //測試
-                travelmounted() {
-                    for (let i = 0; i < this.travel.length; i++) {
-                        for (let j = 0; j < this.travel[i].length; j++) {
-                            this.locations.push({ lat: this.travel[i][j].lat, lng: this.travel[i][j].lng });
-                        }
                     }
-                },
-                //add() {
-                //    console.log(this.locations)
-                //    this.locations.push({ lat: this.travel[0][0].lat, lng: this.travel[0][0].lng });
-                //    //this.setMarker();
-                //},
 
-
+                }
+                this.$store.dispatch('axiosSave',
+                    {
+                        StartDate: new Date(this.duringDate[0]),
+                        EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
+                        WeatherWarning: null,
+                        details: this.saveData,
+                    })
+                alert("儲存成功")
             },
+        },
 
-        })
 
-        //行程組件vue
-        Vue.component('vuedraggable', window.vuedraggable.name)
-        new Vue({
-            store,
-            el: '#app4',
-            data() {
-                return {
-                    drag: true,
+    })
+
+    //地圖vue
+    new Vue({
+        store,
+        el: '#app3',
+        data: {
+            map: null,
+            //中心點
+            //存放地點
+            locations: [],
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
+            },
+            selectPlaces() {
+                return this.$store.state.selectPlaces
+            },
+        },
+        mounted() {
+            //this.travelmounted();
+            //載入store action
+            this.$store.dispatch('initMap')
+            this.$store.dispatch('setMarker')
+
+        },
+        methods: {
+            //測試
+            travelmounted() {
+                for (let i = 0; i < this.travel.length; i++) {
+                    for (let j = 0; j < this.travel[i].length; j++) {
+                        this.locations.push({ lat: this.travel[i][j].lat, lng: this.travel[i][j].lng });
+                    }
                 }
             },
+        },
 
-            computed: {
-                travel() {
-                    return this.$store.state.travel;
-                },
-                selectPlaces() {
-                    return this.$store.state.selectPlaces
-                },
-                datetime() {
-                    return this.$store.state.datetime
-                },
-                duringDate() {
-                    return this.$store.state.duringDate
+    })
+
+    //行程組件vue
+    Vue.component('vuedraggable', window.vuedraggable.name)
+    new Vue({
+        store,
+        el: '#app4',
+        data() {
+            return {
+                drag: true,
+            }
+        },
+
+        computed: {
+            travel() {
+                return this.$store.state.travel;
+            },
+            selectPlaces() {
+                return this.$store.state.selectPlaces
+            },
+            datetime() {
+                return this.$store.state.datetime
+            },
+            duringDate() {
+                return this.$store.state.duringDate
+            }
+        },
+
+        mounted() {
+            //this.$store.dispatch('axiosTest')
+        },
+
+        methods: {
+            //刪除景點
+            remove: function (day, view) {
+                this.travel[day].splice(view, 1)
+                this.$store.commit("cultime")
+            },
+
+            //減少停留時間
+            reduceStay(dayIndex, veiwIndex) {
+                this.travel[dayIndex][veiwIndex].min -= 30
+                if (this.travel[dayIndex][veiwIndex].min < 0) {
+                    this.travel[dayIndex][veiwIndex].min = 0
                 }
+                this.cultime()
             },
 
-            mounted() {
-                //this.$store.dispatch('axiosTest')
-            },
-
-            methods: {
-                //刪除景點
-                remove: function(day, view) {
-                    this.travel[day].splice(view, 1)
-                    this.$store.commit("cultime")
-                },
-
-                //減少停留時間
-                reduceStay(dayIndex, veiwIndex) {
-                    this.travel[dayIndex][veiwIndex].min -= 30
-                    if (this.travel[dayIndex][veiwIndex].min < 0) {
-                        this.travel[dayIndex][veiwIndex].min = 0
-                    }
-                    this.cultime()
-                },
-
-                //增加停留時間
-                addStay(dayIndex, veiwIndex) {
-                    this.travel[dayIndex][veiwIndex].min += 30
-                    if (this.travel[dayIndex][veiwIndex].min > 600) {
-                        this.travel[dayIndex][veiwIndex].min = 600
-                    }
-                    this.cultime()
-                },
-
-                //拖曳啟動
-                onStart() {
-                    this.drag = true;
-                },
-
-                //拖曳結束
-                onEnd() {
-                    this.drag = false;
-                },
-                
-                //計算時間
-                cultime() {
-                    this.$store.commit("cultime")
-                },
-
-                //計算小時小數點
-                fixNumber(val) {
-                    return val.toFix(1)
+            //增加停留時間
+            addStay(dayIndex, veiwIndex) {
+                this.travel[dayIndex][veiwIndex].min += 30
+                if (this.travel[dayIndex][veiwIndex].min > 600) {
+                    this.travel[dayIndex][veiwIndex].min = 600
                 }
+                this.cultime()
             },
 
+            //拖曳啟動
+            onStart() {
+                this.drag = true;
+            },
 
-            template:
-                `
+            //拖曳結束
+            onEnd() {
+                this.drag = false;
+            },
+
+            //計算時間
+            cultime() {
+                this.$store.commit("cultime")
+            },
+
+            //計算小時小數點
+            fixNumber(val) {
+                return val.toFix(1)
+            }
+        },
+
+
+        template:
+            `
                                                                     <div>
 
 
@@ -422,66 +419,66 @@
                                                                         </div>
                                                                     </div>
                                                                     `
-        })
+    })
 
-        //搜尋組件vue
-        new Vue({
-            store,
-            el: '#app2',
-            data() {
-                return {
-                    countys: [
-                        '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
-                        '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
-                        '臺東縣', '澎湖縣', '連江縣', '金門縣'
-                    ],
-                    acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
-                    selectCounty: [],
-                    selectAcitivity: [],
-                }
+    //搜尋組件vue
+    new Vue({
+        store,
+        el: '#app2',
+        data() {
+            return {
+                countys: [
+                    '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
+                    '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
+                    '臺東縣', '澎湖縣', '連江縣', '金門縣'
+                ],
+                acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
+                selectCounty: [],
+                selectAcitivity: [],
+            }
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
             },
-            computed: {
-                travel() {
-                    return this.$store.state.travel
-                },
-                selectPlaces() {
-                    return this.$store.state.selectPlaces
-                },
+            selectPlaces() {
+                return this.$store.state.selectPlaces
             },
-            methods: {
-                //搜尋景點
-                search() {
-                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
-                    this.$store.dispatch('setMarker')
-                },
-
-                // 新增景點
-                addview: function(index) {
-                    this.travel[0].push({
-                        startTime: '',
-                        endTime: '',
-                        placeId: this.selectPlaces[index].placeId,
-                        name: this.selectPlaces[index].name,
-                        description: this.selectPlaces[index].description,
-                        tel: this.selectPlaces[index].tel,
-                        add: this.selectPlaces[index].add,
-                        lat: this.selectPlaces[index].lat,
-                        lng: this.selectPlaces[index].lng,
-                        region: this.selectPlaces[index].region,
-                        town: this.selectPlaces[index].town,
-                        class: this.selectPlaces[index].class,
-                        opentime: this.selectPlaces[index].opentime,
-                        closetime: this.selectPlaces[index].closetime,
-                        min: this.selectPlaces[index].timestay,
-                    })
-                    this.$store.dispatch('setMarker')
-                    this.$store.commit("cultime")
-
-                },
+        },
+        methods: {
+            //搜尋景點
+            search() {
+                this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                this.$store.dispatch('setMarker')
             },
 
-            template:
-                `
+            // 新增景點
+            addview: function (index) {
+                this.travel[0].push({
+                    startTime: '',
+                    endTime: '',
+                    placeId: this.selectPlaces[index].placeId,
+                    name: this.selectPlaces[index].name,
+                    description: this.selectPlaces[index].description,
+                    tel: this.selectPlaces[index].tel,
+                    add: this.selectPlaces[index].add,
+                    lat: this.selectPlaces[index].lat,
+                    lng: this.selectPlaces[index].lng,
+                    region: this.selectPlaces[index].region,
+                    town: this.selectPlaces[index].town,
+                    class: this.selectPlaces[index].class,
+                    opentime: this.selectPlaces[index].opentime,
+                    closetime: this.selectPlaces[index].closetime,
+                    min: this.selectPlaces[index].timestay,
+                })
+                this.$store.dispatch('setMarker')
+                this.$store.commit("cultime")
+
+            },
+        },
+
+        template:
+            `
                                                                     <div class="itxst">
                                                                         <div class="lbl">
                                                                             <div class="cy">
@@ -518,12 +515,11 @@
                                                                     </div>
                                                                 </div>
                                                                 `
-        })
+    })
 
 
 
 
 
-    </script>
+</script>
 }
-

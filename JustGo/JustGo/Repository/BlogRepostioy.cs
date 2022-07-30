@@ -85,12 +85,10 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm)
         {
-            string title = "";
-            //string describe = "";
+            string strSerarch = "";            
             if (vm.Search.Length > 0)
             {
-                title = "(Title like '%'+@Search+'%' or Describe like '%'+@Search+'%') and";
-                //describe = "and Describe like '%'+@Search+'%'";
+                strSerarch = "(Title like '%'+@Search+'%' or Describe like '%'+@Search+'%') and";                
             }
             string filterCounty = "";            
             if (vm.selectCounty.Length > 0)
@@ -102,7 +100,7 @@ namespace JustGo.Repository
             {
                 filterAcitivity = "and Class in @selectAcitivity";
             }            
-            string strSQL = $"select * from Blog as b where {title} (Select count(DetailsID) from BlogDetails as bd where b.BlogID = BlogID and(select COUNT(PlaceID) from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity})>0)>0";
+            string strSQL = $"select * from Blog as b where {strSerarch} (Select count(DetailsID) from BlogDetails as bd where b.BlogID = BlogID and(select COUNT(PlaceID) from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity})>0)>0";
             List<Blog> mList = _con.Query<Blog>(strSQL, vm).ToList();
             List<BlogVM> vmList = new List<BlogVM>();
             if (mList.Count > 0)
@@ -111,8 +109,7 @@ namespace JustGo.Repository
                 {
                     vmList.Add(modeltoVM(item));
                 }
-            }
-            
+            }            
             return vmList;
         }
 

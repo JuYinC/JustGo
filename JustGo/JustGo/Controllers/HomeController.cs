@@ -34,6 +34,10 @@ namespace JustGo.Controllers
         {            
             return View();
         }
+        public IActionResult UserCatelog()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

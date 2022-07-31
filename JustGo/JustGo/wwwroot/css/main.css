@@ -70,8 +70,7 @@ html h5 {
 
 @media (min-aspect-ratio: 16 / 9) {
   .index__bg-video {
-    width: 100%;
-    height: auto; } }
+    object-fit: cover; } }
 
 @media (max-aspect-ratio: 16 / 9) {
   .index__bg-video {
@@ -472,8 +471,20 @@ html h5 {
       margin: 1.5rem;
       overflow-y: scroll; }
       .journey__map .sidebar-hide button {
-        width: 20px;
+        width: 100px;
         height: 20px; }
+      .journey__map .sidebar-hide .item2 {
+        display: grid;
+        min-height: 50px;
+        height: auto;
+        min-width: 200px;
+        width: auto;
+        padding: 6px 12px;
+        margin: 10px 10px 0px 10px;
+        border: solid 1px #eee;
+        background-color: #FAF0E6;
+        border-radius: 10px;
+        text-align: left; }
       .journey__map .sidebar-hide .lbl button {
         width: 160px; }
       .journey__map .sidebar-hide .lbl .cy {
@@ -511,38 +522,57 @@ html h5 {
     .journey__map .sidebar__grid {
       height: 100%;
       display: grid;
-      grid-template-rows: 10% 80% 1fr; }
-      .journey__map .sidebar__grid .grid-item-t ul {
-        display: flex;
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        align-items: center; }
-        .journey__map .sidebar__grid .grid-item-t ul .days {
-          list-style: none;
-          border: 1px solid black;
-          width: 9rem;
-          height: 4rem;
-          margin: 0.3rem;
-          text-align: center;
-          padding-top: 1rem; }
-      .journey__map .sidebar__grid .grid-item-m {
-        background-color: #ce9906; }
-        .journey__map .sidebar__grid .grid-item-m ul {
+      grid-template-rows: 15% 75% 1fr; }
+      .journey__map .sidebar__grid .grid-item-t {
+        margin: 12px; }
+        .journey__map .sidebar__grid .grid-item-t .daysbox {
           display: flex;
-          padding: 0;
-          margin: 0;
-          height: 100%; }
-          .journey__map .sidebar__grid .grid-item-m ul div {
+          padding: 5px;
+          margin: 0; }
+          .journey__map .sidebar__grid .grid-item-t .daysbox .days {
             list-style: none;
             border: 1px solid black;
-            width: 25rem;
-            height: 7rem;
+            border-radius: 10px;
+            width: 9rem;
+            height: 4rem;
             margin: 0.3rem;
             text-align: center;
-            padding-top: 0.5rem; }
+            padding-top: 1rem; }
+      .journey__map .sidebar__grid .grid-item-m {
+        height: inherit;
+        overflow-y: scroll; }
+        .journey__map .sidebar__grid .grid-item-m .col {
+          width: 25.5rem;
+          flex: 1;
+          min-width: 250px;
+          padding: 10px;
+          border: solid 1px #333;
+          border-radius: 5px;
+          margin: 3px 0px 5px 17px; }
+          .journey__map .sidebar__grid .grid-item-m .col .title {
+            font-size: 1.5rem; }
+        .journey__map .sidebar__grid .grid-item-m .item {
+          min-height: 5rem;
+          height: auto;
+          min-width: 20rem;
+          width: auto;
+          padding: 0.6rem 1.2rem;
+          margin-top: 1rem;
+          border: solid 1px #eee;
+          background-color: #F5F5DC;
+          border-radius: 1rem;
+          text-align: left;
+          font-size: 1.4rem; }
+          .journey__map .sidebar__grid .grid-item-m .item .adjtime {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; }
+          .journey__map .sidebar__grid .grid-item-m .item button {
+            width: 40px;
+            border-style: none;
+            background: #ff5568; }
       .journey__map .sidebar__grid .grid-item-b {
-        background-color: red; }
+        margin: 30px 0 0 100px; }
   .journey__map .mapbox {
     flex: 1;
     display: flex;

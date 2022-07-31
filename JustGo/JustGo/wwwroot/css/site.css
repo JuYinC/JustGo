@@ -9,16 +9,8 @@ html {
   
  /* min-height: 100%;*/
 }
-html.noscroll {
-  position: fixed; 
-  overflow-y: scroll;
-  width: 100%;
-}
 
-html.fixWindow {
-  position: fixed;
-  width: 100%;
-}
+
 
 * {
   margin: 0;
@@ -31,60 +23,10 @@ html.fixWindow {
   }
 }
 
-.col {
-    width: 20%;
-    flex: 1;
-    min-width: 250px;
-    min-height: 800px;
-    height: auto;
-    padding: 10px;
-    border: solid 1px #eee;
-    border-radius: 5px;
-    float: left;
-    margin: 10px;
-}
-.col2 {
-    width: 30%;
-    flex: 1;
-    min-width: 250px;
-    min-height: 800px;
-    height: auto;
-    padding: 10px;
-    border: solid 1px #eee;
-    border-radius: 5px;
-    float: left;
-    margin: 10px;
-}
 
-    .col + .col {
-        margin-left: 10px;
-    }
 
-.item {
-    min-height: 50px;
-    height: auto;
-    min-width: 200px;
-    width: auto;
-    padding: 6px 12px;
-    margin: 10px 10px 0px 10px;
-    border: solid 1px #eee;
-    background-color: #F5F5DC;
-    border-radius: 10px;
-    text-align: left;
-}
 
-.item2 {
-    min-height: 50px;
-    height: auto;
-    min-width: 200px;
-    width: auto;
-    padding: 6px 12px;
-    margin: 10px 10px 0px 10px;
-    border: solid 1px #eee;
-    background-color: #FAF0E6;
-    border-radius: 10px;
-    text-align: left;
-}
+
 
 .item:hover {
     background-color: #FFFDD0;
@@ -106,12 +48,12 @@ html.fixWindow {
     flex-direction: column;
     min-height: 100px;
 }
-/*¦a¹Ï*/
+/*ï¿½aï¿½ï¿½*/
 #map {
     height: 500px;
     width: 100%;
 }
-/*¦a¹Ï¤W­±ªº«ö¶s*/
+/*ï¿½aï¿½Ï¤Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s*/
 #floating-panel {
     position: absolute;
     top: 100px;
@@ -125,10 +67,10 @@ html.fixWindow {
     line-height: 30px;
     padding-left: 10px;
 }
-/*ÁôÂÃinfowindowªº¤e¤e«ö¶s*/
+/*ï¿½ï¿½ï¿½ï¿½infowindowï¿½ï¿½ï¿½eï¿½eï¿½ï¿½ï¿½s*/
 button.gm-ui-hover-effect {
     visibility: hidden;
 }
 body {
-    margin-bottom: 60px;
+  
 }

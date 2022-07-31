@@ -29,6 +29,14 @@ namespace JustGo.Controllers
         {
             return View();
         }
+        public IActionResult block1()
+        {
+            return View();
+    }
+    public IActionResult blog()
+        {
+            return View();
+        }
 
         public IActionResult itinerary()
         {            

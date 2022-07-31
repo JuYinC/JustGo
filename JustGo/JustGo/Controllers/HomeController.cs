@@ -14,11 +14,12 @@ namespace JustGo.Controllers
         private readonly IScheduleRepostioy _schedule;
         private readonly IBlogRepostioy _blog;
 
-        public HomeController(ILogger<HomeController> logger, IPlaceWeatherRepostiory pwr, IScheduleRepostioy schedule)
+        public HomeController(ILogger<HomeController> logger, IPlaceWeatherRepostiory pwr, IScheduleRepostioy schedule,IBlogRepostioy blog)
         {
             _logger = logger;
             _pwr = pwr;
-            _schedule = schedule;            
+            _schedule = schedule;           
+            _blog = blog;
         }
         public IActionResult Index()
         {

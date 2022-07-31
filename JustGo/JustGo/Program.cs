@@ -10,7 +10,7 @@ using System.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 var TravelWindows = builder.Configuration.GetConnectionString("TravelWindows");
 var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
 
@@ -20,6 +20,7 @@ builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP)
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 builder.Services.AddTransient<IBlogRepostioy, BlogRepostioy>();
+
 
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));

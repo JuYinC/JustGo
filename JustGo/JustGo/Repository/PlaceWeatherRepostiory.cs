@@ -22,7 +22,7 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10)",vm).ToList();            
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10)", vm).ToList();
             Console.WriteLine(getPlace.GetType());
 
             return getPlace;
@@ -30,44 +30,43 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
         {
-            
-                string sqlStr = $"select * from Place Where ";
-                bool i = true;
-                if (vm.selectCounty.Length>0)
+            string sqlStr;
+            sqlStr = $"select * from Place Where ";
+            //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) Where ";
+            //sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) Where ";
+            bool i = true;
+            if (vm.selectCounty.Length > 0)
+            {
+                if (i)
                 {
-                    if (i)
-                    {
-                        sqlStr += "Region in @selectCounty ";
-                        i = false;
-                    }                    
-                }               
-                if (vm.selectAcitivity.Length > 0)
-                {
-                    if (i)
-                    {
-                        sqlStr += " Class in @selectAcitivity";
-                    }
-                    else
-                    {
-                        sqlStr += " and Class in @selectAcitivity";
-                    }                    
+                    sqlStr += "Region in @selectCounty ";
+                    i = false;
                 }
-                return _con.Query<Place>(sqlStr, vm).ToList();
-            
+            }
+            if (vm.selectAcitivity.Length > 0)
+            {
+                if (i)
+                {
+                    sqlStr += " Class in @selectAcitivity";
+                }
+                else
+                {
+                    sqlStr += " and Class in @selectAcitivity";
+                }
+            }
+            return _con.Query<Place>(sqlStr, vm).ToList();
         }
 
         public Place getPlaceId(string id)
         {
-            
-                
-                string sqlStr = $"select * from Place Where PlaceId = @id";
-                return _con.Query<Place>(sqlStr, new { id }).FirstOrDefault()??new Place();
-            
+            string sqlStr = $"select * from Place Where PlaceId = @id";
+            return _con.Query<Place>(sqlStr, new { id }).FirstOrDefault() ?? new Place();
+
         }
 
         public Weather getWeatherByLocation(string location)
         {
             throw new NotImplementedException();
-        }        
-    }    
+        }
+    }
 }

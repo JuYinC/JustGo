@@ -1,7 +1,13 @@
-﻿using JustGo.Models;
-using JustGo.ViewModels;
+﻿using Dapper;
+using JustGo.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using JustGo.ViewModels;
 using System.Data;
+using System.Diagnostics;
 
 namespace JustGo.Repository
 {
@@ -9,12 +15,10 @@ namespace JustGo.Repository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
-        readonly IPlaceWeatherRepostiory _pr;
-        public BlogRepostioy(IDbConnection con, TravelContext context, IPlaceWeatherRepostiory weatherRepostiory)
+        public BlogRepostioy(IDbConnection con, TravelContext context)
         {
             _con = con;
             _context = context;
-            _pr = weatherRepostiory;
         }
 
         public bool createBlog(BlogVM vm)
@@ -81,13 +85,32 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm)
         {
-            ICollection<Place> p_list = _pr.getPlaceFilter(vm);
-            List<BlogVM> result = new List<BlogVM>();
-            foreach (Place p in p_list)
+            string strSerarch = "";            
+            if (vm.Search.Length > 0)
             {
-                var item = _context.Blog.SingleOrDefault();
+                strSerarch = "(Title like '%'+@Search+'%' or Describe like '%'+@Search+'%') and";                
             }
-            return result;
+            string filterCounty = "";            
+            if (vm.selectCounty.Length > 0)
+            {
+                filterCounty = "and Region in @selectCounty";
+            }
+            string filterAcitivity = "";
+            if (vm.selectAcitivity.Length > 0)
+            {
+                filterAcitivity = "and Class in @selectAcitivity";
+            }            
+            string strSQL = $"select * from Blog as b where {strSerarch} exists(Select DetailsID from BlogDetails as bd where b.BlogID = BlogID and exists(select PlaceID from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity}))";
+            List<Blog> mList = _con.Query<Blog>(strSQL, vm).ToList();
+            List<BlogVM> vmList = new List<BlogVM>();
+            if (mList.Count > 0)
+            {                
+                foreach (var item in mList)
+                {
+                    vmList.Add(modeltoVM(item));
+                }
+            }            
+            return vmList;
         }
 
         public ICollection<BlogVM> getBlogRank()

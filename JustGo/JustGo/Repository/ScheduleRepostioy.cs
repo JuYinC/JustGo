@@ -105,8 +105,8 @@ namespace JustGo.Repository
                 ScheduleId = vm.ScheduleId,
                 UserId = vm.UserId,
                 Title = vm.Title,
-                StartDate = vm.StartDate,
-                EndDate = vm.EndDate,
+                StartDate = vm.StartDate.AddHours(8),
+                EndDate = vm.EndDate.AddHours(8),
                 WeatherWarning = vm.WeatherWarning,
 
                 ScheduleDetails = modelList,

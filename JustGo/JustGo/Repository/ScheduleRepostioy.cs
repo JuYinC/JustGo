@@ -125,6 +125,8 @@ namespace JustGo.Repository
                 EndDate = model.EndDate,
                 WeatherWarning = model.WeatherWarning,
             };
+            model.StartDate.AddHours(-8);
+            model.EndDate.AddHours(-8);
             if (model.ScheduleDetails.Count > 0)
             {
                 vm.Details = new List<IList<ScheduleDetailVM>>();                

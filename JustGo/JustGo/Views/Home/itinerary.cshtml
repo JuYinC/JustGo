@@ -124,9 +124,10 @@
                 updateSchedule(state, status) {
                     let startTime = new Date(status.startDate)
                     let endTime = new Date(status.endDate)
-
-                    console.log(status.startDate)
+                    let endTime2 = new Date(status.details[0][0].startTime)
                     console.log(startTime)
+                    console.log(endTime2.getHours())
+                    console.log(endTime2.get)
 
 
                     for (let i = 0; i < status.details.length; i++) {
@@ -135,6 +136,7 @@
                         startTime = startTime.setDate(startTime.getDate() + 1)
                         startTime = new Date(startTime)
                         this.state.datetime.push('09:00')
+                        
 
                         for (let j = 0; j < status.details[i].length; j++) {
                             this.state.travel[i].push({
@@ -152,6 +154,8 @@
                                 class: status.details[i][j].place.class,
                                 opentime: status.details[i][j].place.opentime,
                                 closetime: status.details[i][j].place.closetime,
+
+                                //
                                 min: status.details[i][j].place.timestay,
                             })
                         }

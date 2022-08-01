@@ -87,8 +87,8 @@ namespace JustGo.Repository
                         }
                         ScheduleDetails details = new ScheduleDetails()
                         {
-                            StartTime = item.StartTime.AddHours(8),
-                            EndtTime = item.EndTime.AddHours(8),
+                            StartTime = item.StartTime,
+                            EndtTime = item.EndTime,
                             PlaceId = item.Place.PlaceId,
                             Town = item.Place.Town,
                             WeatherWarning = item.WeatherWarning,

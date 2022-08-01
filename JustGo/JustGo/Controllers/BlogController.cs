@@ -7,9 +7,11 @@ namespace JustGo.Controllers
     public class BlogController : Controller
     {
         readonly ILogger _logger;
-        public BlogController(ILogger<BlogController> logger)
+        readonly IWebHostEnvironment _webHostEnvironment;
+        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -23,6 +25,27 @@ namespace JustGo.Controllers
         {
             Console.WriteLine(vm.Title);
             return Json(vm);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> uploadImage(IEnumerable<IFormFile> image)
+        {
+            if (image.First() != null)
+            {
+                foreach(IFormFile file in image)
+                {
+                    string WebRootPatch = _webHostEnvironment.WebRootPath;
+                    string ProjectPath = _webHostEnvironment.ContentRootPath;
+                    string SourcFilename = Path.GetFileName(file.FileName);
+                    string TargetFilename = Path.Combine(WebRootPatch,"Uploads",SourcFilename);
+                    using(FileStream stream = new FileStream(TargetFilename, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+            return Json("ok");
         }
     }
 }

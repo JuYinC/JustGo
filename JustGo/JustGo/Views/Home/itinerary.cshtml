@@ -92,8 +92,7 @@
                 },
 
             //計算行程表時間
-            cultime() {
-                console.log("cultime")
+            cultime() {                
                 for (let j = 0; j < this.state.travel.length; j++) {
                     let timestamp = this.state.datetime[j]
                     for (let i = 0; i < this.state.travel[j].length; i++) {
@@ -244,13 +243,8 @@
 
         //非同步function，由組件呼叫使用
         actions: {
-            axiosPreload(context, payload) {
-                axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
-                    .then(res => console.log(res.data))
-            },
             //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
-            axiosSave(context, payload) {
-                console.log(payload)
+            axiosSave(context, payload) {                
                 axios.post("@Url.Action("setSchedule","Schedule")", payload)
                     .then(console.log("success"))
                     .catch(err => console.log("err"))
@@ -306,8 +300,8 @@
                 this.duringDate.length = 0
                 this.datetime.length = 0
 
-                console.log(startTime)
-                console.log(endTime)
+                //console.log(startTime)
+                //console.log(endTime)
 
                 if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
 
@@ -339,7 +333,7 @@
                             this.travel.pop()
                         }
                     }
-                    this.cultime()
+                    
                 } else {
                     alert('重新選擇日期')
                 }
@@ -373,45 +367,15 @@
                     alert("儲存成功")
                 },
             },
-
-
     })
 
     //地圖vue
     new Vue({
         store,
         el: '#app3',
-        data: {
-            map: null,
-            //中心點
-            //存放地點
-            locations: [],
-        },
-        computed: {
-            travel() {
-                return this.$store.state.travel
-            },
-            selectPlaces() {
-                return this.$store.state.selectPlaces
-            },
-        },
-        mounted() {
-            //this.travelmounted();
-            //載入store action
+        mounted() {            
             this.$store.dispatch('initMap')
-
         },
-        methods: {
-            //測試
-            travelmounted() {
-                for (let i = 0; i < this.travel.length; i++) {
-                    for (let j = 0; j < this.travel[i].length; j++) {
-                        this.locations.push({ lat: this.travel[i][j].lat, lng: this.travel[i][j].lng });
-                    }
-                }
-            },
-        },
-
     })
 
     //行程組件vue

@@ -41,13 +41,15 @@
             <div class="titlebar">行程</div>
             <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
                 <div class="schedule" v-for="item in showSchedule" v-if="item.startDate>dateNow">
-                <div class="scheduleInfo" >                   
+                <div class="scheduleInfo" >
+                    {{item.scheduleId}}<br>
                     {{item.title}}<br>
                     {{item.startDate}}<br>
                     {{item.endDate}}<br>
                     
                 </div>
                 <div class="buttonBar">
+                    <button class="btn btn-secondary" @@click="editSchedule(item.scheduleId)">編輯</button>
                     <button class="btn btn-secondary">分享旅程</button>
                     <button class="btn btn-danger">刪除</button>
                 </div>
@@ -85,6 +87,11 @@
                 }
             },
             methods: {
+                
+                editSchedule(scheduleId){
+                    window.location.href ='@Url.Action("itinerary","Home")?' + scheduleId
+                    //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
+                }
 
             },
             mounted(){

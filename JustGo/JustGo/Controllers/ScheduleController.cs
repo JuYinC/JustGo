@@ -39,9 +39,9 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
-            Console.WriteLine(Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4")));
+            Console.WriteLine(Json(_schedule.selectUserSchedule(GetUserId())));
             //return Json(_schedule.selectUserSchedule("1"));
-            return Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4"));
+            return Json(_schedule.selectUserSchedule(GetUserId()));
             //return Json("123");
         }
 
@@ -49,7 +49,7 @@ namespace JustGo.Controllers
         [HttpPost]
         public IActionResult selectDetail([FromBody] ScheduleVM vm)
         {
-            return Json(_schedule.selectScedule(vm.ScheduleId));
+            return Json(_schedule.selectScedule(vm.ScheduleId, GetUserId()));
         }
 
         //新增行程

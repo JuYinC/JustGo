@@ -23,7 +23,7 @@ namespace JustGo.Controllers
         }
         public IActionResult Index()
         {
-            return View("Blog");
+            return View("EditBlog");
         }
 
         public IActionResult Index0728()
@@ -50,7 +50,7 @@ namespace JustGo.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Search");
         }
 
         [HttpPost]

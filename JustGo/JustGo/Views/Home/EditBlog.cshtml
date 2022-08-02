@@ -1,0 +1,399 @@
+﻿@{
+    Layout = "_Layout2";
+}
+@{
+    ViewData["Title"] = "EditBlog";
+}
+
+@section Style{
+    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
+    <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
+
+}
+
+
+    @section Scripts{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+
+
+        let id = 0;
+        let vm = new Vue({
+            el: `#bloginfo`,
+            data: {
+                Details:  [
+                    [
+                        {
+                            id: id++,
+                            P_Add:"",                            
+                            PlaceId: 1,
+                            P_Name: "北部1",
+                            P_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"",                         
+                            image: null,
+                            previewlist: [],
+                            Images: [],                      
+                 
+                        },
+                        {
+                            id: id++,
+                            P_Add:"",                            
+                            PlaceId: 1,
+                            P_Name: "南部2",
+                            P_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images:[] ,                           
+                           
+
+                        },
+                        {
+                            id: id++,
+                            P_Add:"",                            
+                            PlaceId: 1,
+                            P_Name: "外島3",
+                            P_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                            
+                          
+                        }
+
+                    ],
+                    [
+                        {
+                            id: id++,
+                            P_Add:"",                            
+                            PlaceId: 1,
+                            P_Name: "東部1",
+                            P_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                            
+                            
+                        },
+                        {
+                            id: id++,
+                            P_Add:"",                            
+                            PlaceId: 1,
+                            P_Name: "中部2",
+                            P_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                       
+                          
+
+                        },
+
+
+                    ],
+                ],
+                UserId: ["Alley", "Beca", "Cindy"],
+                UserImage: "https://source.unsplash.com/random/?user",
+                CoverImageName: 'https://unsplash.it/1800/1600/?random/view',
+                Title: '請輸入標題~~~~~~~',
+                Describe: '',
+                // like:0,//只存總數喜歡
+                //(個別喜歡存UserKeep)
+                Like: 5,
+
+                myscore: this.score,
+                mytempscore: this.score
+
+            },
+            props: {
+                count: {
+                    type: Number,
+                    default: 5
+                },
+                score: {
+                    type: Number,
+                    default: 1
+                },
+                color: {
+                    type: String,
+                    default: 'black'
+                }
+            },
+            methods: {              
+                saveBlog(){
+                    axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
+                            .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
+                            .catch(err => console.log("err"))
+                },
+                //{UserImage: this.UserImage, CoverImageName: this.CoverImageName, Title:this.Title, Describe: this.Describe,Like: this.Like, Details:this.Details}
+                //saveDataBlog: function(index) {
+                //    for (let index = 0; index < this.data.length; index++) {
+                //        this.saveDataBlog.push([index])({
+                //            UserImage: this.UserImage[index], CoverImageName: this.CoverImageName[index], Title: this.Title[index], Describe: this.Describe[index], Like: this.Like[index], Details: { P_Add: this.P_Add[index], PlaceId: this.PlaceId[index], P_Name: this.P_Name[index], P_tel: this.P_tel[index], score: this.score[index], Describe: this.Describe[index], previewlist: this.previewlist[index], Images: this.Images[index] }
+                //            })
+                //        }
+                //},
+                  //loadBlog: function() {
+                //    axios.post("Url.Action("loadBlog","getBlog")", {})
+                //        .then(res => { console.log(res.data); context.commit('loadDataBlog', res.data) })
+                //        .catch(err => console.log("err"))
+                //},
+                
+                fileChange(e) {
+                    let file = e.target.files[0]
+                    let readFile = new FileReader()
+                    readFile.readAsDataURL(file)
+                    readFile.addEventListener('load', () => {
+                        let image = document.getElementById('image')
+                        this.CoverImageName = readFile.result
+                        // console.log(this.CoverImageName);
+                        this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
+                        console.log(this.CoverImageName);
+                    })
+
+                },
+                copyURL: function() {
+                    // let url = window.location.toString()
+                    let myurl = document.createElement('input'),
+                    geturl = window.location.toString()
+                  
+                    document.body.appendChild(myurl);
+                    myurl.value = geturl;
+                    myurl.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(myurl);
+
+                },
+                loadimg: function(dayIndex, viewIndex, e) {
+                    var input = e.target;
+                    var count = input.files.length;
+                    console.log(count);
+                    var index = 0;
+                    if (input.files) {
+                        while (count--) {
+                            var reader = new FileReader();
+                            reader.onload = (e) => {
+                                this.Details[dayIndex][viewIndex].previewlist = e.target.result;
+                                console.log(e.target.result)                        
+
+                            }
+                            this.Details[dayIndex][viewIndex].Images = (input.files[index]);
+                            reader.readAsDataURL(input.files[index]);
+                            index++;
+                        }
+                    }
+                },
+                reset: function() {
+                    this.image = null;
+                    this.preview = null;
+                    this.Images = [];
+                    this.previewlist = [];
+                },
+                likeblog: function() {
+                    var heart = document.getElementsByClassName("fa-heart");
+                    var totallike = document.getElementsByClassName("totallike");
+                    var totallike;
+                    var bool = true;
+                    i = 0
+                    heart[i].onclick = function() {
+                        if (bool) {
+                            bool = false;
+                            this.className = "fa fa-heart active";
+                            ++totallike[i].innerHTML;
+                            // console.log(bool);
+                        } else {
+                            bool = true;
+                            this.className = "fa fa-heart";
+                            --totallike[i].innerHTML;
+                            console.log(bool);
+                        }
+                    }
+                },               
+                onChange(dayIndex) {
+
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+                caltime(dayIndex) {
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                }
+            },
+            
+        },
+        )
+
+
+    </script>
+
+}
+   @* <nav id="navbar">
+        <a class="logo">JUSTGO</a>
+        <ul id="menu">
+            <li><a href="#">規劃行程 </a></li>
+            <li><a href="#">行程推薦</a></li>
+            <li><a href="#">我的行程</a></li>
+        </ul>
+    </nav>*@
+
+    <div id="bloginfo">
+        <img :src="CoverImageName" id="coverimg" alt="封面圖片">
+        <div id="covertitle">
+            <i class="fa fa-flag" aria-hidden="true">標題</i>
+            <input type="text" id="TitleId" v-model="Title" maxlength="15" size="20">
+            <label class="btn btn-primary">
+                <input id="upload_img" style="display:none;" type="file" @@change="fileChange" size="10">
+                <i class="fa fa-photo"></i> 挑選我的封面
+            </label>
+            <button @@click="saveBlog" class="btn btn-outline-primary btn-sm">儲存行程</button>
+        </div>
+        <!--左邊欄位-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3" id="sidebar">
+                    <div class="sticky-top list-group">
+                        <label>我的行程</label>
+                        <div v-for="(day,dayIndex) in Details">
+                            <ul>
+                                Day{{dayIndex+1}}
+                                <li v-for="(P_Name,viewIndex) in day" :key="P_Name.id" class="Details list-group-item list-group-item-action list-group-item-primary">
+                                    <a href="#P_Name.P_Name">{{P_Name.P_Name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+         <!--右邊欄位-->
+                <div class="col-sm-8" style="margin-left: 20px;">
+                    <div class="user">
+                        <div>
+                            <span>
+                                <img :src="UserImage" id="userimg" alt="">
+                            </span><span>使用者:{{UserId[0]}}</span>
+                        </div>
+                        <div>
+                            <!-- https://www.minwt.com/webdesign-dev/23006.html -->
+                            <span id="iconfb"><i class="fa-brands fa-facebook"></i><span>推文</span></span>
+                            <span id="iconig"><i class="fa-brands fa-instagram-square"></i><span>推文</span></span>
+                            <span id="icontw"><i class="fa-brands fa-twitter"></i><span>推文</span></span>
+                            <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
+                            <label class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL">複製連結</i>
+                            </label>
+
+                        </div>
+                        <h4>推薦:</h4>
+                        <textarea rows="4" class="form-control" maxlength="150" placeholder="這次特別推薦 字數限制為150字" v-model="Describe" style="resize:none"></textarea>
+                    </div>
+
+                    <div v-for="(day,dayIndex) in Details">
+                        <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id" :id="P_Name.P_Name">
+                            Day{{dayIndex+1}}
+                            <span><i class="fa-solid fa-map-location-dot"></i></span>
+                            <span class="Details">{{P_Name.P_Name}}</span>
+                            <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
+
+                            <div>
+                                <i class="fa fa-star" :style="{color:color}"
+                               :class="item<=P_Name.score?'fa-star':'fa-star-o'"
+                               v-for="item in count"
+                               @@mouseenter="P_Name.score=item"
+                               @@mouseleave="P_Name.score=myscore"
+                               @@click="myscore=item"></i>
+                                {{P_Name.score}}分
+                            </div>
+
+                            <textarea rows="6" class="form-control" maxlength="400" v-model="P_Name.Describe" placeholder="行程敘述 這次行程多虧了justgo... 字數限制為400字" style="resize:none"></textarea>
+
+
+                            <div>
+                                <label class="btn btn-primary btn-sm">
+                                    <input type="file" accept="image/*" multiple @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg" style="display:none;" size="10">
+                                    <i class="fa fa-photo"></i> 上傳圖片
+                                </label>
+                                <button @@click="reset" class="btn btn-outline-secondary btn-sm">取消上傳</button>
+
+                                <div>test test test </div>
+                                {{Details[dayIndex][viewIndex].Images}}
+                                {{Details[dayIndex][viewIndex].previewlist}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-around">
+                    <button class="btn btn-outline-primary btn-sm">取消編輯</button>
+                    
+                    <button class="btn btn-outline-primary btn-sm">發佈行程</button>
+                </div>
+
+            </div>
+        </div>
+        <footer style="height:300px; background-color:antiquewhite"> I am footer
+
+        </footer>
+
+    </div>

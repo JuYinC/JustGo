@@ -23,7 +23,7 @@ namespace JustGo.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View("Blog");
         }
 
         public IActionResult Index0728()

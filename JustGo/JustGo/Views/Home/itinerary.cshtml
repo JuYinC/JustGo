@@ -136,11 +136,13 @@
                     state.markers = [];
                     state.markerCluster = null
                 }
+                const bounds = new google.maps.LatLngBounds();
                 // 產生地點marker
                 state.selectPlaces.map((position, i) => {
                     const marker = new google.maps.Marker({
                         position: { lat: position.lat, lng: position.lng },
                     });
+                    bounds.extend(marker.position);
                     // 產生infowindow
                     let contentString =
                         `<div id="info">
@@ -170,6 +172,7 @@
                     map: state.map,
                     markers: state.markers,
                 });
+                state.map.fitBounds(bounds);
             },
 
             // 產生地圖標示_行程
@@ -227,7 +230,7 @@
                 });
             },
 
-            // 計算行程時間
+            // 計算行程時間 & 畫路線
             calcRoute(state) {
                 console.log(state.travel)
                 state.travelTime = [];
@@ -620,7 +623,9 @@
         methods: {
             //搜尋景點
             search() {
-                this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                }
             },
 
             // 新增景點
@@ -655,7 +660,7 @@
                     <div class="lbl">
                         <div class="cy">
                             <span v-for="(county,index) in countys">
-                                <input  type="checkbox" :value="county" v-model="selectCounty" :id="county">
+                                <input @@change="search" type="checkbox" :value="county" v-model="selectCounty" :id="county">
                                 <label :for="county">{{county}}</label>
                             </span>
                         </div>
@@ -663,7 +668,7 @@
                         <div class="cat">
                             <span v-for="(acitivity,index) in acitivitys">
 
-                                <input type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
+                                <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
                                 <label :for="index+1">{{acitivity}}</label>
                             </span>
                         </div>

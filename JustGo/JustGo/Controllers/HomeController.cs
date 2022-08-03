@@ -46,7 +46,7 @@ namespace JustGo.Controllers
         }
         public IActionResult UserCatelog()
         {
-            return View(_schedule.selectUserSchedule(GetUserId()));
+            return View();
         }
 
         public IActionResult Privacy()
@@ -73,14 +73,6 @@ namespace JustGo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        string GetUserId()
-        {
-            var user = (ClaimsIdentity)User.Identity;
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return userId.ToString();
-        }
-
     }
 
 }

@@ -54,6 +54,10 @@ namespace JustGo.Controllers
             }
             return Json("ok");
         }
+        public IActionResult creatBlog(ScheduleVM vm)
+        {            
+            return Json(_blog.createScheduleToBlog(vm.ScheduleId));
+        }
 
         //查詢使用者部落格(無細項)
         [HttpPost]

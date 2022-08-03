@@ -45,11 +45,11 @@ namespace JustGo.Repository
                 EndDate = schedule.EndDate
             };            
             schedule.StartDate.AddHours(-8);
-            schedule.EndDate.AddHours(-8);            
+            schedule.EndDate.AddHours(-8);
             if (schedule.ScheduleDetails.Count > 0)
             {
                 blogVm.Details = new List<IList<BlogDetailsVM>>();
-                for(int i = 0; i < schedule.EndDate.Day - schedule.StartDate.Day; i++)
+                for(int i = 0; i <= schedule.EndDate.Day - schedule.StartDate.Day; i++)
                 {
                     blogVm.Details.Add(new List<BlogDetailsVM>());
                     foreach (ScheduleDetails item in schedule.ScheduleDetails.Where(e => e.StartTime.Day == schedule.StartDate.Day + i))

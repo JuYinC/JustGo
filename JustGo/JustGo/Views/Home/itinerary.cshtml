@@ -38,9 +38,9 @@
                         
                         </div>
                         <div class="grid-item-m">
-                            
-                                <div id="app4"></div>
-                          
+
+                            <div id="app4"></div>
+
                         </div>
                         <div class="grid-item-b">
                             <button class="btn btn-primary">儲存行程</button>
@@ -58,10 +58,10 @@
                     <div id="map"></div>
                 </div>
             </div>
-            
+
         </div>
     </div>
- 
+
 
 
     @section Scripts{
@@ -176,6 +176,25 @@
                     });
                     state.markers.push(marker);
                 });
+            //非同步function，由組件呼叫使用
+            actions: {
+                //axios載入先前資料
+                axiosLoad(context, payload) {
+                    console.log(payload)
+                    axios.post("@Url.Action("selectDetail","Schedule")", payload)
+                        .then(res => {
+                            context.commit('updateSchedule', res.data)
+                        })
+                        .catch(err => console.log("err"))
+                },
+
+                //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
+                axiosSave(context, payload) {
+                    console.log(payload)
+                    axios.post("@Url.Action("setSchedule","Schedule")", payload)
+                        .then(console.log("success"))
+                        .catch(err => console.log("err"))
+                },
 
                 // 地點群組marker Cluster
                 state.markerCluster = new markerClusterer.MarkerClusterer({
@@ -295,6 +314,40 @@
         methods: {
             //編排日期
             culDate() {
+        //日期、儲存行程vue
+        new Vue({
+            store,
+            el: '#app',
+            data() {
+                return {
+                    selectDatelocal: [],
+                    selectDateEndlocal: [],
+                    saveData: [],
+                }
+            },
+            computed: {
+                travel() {
+                    return this.$store.state.travel
+                },
+                datetime() {
+                    return this.$store.state.datetime
+                },
+                duringDate() {
+                    return this.$store.state.duringDate
+                },
+            },
+            mounted() {
+
+                let id = window.location.search.substring(1)
+                console.log(id)
+                if (id != "") {
+                    this.$store.dispatch('axiosLoad', { ScheduleId: id })
+                }
+
+            },
+            methods: {
+                //編排日期
+                culDate() {
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
@@ -353,7 +406,7 @@
                                 weatherWarning: false,
                                 pop: 10,
                                 temperature: 25,
-                                uvi: 5,                                
+                                uvi: 5,
                                 place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                             })
                         }
@@ -364,7 +417,7 @@
                             StartDate: new Date(this.duringDate[0]),
                             EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
                             WeatherWarning: false,
-                            title:"123",
+                            title: "123",
                             details: this.saveData,
                         })
                     alert("儲存成功")
@@ -407,9 +460,9 @@
             }
         },
 
-        mounted() {
-            //this.$store.dispatch('axiosTest')
-        },
+            mounted() {
+
+            },
 
         methods: {
             //刪除景點
@@ -461,35 +514,35 @@
 
             template:
                 `
-                <div>
-                    <div class="itxst schedule">
-                        <div class="col" v-for="(day,dayIndex) in travel">
-                            <div class="title"> {{duringDate[dayIndex]}}</div>    
-                                <hr>旅遊時間 :
-                                <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
+                                                <div>
+                                                    <div class="itxst schedule">
+                                                        <div class="col" v-for="(day,dayIndex) in travel">
+                                                            <div class="title"> {{duringDate[dayIndex]}}</div>
+                                                                <hr>旅遊時間 :
+                                                                <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
 
-                                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
-                                    ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
-                                    @@change="cultime()" class="min">
-                                    <transition-group>
-                                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                            {{view.startTime}}-{{view.endTime}}<br>
-                                            {{view.name}}<br>
-                                            {{view.add}}<br>
-                                            <div class="adjtime">
-                                                停留時間:
-                                                <i class="fa-solid fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i>
-                                                {{view.min/60}}小時
-                                                <i class="fa-solid fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i>
-                                            </div>
-                                            <button @@click="remove(dayIndex,veiwIndex)">刪</button>
-                                        </div>
-                                    </transition-group>
-                                </draggable>
-                        </div>
-                    </div>
-                </div>
-                `
+                                                                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                                                                    ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                                                                    @@change="cultime()" class="min">
+                                                                    <transition-group>
+                                                                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                                                            {{view.startTime}}-{{view.endTime}}<br>
+                                                                            {{view.name}}<br>
+                                                                            {{view.add}}<br>
+                                                                            <div class="adjtime">
+                                                                                停留時間:
+                                                                                <i class="fa-solid fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i>
+                                                                                {{view.min/60}}小時
+                                                                                <i class="fa-solid fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i>
+                                                                            </div>
+                                                                            <button @@click="remove(dayIndex,veiwIndex)">刪</button>
+                                                                        </div>
+                                                                    </transition-group>
+                                                                </draggable>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `
         })
 
     //搜尋組件vue
@@ -549,42 +602,42 @@
 
             template:
                 `
-                <div class="itxst">
-                    <div class="lbl">
-                        <div class="cy">
-                            <span v-for="(county,index) in countys">
-                                <input  type="checkbox" :value="county" v-model="selectCounty" :id="county">
-                                <label :for="county">{{county}}</label>
-                            </span>
-                        </div>
-                        <hr>
-                        <div class="cat">
-                            <span v-for="(acitivity,index) in acitivitys">
+                                                <div class="itxst">
+                                                    <div class="lbl">
+                                                        <div class="cy">
+                                                            <span v-for="(county,index) in countys">
+                                                                <input  type="checkbox" :value="county" v-model="selectCounty" :id="county">
+                                                                <label :for="county">{{county}}</label>
+                                                            </span>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="cat">
+                                                            <span v-for="(acitivity,index) in acitivitys">
 
-                                <input type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
-                                <label :for="index+1">{{acitivity}}</label>
-                            </span>
-                        </div>
-                        <hr>
+                                                                <input type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
+                                                                <label :for="index+1">{{acitivity}}</label>
+                                                            </span>
+                                                        </div>
+                                                        <hr>
 
 
-                        <button @@click="search" class="btn btn-primary">搜尋</button>
-                    </div>
-                    <div class="col2">
-                        <div v-for="(view,selIndex) in selectPlaces">
-                            <div class="item2">
-                                <h3>{{view.name}}</h3>
-                                <i class="fa-solid fa-phone">{{view.tel}}</i>
-                                <i class="fa-solid fa-house-chimney">{{view.add}}</i>
-                                <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
-                                <i>建議停留{{view.timestay}}分</i>
-                                <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
+                                                        <button @@click="search" class="btn btn-primary">搜尋</button>
+                                                    </div>
+                                                    <div class="col2">
+                                                        <div v-for="(view,selIndex) in selectPlaces">
+                                                            <div class="item2">
+                                                                <h3>{{view.name}}</h3>
+                                                                <i class="fa-solid fa-phone">{{view.tel}}</i>
+                                                                <i class="fa-solid fa-house-chimney">{{view.add}}</i>
+                                                                <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
+                                                                <i>建議停留{{view.timestay}}分</i>
+                                                                <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            `
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            `
         })
 
         //下方選擇日期vue
@@ -596,7 +649,7 @@
                     toleft:0,
                     
                 }
-              
+
             },
 
             computed: {

@@ -49,7 +49,7 @@ namespace JustGo.Controllers
         [HttpPost]
         public IActionResult selectDetail([FromBody] ScheduleVM vm)
         {
-            return Json(_schedule.selectScedule(vm.ScheduleId));
+            return Json(_schedule.selectScedule(vm.ScheduleId,GetUserId()));
         }
 
         //新增行程

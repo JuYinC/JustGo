@@ -17,11 +17,6 @@ namespace JustGo.Controllers
             _blog = blog;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)

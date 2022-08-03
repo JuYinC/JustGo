@@ -4,6 +4,7 @@ using JustGo.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace JustGo.Controllers
 {
@@ -45,7 +46,7 @@ namespace JustGo.Controllers
         }
         public IActionResult UserCatelog()
         {
-            return View();
+            return View(_schedule.selectUserSchedule(GetUserId()));
         }
 
         public IActionResult Privacy()
@@ -71,8 +72,15 @@ namespace JustGo.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }        
-        
+        }
+
+        string GetUserId()
+        {
+            var user = (ClaimsIdentity)User.Identity;
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return userId.ToString();
+        }
+
     }
 
 }

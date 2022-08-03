@@ -25,7 +25,8 @@ namespace JustGo.Controllers
 
         [HttpPost]
         public IActionResult getPlace([FromBody] SelectPlaceVM select)
-        {            
+        {
+            //return View();
             return Json(_place.getPlace(select));
         }
 
@@ -39,10 +40,7 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
-            Console.WriteLine(Json(_schedule.selectUserSchedule(GetUserId())));
-            //return Json(_schedule.selectUserSchedule("1"));
             return Json(_schedule.selectUserSchedule(GetUserId()));
-            //return Json("123");
         }
 
         //搜尋行程細項

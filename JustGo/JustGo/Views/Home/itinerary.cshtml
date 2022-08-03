@@ -80,9 +80,9 @@
             selectPlaces: [],//搜尋結果
             datetime: [],//每日時間
             duringDate: [],//旅遊期間日期
-            markers: [],
-            markerCluster: null,
-            travelTime: []
+            markers: [], // 地圖Marker
+            markerCluster: null, // 地圖Cluster
+            travelTime: [], // 行程時間
         },
 
         //由action傳入值,更新state狀態
@@ -232,53 +232,104 @@
                 console.log(state.travel)
                 state.travelTime = [];
                 let request = null;
+                const route = [];
                 directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
-                //跑行程迴圈，不同天的行程分開
+                //行程變成同一條路徑，上限25個
                 for (i = 0; i < state.travel.length; i++) {
-                    // state.travelTime.push([])
-                    console.log(`第${i}天`)
-                    //多個點，加上中間停靠站
-                    if (state.travel[i].length > 2) {
-                        //建立行程request
-                        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
-                        const waypts = [];
-                        for (j = 1; j < state.travel[i].length - 1; j++) {
-                            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
-                        }
-                        request = {
-                            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng },  //起點
-                            destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng },  //終點
-                            waypoints: waypts, //中途停靠點
-                            travelMode: 'DRIVING', //開車
-                        };
-                        //兩個點，只要給起點和終點就好
-                    } else if (state.travel[i].length == 2) {
-                        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
-                        request = {
-                            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng },  //起點
-                            destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng },  //終點
-                            travelMode: 'DRIVING', //開車
-                        }
-                        //一個點，路線無法計算，跳出
-                    } else {
-                        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
-                        continue;
+                    for (j = 0; j < state.travel[i].length; j++) {
+                        route.push(state.travel[i][j])
                     }
-
-                    // request放入Google行程服務，得到結果                
-                    directionsService.route(request, function (result, status) {
-                        if (status == 'OK') {
-                            //儲存行程時間陣列
-                            for (j = 0; j < result.routes[0].legs.length; j++) {
-                                state.travelTime.push(result.routes[0].legs[j].duration.value) //時間(秒)，number
-                                // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
-                                //result回傳的東西有很多，有興趣可以研究
-                            }
-                        }
-                    });
                 }
+                // 總行程數 = 1 離開方程式
+                if (route.length < 2) {
+                    console.log(`行程數<2 行程數為 ${route.length}`)
+                    return
+                    // 總行程數 = 2 只需要起始點和終點
+                } else if (route.length == 2) {
+                    console.log(`行程數=2 行程數為 ${route.length}`)
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[1].lat, lng: route[1].lng },  //終點
+                        travelMode: 'DRIVING', //開車
+                    }
+                } else {
+                    console.log(`行程數>2 行程數為 ${route.length}`)
+                    const waypts = [];
+                    for (i = 1; i < route.length - 1; i++) {
+                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                    }
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                        waypoints: waypts, //中途停靠點
+                        travelMode: 'DRIVING', //開車
+                    };
+                }
+                // request放入Google行程服務，得到結果
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        //儲存行程時間陣列
+                        for (i = 0; i < result.routes[0].legs.length; i++) {
+                            // console.log(state.travelTime)
+                            console.log(result.routes[0].legs[i].duration.value)
+                            state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+                            // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
+                            //result回傳的東西有很多，有興趣可以研究
+                        }
+                    }
+                });
+
+
+
+                //不同天的行程分開計算
+                //for (i = 0; i < state.travel.length; i++) {
+                //    state.travelTime.push([])
+                //    console.log(state.travelTime)
+                //    console.log(`第${i}天`)
+                //    多個點，加上中間停靠站
+                //    if (state.travel[i].length > 2) {
+                //        建立行程request
+                //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
+                //        const waypts = [];
+                //        for (j = 1; j < state.travel[i].length - 1; j++) {
+                //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
+                //        }
+                //        request = {
+                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+                //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
+                //        waypoints: waypts, 中途停靠點
+                //        travelMode: 'DRIVING', 開車
+                //        };
+                //        兩個點，只要給起點和終點就好
+                //    } else if (state.travel[i].length == 2) {
+                //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
+                //        request = {
+                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+                //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
+                //        travelMode: 'DRIVING', 開車
+                //        }
+                //        一個點，路線無法計算，跳出
+                //    } else {
+                //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
+                //        continue;
+                //    }
+                //    request放入Google行程服務，得到結果
+                //    directionsService.route(request, function (result, status) {
+                //        if (status == 'OK') {
+                //            儲存行程時間陣列
+                //            for (j = 0; j < result.routes[0].legs.length; j++) {
+                //                console.log(state.travelTime)
+                //                console.log(result.routes[0].legs[j].duration.value)
+                //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
+                //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
+                //                result回傳的東西有很多，有興趣可以研究
+                //            }
+                //        }
+                //    });
+                //}
                 console.log(`travelTime:`)
                 console.log(state.travelTime)
+
             },
 
         },

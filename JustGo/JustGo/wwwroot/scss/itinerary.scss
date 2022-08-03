@@ -58,16 +58,20 @@
         & input{
             font-size: 2rem;
             border-style: none;
-            border: blue;
             background: transparent;
             font-weight: 700;
             margin-left: 3rem;
+
+            &::placeholder{
+                color: #eee;
+            }
+           
         }
 
         & button{
             // background-color: #ce9906;
             font-size: 2rem;
-            width: 10rem;
+            width: 20rem;
             margin-left: 3rem;
             border-radius: 15px;
         }
@@ -186,15 +190,19 @@
     &__grid{
         height: 100%;
         display: grid;
-        grid-template-rows: 15% 75% 1fr ;
+        grid-template-rows: 120px 620px 1fr;
 
         & .grid-item{
             &-t{
                 margin: 12px;
+                position: relative;
+                width: 288px;
                 & .daysbox{
                     display: flex;
                     padding: 5px;
-                    margin: 0;
+                    margin: 0 10px 0 10px;
+                    position: absolute;
+                   
 
                     & .days{
                         list-style: none;
@@ -209,13 +217,47 @@
                       
                     }
                 }
+
+
+                & .btnbox{
+                    position: absolute;
+                    top: 48px;
+                    width: 288px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                }
+                & .left{
+                    position: absolute;
+                    left: -13px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 25px;
+                    height: 100%;
+                    background: white;
+                   
+                }
+                & .right{
+                    position: absolute;
+                    left: 263px;
+                    width: 26px;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                }
+
                 
                
             }
             &-m{
                 // background-color: #ce9906;
                 height: inherit;
+                width: 300px;
                 overflow-y: scroll;
+
 
                 & .col{
                     width: 25.5rem;

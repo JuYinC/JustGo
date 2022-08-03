@@ -6,6 +6,7 @@
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    
     <style>
         .footer__waves {
             display: none;
@@ -23,17 +24,18 @@
             <div class="datepicker"></div>
             <div class="datepicker__content">
                 <div id="app">
-                    <input type="date" v-model="selectDatelocal"> 
-                    <input type="date" v-model="selectDateEndlocal"> 
-                    <button @@click="culDate">開始</button>
-                    <button @@click="saveSchedule">儲存行程</button>
+                    <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="selectDatelocal" >
+                    <input placeholder="結束時間" type="text" onfocus="(this.type='date')"  onblur="(this.type='text')" v-model="selectDateEndlocal" >
+                    <button @@click="culDate" class="btn btn-primary">開始</button>
+                    <!-- <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button> -->
                 </div>
             </div>
             <div class="journey__map">
                 <div class="sidebar">
                     <div class="sidebar__grid">
-                        <div class="grid-item-t">
+                        <div class="grid-item-t" >
                           <div id="app5"></div>
+                        
                         </div>
                         <div class="grid-item-m">
                             
@@ -68,10 +70,12 @@
     <script src="https://unpkg.com/vuex@3"></script>
     <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
     <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+  
 
 
 
     <script>
+       
         const store = new Vuex.Store({
             state: {
                 map: null,
@@ -562,7 +566,9 @@
             el: '#app5',
             data() {
                 return{
-                     travel:travel()
+                     travel:travel(),
+                     toleft:-50
+                     
                 }
               
             },
@@ -597,20 +603,25 @@
                 cultime() {
                     this.$store.commit("cultime")
                 },
+              
 
             },
 
 
             template:
-            `   <div>
+            `   <div >
                     <h3>預設自訂行程1</h3>
                     <div>
                         <input type="date">
                         <input type="date">
                     </div>
-                    <ul class=daysbox>
-                    <li class="days" v-for="(day,dayIndex) in travel">第{{dayIndex+1}}天 </li>
-                    </ul>
+                        <ul class="daysbox" :style="{ left : toleft }">
+                        <li class="days" v-for="(day,dayIndex) in travel">第{{dayIndex+1}}天 </li>
+                        </ul>
+                    <div class="btnbox">
+                            <i class="fa-solid fa-angle-left left"></i>
+                            <i class="fa-solid fa-angle-right right"></i>
+                    </div>
                 </div>
             `
         })

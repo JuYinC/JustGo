@@ -448,13 +448,14 @@ html h5 {
     .datepicker__content input {
       font-size: 2rem;
       border-style: none;
-      border: blue;
       background: transparent;
       font-weight: 700;
       margin-left: 3rem; }
+      .datepicker__content input::placeholder {
+        color: #eee; }
     .datepicker__content button {
       font-size: 2rem;
-      width: 10rem;
+      width: 20rem;
       margin-left: 3rem;
       border-radius: 15px; }
 
@@ -522,13 +523,16 @@ html h5 {
     .journey__map .sidebar__grid {
       height: 100%;
       display: grid;
-      grid-template-rows: 15% 75% 1fr; }
+      grid-template-rows: 120px 620px 1fr; }
       .journey__map .sidebar__grid .grid-item-t {
-        margin: 12px; }
+        margin: 12px;
+        position: relative;
+        width: 288px; }
         .journey__map .sidebar__grid .grid-item-t .daysbox {
           display: flex;
           padding: 5px;
-          margin: 0; }
+          margin: 0 10px 0 10px;
+          position: absolute; }
           .journey__map .sidebar__grid .grid-item-t .daysbox .days {
             list-style: none;
             border: 1px solid black;
@@ -538,8 +542,34 @@ html h5 {
             margin: 0.3rem;
             text-align: center;
             padding-top: 1rem; }
+        .journey__map .sidebar__grid .grid-item-t .btnbox {
+          position: absolute;
+          top: 48px;
+          width: 288px;
+          height: 50px;
+          display: flex;
+          align-items: center; }
+        .journey__map .sidebar__grid .grid-item-t .left {
+          position: absolute;
+          left: -13px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 25px;
+          height: 100%;
+          background: white; }
+        .journey__map .sidebar__grid .grid-item-t .right {
+          position: absolute;
+          left: 263px;
+          width: 26px;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: white; }
       .journey__map .sidebar__grid .grid-item-m {
         height: inherit;
+        width: 300px;
         overflow-y: scroll; }
         .journey__map .sidebar__grid .grid-item-m .col {
           width: 25.5rem;

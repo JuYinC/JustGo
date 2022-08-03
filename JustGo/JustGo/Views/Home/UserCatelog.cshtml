@@ -134,25 +134,18 @@
                     //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
                 },
                 deleteSchedule(scheduleId, index) {
-                    axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
-                        .then(res=>{
-                            this.showSchedule.splice(index, 1);
-                            console.log(this.showSchedule);
-                        }
-                        )
+                    this.showSchedule.splice(index, 1);
+                    axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })                        
                         .catch(err => console.log("err"))                    
                 },
                 createBlog(scheduleId) {
                     window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId                    
                 }
             },
-            mounted() {
-                
+            mounted() {                
                 axios.post("@Url.Action("selectUserSchedule","Schedule")")
                     .then(res => this.showSchedule = res.data)
-                    .catch(err => console.log("err"))
-                
-                
+                    .catch(err => console.log("err"))                                
             },
 
         })

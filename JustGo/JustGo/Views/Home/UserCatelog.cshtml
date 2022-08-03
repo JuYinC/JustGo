@@ -56,9 +56,7 @@
                     </div>
                     <div class="buttonBar">
                         <button class="btn btn-secondary" @@click="editSchedule(item.scheduleId)">編輯</button>
-                        <button class="btn btn-secondary" @@click="createBlog(item.scheduleId)">分享行程</button>
                         <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
-                        <button class="btn btn-secondary" @@click="checkDate">check</button>
                     </div>
                 </div>
             </div>
@@ -76,7 +74,7 @@
 
                     </div>
                     <div class="buttonBar">
-                        <button class="btn btn-secondary" @@click="checkDate">分享行程</button>
+                        <button class="btn btn-secondary" @@click="createBlog(item.scheduleId)">分享行程</button>
                         <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
                         
                     </div>
@@ -90,7 +88,6 @@
                 </div>
             </div>
         </div>
-        <button @@click="testAxios">test</button>
     </div>
 
     @section Scripts{

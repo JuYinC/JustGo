@@ -96,6 +96,7 @@
 
                 //計算行程表時間
                 cultime() {
+                    console.log(1);
                     for (let j = 0; j < this.state.travel.length; j++) {
                         let timestamp = this.state.datetime[j]
                         for (let i = 0; i < this.state.travel[j].length; i++) {
@@ -243,20 +244,66 @@
                     let startTime = new Date(status.startDate)
                     let endTime = new Date(status.endDate)
                     let endTime2 = new Date(status.details[0][0].startTime)
-                    console.log(startTime)
-                    console.log(endTime2.getHours())
-                    console.log(endTime2.get)
+
                     for (let i = 0; i < status.details.length; i++) {
                         this.state.travel.push([])
                         this.state.duringDate.push(startTime.toLocaleDateString())
                         startTime = startTime.setDate(startTime.getDate() + 1)
                         startTime = new Date(startTime)
-                        this.state.datetime.push('09:00')
+                        //
+                        datetime = new Date(status.details[i][0].startTime)
+                        let time = ""
+                        let hour = datetime.getHours()+8
+                        let minute = datetime.getMinutes()
+                        //處理時分
+                        if (Number(hour) > 24) {
+                            hour = hour-24
+                        }
+                        if (Number(hour) < 10) {
+                            hour ="0"+hour
+                        }
+                        if (Number(minute) < 10) {
+                            minute ="0"+minute
+                        }
+                        time = hour+":"+minute
+                        console.log(time);
+                        this.state.datetime.push(time)
 
                         for (let j = 0; j < status.details[i].length; j++) {
+                            let startTime = new Date(status.details[i][j].startTime);
+                            let endTime = new Date(status.details[i][j].endTime);
+
+                            let timestay = (endTime.getTime()-startTime.getTime())/(1000*60);
+                            console.log(timestay)
+                            hour = startTime.getHours()+8
+                            minute = startTime.getMinutes()
+                            if (Number(hour) > 24) {
+                            hour = hour-24
+                            }
+                            if (Number(hour) < 10) {
+                            hour ="0"+hour
+                            }
+                            if (Number(minute) < 10) {
+                                minute ="0"+minute
+                            }
+                            startTime = hour+":"+minute
+
+                            hour = endTime.getHours()+8
+                            minute = endTime.getMinutes()
+                            if (Number(hour) > 24) {
+                            hour = hour-24
+                            }
+                            if (Number(hour) < 10) {
+                            hour ="0"+hour
+                            }
+                            if (Number(minute) < 10) {
+                                minute ="0"+minute
+                            }
+                            endTime = hour+":"+minute
+
                             this.state.travel[i].push({
-                                //startTime: status.details[i][j].startTime,
-                                //endTime: status.details[i][j].endTime,
+                                startTime: startTime,
+                                endTime: endTime,
                                 placeId: status.details[i][j].place.placeId,
                                 name: status.details[i][j].place.name,
                                 description: status.details[i][j].place.description,
@@ -270,22 +317,34 @@
                                 opentime: status.details[i][j].place.opentime,
                                 closetime: status.details[i][j].place.closetime,
                                 //
-                                min: status.details[i][j].place.timestay,
+                                min: timestay,
                             })
                         }
                     }
-                    this.cultime();
-                    console.log(this.state.duringDate)
                 },
 
             },
 
-            getters: {},
+            getters: {
+            
+                    //setTimer(datetime){
+                    //    let time = new Date(datetime)
+                    //    let hour = datetime.getHours()+8
+                    //    let minute = datetime.getMinutes()
+                    //    if (hour > 10) {
+                    //        hour ="0"+hour
+                    //    }
+                    //    if (minute > 10) {
+                    //        minute ="0"+minute
+                    //    }
+                    //    time = hour+":"+minute
+                    //    return time
+                    //}
+            },
 
             //非同步function，由組件呼叫使用
             actions: {
                 axiosLoad(context, payload) {
-                    console.log(payload)
                     axios.post("@Url.Action("selectDetail","Schedule")", payload)
                         .then(res => {
                             context.commit('updateSchedule', res.data)
@@ -340,7 +399,6 @@
             },
             mounted() {
                 let id = window.location.search.substring(1)
-                console.log(id)
                 if (id != "") {
                     this.$store.dispatch('axiosLoad', { ScheduleId: id })
                     //
@@ -359,9 +417,6 @@
 
                     this.duringDate.length = 0
                     this.datetime.length = 0
-
-                    //console.log(startTime)
-                    //console.log(endTime)
 
                     if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
 

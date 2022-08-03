@@ -41,8 +41,7 @@ namespace JustGo.Controllers
         {
             //Console.WriteLine(Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4")));
             //return Json(_schedule.selectUserSchedule("1"));
-            return Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4"));
-            //return Json("123");
+            return Json(_schedule.selectUserSchedule(GetUserId()));
         }
 
         //搜尋行程細項

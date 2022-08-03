@@ -55,6 +55,7 @@
                     </div>
                     <div class="buttonBar">
                         <button class="btn btn-secondary" @@click="editSchedule(item.scheduleId)">編輯</button>
+                        <button class="btn btn-secondary" @@click="createBlog(item.scheduleId)">分享行程</button>
                         <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
                     </div>
                 </div>
@@ -109,6 +110,9 @@
                         )
                         .catch(err => console.log("err"))                    
                 },
+                createBlog(scheduleId) {
+                    window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId                    
+                }
             },
             mounted() {
                 axios.post("@Url.Action("selectUserSchedule","Schedule")")

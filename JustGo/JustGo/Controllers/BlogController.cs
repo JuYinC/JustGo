@@ -54,7 +54,10 @@ namespace JustGo.Controllers
             }
             return Json("ok");
         }
-        public IActionResult creatBlog(ScheduleVM vm)
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult creatBlog([FromBody]ScheduleVM vm)
         {            
             return Json(_blog.createScheduleToBlog(vm.ScheduleId));
         }

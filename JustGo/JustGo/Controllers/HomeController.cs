@@ -33,6 +33,11 @@ namespace JustGo.Controllers
             return View("EditBlog");
         }
 
+        public IActionResult EditBlog()
+        {
+            return View();
+        }
+
         public IActionResult itinerary()
         {
             return View();

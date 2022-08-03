@@ -532,7 +532,8 @@ html h5 {
           display: flex;
           padding: 5px;
           margin: 0 10px 0 10px;
-          position: absolute; }
+          position: absolute;
+          transition: all .5s; }
           .journey__map .sidebar__grid .grid-item-t .daysbox .days {
             list-style: none;
             border: 1px solid black;

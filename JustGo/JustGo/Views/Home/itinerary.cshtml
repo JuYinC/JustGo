@@ -593,9 +593,8 @@
             el: '#app5',
             data() {
                 return{
-                     travel:travel(),
-                     toleft:-50
-                     
+                    toleft:0,
+                    
                 }
               
             },
@@ -612,11 +611,20 @@
                 },
                 duringDate() {
                     return this.$store.state.duringDate
-                }
+                },
+                move(){
+                    return{
+                        left : this.toleft + 'px',
+                    }
+                },
+              
+               
+               
+
             },
 
             mounted() {
-                //this.$store.dispatch('axiosTest')
+                
             },
 
             methods: {
@@ -630,6 +638,30 @@
                 cultime() {
                     this.$store.commit("cultime")
                 },
+                tol(){
+                    let x = document.getElementsByClassName('daysbox')[0].clientWidth
+                    let y = document.getElementsByClassName('btnbox')[0].clientWidth
+                    let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
+                    if( y<x && z<x){
+                      this.toleft -= 150
+                    }
+                    else{
+                        this.toleft = this.toleft
+                    }
+      
+                },
+                tor(){
+                    if(this.toleft!= 0){
+                         this.toleft += 150
+                    }
+                    else{
+                        this.toleft = 0
+                    }
+                   
+                },
+               
+        
+           
               
 
             },
@@ -642,12 +674,12 @@
                         <input type="date">
                         <input type="date">
                     </div>
-                        <ul class="daysbox" :style="{ left : toleft }">
+                        <ul class="daysbox" :style="move">
                         <li class="days" v-for="(day,dayIndex) in travel">第{{dayIndex+1}}天 </li>
                         </ul>
                     <div class="btnbox">
-                            <i class="fa-solid fa-angle-left left"></i>
-                            <i class="fa-solid fa-angle-right right"></i>
+                            <i @@click="tol" class="fa-solid fa-angle-left left"></i>
+                            <i @@click="tor" class="fa-solid fa-angle-right right"></i>
                     </div>
                 </div>
             `

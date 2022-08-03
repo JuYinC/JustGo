@@ -30,11 +30,8 @@ namespace JustGo.Controllers
         {
             return View();
         }
-        public IActionResult block1()
-        {
-            return View();
-    }
-    public IActionResult blog()
+      
+        public IActionResult blog()
         {
             return View();
         }
@@ -50,22 +47,9 @@ namespace JustGo.Controllers
 
         public IActionResult Privacy()
         {
-            return View("Search");
+            return View();
         }
 
-        [HttpPost]
-        public IActionResult selectPlace([FromBody]SelectPlaceVM select)
-        {
-            return Json(_pwr.getPlaceFilter(select));
-        }
-
-        [HttpPost]
-        public IActionResult teatMapData([FromBody] SelectPlaceVM select)
-        {
-            SelectPlaceVM selectPlaceVM = new SelectPlaceVM() { Lat = 22.6397082860113, Lng = 120.30264837097221 };
-            return Json(_pwr.getPlace(select));            
-        }
-            
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

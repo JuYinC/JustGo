@@ -6,10 +6,7 @@ namespace JustGo.Controllers
 {
     public class BaseController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         protected string GetUserId()
         {
             var user = (ClaimsIdentity)User.Identity;

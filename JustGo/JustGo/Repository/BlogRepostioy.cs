@@ -43,27 +43,32 @@ namespace JustGo.Repository
                 Like = 0,
                 StartDate = schedule.StartDate,
                 EndDate = schedule.EndDate
-            };
-
-            List<BlogDetailsVM> vmList = new List<BlogDetailsVM>();
-
-            foreach (ScheduleDetails item in schedule.ScheduleDetails)
+            };            
+            schedule.StartDate.AddHours(-8);
+            schedule.EndDate.AddHours(-8);
+            if (schedule.ScheduleDetails.Count > 0)
             {
-                var p = _context.Place.SingleOrDefault(e=>e.PlaceId == item.PlaceId);
-                var vm = new BlogDetailsVM() { 
-                    StartTime = item.StartTime,
-                    EndtTime  = item.EndtTime,
-                    PlaceId = item.PlaceId,
-                    P_Name = p.Name,
-                    P_tel = p.Tel,
-                    P_Add = p.Add,
-                    
-                };
-                vmList.Add(vm);
+                blogVm.Details = new List<IList<BlogDetailsVM>>();
+                for(int i = 0; i <= schedule.EndDate.Day - schedule.StartDate.Day; i++)
+                {
+                    blogVm.Details.Add(new List<BlogDetailsVM>());
+                    foreach (ScheduleDetails item in schedule.ScheduleDetails.Where(e => e.StartTime.Day == schedule.StartDate.Day + i))
+                    {
+                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
+                        var vm = new BlogDetailsVM()
+                        {
+                            StartTime = item.StartTime,
+                            EndtTime = item.EndtTime,
+                            PlaceId = item.PlaceId,
+                            P_Name = p.Name,
+                            P_tel = p.Tel,
+                            P_Add = p.Add,
+
+                        };
+                        blogVm.Details[i].Add(vm);
+                    }
+                }                
             }
-
-            blogVm.Details = vmList;
-
             return blogVm;
         }
 
@@ -115,7 +120,13 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogRank()
         {
-            throw new NotImplementedException();
+            var blogs = _context.Blog.OrderBy(e => e.Like).Take(20);
+            List<BlogVM> vmList = new List<BlogVM>();
+            foreach(Blog item in blogs)
+            {
+                vmList.Add(modeltoVM(item));
+            }
+            return vmList;
         }
 
         public BlogVM selectBlog(int blogId)
@@ -146,28 +157,31 @@ namespace JustGo.Repository
                 Like = model.Like,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                Details = new List<BlogDetailsVM>()
+                Details = new List<IList<BlogDetailsVM>>()
             };
             if(model.BlogDetails.Count>0)
             {
-                foreach (BlogDetails item in model.BlogDetails)
+                for (int i = 0; i <= (model.EndDate - model.StartDate).Days; i++)
                 {
-                    var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
-                    vm.Details.Add(new BlogDetailsVM()
+                    foreach (BlogDetails item in model.BlogDetails.Where(e => e.StartTime.Day == model.StartDate.Day + i))
                     {
-                        StartTime = item.StartTime,
-                        EndtTime  = item.EndtTime,
-                        PlaceId = item.PlaceId,
-                        P_Name = p.Name,
-                        P_Add  = p.Add,
-                        P_tel = p.Name,
-                        Describe = item.Describe,
-                        Images = new List<string>(),
-                        Score = item.Score
-                    });
-                }
+                        vm.Details.Add(new List<BlogDetailsVM>());
+                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
+                        vm.Details[i].Add(new BlogDetailsVM()
+                        {
+                            StartTime = item.StartTime,
+                            EndtTime = item.EndtTime,
+                            PlaceId = item.PlaceId,
+                            P_Name = p.Name,
+                            P_Add = p.Add,
+                            P_tel = p.Name,
+                            Describe = item.Describe,
+                            Images = new List<string>(),
+                            Score = item.Score
+                        });
+                    }
+                }                    
             }
-
             return vm;
         }
         Blog VMtoModel(BlogVM vm)
@@ -185,16 +199,23 @@ namespace JustGo.Repository
             if (vm.Details.Count > 0)
             {
                 model.BlogDetails = new List<BlogDetails>();
-                foreach (BlogDetailsVM item in vm.Details)
+                for(int i = 0; i < vm.Details.Count; i++)
                 {
-                    model.BlogDetails.Add(
-                        new BlogDetails()
-                        {
-                            StartTime=item.StartTime,EndtTime=item.EndtTime,Describe = item.Describe,Images = item.Images.ToString(),
-                            Score = item.Score
-                        }
-                    );
-                }
+                    foreach (BlogDetailsVM item in vm.Details[i])
+                    {
+                        model.BlogDetails.Add(
+                            new BlogDetails()
+                            {
+                                PlaceId = item.PlaceId,
+                                StartTime = item.StartTime,
+                                EndtTime = item.EndtTime,
+                                Describe = item.Describe,
+                                Images = item.Images.ToString(),
+                                Score = item.Score
+                            }
+                        );
+                    }
+                }                
             }
             return model;            
         }

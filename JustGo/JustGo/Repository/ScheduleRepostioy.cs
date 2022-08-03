@@ -57,9 +57,10 @@ namespace JustGo.Repository
             return true;
         }
 
-        public ScheduleVM selectScedule(int SceduleId)
-        {            
-            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId)??new Schedule());
+        public ScheduleVM selectScedule(int SceduleId ,string UserId)
+        {
+            return modelToView(_context.Schedule.Where(e => e.UserId == UserId).Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
+            //return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
         }
 
         public IList<ScheduleVM> selectUserSchedule(string UserId)
@@ -125,6 +126,8 @@ namespace JustGo.Repository
                 EndDate = model.EndDate,
                 WeatherWarning = model.WeatherWarning,
             };
+            model.StartDate.AddHours(-8);
+            model.EndDate.AddHours(-8);
             if (model.ScheduleDetails.Count > 0)
             {
                 vm.Details = new List<IList<ScheduleDetailVM>>();                

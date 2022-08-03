@@ -13,7 +13,7 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public ICollection<BlogDetailsVM>? Details { get; set; }
+        public IList<IList<BlogDetailsVM>>? Details { get; set; }
     }
 
     public partial class BlogDetailsVM

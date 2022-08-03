@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace JustGo.Controllers
 {
-    public class ScheduleController : Controller
+    public class ScheduleController : BaseController
     {
         readonly IPlaceWeatherRepostiory _place;
         readonly IScheduleRepostioy _schedule;
@@ -39,7 +39,7 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()
         {
-            Console.WriteLine(Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4")));
+            //Console.WriteLine(Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4")));
             //return Json(_schedule.selectUserSchedule("1"));
             return Json(_schedule.selectUserSchedule("862c02ac-67e1-461f-ac15-74b166c0a1e4"));
             //return Json("123");
@@ -73,13 +73,6 @@ namespace JustGo.Controllers
         public IActionResult deleteSchedule([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.deleteScedule(vm.ScheduleId));
-        }
-
-        string GetUserId()
-        {
-            var user = (ClaimsIdentity)User.Identity;
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return userId.ToString();
-        }
+        }       
     }
 }

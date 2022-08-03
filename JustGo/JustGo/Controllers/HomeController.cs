@@ -8,42 +8,36 @@ using System.Security.Claims;
 
 namespace JustGo.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPlaceWeatherRepostiory _pwr;
         private readonly IScheduleRepostioy _schedule;
         private readonly IBlogRepostioy _blog;
 
-        public HomeController(ILogger<HomeController> logger, IPlaceWeatherRepostiory pwr, IScheduleRepostioy schedule,IBlogRepostioy blog)
+        public HomeController(ILogger<HomeController> logger, IPlaceWeatherRepostiory pwr, IScheduleRepostioy schedule, IBlogRepostioy blog)
         {
             _logger = logger;
             _pwr = pwr;
-            _schedule = schedule;           
+            _schedule = schedule;
             _blog = blog;
         }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Index0728()
+        public IActionResult Blog()
         {
-            return View();
+            return View("EditBlog");
         }
-        public IActionResult block1()
-        {
-            return View();
-    }
-    public IActionResult blog()
+
+        public IActionResult itinerary()
         {
             return View();
         }
 
-        public IActionResult itinerary()
-        {            
-            return View();
-        }
         public IActionResult UserCatelog()
         {
             return View();
@@ -54,25 +48,12 @@ namespace JustGo.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult selectPlace([FromBody]SelectPlaceVM select)
-        {
-            return Json(_pwr.getPlaceFilter(select));
-        }
-
-        [HttpPost]
-        public IActionResult teatMapData([FromBody] SelectPlaceVM select)
-        {
-            SelectPlaceVM selectPlaceVM = new SelectPlaceVM() { Lat = 22.6397082860113, Lng = 120.30264837097221 };
-            return Json(_pwr.getPlace(select));            
-        }
-            
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 
 }

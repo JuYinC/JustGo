@@ -40,11 +40,12 @@
 
     <div class="container" id="app">
         <div class="block">
+            {{dateNow}}
             <div class="titlebar">行程</div>
             <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
                 
-                <div class="schedule" v-for="(item,index) in schedule" :key="index">
-                    
+                @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
+                    <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
                     <div class="scheduleInfo">
                         {{index}}<br>
                         {{item.scheduleId}}<br>
@@ -57,6 +58,7 @@
                         <button class="btn btn-secondary" @@click="editSchedule(item.scheduleId)">編輯</button>
                         <button class="btn btn-secondary" @@click="createBlog(item.scheduleId)">分享行程</button>
                         <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
+                        <button class="btn btn-secondary" @@click="checkDate">check</button>
                     </div>
                 </div>
             </div>
@@ -64,7 +66,20 @@
         <div class="block">
             <div class="titlebar">過往行程</div>
             <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
-                <div class="schedule" v-for="item in 4">
+                <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
+                    <div class="scheduleInfo">
+                        {{index}}<br>
+                        {{item.scheduleId}}<br>
+                        {{item.title}}<br>
+                        {{item.startDate}}<br>
+                        {{item.endDate}}<br>
+
+                    </div>
+                    <div class="buttonBar">
+                        <button class="btn btn-secondary" @@click="checkDate">分享行程</button>
+                        <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,7 +102,7 @@
             el: "#app",
             data() {
                 return {
-                    showSchedule: [{}, {}, {}, {}],
+                    showSchedule: [],
                     dateNow: "",
                 }
             },
@@ -97,6 +112,26 @@
                 }
             },
             methods: {
+                nextSchedule(index) {
+                    this.dateNow = new Date();
+                    let datetime = new Date(this.showSchedule[index].endDate)
+
+                    if (this.dateNow < new Date(this.showSchedule[index].endDate)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                },
+                exSchedule(index) {
+                    this.dateNow = new Date();
+                    let datetime = new Date(this.showSchedule[index].endDate)
+
+                    if (this.dateNow < new Date(this.showSchedule[index].endDate)) {
+                        return false
+                    } else {
+                        return true
+                    }
+                },
                 editSchedule(scheduleId) {
                     window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId
                     //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
@@ -115,10 +150,14 @@
                 }
             },
             mounted() {
+                
                 axios.post("@Url.Action("selectUserSchedule","Schedule")")
                     .then(res => this.showSchedule = res.data)
                     .catch(err => console.log("err"))
+                
+                
             },
+
         })
     </script>
 }

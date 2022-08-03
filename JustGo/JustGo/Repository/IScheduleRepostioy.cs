@@ -9,7 +9,7 @@ namespace JustGo.Repository
         public IList<ScheduleVM> selectUserSchedule(string UserId);
 
         //搜尋行程表細項
-        public ScheduleVM selectScedule(int SceduleId);
+        public ScheduleVM selectScedule(int SceduleId, string UserId);
 
         public bool editScedule(ScheduleVM vm);
 

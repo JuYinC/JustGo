@@ -234,6 +234,9 @@
                 let request = null;
                 const route = [];
                 directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
+                directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                    suppressMarkers: true,
+                });
                 //行程變成同一條路徑，上限25個
                 for (i = 0; i < state.travel.length; i++) {
                     for (j = 0; j < state.travel[i].length; j++) {
@@ -253,6 +256,7 @@
                         travelMode: 'DRIVING', //開車
                     }
                 } else {
+                    // 總行程數 > 2 加入停靠站
                     console.log(`行程數>2 行程數為 ${route.length}`)
                     const waypts = [];
                     for (i = 1; i < route.length - 1; i++) {
@@ -265,11 +269,13 @@
                         travelMode: 'DRIVING', //開車
                     };
                 }
+                directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
                 // request放入Google行程服務，得到結果
                 directionsService.route(request, function (result, status) {
                     if (status == 'OK') {
                         //儲存行程時間陣列
                         for (i = 0; i < result.routes[0].legs.length; i++) {
+                            directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
                             // console.log(state.travelTime)
                             console.log(result.routes[0].legs[i].duration.value)
                             state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number

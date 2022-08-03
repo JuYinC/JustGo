@@ -120,7 +120,13 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogRank()
         {
-            throw new NotImplementedException();
+            var blogs = _context.Blog.OrderBy(e => e.Like).Take(20);
+            List<BlogVM> vmList = new List<BlogVM>();
+            foreach(Blog item in blogs)
+            {
+                vmList.Add(modeltoVM(item));
+            }
+            return vmList;
         }
 
         public BlogVM selectBlog(int blogId)

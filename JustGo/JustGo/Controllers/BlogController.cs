@@ -1,17 +1,20 @@
 ﻿using JustGo.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using JustGo.Repository;
 
 namespace JustGo.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         readonly ILogger _logger;
         readonly IWebHostEnvironment _webHostEnvironment;
-        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment)
+        readonly IBlogRepostioy _blog;
+        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment,IBlogRepostioy blog)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _blog = blog;
         }
 
         public IActionResult Index()
@@ -20,14 +23,23 @@ namespace JustGo.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        public IActionResult setBlog(BlogVM vm)
+        [Authorize]
+        public IActionResult setBlog([FromBody] BlogVM vm)
         {
-            Console.WriteLine(vm.Title);
+            if(vm != null)
+            {
+                if(vm.BlogId != 0)
+                {
+                    vm.UserId = GetUserId();
+                    return Json(_blog.editBlog(vm));
+                }
+                vm.UserId = GetUserId();
+                return Json(_blog.createBlog(vm));
+            }
             return Json(vm);
         }
 
-
+        //傳圖 (測試)
         [HttpPost]
         public async Task<IActionResult> uploadImage(IEnumerable<IFormFile> image)
         {
@@ -46,6 +58,27 @@ namespace JustGo.Controllers
                 }
             }
             return Json("ok");
+        }
+
+        //查詢使用者部落格(無細項)
+        [HttpPost]
+        [Authorize]
+        public IActionResult selectUserBlog()
+        {
+            return Json(_blog.selectUserBlog(GetUserId()));
+        }
+
+        //Blog細項
+        [HttpPost]
+        public IActionResult selectblogDetails([FromBody] BlogVM vm)
+        {
+            return Json(_blog.selectBlog(vm.BlogId));
+        }
+
+        //搜尋部落格
+        public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
+        {
+            return Json(_blog.getBlogFilter(vm));
         }
     }
 }

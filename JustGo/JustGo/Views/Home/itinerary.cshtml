@@ -85,7 +85,7 @@
                 duringDate: [],//旅遊期間日期
                 markers: [], // 地圖Marker
                 markerCluster: null, // 地圖Cluster
-                travelTime: [], // 行程時間
+                travelTime: [], // 行程時間                
             },
 
             //由action傳入值,更新state狀態
@@ -865,7 +865,7 @@
                     let y = 270
                     let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
                     if (y < x && z < x) {
-                        this.toleft -= 150
+                        this.toleft -= 100
                     }
                     else {
                         this.toleft = this.toleft
@@ -874,7 +874,7 @@
                 },
                 tor() {
                     if (this.toleft != 0) {
-                        this.toleft += 150
+                        this.toleft += 100
                     }
                     else {
                         this.toleft = 0
@@ -910,9 +910,9 @@
                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
                         </ul>
                     <div class="btnbox-l">
-                            <i @@click="tol" class="fa-solid fa-angle-left left"></i>
+                            <i @@click="tor" class="fa-solid fa-angle-left left"></i>
                     <div class="btnbox-r">                            
-                            <i @@click="tor" class="fa-solid fa-angle-right right"></i>
+                            <i @@click="tol" class="fa-solid fa-angle-right right"></i>
                     </div>
                 </div>
             `

@@ -286,7 +286,7 @@
                 let id = window.location.search.substring(1) 
                 console.log(id)
                 if (id != "") {
-                    axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: 89 }).then(res =>  this.Details = res.data.details )
+                    axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )
                 }
             }
             

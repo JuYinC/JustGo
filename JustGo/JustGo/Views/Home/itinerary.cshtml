@@ -85,7 +85,7 @@
                 duringDate: [],//旅遊期間日期
                 markers: [], // 地圖Marker
                 markerCluster: null, // 地圖Cluster
-                travelTime: [], // 行程時間
+                travelTime: [], // 行程時間                
             },
 
             //由action傳入值,更新state狀態
@@ -865,7 +865,7 @@
                     let y = 270
                     let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
                     if (y < x && z < x) {
-                        this.toleft -= 150
+                        this.toleft -= 100
                     }
                     else {
                         this.toleft = this.toleft
@@ -874,7 +874,7 @@
                 },
                 tor() {
                     if (this.toleft != 0) {
-                        this.toleft += 150
+                        this.toleft += 100
                     }
                     else {
                         this.toleft = 0
@@ -887,17 +887,9 @@
                         this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
                     }
                     console.log(this.calpositiontotal)
-                    document.getElementsByClassName('grid-item-m')[0].scrollTop=this.calpositiontotal
-                  
-                },
-           
-               
-        
-           
-              
-
+                    document.getElementsByClassName('grid-item-m')[0].scrollTop=this.calpositiontotal                  
+                },                                                           
             },
-
 
             template:
             `   <div >
@@ -913,15 +905,11 @@
                             <i @@click="tol" class="fa-solid fa-angle-left left"></i>
                     </div>
                     <div class="btnbox-r">                            
-                            <i @@click="tor" class="fa-solid fa-angle-right right"></i>
+                            <i @@click="tol" class="fa-solid fa-angle-right right"></i>
                     </div>
                 </div>
             `
         })
-
-
-
-
 
     </script>
 }

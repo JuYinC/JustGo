@@ -154,16 +154,37 @@
                         });
                         bounds.extend(marker.position);
                         // 產生infowindow
+                        addView = function(position2) { 
+                            //state.travel[state.daysindex].push({
+                            //    startTime: '',
+                            //    endTime: '',
+                            //    placeId: position2.placeId,
+                            //    name: position2.name,
+                            //    description: position2.description,
+                            //    tel: position2.tel,
+                            //    add: position2.add,
+                            //    lat: position2.lat,
+                            //    lng: position2.lng,
+                            //    region: position2.region,
+                            //    town: position2.town,
+                            //    class: position2.class,
+                            //    opentime: position2.opentime,
+                            //    closetime: position2.closetime,
+                            //    min: position2.timestay,
+                            //});
+                            
+                            console.log(position2);
+                            commit('cultime'); }
                         let contentString =
                         
                     `
                     <div class="infowindow">
                         <div class="infowindow_bar row row-cols-2">
                             <div class="infowindow_bar_title col-11">
-                            大羅蘭溪
+                            ${position.name}
                             </div>
                             <div class="infowindow_bar_divbutton col-1">
-                                <div class="infowindow_bar_button" type="button">
+                                <div class="infowindow_bar_button" type="button" onclick="addView(${position})">
                                 +
                                 </div>
                             </div>
@@ -173,7 +194,7 @@
                                 <img src="" class="infowindow_picture">
                             </div>
                             <div class="infowindow_info col-6">
-                                <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> 屏東縣恆春鎮燈塔路90號附近</p>
+                                <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>
                                 <p><i class="fa-solid fa-clock" style="color:#260078"></i> 00:00-24:00</p>
                                 <p><i class="fa-solid fa-phone" style="color:#3500A8"></i> 08-8861321</p>
                             </div>

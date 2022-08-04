@@ -19,16 +19,19 @@
 <body>
 
     <header>
+        
         <nav class="navbarC"  id="navbarC">
             <li> 
-                  <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                     <img class="navbarC__logo" src="~/file/photo/logo.png" alt="JustGo" />
-                  </a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img class="navbarC__logo" src="~/file/photo/logo.png" alt="JustGo" />
+                </a>
             </li>
-          
+            <input type="checkbox" id="check" class="checkbox">
+            <label for="check" class="checkbtn">
+                <i class="fa-solid fa-align-justify"></i>
+            </label>
 
             <ul id="navbarC__menu">
-
                 <li >
                  <a  asp-area="" asp-controller="Home" asp-action="itinerary">規劃行程</a>
                 </li>
@@ -37,7 +40,9 @@
                 <li >
                  <a  asp-area="" asp-controller="Home" asp-action="UserCatelog">會員資訊</a>
                 </li>
-                <li> <partial name="_LoginPartial" /></li>   
+                <li>
+                <partial name="_LoginPartial" /> 
+                </li>   
             </ul>
         </nav>
     </header>
@@ -74,6 +79,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

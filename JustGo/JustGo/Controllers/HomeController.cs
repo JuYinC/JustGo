@@ -30,7 +30,7 @@ namespace JustGo.Controllers
 
         public IActionResult Blog()
         {
-            return View("EditBlog");
+            return View();
         }
 
         public IActionResult EditBlog()

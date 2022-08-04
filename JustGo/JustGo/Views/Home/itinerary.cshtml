@@ -906,11 +906,12 @@
                         <input type="date">
                         <input type="date">
                     </div>
-                        <ul class="daysbox" :style="move">
+                    <ul class="daysbox" :style="move">
                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
-                        </ul>
+                    </ul>
                     <div class="btnbox-l">
                             <i @@click="tol" class="fa-solid fa-angle-left left"></i>
+                    </div>
                     <div class="btnbox-r">                            
                             <i @@click="tor" class="fa-solid fa-angle-right right"></i>
                     </div>

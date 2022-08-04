@@ -22,7 +22,7 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10)", vm).ToList();
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 16", vm).ToList();
             Console.WriteLine(getPlace.GetType());
 
             return getPlace;
@@ -54,6 +54,7 @@ namespace JustGo.Repository
                     sqlStr += " and Class in @selectAcitivity";
                 }
             }
+            sqlStr += "and Class <16";
             return _con.Query<Place>(sqlStr, vm).ToList();
         }
 

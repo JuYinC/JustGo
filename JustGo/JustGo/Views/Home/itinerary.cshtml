@@ -88,7 +88,8 @@
             markers: [], // 地圖Marker
             markerCluster: null, // 地圖Cluster
             travelTime: [], // 行程時間
-            directionsRenderer: null
+            directionsRenderer: null,
+            daysindex: 0,
         },
 
         //由action傳入值,更新state狀態
@@ -130,9 +131,10 @@
                 state.map = new google.maps.Map(document.getElementById("map"), {
                     center: { lat: 23.573837, lng: 120.97969 },
                     zoom: 8,  // 0-20
+                    mapId: '1d3a304bcea5789e',
                     mapTypeControl: false,  // 換地圖類型
                     streetViewControl: false,  // 街道檢視
-                    clickableIcons: false,   // 可不可以點地圖上的點
+                    clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
             },
 

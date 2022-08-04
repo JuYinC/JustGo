@@ -13,6 +13,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+    
 
 }
 
@@ -72,6 +74,9 @@
     <script src="https://unpkg.com/vuex@3"></script>
     <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
     <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 
@@ -86,6 +91,7 @@
                 markers: [], // 地圖Marker
                 markerCluster: null, // 地圖Cluster
                 travelTime: [], // 行程時間
+                daysindex: 0,
             },
 
             //由action傳入值,更新state狀態
@@ -149,334 +155,352 @@
                         bounds.extend(marker.position);
                         // 產生infowindow
                         let contentString =
-                            `<div id="info">
-                                            <p style="color:black">${position.name}</p>
-                                    </div>`
+                        
+                    `
+                    <div class="infowindow">
+                        <div class="infowindow_bar row row-cols-2">
+                            <div class="infowindow_bar_title col-11">
+                            大羅蘭溪
+                            </div>
+                            <div class="infowindow_bar_divbutton col-1">
+                                <div class="infowindow_bar_button" type="button">
+                                +
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infowindow_part row">
+                            <div class="infowindow_img col-4">
+                                <img src="" class="infowindow_picture">
+                            </div>
+                            <div class="infowindow_info col-6">
+                                <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> 屏東縣恆春鎮燈塔路90號附近</p>
+                                <p><i class="fa-solid fa-clock" style="color:#260078"></i> 00:00-24:00</p>
+                                <p><i class="fa-solid fa-phone" style="color:#3500A8"></i> 08-8861321</p>
+                            </div>
+                        </div>
+
+                        <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            景點介紹
+                        </button>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body infowindow_detail">
+                                在很多人的印象中，鵝鑾鼻不僅是恆春半島的風景名勝區，鵝鑾鼻燈塔還是臺灣最南端的知名地標，許多遊客來到墾丁旅遊，必定不忘前來造訪；不過少有人知道，臺灣本島最南之角，其實位在鵝鑾鼻公園附近，大約1公里處的位置，這裡也是一處珊瑚礁石海岸，奇石遍覆、海景闊麗的景致，同樣令人難忘。從鵝鑾鼻公園出發，沿路指標清楚，在抵達最南點停車場後，再行走一小段路，即可看見前往臺灣最南點的紅磚步道入口。紅磚步道總長約500公尺，步道兩旁林蔭濃密，環境幽靜，也不會受到日曬之苦，偶而還會見到幾隻蝴蝶飛舞的身影，隨著腳步陸續推進，能逐漸聽到浪濤聲，由遠而近，聲音越來越清楚，也越能感覺天寬海闊的景象，約10餘分鐘的路程，即來...
+                            </div>
+                        </div>
+                    </div>
+                    `
                         const infowindow = new google.maps.InfoWindow({
-                            content: contentString,
-                            disableAutoPan: false,
+                        content: contentString,
+                        disableAutoPan: false,
+                    });
+                    // 滑過marker開啟infowindow
+                    marker.addListener("click", () => {
+                        infowindow.open({
+                            anchor: marker,
+                            map: state.map,
+                            shouldFocus: false,
                         });
-                        // 滑過marker開啟infowindow
-                        marker.addListener("mouseover", () => {
-                            infowindow.open({
-                                anchor: marker,
-                                map: state.map,
-                                shouldFocus: false,
-                            });
-                            state.infowindow = infowindow
+                        state.infowindow = infowindow
+                    });
+                    //marker.addListener("mouseout", () => {
+                    //    infowindow.close();
+                    //    state.infowindow = infowindow
+                    //});
+                    state.markers.push(marker);
+                });
+        // 地點群組marker Cluster
+        state.markerCluster = new markerClusterer.MarkerClusterer({
+            map: state.map,
+            markers: state.markers,
+        });
+        state.map.fitBounds(bounds);
+                        },
+
+        // 產生地圖標示_行程
+        setTravelMarker(state) {
+            if (state.markers.length > 0) {
+                state.markerCluster.clearMarkers();
+                state.markers = [];
+                state.markerCluster = null
+                //this.state.markers.forEach((marker) => {
+                //    marker.setMap(null)
+                //});
+            }
+            //markers.setMap(null);
+            // 產生地點marker
+            let iofSpots = 0
+            for (i = 0; i < state.travel.length; i++) {
+                state.travel[i].map((position, j) => {
+                    iofSpots++
+                    const marker = new google.maps.Marker({
+                        position: { lat: position.lat, lng: position.lng },
+                        label: `${iofSpots}`,   //其他屬性，可以先略過
+                        // title: position.title,
+                        // map: this.state.map,
+                    });
+                    // 產生infowindow
+                    let contentString =
+                        `<div id="info">
+                                                                            <p style="color:black">${position.name}</p>
+                                                                    </div>`
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        disableAutoPan: false,
+                    });
+                    // 滑過marker開啟infowindow
+                    marker.addListener("mouseover", () => {
+                        //if (this.state.infowindow) { this.state.infowindow.close() };
+                        infowindow.open({
+                            anchor: marker,
+                            map: state.map,
+                            shouldFocus: false,
                         });
-                        marker.addListener("mouseout", () => {
-                            infowindow.close();
-                            state.infowindow = infowindow
-                        });
-                        state.markers.push(marker);
+                        state.infowindow = infowindow
                     });
-                    // 地點群組marker Cluster
-                    state.markerCluster = new markerClusterer.MarkerClusterer({
-                        map: state.map,
-                        markers: state.markers,
+                    marker.addListener("mouseout", () => {
+                        infowindow.close();
+                        state.infowindow = infowindow
                     });
-                    state.map.fitBounds(bounds);
-                },
+                    state.markers.push(marker);
+                });
+            }
+            // 地點群組marker Cluster
+            state.markerCluster = new markerClusterer.MarkerClusterer({
+                map: state.map,
+                markers: state.markers,
+            });
+        },
 
-                // 產生地圖標示_行程
-                setTravelMarker(state) {
-                    if (state.markers.length > 0) {
-                        state.markerCluster.clearMarkers();
-                        state.markers = [];
-                        state.markerCluster = null
-                        //this.state.markers.forEach((marker) => {
-                        //    marker.setMap(null)
-                        //});
+        // 計算行程時間 & 畫路線
+        calcRoute(state) {
+            console.log(state.travel)
+            state.travelTime = [];
+            let request = null;
+            const route = [];
+            directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
+            directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                suppressMarkers: true,
+            });
+            //行程變成同一條路徑，上限25個
+            for (i = 0; i < state.travel.length; i++) {
+                for (j = 0; j < state.travel[i].length; j++) {
+                    route.push(state.travel[i][j])
+                }
+            }
+            // 總行程數 = 1 離開方程式
+            if (route.length < 2) {
+                console.log(`行程數<2 行程數為 ${route.length}`)
+                return
+                // 總行程數 = 2 只需要起始點和終點
+            } else if (route.length == 2) {
+                console.log(`行程數=2 行程數為 ${route.length}`)
+                request = {
+                    origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                    destination: { lat: route[1].lat, lng: route[1].lng },  //終點
+                    travelMode: 'DRIVING', //開車
+                }
+            } else {
+                // 總行程數 > 2 加入停靠站
+                console.log(`行程數>2 行程數為 ${route.length}`)
+                const waypts = [];
+                for (i = 1; i < route.length - 1; i++) {
+                    waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                }
+                request = {
+                    origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                    destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                    waypoints: waypts, //中途停靠點
+                    travelMode: 'DRIVING', //開車
+                };
+            }
+            directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
+            // request放入Google行程服務，得到結果
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    //儲存行程時間陣列
+                    for (i = 0; i < result.routes[0].legs.length; i++) {
+                        directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                        // console.log(state.travelTime)
+                        console.log(result.routes[0].legs[i].duration.value)
+                        state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+                        // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
+                        //result回傳的東西有很多，有興趣可以研究
                     }
-                    //markers.setMap(null);
-                    // 產生地點marker
-                    let iofSpots = 0
-                    for (i = 0; i < state.travel.length; i++) {
-                        state.travel[i].map((position, j) => {
-                            iofSpots++
-                            const marker = new google.maps.Marker({
-                                position: { lat: position.lat, lng: position.lng },
-                                label: `${iofSpots}`,   //其他屬性，可以先略過
-                                // title: position.title,
-                                // map: this.state.map,
-                            });
-                            // 產生infowindow
-                            let contentString =
-                                `<div id="info">
-                                            <p style="color:black">${position.name}</p>
-                                    </div>`
-                            const infowindow = new google.maps.InfoWindow({
-                                content: contentString,
-                                disableAutoPan: false,
-                            });
-                            // 滑過marker開啟infowindow
-                            marker.addListener("mouseover", () => {
-                                //if (this.state.infowindow) { this.state.infowindow.close() };
-                                infowindow.open({
-                                    anchor: marker,
-                                    map: state.map,
-                                    shouldFocus: false,
-                                });
-                                state.infowindow = infowindow
-                            });
-                            marker.addListener("mouseout", () => {
-                                infowindow.close();
-                                state.infowindow = infowindow
-                            });
-                            state.markers.push(marker);
-                        });
+                }
+            });
+
+
+
+            //不同天的行程分開計算
+            //for (i = 0; i < state.travel.length; i++) {
+            //    state.travelTime.push([])
+            //    console.log(state.travelTime)
+            //    console.log(`第${i}天`)
+            //    多個點，加上中間停靠站
+            //    if (state.travel[i].length > 2) {
+            //        建立行程request
+            //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
+            //        const waypts = [];
+            //        for (j = 1; j < state.travel[i].length - 1; j++) {
+            //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
+            //        }
+            //        request = {
+            //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+            //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
+            //        waypoints: waypts, 中途停靠點
+            //        travelMode: 'DRIVING', 開車
+            //        };
+            //        兩個點，只要給起點和終點就好
+            //    } else if (state.travel[i].length == 2) {
+            //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
+            //        request = {
+            //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+            //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
+            //        travelMode: 'DRIVING', 開車
+            //        }
+            //        一個點，路線無法計算，跳出
+            //    } else {
+            //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
+            //        continue;
+            //    }
+            //    request放入Google行程服務，得到結果
+            //    directionsService.route(request, function (result, status) {
+            //        if (status == 'OK') {
+            //            儲存行程時間陣列
+            //            for (j = 0; j < result.routes[0].legs.length; j++) {
+            //                console.log(state.travelTime)
+            //                console.log(result.routes[0].legs[j].duration.value)
+            //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
+            //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
+            //                result回傳的東西有很多，有興趣可以研究
+            //            }
+            //        }
+            //    });
+            //}
+            console.log(`travelTime:`)
+            console.log(state.travelTime)
+
+        },
+        updateSchedule(state, status) {
+            let startTime = new Date(status.startDate)
+            let endTime = new Date(status.endDate)
+            let endTime2 = new Date(status.details[0][0].startTime)
+
+            for (let i = 0; i < status.details.length; i++) {
+                this.state.travel.push([])
+                this.state.duringDate.push(startTime.toLocaleDateString())
+                startTime = startTime.setDate(startTime.getDate() + 1)
+                startTime = new Date(startTime)
+                //
+                datetime = new Date(status.details[i][0].startTime)
+                let time = ""
+                let hour = datetime.getHours() + 8
+                let minute = datetime.getMinutes()
+                //處理時分
+                if (Number(hour) > 24) {
+                    hour = hour - 24
+                }
+                if (Number(hour) < 10) {
+                    hour = "0" + hour
+                }
+                if (Number(minute) < 10) {
+                    minute = "0" + minute
+                }
+                time = hour + ":" + minute
+                console.log(time);
+                this.state.datetime.push(time)
+
+                for (let j = 0; j < status.details[i].length; j++) {
+                    let startTime = new Date(status.details[i][j].startTime);
+                    let endTime = new Date(status.details[i][j].endTime);
+
+                    let timestay = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
+                    console.log(timestay)
+                    hour = startTime.getHours() + 8
+                    minute = startTime.getMinutes()
+                    if (Number(hour) > 24) {
+                        hour = hour - 24
                     }
-                    // 地點群組marker Cluster
-                    state.markerCluster = new markerClusterer.MarkerClusterer({
-                        map: state.map,
-                        markers: state.markers,
-                    });
-                },
-
-                // 計算行程時間 & 畫路線
-                calcRoute(state) {
-                    console.log(state.travel)
-                    state.travelTime = [];
-                    let request = null;
-                    const route = [];
-                    directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
-                    directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                        suppressMarkers: true,
-                    });
-                    //行程變成同一條路徑，上限25個
-                    for (i = 0; i < state.travel.length; i++) {
-                        for (j = 0; j < state.travel[i].length; j++) {
-                            route.push(state.travel[i][j])
-                        }
+                    if (Number(hour) < 10) {
+                        hour = "0" + hour
                     }
-                    // 總行程數 = 1 離開方程式
-                    if (route.length < 2) {
-                        console.log(`行程數<2 行程數為 ${route.length}`)
-                        return
-                        // 總行程數 = 2 只需要起始點和終點
-                    } else if (route.length == 2) {
-                        console.log(`行程數=2 行程數為 ${route.length}`)
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[1].lat, lng: route[1].lng },  //終點
-                            travelMode: 'DRIVING', //開車
-                        }
-                    } else {
-                        // 總行程數 > 2 加入停靠站
-                        console.log(`行程數>2 行程數為 ${route.length}`)
-                        const waypts = [];
-                        for (i = 1; i < route.length - 1; i++) {
-                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
-                        }
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                            waypoints: waypts, //中途停靠點
-                            travelMode: 'DRIVING', //開車
-                        };
+                    if (Number(minute) < 10) {
+                        minute = "0" + minute
                     }
-                    directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
-                    // request放入Google行程服務，得到結果
-                    directionsService.route(request, function(result, status) {
-                        if (status == 'OK') {
-                            //儲存行程時間陣列
-                            for (i = 0; i < result.routes[0].legs.length; i++) {
-                                directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                                // console.log(state.travelTime)
-                                console.log(result.routes[0].legs[i].duration.value)
-                                state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
-                                // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
-                                //result回傳的東西有很多，有興趣可以研究
-                            }
-                        }
-                    });
+                    startTime = hour + ":" + minute
 
+                    hour = endTime.getHours() + 8
+                    minute = endTime.getMinutes()
+                    if (Number(hour) > 24) {
+                        hour = hour - 24
+                    }
+                    if (Number(hour) < 10) {
+                        hour = "0" + hour
+                    }
+                    if (Number(minute) < 10) {
+                        minute = "0" + minute
+                    }
+                    endTime = hour + ":" + minute
 
-
-                    //不同天的行程分開計算
-                    //for (i = 0; i < state.travel.length; i++) {
-                    //    state.travelTime.push([])
-                    //    console.log(state.travelTime)
-                    //    console.log(`第${i}天`)
-                    //    多個點，加上中間停靠站
-                    //    if (state.travel[i].length > 2) {
-                    //        建立行程request
-                    //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
-                    //        const waypts = [];
-                    //        for (j = 1; j < state.travel[i].length - 1; j++) {
-                    //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
-                    //        }
-                    //        request = {
-                    //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                    //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
-                    //        waypoints: waypts, 中途停靠點
-                    //        travelMode: 'DRIVING', 開車
-                    //        };
-                    //        兩個點，只要給起點和終點就好
-                    //    } else if (state.travel[i].length == 2) {
-                    //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
-                    //        request = {
-                    //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                    //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
-                    //        travelMode: 'DRIVING', 開車
-                    //        }
-                    //        一個點，路線無法計算，跳出
-                    //    } else {
-                    //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
-                    //        continue;
-                    //    }
-                    //    request放入Google行程服務，得到結果
-                    //    directionsService.route(request, function (result, status) {
-                    //        if (status == 'OK') {
-                    //            儲存行程時間陣列
-                    //            for (j = 0; j < result.routes[0].legs.length; j++) {
-                    //                console.log(state.travelTime)
-                    //                console.log(result.routes[0].legs[j].duration.value)
-                    //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
-                    //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
-                    //                result回傳的東西有很多，有興趣可以研究
-                    //            }
-                    //        }
-                    //    });
-                    //}
-                    console.log(`travelTime:`)
-                    console.log(state.travelTime)
-
-                },
-                updateSchedule(state, status) {
-                    let startTime = new Date(status.startDate)
-                    let endTime = new Date(status.endDate)
-                    let endTime2 = new Date(status.details[0][0].startTime)
-
-                    for (let i = 0; i < status.details.length; i++) {
-                        this.state.travel.push([])
-                        this.state.duringDate.push(startTime.toLocaleDateString())
-                        startTime = startTime.setDate(startTime.getDate() + 1)
-                        startTime = new Date(startTime)
+                    this.state.travel[i].push({
+                        startTime: startTime,
+                        endTime: endTime,
+                        placeId: status.details[i][j].place.placeId,
+                        name: status.details[i][j].place.name,
+                        description: status.details[i][j].place.description,
+                        tel: status.details[i][j].place.tel,
+                        add: status.details[i][j].place.add,
+                        lat: status.details[i][j].place.lat,
+                        lng: status.details[i][j].place.lng,
+                        region: status.details[i][j].place.region,
+                        town: status.details[i][j].place.town,
+                        class: status.details[i][j].place.class,
+                        opentime: status.details[i][j].place.opentime,
+                        closetime: status.details[i][j].place.closetime,
                         //
-                        datetime = new Date(status.details[i][0].startTime)
-                        let time = ""
-                        let hour = datetime.getHours() + 8
-                        let minute = datetime.getMinutes()
-                        //處理時分
-                        if (Number(hour) > 24) {
-                            hour = hour - 24
-                        }
-                        if (Number(hour) < 10) {
-                            hour = "0" + hour
-                        }
-                        if (Number(minute) < 10) {
-                            minute = "0" + minute
-                        }
-                        time = hour + ":" + minute
-                        console.log(time);
-                        this.state.datetime.push(time)
+                        min: timestay,
+                    })
+                }
+            }
+        },
+                    },
 
-                        for (let j = 0; j < status.details[i].length; j++) {
-                            let startTime = new Date(status.details[i][j].startTime);
-                            let endTime = new Date(status.details[i][j].endTime);
+        getters: {
+        },
 
-                            let timestay = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
-                            console.log(timestay)
-                            hour = startTime.getHours() + 8
-                            minute = startTime.getMinutes()
-                            if (Number(hour) > 24) {
-                                hour = hour - 24
-                            }
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
-                            }
-                            if (Number(minute) < 10) {
-                                minute = "0" + minute
-                            }
-                            startTime = hour + ":" + minute
-
-                            hour = endTime.getHours() + 8
-                            minute = endTime.getMinutes()
-                            if (Number(hour) > 24) {
-                                hour = hour - 24
-                            }
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
-                            }
-                            if (Number(minute) < 10) {
-                                minute = "0" + minute
-                            }
-                            endTime = hour + ":" + minute
-
-                            this.state.travel[i].push({
-                                startTime: startTime,
-                                endTime: endTime,
-                                placeId: status.details[i][j].place.placeId,
-                                name: status.details[i][j].place.name,
-                                description: status.details[i][j].place.description,
-                                tel: status.details[i][j].place.tel,
-                                add: status.details[i][j].place.add,
-                                lat: status.details[i][j].place.lat,
-                                lng: status.details[i][j].place.lng,
-                                region: status.details[i][j].place.region,
-                                town: status.details[i][j].place.town,
-                                class: status.details[i][j].place.class,
-                                opentime: status.details[i][j].place.opentime,
-                                closetime: status.details[i][j].place.closetime,
-                                //
-                                min: timestay,
-                            })
-                        }
-                    }
-                },
+        //非同步function，由組件呼叫使用
+        actions: {
+            axiosLoad(context, payload) {
+                axios.post("@Url.Action("selectDetail","Schedule")", payload)
+                    .then(res => {
+                        context.commit('updateSchedule', res.data)
+                    })
+                    .catch(err => console.log("err"))
+            },
+            //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
+            axiosSave(context, payload) {
+                axios.post("@Url.Action("setSchedule","Schedule")", payload)
+                    .then(console.log("success"))
+                    .catch(err => console.log("err"))
             },
 
-                getters: {
+            //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
+            axiosSearch(context, payload) {
+                axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
+                    .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
+                    .catch(err => console.log(err))
+            },
 
-                    //setTimer(datetime){
-                    //    let time = new Date(datetime)
-                    //    let hour = datetime.getHours()+8
-                    //    let minute = datetime.getMinutes()
-                    //    if (hour > 10) {
-                    //        hour ="0"+hour
-                    //    }
-                    //    if (minute > 10) {
-                    //        minute ="0"+minute
-                    //    }
-                    //    time = hour+":"+minute
-                    //    return time
-                    //}
-                },
+            //載入地圖 設置中心點
+            initMap({ commit }) {
+                commit('initMap')
+                axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
+                    .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
 
-                //非同步function，由組件呼叫使用
-                actions: {
-                    axiosLoad(context, payload) {
-                        axios.post("@Url.Action("selectDetail","Schedule")", payload)
-                            .then(res => {
-                                context.commit('updateSchedule', res.data)
-                            })
-                            .catch(err => console.log("err"))
-                    },
-                    //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
-                    axiosSave(context, payload) {
-                        axios.post("@Url.Action("setSchedule","Schedule")", payload)
-                            .then(console.log("success"))
-                            .catch(err => console.log("err"))
-                    },
-
-                    //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
-                    axiosSearch(context, payload) {
-                        axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
-                            .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
-                            .catch(err => console.log(err))
-                    },
-
-                    //載入地圖 設置中心點
-                    initMap({ commit }) {
-                        commit('initMap')
-                        axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
-                            .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-
-                    },
-                }
-            })
+            },
+        }
+                })
 
         //日期、儲存行程vue
         new Vue({
@@ -504,10 +528,6 @@
                 let id = window.location.search.substring(1)
                 if (id != "") {
                     this.$store.dispatch('axiosLoad', { ScheduleId: id })
-                    //
-                    //if (this.travel.length == 0) {
-                    //    window.location.search = "";
-                    //}
                 }
             },
             methods: {
@@ -679,35 +699,35 @@
 
             template:
                 `
-                                <div>
-                                    <div class="itxst schedule">
-                                        <div class="col" v-for="(day,dayIndex) in travel">
-                                            <div class="title"> {{duringDate[dayIndex]}}</div>
-                                                <hr>旅遊時間 :
-                                                <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
+                                                                <div>
+                                                                    <div class="itxst schedule">
+                                                                        <div class="col" v-for="(day,dayIndex) in travel">
+                                                                            <div class="title"> {{duringDate[dayIndex]}}</div>
+                                                                                <hr>旅遊時間 :
+                                                                                <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
 
-                                                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
-                                                    ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
-                                                    @@change="cultime()" class="min">
-                                                    <transition-group>
-                                                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                                            {{view.startTime}}-{{view.endTime}}<br>
-                                                            {{view.name}}<br>
-                                                            {{view.add}}<br>
-                                                            <div class="adjtime">
-                                                                停留時間:
-                                                                <i class="fa-solid fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i>
-                                                                {{view.min/60}}小時
-                                                                <i class="fa-solid fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i>
-                                                            </div>
-                                                            <button @@click="remove(dayIndex,veiwIndex)">刪</button>
-                                                        </div>
-                                                    </transition-group>
-                                                </draggable>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
+                                                                                <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
+                                                                                    ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
+                                                                                    @@change="cultime()" class="min">
+                                                                                    <transition-group>
+                                                                                        <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                                                                            {{view.startTime}}-{{view.endTime}}<br>
+                                                                                            {{view.name}}<br>
+                                                                                            {{view.add}}<br>
+                                                                                            <div class="adjtime">
+                                                                                                停留時間:
+                                                                                                <i class="fa-solid fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i>
+                                                                                                {{view.min/60}}小時
+                                                                                                <i class="fa-solid fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i>
+                                                                                            </div>
+                                                                                            <button @@click="remove(dayIndex,veiwIndex)">刪</button>
+                                                                                        </div>
+                                                                                    </transition-group>
+                                                                                </draggable>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                `
         })
 
         //搜尋組件vue
@@ -716,15 +736,20 @@
             el: '#app2',
             data() {
                 return {
+                    type: ["景點", "餐飲", "旅宿"],
                     countys: [
                         '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
                         '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
                         '臺東縣', '澎湖縣', '連江縣', '金門縣'
                     ],
                     acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
+                    selectType: [],
                     selectCounty: [],
                     selectAcitivity: [],
                 }
+            },
+            mounted() {
+                this.selectType = '景點'
             },
             computed: {
                 travel() {
@@ -733,18 +758,52 @@
                 selectPlaces() {
                     return this.$store.state.selectPlaces
                 },
+                daysindex() {
+                    return this.$store.state.daysindex
+                }
             },
             methods: {
                 //搜尋景點
                 search() {
+                    if (this.selectCounty.length > 3) {
+                        this.selectCounty.splice(0, 1)
+                    }
+                    if (this.selectAcitivity.length > 1) {
+                        if (this.selectAcitivity[0] == 15 || this.selectAcitivity[0] == 16) {
+                            this.selectAcitivity.splice(0, 1)
+                            this.selectType = '景點'
+                        }
+                    }
+
+                    if (this.selectAcitivity.length > 3) {
+                        this.selectAcitivity.splice(0, 1)
+                    }
+
                     if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
                         this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
                     }
                 },
+                searchType() {
+                    switch (this.selectType) {
+                        case '景點':
+                            break;
+                        case '餐飲':
+                            this.selectAcitivity = [15]
+                            this.selectCounty = []
+                            //this.search()
+                            break;
+                        case '旅宿':
+                            this.selectAcitivity = [16]
+                            this.selectCounty = []
+                            //this.search()
+                            break;
+                    }
+
+                },
 
                 // 新增景點
                 addview: function(index) {
-                    this.travel[0].push({
+                    this.travel[daysindex].push({
                         startTime: '',
                         endTime: '',
                         placeId: this.selectPlaces[index].placeId,
@@ -770,42 +829,49 @@
 
             template:
                 `
-                        <div class="itxst">
-                            <div class="lbl">
-                                <div class="cy">
-                                    <span v-for="(county,index) in countys">
-                                        <input @@change="search" type="checkbox" :value="county" v-model="selectCounty" :id="county">
-                                        <label :for="county">{{county}}</label>
-                                    </span>
-                                </div>
-                                <hr>
-                                <div class="cat">
-                                    <span v-for="(acitivity,index) in acitivitys">
+                                                        <div class="itxst">
+                                                            <div class="lbl">
+                                                                <div class="cy">
+                                                                    <span v-for="(atype,index) in type">
+                                                                        <input @@change="searchType" type="radio" :value="atype" v-model="selectType" :id="atype">
+                                                                        <label :for="atype">{{atype}}</label>
+                                                                    </span>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="cy">
+                                                                    <span v-for="(county,index) in countys">
+                                                                        <input @@change="search" type="checkbox" :value="county" v-model="selectCounty" :id="county">
+                                                                        <label :for="county">{{county}}</label>
+                                                                    </span>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="cat">
+                                                                    <span v-for="(acitivity,index) in acitivitys">
 
-                                        <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
-                                        <label :for="index+1">{{acitivity}}</label>
-                                    </span>
-                                </div>
-                                <hr>
+                                                                        <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
+                                                                        <label :for="index+1">{{acitivity}}</label>
+                                                                    </span>
+                                                                </div>
+                                                                <hr>
 
 
 
-                                    </div>
-                                    <div class="col2">
-                                        <div v-for="(view,selIndex) in selectPlaces">
-                                            <div class="item2">
-                                                <h3>{{view.name}}</h3>
-                                                <i class="fa-solid fa-phone">{{view.tel}}</i>
-                                                <i class="fa-solid fa-house-chimney">{{view.add}}</i>
-                                                <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
-                                                <i>建議停留{{view.timestay}}分</i>
-                                                <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
+                                                                    </div>
+                                                                    <div class="col2">
+                                                                        <div v-for="(view,selIndex) in selectPlaces">
+                                                                            <div class="item2">
+                                                                                <h3>{{view.name}}</h3>
+                                                                                <i class="fa-solid fa-phone">{{view.tel}}</i>
+                                                                                <i class="fa-solid fa-house-chimney">{{view.add}}</i>
+                                                                                <i>營業時間{{view.opentime}}-{{view.closetime}}</i>
+                                                                                <i>建議停留{{view.timestay}}分</i>
+                                                                                <button @@click="addview(selIndex)" class="btn btn-primary">新增至行程</button>
 
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            `
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                            `
         })
 
         //下方選擇日期vue
@@ -813,10 +879,9 @@
             store,
             el: '#app5',
             data() {
-                return{
-                    toleft:0,
-                    calpositiontotal:0
-                    
+                return {
+                    toleft: 0,
+                    calpositiontotal: 0
                 }
             },
 
@@ -833,15 +898,14 @@
                 duringDate() {
                     return this.$store.state.duringDate
                 },
+                daysindex() {
+                    return this.$store.state.daysindex
+                },
                 move() {
                     return {
                         left: this.toleft + 'px',
                     }
                 },
-
-
-
-
             },
 
             mounted() {
@@ -849,16 +913,6 @@
             },
 
             methods: {
-                //刪除景點
-                remove: function(day, view) {
-                    this.travel[day].splice(view, 1)
-                    this.$store.commit("cultime")
-                },
-
-                //計算時間
-                cultime() {
-                    this.$store.commit("cultime")
-                },
                 tol() {
                     let x = document.getElementsByClassName('daysbox')[0].clientWidth
                     // let y = document.getElementsByClassName('btnbox')[0].clientWidth
@@ -881,46 +935,37 @@
                     }
 
                 },
-                calposition(k){
+                calposition(k) {
+                    daysindex = k
+                    //
                     this.calpositiontotal = 0
-                    for(i=0;i<k;i++){
+                    for (i = 0; i < k; i++) {
                         this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
                     }
                     console.log(this.calpositiontotal)
-                    document.getElementsByClassName('grid-item-m')[0].scrollTop=this.calpositiontotal
-                  
+                    document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
                 },
-           
-               
-        
-           
-              
-
             },
 
 
             template:
-            `   <div >
-                    <h3>預設自訂行程1</h3>
-                    <div>
-                        <input type="date">
-                        <input type="date">
-                    </div>
-                        <ul class="daysbox" :style="move">
-                        <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
-                        </ul>
-                    <div class="btnbox-l">
-                            <i @@click="tol" class="fa-solid fa-angle-left left"></i>
-                    <div class="btnbox-r">                            
-                            <i @@click="tor" class="fa-solid fa-angle-right right"></i>
-                    </div>
-                </div>
-            `
+                `   <div >
+                                                    <h3>預設自訂行程1</h3>
+                                                    <div>
+                                                        <input type="date">
+                                                        <input type="date">
+                                                    </div>
+                                                        <ul class="daysbox" :style="move">
+                                                        <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
+                                                        </ul>
+                                                    <div class="btnbox-l">
+                                                            <i @@click="tol" class="fa-solid fa-angle-left left"></i>
+                                                    <div class="btnbox-r">
+                                                            <i @@click="tor" class="fa-solid fa-angle-right right"></i>
+                                                    </div>
+                                                </div>
+                                            `
         })
-
-
-
-
 
     </script>
 }

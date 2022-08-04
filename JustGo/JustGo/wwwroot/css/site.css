@@ -91,6 +91,18 @@ html {
 button.gm-ui-hover-effect {
     visibility: hidden;
 }
+
+
+
+.gm-style .gm-style-iw-c {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.infowindow {
+    max-height: 700px;
+    overflow-y: auto;
+}
+
 body {
-  
 }

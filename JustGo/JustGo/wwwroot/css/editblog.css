@@ -30,10 +30,10 @@ nav {
 
 #coverimg {
     width: 100%;
-    height: 400px;
+    height: 420px;
     /* position: absolute; */
     z-index: -5;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
 }
 
 #covertitle {
@@ -72,11 +72,33 @@ nav {
 
 textarea {
     width: 100%;
+    border: none;
+    border-bottom: 2px dashed #909cc2;
 }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-bottom: 1px dashed #084887;
+    }
 
 .container-fluid {
     position: relative;
 }
+
+textarea::-webkit-scrollbar {
+    width: 8px;
+    width: 8px;
+    border-radius: 40px;
+    background-color: #c3c3c3;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    width: 8px;
+    border-radius: 40px;
+    background-color: #c3c3c3;
+}
+
+
 
 
 
@@ -87,6 +109,9 @@ textarea {
 
 .active {
     color: #E1251B;
+}
+
+.active {
     animation: heart 0.5s linear;
 }
 
@@ -106,12 +131,71 @@ textarea {
 
 #userimg {
     border-radius: 50%;
-    width: 60px;
-    height:60px;
+    height: 55px;
 }
 
 
 
 .Details {
     list-style-type: none;
+}
+
+/* #sidebar{
+            position:sticky;
+            top:0px;
+        } */
+/* .scrollspy-example {
+            position: relative;
+            height: 800px;
+            margin-top: .5rem;
+            overflow: auto;
+        } */
+.list-group-item {
+    /* background-color: darkblue; */
+    size: 12px;
+    color: #f9ab55;
+    font-weight: bold;
+    box-shadow: 0;
+    border: none;
+    padding: 2px;
+}
+
+    .list-group-item:hover {
+        background-color: transparent;
+        color: #f58a07;
+        border: none;
+        font-weight: bold;
+        size: 12px;
+        box-shadow: 0;
+        transition: width 2s, height 2s;
+        /* -webkit-transform:rotate(3deg) */
+    }
+
+    .list-group-item.active {
+        background-color: transparent;
+        color: #f58a07;
+        border: none;
+        font-weight: bold;
+        size: 12px;
+        box-shadow: 0
+    }
+
+.btn-primary {
+    background-color: #669ed6;
+    color: #fff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #084887;
+        color: #fff;
+        border: none;
+    }
+
+#day {
+    background-color: #084887;
+    color: #fff;
+    border-radius: 8px;
+    padding: 2px 8px;
+    margin-bottom: 5px;
 }

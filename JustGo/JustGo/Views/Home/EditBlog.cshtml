@@ -20,6 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
@@ -29,7 +30,7 @@
         $("body").attr('data-bs-offset','0')
         $("body").attr('tabindex','0')
 
-        let id = 0;
+       let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,
             data: {
@@ -46,7 +47,7 @@
                             Describe:"",                         
                             image: null,
                             previewlist: [],
-                            Images: [],                      
+                            images: [],                      
                  
                         },
                         {
@@ -61,7 +62,7 @@
                             preview: null,
                             image: null,
                             previewlist: [],
-                            Images:[] ,                           
+                            images:[] ,                           
                            
 
                         },
@@ -77,7 +78,7 @@
                             preview: null,
                             image: null,
                             previewlist: [],
-                            Images: [],                            
+                            images: [],                            
                           
                         }
 
@@ -95,7 +96,7 @@
                             preview: null,
                             image: null,
                             previewlist: [],
-                            Images: [],                            
+                            images: [],                            
                             
                         },
                         {
@@ -110,20 +111,25 @@
                             preview: null,
                             image: null,
                             previewlist: [],
-                            Images: [],                       
+                            images: [],                       
                           
 
                         },
 
-                //UserId: ["Alley", "Beca", "Cindy"],
-                //UserImage:"https://unsplash.it/1800/1600/?random/person",
-                //CoverImageName: '../poto/blog1.jpg',
-                //Title: '請輸入標題~~~~~~~',
-                //Describe:'',
-                //totallike:0,  
-                //myscore: this.score,
-                //mytempscore: this.score
-                
+
+                    ],
+                ],
+                UserId: ["Alley", "Beca", "Cindy"],
+                UserImage: "https://source.unsplash.com/random/?user",
+                CoverImageName: 'https://unsplash.it/1800/1600/?random/view',
+                Title: '請輸入標題~~~~~~~',
+                Describe: '',
+                // like:0,//只存總數喜歡
+                //(個別喜歡存UserKeep)
+                Like: 5,
+
+                myscore: this.score,
+                mytempscore: this.score
 
             },
             props: {
@@ -146,21 +152,12 @@
                 },
                 getanchor(dayIndex,viewIndex){                    
                     return "list-item-"+dayIndex+"-"+viewIndex
-                },   
+                },    
                 saveBlog(){
                     axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
                             .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
                             .catch(err => console.log("err"))
-                },
-                //{UserImage: this.UserImage, CoverImageName: this.CoverImageName, Title:this.Title, Describe: this.Describe,Like: this.Like, Details:this.Details}
-                //saveDataBlog: function(index) {
-                //    for (let index = 0; index < this.data.length; index++) {
-                //        this.saveDataBlog.push([index])({
-                //            UserImage: this.UserImage[index], CoverImageName: this.CoverImageName[index], Title: this.Title[index], Describe: this.Describe[index], Like: this.Like[index], Details: { P_Add: this.P_Add[index], PlaceId: this.PlaceId[index], P_Name: this.P_Name[index], P_tel: this.P_tel[index], score: this.score[index], Describe: this.Describe[index], previewlist: this.previewlist[index], Images: this.Images[index] }
-                //            })
-                //        }
-                //},
-               
+                },     
                 fileChange(e) {
                     let file = e.target.files[0]
                     let readFile = new FileReader()
@@ -189,27 +186,26 @@
                 loadimg: function(dayIndex, viewIndex, e) {
                     var input = e.target;
                     var count = input.files.length;
-                    console.log(count);
                     var index = 0;
-                    if (input.files) {
+                    if (input.files) {                       
+                        console.log(input.files);
                         while (count--) {
                             var reader = new FileReader();
                             reader.onload = (e) => {
-                                this.Details[dayIndex][viewIndex].previewlist = e.target.result;
-                                console.log(e.target.result)                        
-
+                                this.Details[dayIndex][viewIndex].previewlist.push(e.target.result);                                                  
                             }
-                            this.Details[dayIndex][viewIndex].Images = (input.files[index]);
+                            this.Details[dayIndex][viewIndex].images.push(input.files[index]);
                             reader.readAsDataURL(input.files[index]);
                             index++;
-                        }
+                        }                    
                     }
                 },
-                reset: function() {
-                    this.image = null;
-                    this.preview = null;
-                    this.Images = [];
-                    this.previewlist = [];
+                reset: function(dayIndex, viewIndex, e) {
+                    console.log("iiii")
+                    this.Details[dayIndex][viewIndex].image = null;
+                    this.Details[dayIndex][viewIndex].preview = null;
+                    this.Details[dayIndex][viewIndex].images = [];
+                    this.Details[dayIndex][viewIndex].previewlist = [];
                 },
                 likeblog: function() {
                     var heart = document.getElementsByClassName("fa-heart");
@@ -324,7 +320,7 @@
                                 </ul>
                             </div>
                         </div> -->
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group">
                             <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天 
                             <li class="list-group-item  justify-content-between align-items-center px-0">
                                 <ul>
@@ -361,8 +357,7 @@
                             </label> -->
                         </div>
                         <textarea rows="4" class="" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe"  style="resize:none"></textarea>
-                    </div>
-                    <!-- <div  data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example" tabindex="0"> -->
+                    </div>              
                     <div>
                         <div v-for="(day,dayIndex) in Details">
                         <label id="day">第{{dayIndex+1}}天</label> 
@@ -390,20 +385,58 @@
                                     <input type="file" accept="image/*" multiple @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg" style="display:none;" size="10">
                                     <i class="fa fa-photo"></i> 上傳圖片
                                 </label> 
-                                <button @@click="reset" class="btn btn-outline-secondary btn-sm">取消上傳</button>
+                                <button @@click="(e)=>reset(dayIndex,viewIndex,e)" class="btn btn-outline-secondary btn-sm">取消上傳</button>                                
                                 
-                                    <!-- <div>test test test </div>
-                                    {{Details[dayIndex][viewIndex].Images}}
-                                    {{Details[dayIndex][viewIndex].previewlist}} -->
-                            
+                                    <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
+                                        <div class="d-flex">
+                                            <img :src="imgURL"/>                                           
+                                        </div>
+                                    </div>                                
                             </div>
+                                                        
+
                         </div>
+
+                        <div>
+                            <h2 class="mb-4">Plain Text</h2>
+                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
+                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
+                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
+                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                            </div>
+                            <div>
+                            <h2 class="mb-4">Plain Text</h2>
+                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
+                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
+                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
+                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                            </div>
+                            <div>
+                            <h2 class="mb-4">Plain Text</h2>
+                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
+                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
+                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
+                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                            </div>
+                             <h2 class="mb-4">Plain Text</h2>
+                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
+                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
+                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
+                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                            </div>
+                            <div>
+                            <h2 class="mb-4">Plain Text</h2>
+                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
+                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
+                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
+                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                            </div>
                     </div>
                 </div>
                 </div>
                 <div style="display: flex; justify-content: center">
                     <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">取消編輯</button>
-                    <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">儲存行程</button>
+                    <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;" @@click="saveBlog">儲存行程</button>
                     <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">發佈行程</button>
                 </div>
 

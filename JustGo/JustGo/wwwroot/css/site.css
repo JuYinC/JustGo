@@ -89,7 +89,7 @@ html {
 }
 /* infowindow不要顯示x */
 button.gm-ui-hover-effect {
-    visibility: hidden;
+   /* visibility:visible;*/
 }
 
 

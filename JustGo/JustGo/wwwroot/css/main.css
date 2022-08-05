@@ -636,14 +636,19 @@ html h5 {
     /*border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
     font-family: sans-serif;*/
+    overflow:hidden;
 }
 
 .infowindow_bar {
+    padding:5px;
     margin: 0px;
-    width: 375px;
+    /*width: 375px;*/
+    min-width: 375px;
+    width: auto;
     border-radius: 5px 5px 0px 0px;
-    background-color: #FDC11D;
-    color: white;
+    background: linear-gradient(to right, #FDC11D,white);
+    /*background-color: #FDC11D;*/
+    color: #101F40;
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -679,7 +684,13 @@ html h5 {
     }
 
 .infowindow_detail {
+    padding: 5px;
+    margin: 5px;
+    text-align: justify;
+    text-justify: inter-ideograph;
     font-size: 13px;
+    background-color: #FBF8D6;
+    border-radius: 5px;
 }
 
 .infowindow_picture {
@@ -706,12 +717,15 @@ html h5 {
 }
 
 .infowindow_bar_button:hover {
-    text-shadow: white 0px 15px 25px, white 0px 5px 10px;
+    text-shadow: 0 0 2px #FDC11D;
 }
 
-.card-body {
-    background-color: #FEF8F0;
-    border: 0px;
-    border-radius: 0px 0px;
-    color: #514D54
+.infowindow_bar_divbutton {
+    text-align:center;
+
 }
+.infowindow_intro{
+    padding:3px 0px 3px 0px;
+}
+
+

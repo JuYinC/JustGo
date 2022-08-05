@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <style>
-        .footer__waves {
-            display: none;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+<style>
+    .footer__waves {
+        display: none;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 
 
 }
@@ -78,7 +78,7 @@
 <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
 <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <script>
@@ -97,23 +97,23 @@
             isTravel: false,
         },
 
-            //由action傳入值,更新state狀態
-            mutations: {
-                //更新state 搜尋結果
-                updateData(state, status) {
-                    state.selectPlaces.length = 0;
-                    state.selectPlaces = status
-                },
+        //由action傳入值,更新state狀態
+        mutations: {
+            //更新state 搜尋結果
+            updateData(state, status) {
+                state.selectPlaces.length = 0;
+                state.selectPlaces = status
+            },
 
-                //計算行程表時間
-                cultime() {
-                    for (let j = 0; j < this.state.travel.length; j++) {
-                        let timestamp = this.state.datetime[j]
-                        for (let i = 0; i < this.state.travel[j].length; i++) {
-                            this.state.travel[j][i].startTime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
+            //計算行程表時間
+            cultime() {
+                for (let j = 0; j < this.state.travel.length; j++) {
+                    let timestamp = this.state.datetime[j]
+                    for (let i = 0; i < this.state.travel[j].length; i++) {
+                        this.state.travel[j][i].startTime = timestamp
+                        let hr = timestamp.substring(0, 2)
+                        let min = timestamp.substring(3, 5)
+                        let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
 
                         hr = Number(hr) + Number(addhr)
                         min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
@@ -154,6 +154,7 @@
                         marker.setMap(null)
                     });
                     state.markers = [];
+                    state.directionsRenderer.setMap(null)
                 }
 
                 const bounds = new google.maps.LatLngBounds();
@@ -165,7 +166,7 @@
                     bounds.extend(marker.position);
                     // 產生infowindow
                     let contentString =
-                        `                            <div class="infowindow">
+                        `<div class="infowindow">
                                 <div class="infowindow_bar row row-cols-2" >
                                     <div class="infowindow_bar_title col-10">
                                      ${position.name}
@@ -259,7 +260,7 @@
                                     </div>
                                     <div class="infowindow_bar_divbutton col-2">
                                         <div class="infowindow_bar_button" type="button" onclick="addView()">
-                                         
+
                                         </div>
                                     </div>
                                 </div>
@@ -424,6 +425,7 @@
                     console.log(state.travelTime)
                 }
             },
+
             changeView(state) {
                 let numTravel = 0
                 for (i = 0; i < state.travel.length; i++) {
@@ -525,31 +527,31 @@
             },
         },
 
-            getters: {
+        getters: {
+        },
+
+        //非同步function，由組件呼叫使用
+        actions: {
+            axiosLoad(context, payload) {
+                axios.post("@Url.Action("selectDetail","Schedule")", payload)
+                    .then(res => {
+                        context.commit('updateSchedule', res.data)
+                    })
+                    .catch(err => console.log("err"))
+            },
+            //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
+            axiosSave(context, payload) {
+                axios.post("@Url.Action("setSchedule","Schedule")", payload)
+                    .then(console.log("success"))
+                    .catch(err => console.log("err"))
             },
 
-            //非同步function，由組件呼叫使用
-            actions: {
-                axiosLoad(context, payload) {
-                    axios.post("@Url.Action("selectDetail","Schedule")", payload)
-                        .then(res => {
-                            context.commit('updateSchedule', res.data)
-                        })
-                        .catch(err => console.log("err"))
-                },
-                //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
-                axiosSave(context, payload) {
-                    axios.post("@Url.Action("setSchedule","Schedule")", payload)
-                        .then(console.log("success"))
-                        .catch(err => console.log("err"))
-                },
-
-                //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
-                axiosSearch(context, payload) {
-                    axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
-                        .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
-                        .catch(err => console.log(err))
-                },
+            //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
+            axiosSearch(context, payload) {
+                axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
+                    .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
+                    .catch(err => console.log(err))
+            },
 
             //載入地圖 設置中心點
             initMap({ commit }) {
@@ -561,37 +563,37 @@
         }
     })
 
-        //日期、儲存行程vue
-        new Vue({
-            store,
-            el: '#app',
-            data() {
-                return {
-                    selectDatelocal: [],
-                    selectDateEndlocal: [],
-                    saveData: [],
-                }
+    //日期、儲存行程vue
+    new Vue({
+        store,
+        el: '#app',
+        data() {
+            return {
+                selectDatelocal: [],
+                selectDateEndlocal: [],
+                saveData: [],
+            }
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
             },
-            computed: {
-                travel() {
-                    return this.$store.state.travel
-                },
-                datetime() {
-                    return this.$store.state.datetime
-                },
-                duringDate() {
-                    return this.$store.state.duringDate
-                },
+            datetime() {
+                return this.$store.state.datetime
             },
-            mounted() {
-                let id = window.location.search.substring(1)
-                if (id != "") {
-                    this.$store.dispatch('axiosLoad', { ScheduleId: id })
-                }
+            duringDate() {
+                return this.$store.state.duringDate
             },
-            methods: {
-                //編排日期
-                culDate() {
+        },
+        mounted() {
+            let id = window.location.search.substring(1)
+            if (id != "") {
+                this.$store.dispatch('axiosLoad', { ScheduleId: id })
+            }
+        },
+        methods: {
+            //編排日期
+            culDate() {
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
@@ -636,35 +638,35 @@
                 }
             },
 
-                //儲存行程
-                saveSchedule() {
-                    for (let i = 0; i < this.travel.length; i++) {
-                        this.saveData.push([]);
-                        for (let j = 0; j < this.travel[i].length; j++) {
-                            this.saveData[i].push({
-                                startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
-                                endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
-                                weatherWarning: false,
-                                pop: 10,
-                                temperature: 25,
-                                uvi: 5,
-                                place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
-                            })
-                        }
-                    }
-
-                    this.$store.dispatch('axiosSave',
-                        {
-                            StartDate: new Date(this.duringDate[0]),
-                            EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
-                            WeatherWarning: false,
-                            title: "123",
-                            details: this.saveData,
+            //儲存行程
+            saveSchedule() {
+                for (let i = 0; i < this.travel.length; i++) {
+                    this.saveData.push([]);
+                    for (let j = 0; j < this.travel[i].length; j++) {
+                        this.saveData[i].push({
+                            startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                            endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                            weatherWarning: false,
+                            pop: 10,
+                            temperature: 25,
+                            uvi: 5,
+                            place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                         })
-                    alert("儲存成功")
-                },
+                    }
+                }
+
+                this.$store.dispatch('axiosSave',
+                    {
+                        StartDate: new Date(this.duringDate[0]),
+                        EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
+                        WeatherWarning: false,
+                        title: "123",
+                        details: this.saveData,
+                    })
+                alert("儲存成功")
             },
-        })
+        },
+    })
 
     //地圖vue
     new Vue({
@@ -802,105 +804,105 @@
                                 `
     })
 
-        //搜尋組件vue
-        new Vue({
-            store,
-            el: '#app2',
-            data() {
-                return {
-                    type: ["景點", "餐飲", "旅宿"],
-                    countys: [
-                        '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
-                        '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
-                        '臺東縣', '澎湖縣', '連江縣', '金門縣'
-                    ],
-                    acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
-                    selectType: [],
-                    selectCounty: [],
-                    selectAcitivity: [],
+    //搜尋組件vue
+    new Vue({
+        store,
+        el: '#app2',
+        data() {
+            return {
+                type: ["景點", "餐飲", "旅宿"],
+                countys: [
+                    '基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
+                    '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
+                    '臺東縣', '澎湖縣', '連江縣', '金門縣'
+                ],
+                acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
+                selectType: [],
+                selectCounty: [],
+                selectAcitivity: [],
+            }
+        },
+        mounted() {
+            this.selectType = '景點'
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
+            },
+            selectPlaces() {
+                return this.$store.state.selectPlaces
+            },
+            daysindex() {
+                return this.$store.state.daysindex
+            }
+        },
+        methods: {
+            //搜尋景點
+            search() {
+                if (this.selectCounty.length > 3) {
+                    this.selectCounty.splice(0, 1)
                 }
-            },
-            mounted() {
-                this.selectType = '景點'
-            },
-            computed: {
-                travel() {
-                    return this.$store.state.travel
-                },
-                selectPlaces() {
-                    return this.$store.state.selectPlaces
-                },
-                daysindex() {
-                    return this.$store.state.daysindex
-                }
-            },
-            methods: {
-                //搜尋景點
-                search() {
-                    if (this.selectCounty.length > 3) {
-                        this.selectCounty.splice(0, 1)
-                    }
-                    if (this.selectAcitivity.length > 1) {
-                        if (this.selectAcitivity[0] == 15 || this.selectAcitivity[0] == 16) {
-                            this.selectAcitivity.splice(0, 1)
-                            this.selectType = '景點'
-                        }
-                    }
-
-                    if (this.selectAcitivity.length > 3) {
+                if (this.selectAcitivity.length > 1) {
+                    if (this.selectAcitivity[0] == 15 || this.selectAcitivity[0] == 16) {
                         this.selectAcitivity.splice(0, 1)
+                        this.selectType = '景點'
                     }
+                }
 
-                    if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                        this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
-                    }
-                },
-                searchType() {
-                    switch (this.selectType) {
-                        case '景點':
-                            break;
-                        case '餐飲':
-                            this.selectAcitivity = [15]
-                            this.selectCounty = []
-                            //this.search()
-                            break;
-                        case '旅宿':
-                            this.selectAcitivity = [16]
-                            this.selectCounty = []
-                            //this.search()
-                            break;
-                    }
+                if (this.selectAcitivity.length > 3) {
+                    this.selectAcitivity.splice(0, 1)
+                }
 
-                },
+                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                }
+            },
+            searchType() {
+                switch (this.selectType) {
+                    case '景點':
+                        break;
+                    case '餐飲':
+                        this.selectAcitivity = [15]
+                        this.selectCounty = []
+                        //this.search()
+                        break;
+                    case '旅宿':
+                        this.selectAcitivity = [16]
+                        this.selectCounty = []
+                        //this.search()
+                        break;
+                }
 
-                // 新增景點
-                addview: function(index) {
-                    this.travel[this.daysindex].push({
-                        startTime: '',
-                        endTime: '',
-                        placeId: this.selectPlaces[index].placeId,
-                        name: this.selectPlaces[index].name,
-                        description: this.selectPlaces[index].description,
-                        tel: this.selectPlaces[index].tel,
-                        add: this.selectPlaces[index].add,
-                        lat: this.selectPlaces[index].lat,
-                        lng: this.selectPlaces[index].lng,
-                        region: this.selectPlaces[index].region,
-                        town: this.selectPlaces[index].town,
-                        class: this.selectPlaces[index].class,
-                        opentime: this.selectPlaces[index].opentime,
-                        closetime: this.selectPlaces[index].closetime,
-                        min: this.selectPlaces[index].timestay,
-                    })
-                    this.$store.commit('setTravelMarker')
-                    this.$store.commit("cultime")
-                    this.$store.commit('calcRoute')
+            },
+
+            // 新增景點
+            addview: function (index) {
+                this.travel[this.daysindex].push({
+                    startTime: '',
+                    endTime: '',
+                    placeId: this.selectPlaces[index].placeId,
+                    name: this.selectPlaces[index].name,
+                    description: this.selectPlaces[index].description,
+                    tel: this.selectPlaces[index].tel,
+                    add: this.selectPlaces[index].add,
+                    lat: this.selectPlaces[index].lat,
+                    lng: this.selectPlaces[index].lng,
+                    region: this.selectPlaces[index].region,
+                    town: this.selectPlaces[index].town,
+                    class: this.selectPlaces[index].class,
+                    opentime: this.selectPlaces[index].opentime,
+                    closetime: this.selectPlaces[index].closetime,
+                    min: this.selectPlaces[index].timestay,
+                })
+                this.$store.commit('setTravelMarker')
+                this.$store.commit("cultime")
+                this.$store.commit('calcRoute')
 
             },
         },
 
-            template:
-                `
+        template:
+            `
                                                                 <div class="itxst">
                                                                     <div class="lbl">
                                                                         <div class="cy">
@@ -944,7 +946,7 @@
                                                                         </div>
                                                                     </div>
                                                                     `
-        })
+    })
 
     //下方選擇日期vue
     new Vue({
@@ -958,45 +960,45 @@
             }
         },
 
-            computed: {
-                travel() {
-                    return this.$store.state.travel;
-                },
-                selectPlaces() {
-                    return this.$store.state.selectPlaces
-                },
-                datetime() {
-                    return this.$store.state.datetime
-                },
-                duringDate() {
-                    return this.$store.state.duringDate
-                },
-                daysindex() {
-                    return this.$store.state.daysindex
-                },
-                move() {
-                    return {
-                        left: this.toleft + 'px',
-                    }
-                },
+        computed: {
+            travel() {
+                return this.$store.state.travel;
             },
+            selectPlaces() {
+                return this.$store.state.selectPlaces
+            },
+            datetime() {
+                return this.$store.state.datetime
+            },
+            duringDate() {
+                return this.$store.state.duringDate
+            },
+            daysindex() {
+                return this.$store.state.daysindex
+            },
+            move() {
+                return {
+                    left: this.toleft + 'px',
+                }
+            },
+        },
 
         mounted() {
 
         },
 
-            methods: {
-                tol() {
-                    let x = document.getElementsByClassName('daysbox')[0].clientWidth
-                    // let y = document.getElementsByClassName('btnbox')[0].clientWidth
-                    let y = 270
-                    let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
-                    if (y < x && z < x) {
-                        this.toleft -= 150
-                    }
-                    else {
-                        this.toleft = this.toleft
-                    }
+        methods: {
+            tol() {
+                let x = document.getElementsByClassName('daysbox')[0].clientWidth
+                // let y = document.getElementsByClassName('btnbox')[0].clientWidth
+                let y = 270
+                let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
+                if (y < x && z < x) {
+                    this.toleft -= 150
+                }
+                else {
+                    this.toleft = this.toleft
+                }
 
             },
             tor() {
@@ -1007,19 +1009,19 @@
                     this.toleft = 0
                 }
 
-                },
-                calposition(k) {
-                    daysindex = k
-                    console.log(daysindex)
-                    //
-                    this.calpositiontotal = 0
-                    for (i = 0; i < k; i++) {
-                        this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
-                    }
-                    console.log(this.calpositiontotal)
-                    document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
-                },
             },
+            calposition(k) {
+                daysindex = k
+                console.log(daysindex)
+                //
+                this.calpositiontotal = 0
+                for (i = 0; i < k; i++) {
+                    this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
+                }
+                console.log(this.calpositiontotal)
+                document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
+            },
+        },
 
 
         template:

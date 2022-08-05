@@ -165,9 +165,37 @@
                     bounds.extend(marker.position);
                     // 產生infowindow
                     let contentString =
-                        `<div id="info">
-                                            <p style="color:black">${position.name}</p>
-                                    </div>`
+                        `                            <div class="infowindow">
+                                <div class="infowindow_bar row row-cols-2" >
+                                    <div class="infowindow_bar_title col-10">
+                                     ${position.name}
+                                    </div>
+                                    <div class="infowindow_bar_divbutton col-2">
+                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                        + <i class="fa-solid fa-calendar-days"></i>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="infowindow_part row">
+                                    <div class="infowindow_img col-4">
+                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                    </div>
+                                    <div class="infowindow_info col-8">
+                                        <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
+                                        <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
+                                        <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                    </div>
+                                </div>
+                                <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    景點介紹
+                                </button>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="infowindow_detail" style="text-indent:2em">
+                                        ${position.description}
+                                    </div>
+                                </div>
+                            </div>`
                     const infowindow = new google.maps.InfoWindow({
                         content: contentString,
                         disableAutoPan: false,
@@ -223,9 +251,39 @@
                             });
                             // 產生infowindow
                             let contentString =
-                                `<div id="info">
-                                                                                    <p style="color:black">${position.name}</p>
-                                                                            </div>`
+                                `
+                            <div class="infowindow">
+                                <div class="infowindow_bar row row-cols-2" >
+                                    <div class="infowindow_bar_title col-10">
+                                     ${position.name}
+                                    </div>
+                                    <div class="infowindow_bar_divbutton col-2">
+                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="infowindow_part row">
+                                    <div class="infowindow_img col-4">
+                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                    </div>
+                                    <div class="infowindow_info col-8">
+                                        <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
+                                        <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
+                                        <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                    </div>
+                                </div>
+                                <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    景點介紹
+                                </button>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="infowindow_detail" style="text-indent:2em">
+                                        ${position.description}
+                                    </div>
+                                </div>
+                            </div>
+                            `
                             const infowindow = new google.maps.InfoWindow({
                                 content: contentString,
                                 disableAutoPan: false,

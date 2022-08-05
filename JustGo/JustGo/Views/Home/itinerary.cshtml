@@ -615,8 +615,8 @@
                                 place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                             })
                         }
-
                     }
+
                     this.$store.dispatch('axiosSave',
                         {
                             StartDate: new Date(this.duringDate[0]),
@@ -826,7 +826,7 @@
 
                 // 新增景點
                 addview: function(index) {
-                    this.travel[daysindex].push({
+                    this.travel[this.daysindex].push({
                         startTime: '',
                         endTime: '',
                         placeId: this.selectPlaces[index].placeId,

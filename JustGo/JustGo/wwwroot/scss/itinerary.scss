@@ -58,16 +58,20 @@
         & input{
             font-size: 2rem;
             border-style: none;
-            border: blue;
             background: transparent;
             font-weight: 700;
             margin-left: 3rem;
+
+            &::placeholder{
+                color: #eee;
+            }
+           
         }
 
         & button{
             // background-color: #ce9906;
             font-size: 2rem;
-            width: 10rem;
+            width: 20rem;
             margin-left: 3rem;
             border-radius: 15px;
         }
@@ -186,36 +190,99 @@
     &__grid{
         height: 100%;
         display: grid;
-        grid-template-rows: 15% 75% 1fr ;
+        grid-template-rows: 125px 620px 1fr;
 
         & .grid-item{
             &-t{
                 margin: 12px;
+                position: relative;
+                width: 270px;
+                overflow: hidden;
                 & .daysbox{
                     display: flex;
                     padding: 5px;
-                    margin: 0;
+                    margin: 0 10px 0 10px;
+                    position: absolute;
+                    transition: all .5s;
+                   
 
                     & .days{
                         list-style: none;
-                        border: 1px solid black;
-                        // background-color: #ce9906;
-                        border-radius: 10px;
+                        background: skyblue;
                         width: 9rem;
                         height: 4rem;
-                        margin: 0.3rem;
+                        margin: 0.1rem;
                         text-align: center;
-                        padding-top: 1rem;
+                        padding-top: 0.75rem;
+                        font-size: 1.6rem;
+                        font-family: 'cwTeXYen', sans-serif;
+                        font-weight: 600;
+                        color: currentColor;
+
+                        &:hover{
+                            background:rgb(198, 238, 248);
+                        }
                       
                     }
                 }
+
+
+                & .btnbox-l{
+                    position: absolute;
+                    top: 48px;
+                    width: 25px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    left: -5px;
+                   
+
+                    & .left{
+                        position: absolute;
+                       
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 25px;
+                        height: 100%;
+                        background: white;
+                        z-index: 1;
+                        
+                    }
+                }
+                & .btnbox-r{
+                    position: absolute;
+                    left: 255px;
+                    width: 25px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                   
+                    
+                    & .right{
+                        position: absolute;
+                        left: 0;
+                        width: 26px;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background: white;
+                        z-index: 1;
+                    }
+                   
+                }
+              
+               
                 
                
             }
             &-m{
                 // background-color: #ce9906;
                 height: inherit;
+                width: 300px;
                 overflow-y: scroll;
+
 
                 & .col{
                     width: 25.5rem;

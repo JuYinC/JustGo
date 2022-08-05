@@ -28,117 +28,88 @@
         let vm = new Vue({
             el: `#bloginfo`,
             data: {
-
-                Details: [
-                    {
-                        details: [],
-                    //    endDate: "",
-                    //    like: 1,
-                    //    startDate: "",
-                    //    title: "",
-                    //    userId:"",
-                    //    userImage: "",
-                    //    userName: "",
-                    }
-                        
-                
-                    ],
-                        UserId: "allen",
-                        UserImage: "https:source.unsplash.com/random/?user",
-                        CoverImageName: 'https:unsplash.it/1800/1600/?random/view',
-                        Title: '請輸入標題~~~~~~~',
-                        Describe: '',
-                        Like: 5,
-                        myscore: this.score,
-                        mytempscore: this.score,
-                //Details:  [
-                //    [
-                //        {
-                //            id: id++,
-                //            P_Add:"",                            
-                //            PlaceId: 1,
-                //            P_Name: "北部1",
-                //            P_tel:"",
-                //            score:0,
-                //            Describe:"",                         
-                //            image: null,
-                //            previewlist: [],
-                //            Images: [],                      
+                Details:  [
+                    [
+                        {
+                            id: id++,
+                            p_Add:"",                            
+                            placeId: 1,
+                            p_Name: "北部1",
+                            p_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"",                         
+                            image: null,
+                            previewlist: [],
+                            Images: [],                      
                  
-                //        },
-                //        {
-                //            id: id++,
-                //            P_Add:"",                            
-                //            PlaceId: 1,
-                //            P_Name: "南部2",
-                //            P_tel:"",
-                //            score:0,
-                //            Describe:"", 
-                //            preview: null,
-                //            image: null,
-                //            previewlist: [],
-                //            Images:[] ,                           
+                        },
+                        {
+                            id: id++,
+                            p_Add:"",                            
+                            placeId: 1,
+                            p_Name: "南部2",
+                            p_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images:[] ,                           
                            
 
-                //        },
-                //        {
-                //            id: id++,
-                //            P_Add:"",                            
-                //            PlaceId: 1,
-                //            P_Name: "外島3",
-                //            P_tel:"",
-                //            score:0,
-                //            Describe:"", 
-                //            preview: null,
-                //            image: null,
-                //            previewlist: [],
-                //            Images: [],                            
+                        },
+                        {
+                            id: id++,
+                            p_Add:"",                            
+                            placeId: 1,
+                            p_Name: "外島3",
+                            p_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                            
                           
-                //        }
+                        }
 
-                //    ],
-                //    [
-                //        {
-                //            id: id++,
-                //            P_Add:"",                            
-                //            PlaceId: 1,
-                //            P_Name: "東部1",
-                //            P_tel:"",
-                //            score:0,
-                //            Describe:"", 
-                //            preview: null,
-                //            image: null,
-                //            previewlist: [],
-                //            Images: [],                            
+                    ],
+                    [
+                        {
+                            id: id++,
+                            p_Add:"",                            
+                            placeId: 1,
+                            p_Name: "東部1",
+                            p_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                            
                             
-                //        },
-                //        {
-                //            id: id++,
-                //            P_Add:"",                            
-                //            PlaceId: 1,
-                //            P_Name: "中部2",
-                //            P_tel:"",
-                //            score:0,
-                //            Describe:"", 
-                //            preview: null,
-                //            image: null,
-                //            previewlist: [],
-                //            Images: [],                       
+                        },
+                        {
+                            id: id++,
+                            p_Add:"",                            
+                            placeId: 1,
+                            p_Name: "中部2",
+                            p_tel:"",
+                            score:0,
+                            // like:0,
+                            Describe:"", 
+                            preview: null,
+                            image: null,
+                            previewlist: [],
+                            Images: [],                       
                           
 
-                //        },
+                        },
 
-
-                //    ],
-                //],
-                
-                   
-                //UserId: "Allen",
-                //UserImage: "https:source.unsplash.com/random/?user",
-                //CoverImageName: 'https:unsplash.it/1800/1600/?random/view',
-                //Title: '請輸入標題~~~~~~~',
-                //Describe: '',
-                //Like: 5,
 
                 //myscore: this.score,
                 //mytempscore: this.score
@@ -159,18 +130,26 @@
                     default: 'black'
                 }
             },
-            mounted(){
-                 axios.post("@Url.Action("selectblogDetails","Blog")",{Details:this.Details})
-                        //.then(res => { console.log(res.data); this.Details = res.data})
-                        .then(res => this.Details = res.data)
-                        .catch(err => console.log("err"))
-            },
             methods: {              
                 saveBlog(){
                     axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
                             .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
                             .catch(err => console.log("err"))
-                },               
+                },
+                //{UserImage: this.UserImage, CoverImageName: this.CoverImageName, Title:this.Title, Describe: this.Describe,Like: this.Like, Details:this.Details}
+                //saveDataBlog: function(index) {
+                //    for (let index = 0; index < this.data.length; index++) {
+                //        this.saveDataBlog.push([index])({
+                //            UserImage: this.UserImage[index], CoverImageName: this.CoverImageName[index], Title: this.Title[index], Describe: this.Describe[index], Like: this.Like[index], Details: { P_Add: this.P_Add[index], PlaceId: this.PlaceId[index], P_Name: this.P_Name[index], P_tel: this.P_tel[index], score: this.score[index], Describe: this.Describe[index], previewlist: this.previewlist[index], Images: this.Images[index] }
+                //            })
+                //        }
+                //},
+                  //loadBlog: function() {
+                //    axios.post("Url.Action("loadBlog","getBlog")", {})
+                //        .then(res => { console.log(res.data); context.commit('loadDataBlog', res.data) })
+                //        .catch(err => console.log("err"))
+                //},
+                
                 fileChange(e) {
                     let file = e.target.files[0]
                     let readFile = new FileReader()
@@ -293,6 +272,13 @@
                     }
                 }
             },
+            mounted() {
+                let id = window.location.search.substring(1) 
+                console.log(id)
+                if (id != "") {
+                    axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )
+                }
+            }
             
         },
         )
@@ -330,8 +316,8 @@
                         <div v-for="(day,dayIndex) in Details">
                             <ul>
                                 Day{{dayIndex+1}}
-                                <li v-for="(P_Name,viewIndex) in day" :key="P_Name.id" class="Details list-group-item list-group-item-action list-group-item-primary">
-                                    <a href="#P_Name.P_Name">{{P_Name.P_Name}}</a>
+                                <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details list-group-item list-group-item-action list-group-item-primary">
+                                    <a href="#p_Name.p_Name">{{p_Name.p_Name}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -361,23 +347,23 @@
                     </div>
 
                     <div v-for="(day,dayIndex) in Details">
-                        <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id" :id="P_Name.P_Name">
+                        <div class="item" v-for="(p_Name,viewIndex) in day" :key="p_Name.id" :id="p_Name.p_Name">
                             Day{{dayIndex+1}}
                             <span><i class="fa-solid fa-map-location-dot"></i></span>
-                            <span class="Details">{{P_Name.P_Name}}</span>
-                            <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
+                            <span class="Details">{{p_Name.p_Name}}</span>
+                            <div class="Details"><span>地址:{{p_Name.placeId}}</span></div>
 
                             <div>
                                 <i class="fa fa-star" :style="{color:color}"
-                               :class="item<=P_Name.score?'fa-star':'fa-star-o'"
+                               :class="item<=p_Name.score?'fa-star':'fa-star-o'"
                                v-for="item in count"
-                               @@mouseenter="P_Name.score=item"
-                               @@mouseleave="P_Name.score=myscore"
+                               @@mouseenter="p_Name.score=item"
+                               @@mouseleave="p_Name.score=myscore"
                                @@click="myscore=item"></i>
-                                {{P_Name.score}}分
+                                {{p_Name.score}}分
                             </div>
 
-                            <textarea rows="6" class="form-control" maxlength="400" v-model="P_Name.Describe" placeholder="行程敘述 這次行程多虧了justgo... 字數限制為400字" style="resize:none"></textarea>
+                            <textarea rows="6" class="form-control" maxlength="400" v-model="p_Name.Describe" placeholder="行程敘述 這次行程多虧了justgo... 字數限制為400字" style="resize:none"></textarea>
 
 
                             <div>

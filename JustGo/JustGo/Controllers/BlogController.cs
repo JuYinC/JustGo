@@ -17,11 +17,6 @@ namespace JustGo.Controllers
             _blog = blog;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
@@ -58,6 +53,13 @@ namespace JustGo.Controllers
                 }
             }
             return Json("ok");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult creatBlog([FromBody]ScheduleVM vm)
+        {            
+            return Json(_blog.createScheduleToBlog(vm.ScheduleId));
         }
 
         //查詢使用者部落格(無細項)

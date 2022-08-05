@@ -57,9 +57,10 @@ namespace JustGo.Repository
             return true;
         }
 
-        public ScheduleVM selectScedule(int SceduleId)
-        {            
-            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId)??new Schedule());
+        public ScheduleVM selectScedule(int SceduleId ,string UserId)
+        {
+            return modelToView(_context.Schedule.Where(e => e.UserId == UserId).Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
+            //return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
         }
 
         public IList<ScheduleVM> selectUserSchedule(string UserId)

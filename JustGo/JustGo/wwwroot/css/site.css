@@ -23,6 +23,26 @@ html {
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 
 
 
@@ -48,12 +68,12 @@ html {
     flex-direction: column;
     min-height: 100px;
 }
-/*ï¿½aï¿½ï¿½*/
+/*¦a¹Ï*/
 #map {
     height: 500px;
     width: 100%;
 }
-/*ï¿½aï¿½Ï¤Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s*/
+/*¦a¹Ï«ö¶s*/
 #floating-panel {
     position: absolute;
     top: 10%;
@@ -67,7 +87,7 @@ html {
     line-height: 30px;
     padding-left: 10px;
 }
-/*ï¿½ï¿½ï¿½ï¿½infowindowï¿½ï¿½ï¿½eï¿½eï¿½ï¿½ï¿½s*/
+/* infowindow¤£­nÅã¥Üx */
 button.gm-ui-hover-effect {
     visibility: hidden;
 }

@@ -11,7 +11,7 @@
         }
 
         .titlebar {
-            margin: 20px;
+            margin: 30px 30px 55px 30px;
             color: #2F1000;
             font-size: 28px;
             border-bottom: 5px solid transparent;
@@ -19,77 +19,242 @@
         }
 
         .schedules {
+            font-size: 18px;
+        }
+
+        .schedule:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 18px;
+            opacity: 0.7;
+            border: 5px solid #f0f4f4;
+            border-radius: 15px;
+            background-color: #f9f19c;
+            cursor: -webkit-grabbing;
+            cursor: grabbing;
         }
 
         .schedule {
-            margin: 20px;
-            border: 2px solid black;
+            margin: 30px;
+            /* margin: auto; */
+            border: 5px solid #f0f4f4;
             height: 200px;
+            border-radius: 16px;
+            box-shadow: 0 0 3px;
+            opacity: 0.9;
+            background-color: #e9e9be;
         }
+        /* 底下部分框 */
 
         .blog {
-            margin: 20px;
-            border: 2px solid black;
+            /* margin-top: ;  往下一點*/
+            margin: 30px;
+            border: 4px solid#f0f4f4;
             height: 200px;
+            border-radius: 20px;
+            box-shadow: 0 0 3px;
+            opacity: 0.7;
+            background-color: #e9e9be;
         }
-    </style>
+            /* 底下部分部落格框放大 */
 
+            .blog:hover {
+                transform: scale(1.15);
+                box-shadow: 0 0 18px;
+                border: 7px solid #f0f4f4;
+                opacity: 0.8;
+                border-radius: 30px;
+                background-color: #e9e9be;
+            }
+        /* 5行字跟編輯的上下間距 */
+
+        .btntop {
+            margin-top: 3%;
+        }
+
+        .font1:hover {
+            font-size: 115%;
+            margin-left: 10px;
+            margin-right: 15px;
+        }
+
+        /* 字體樣式 */
+
+        .spacing1 {
+            font-size: 16px;
+            margin-left: 11%;
+            margin-right: 11%;
+        }
+            /* 滑鼠移動字體變色 */
+
+            .spacing1:hover {
+                color: rgb(17, 17, 242);
+            }
+        /* 刪除字體樣式 */
+
+        .spacing2 {
+            font-size: 14px;
+            margin-left: 11%;
+            margin-right: 11%;
+        }
+            /* 刪除滑鼠移動變色*/
+
+            .spacing2:hover {
+                color: red;
+            }
+        /* 框內5行字的上間距*/
+        .sizzz {
+            margin-top: 4%;
+        }
+        /* 框內5行字的樣式*/
+        .spacing3 {
+            font-size: 14px;
+            margin-left: 12%;
+            margin-right: 12%;
+        }
+            /* 框內5行字移動放大*/
+            .spacing3:hover {
+                color: rgb(17, 17, 242);
+            }
+        /* 分享行程樣式間距*/
+        .spacing4 {
+            font-size: 14px;
+            margin-left: 11%;
+            margin-right: 11%;
+        }
+            /* 分享行程滑鼠移動放大*/
+            .spacing4:hover {
+                color: rgb(17, 17, 242);
+            }
+     .box1111{
+                 margin: 30px;
+            border: 4px ;
+            height:90vh;
+            width:auto;
+            border-radius: 20px;
+            box-shadow: 0 0 3px;
+            opacity: 0.4;
+            background-color: #D3D3D3;
+     }
+
+
+     .shape-ex11{
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    line-height: 40px;
+    color: #000;
+    background-color: transparent;
+    position: relative;
+    transition: all .3s linear;
 }
+.shape-ex11 > p{
+    position: relative;
+    z-index: 1;
+}
+.shape-ex11::before{
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: block;
+    box-sizing: border-box;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .3s linear;
+    border-radius: 20px;
+} 
+.shape-ex11::after{
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: block;
+    box-sizing: border-box;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: all .3s ease;
+      border-radius: 20px;
+}
+.shape-ex11:hover::before,
+.shape-ex11:hover::after{
+    width: 100%;
+    height: 100%;
+}
+
+    </style>
+}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+    <div class="row">
+        <div class="col-md-2">
+
+                 @*<進度>*@
+            <div class="box1111" style="margin: 30px 30px 55px 30px;">
+              <ul class="list-group list-group-flush">
+<div class="shape-ex11"style="font-size:30px; padding-top:15px;"><p>行程</p></div>
+</ul>
+
+   @*<進度>*@
 
 
-    <div class="container" id="app">
-        <div class="block">
-            {{dateNow}}
-            <div class="titlebar">行程</div>
-            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
-                
-                @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
+
+
+            </div>
+        </div>
+        <div class="col-md-10" id="app">
+            <div class="block">
+                <div class="titlebar">行程</div>
+                <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
+                    @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
                     <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
-                    <div class="scheduleInfo">
-                        {{index}}<br>
-                        {{item.scheduleId}}<br>
-                        {{item.title}}<br>
-                        {{item.startDate}}<br>
-                        {{item.endDate}}<br>
-
-                    </div>
-                    <div class="buttonBar">
-                        <button class="btn btn-secondary" @@click="editSchedule(item.scheduleId)">編輯</button>
-                        <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="block">
-            <div class="titlebar">過往行程</div>
-            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
-                <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
-                    <div class="scheduleInfo">
-                        {{index}}<br>
-                        {{item.scheduleId}}<br>
-                        {{item.title}}<br>
-                        {{item.startDate}}<br>
-                        {{item.endDate}}<br>
-
-                    </div>
-                    <div class="buttonBar">
-                        <button class="btn btn-secondary" @@click="createBlog(item.scheduleId)">分享行程</button>
-                        <button class="btn btn-danger" @@click="deleteSchedule(item.scheduleId,index)">刪除</button>
-                        
+                        <div class="scheduleInfo sizzz">
+                            <span class="spacing3">{{index}}</span><br />
+                            <span class="spacing3"> {{item.scheduleId}}</span><br />
+                            <span class="spacing3">{{item.title}}</span><br />
+                            <span class="spacing3">{{item.startDate}}</span><br />
+                            <span class="spacing3">{{item.endDate}}</span><br />
+                        </div>
+                        <div class="buttonBar btntop">
+                            <span class="spacing1" @@click="editSchedule(item.scheduleId)">編輯</span>
+                            <span class=" spacing2" @@click="deleteSchedule(item.scheduleId,index)">刪除</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="block">
-            <div class="titlebar">遊記</div>
-            <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
-                <div class="blog" v-for="item in 4">
+            <div class="block">
+                <div class="titlebar">過往行程</div>
+                <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
+                    <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
+                        <div class="scheduleInfo sizzz">
+                            <span class="spacing3"> {{index}}</span><br>
+                            <span class="spacing3">  {{item.scheduleId}}</span><br>
+                            <span class="spacing3">{{item.title}}</span><br>
+                            <span class="spacing3">{{item.startDate}}</span><br>
+                            <span class="spacing3">{{item.endDate}}</span><br>
+                        </div>
+                        <div class="buttonBar btntop">
+                            <span class="spacing4" @@click="createBlog(item.scheduleId)">分享行程</span>
+                            <span class="spacing2" @@click="deleteSchedule(item.scheduleId,index)">刪除</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="titlebar">遊記</div>
+                <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
+                    <div class="blog" v-for="item in 4">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     @section Scripts{
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -103,8 +268,8 @@
                     dateNow: "",
                 }
             },
-            computed:{
-                schedule(){
+            computed: {
+                schedule() {
                     return this.showSchedule;
                 }
             },
@@ -135,17 +300,17 @@
                 },
                 deleteSchedule(scheduleId, index) {
                     this.showSchedule.splice(index, 1);
-                    axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })                        
-                        .catch(err => console.log("err"))                    
+                    axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
+                        .catch(err => console.log("err"))
                 },
                 createBlog(scheduleId) {
-                    window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId                    
+                    window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId
                 }
             },
-            mounted() {                
+            mounted() {
                 axios.post("@Url.Action("selectUserSchedule","Schedule")")
                     .then(res => this.showSchedule = res.data)
-                    .catch(err => console.log("err"))                                
+                    .catch(err => console.log("err"))
             },
 
         })

@@ -57,8 +57,10 @@
             </div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
-                    <button @@click="changeView" class="btn btn-primary">切換</button>
-                    <img v-on:click="changeView" :src="imgURL" width="100" alt="gps">
+                    @* <button @@click="changeView" class="btn btn-primary">切換</button> *@
+                    <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="100" alt="gps"
+                        type="button">
+                    <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="100" alt="map" type="button">
                 </div>
                 <div id="map"></div>
             </div>
@@ -95,6 +97,7 @@
             directionsRenderer: null,
             daysindex: 0,
             isTravel: false,
+            imgURL: "@Url.Content("~/file/photo/gps.png")",
         },
 
         //由action傳入值,更新state狀態
@@ -673,7 +676,8 @@
         store,
         el: '#app3',
         data: {
-            imgURL: "@Url.Content("~/file/photo/gps.png")",
+            gpsURL: "@Url.Content("~/file/photo/gps.png")",
+            mapURL: "@Url.Content("~/file/photo/map.png")",
         },
         computed: {
             isTravel() {
@@ -717,7 +721,6 @@
         },
 
         mounted() {
-            //this.$store.dispatch('axiosTest')
         },
 
         methods: {

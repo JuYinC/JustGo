@@ -11,6 +11,7 @@
         }
 
         .titlebar {
+            font-weight: bold;
             margin: 30px 30px 55px 30px;
             color: #2F1000;
             font-size: 28px;
@@ -19,6 +20,7 @@
         }
 
         .schedules {
+            font-weight: bold;
             font-size: 18px;
         }
 
@@ -28,7 +30,7 @@
             opacity: 0.7;
             border: 5px solid #f0f4f4;
             border-radius: 15px;
-            background-color: #f9f19c;
+            background-color: #F0E68C;
             cursor: -webkit-grabbing;
             cursor: grabbing;
         }
@@ -53,7 +55,7 @@
             border-radius: 20px;
             box-shadow: 0 0 3px;
             opacity: 0.7;
-            background-color: #e9e9be;
+            background-color:#e9e9be ;
         }
             /* 底下部分部落格框放大 */
 
@@ -63,7 +65,7 @@
                 border: 7px solid #f0f4f4;
                 opacity: 0.8;
                 border-radius: 30px;
-                background-color: #e9e9be;
+                background-color:#F0E68C;
             }
         /* 5行字跟編輯的上下間距 */
 
@@ -80,6 +82,7 @@
         /* 字體樣式 */
 
         .spacing1 {
+    
             font-size: 18px;
             margin-left: 15%;
             margin-right: 15%;
@@ -103,7 +106,7 @@
             }
         /* 框內5行字的上間距*/
         .sizzz {
-            margin-top: 14%;
+            margin-top: 12%;
         }
         /* 框內3行字的樣式*/
         .spacing3 {
@@ -133,7 +136,7 @@
             border-radius: 20px;
             box-shadow: 0 0 3px;
             opacity: 0.5;
-            background-color: blanchedalmond;
+            background-color: #D3D3D3;
      }
 
 
@@ -220,6 +223,7 @@
                     <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
                         <div class="scheduleInfo sizzz">
                             <span class="spacing3">{{item.title}}</span><br />
+                            <hr  style="margin-top:6px; margin-left:15%;margin-right:15%; margin-bottom:6px;   font-weight: bold;"/>
                             <span class="spacing3">{{item.startDate}}</span><br />
                             <span class="spacing3">{{item.endDate}}</span><br />
                         </div>

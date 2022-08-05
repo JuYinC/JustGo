@@ -628,3 +628,104 @@ html h5 {
     .journey__map .mapbox #map {
       width: 100%;
       height: 100%; }
+
+.infowindow {
+    /*width: 375px;*/
+    /* height: 1000px; */
+    /* border:0.5px solid #FDC11D; */
+    /*border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+    font-family: sans-serif;*/
+    overflow:hidden;
+}
+
+.infowindow_bar {
+    padding:5px;
+    margin: 0px;
+    /*width: 375px;*/
+    min-width: 375px;
+    width: auto;
+    border-radius: 5px 5px 0px 0px;
+    background: linear-gradient(to right, #FDC11D,white);
+    /*background-color: #FDC11D;*/
+    color: #101F40;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+.infowindow_part {
+    height: 150px;
+}
+
+.infowindow_img {
+    width: 150px;
+    /* border: 1px solid black; */
+}
+
+.infowindow_info {
+    padding: 0px;
+    width: 225px;
+}
+
+.infowindow_intro {
+    border-radius: 5px;
+    width: 126px;
+    color: #1C0059;
+    background-color: #FDC11D;
+    border: 0px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+    .infowindow_intro:hover {
+        text-shadow: white 0px 15px 25px,white 0px 5px 10px;
+    }
+
+.infowindow_detail {
+    padding: 5px;
+    margin: 5px;
+    text-align: justify;
+    text-justify: inter-ideograph;
+    font-size: 13px;
+    background-color: #FBF8D6;
+    border-radius: 5px;
+}
+
+.infowindow_picture {
+    border-radius: 5px;
+    margin-left: 5px;
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    /* object-fit: contain; */
+    object-fit: cover;
+}
+
+.infowindow p {
+    color: #514D54;
+    font-size: 14px;
+    font-family: ·L³n¥¿¶ÂÅé;
+    padding: 0px;
+    margin: 5px;
+    margin-bottom: 25px;
+}
+
+.infowindow i {
+    width: 14px;
+}
+
+.infowindow_bar_button:hover {
+    text-shadow: 0 0 2px #FDC11D;
+}
+
+.infowindow_bar_divbutton {
+    text-align:center;
+
+}
+.infowindow_intro{
+    padding:3px 0px 3px 0px;
+}
+
+

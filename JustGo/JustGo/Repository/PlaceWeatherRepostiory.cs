@@ -47,11 +47,11 @@ namespace JustGo.Repository
             {
                 if (i)
                 {
-                    sqlStr += " Class in @selectAcitivity";
+                    sqlStr += " Class in @selectAcitivity ";
                 }
                 else
                 {
-                    sqlStr += " and Class in @selectAcitivity";
+                    sqlStr += " and Class in @selectAcitivity ";
                 }
             }
             sqlStr += "and Class <16";

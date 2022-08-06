@@ -157,7 +157,7 @@
                         marker.setMap(null)
                     });
                     state.markers = [];
-                    state.directionsRenderer.setMap(null)
+                    // state.directionsRenderer.setMap(null)
                 }
 
                 const bounds = new google.maps.LatLngBounds();
@@ -429,7 +429,7 @@
                         }
                     }
                 });
-            }
+            },
 
             // 計算行程時間 & 畫路線
             calcRoute(state) {

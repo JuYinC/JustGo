@@ -5,28 +5,6 @@
     font-family: "Poppins", serif;
 }
 
-nav {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 20px 8%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-    nav ul li {
-        list-style: none;
-        display: inline-block;
-        margin-left: 40px;
-    }
-
-        nav ul li a {
-            text-decoration: none;
-            color: rgb(255, 255, 255);
-            font-size: 17px;
-        }
 
 #coverimg {
     width: 100%;

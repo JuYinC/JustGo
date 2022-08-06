@@ -120,7 +120,7 @@
                     ],
                 ],
                 UserId: ["Alley", "Beca", "Cindy"],
-                UserImage: "https://source.unsplash.com/random/?user",
+                UserImage: "https://unsplash.it/1800/1600/?random/view",
                 CoverImageName: 'https://unsplash.it/1800/1600/?random/view',
                 Title: '請輸入標題~~~~~~~',
                 Describe: '',
@@ -347,15 +347,6 @@
                         <div class="py-3">
                             <span><img :src="UserImage" id="userimg" alt=""></span>
                             <span class="px-3 py-1">{{UserId[0]}}</span></div>
-                        <div>
-                            <!-- <span id="iconfb"><i class="fa-brands fa-facebook"></i><span>推文</span></span>
-                            <span id="iconig"><i class="fa-brands fa-instagram-square"></i><span>推文</span></span>
-                            <span id="icontw"><i class="fa-brands fa-twitter"></i><span>推文</span></span>
-                            <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
-                            <label class="btn btn-outline-dark btn-sm">
-                                <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
-                            </label> -->
-                        </div>
                         <textarea rows="4" class="" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe"  style="resize:none"></textarea>
                     </div>              
                     <div>
@@ -388,7 +379,7 @@
                                 <button @@click="(e)=>reset(dayIndex,viewIndex,e)" class="btn btn-outline-secondary btn-sm">取消上傳</button>                                
                                 
                                     <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
-                                        <div class="d-flex">
+                                        <div class="d-flex" style="display:inline">
                                             <img :src="imgURL"/>                                           
                                         </div>
                                     </div>                                

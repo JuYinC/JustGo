@@ -22,13 +22,15 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
+    
+        
     <script>
+
         $("body").attr('data-bs-spy','scroll')
         $("body").attr('data-bs-target','#list-example')
         $("body").attr('data-bs-offset','0')
         $("body").attr('tabindex','0')
-        
-    <script>
+
         let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,            
@@ -306,6 +308,7 @@
     
 
 
+        
 
      <div id="bloginfo">
         <div class="container-fluid">
@@ -329,7 +332,7 @@
                     <div class="sticky-top">
                         <!-- Author Bio -->
                         <div class="d-flex flex-column text-center bg-primary rounded mb-4 py-4 px-4">
-                            <span><img img :src="UserImage"  id="userimg" alt=""/>
+                            <span><img img :src="UserImage"  id="userimg" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px" alt=""/>
                             <h4 class="text-secondary mb-3 text-white py-1">{{UserId[0]}}</h4></span>
                             <p class="text-white m-0  py-1">
                                 {{Describe}}<br>

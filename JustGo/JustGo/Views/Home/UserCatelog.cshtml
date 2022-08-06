@@ -31,8 +31,7 @@
             border: 5px solid #f0f4f4;
             border-radius: 15px;
             background-color: #F0E68C;
-            cursor: -webkit-grabbing;
-            cursor: grabbing;
+                cursor: grab;
         }
 
         .schedule {
@@ -44,6 +43,7 @@
             box-shadow: 0 0 3px;
             opacity: 0.9;
             background-color: #e9e9be;
+          
         }
         /* 底下部分框 */
 
@@ -56,6 +56,7 @@
             box-shadow: 0 0 3px;
             opacity: 0.7;
             background-color:#e9e9be ;
+         
         }
             /* 底下部分部落格框放大 */
 
@@ -66,6 +67,7 @@
                 opacity: 0.8;
                 border-radius: 30px;
                 background-color:#F0E68C;
+               
             }
         /* 5行字跟編輯的上下間距 */
 
@@ -82,7 +84,7 @@
         /* 字體樣式 */
 
         .spacing1 {
-    
+
             font-size: 18px;
             margin-left: 15%;
             margin-right: 15%;
@@ -90,6 +92,7 @@
             /* 滑鼠移動字體變色 */
 
             .spacing1:hover {
+                cursor: grabbing;
                 color: rgb(17, 17, 242);
             }
         /* 刪除字體樣式 */
@@ -102,6 +105,7 @@
             /* 刪除滑鼠移動變色*/
 
             .spacing2:hover {
+                   cursor: grabbing;
                 color: red;
             }
         /* 框內5行字的上間距*/
@@ -116,7 +120,7 @@
         }
             /* 框內5行字移動放大*/
             .spacing3:hover {
-                color: rgb(17, 17, 242);
+             cursor:grabbing	;
             }
         /* 分享行程樣式間距*/
         .spacing4 {
@@ -126,6 +130,7 @@
         }
             /* 分享行程滑鼠移動放大*/
             .spacing4:hover {
+                     cursor: grabbing;
                 color: rgb(17, 17, 242);
             }
      .box1111{
@@ -137,6 +142,7 @@
             box-shadow: 0 0 3px;
             opacity: 0.5;
             background-color: #D3D3D3;
+               cursor: grab;
      }
 
 
@@ -152,6 +158,7 @@
     background-color: transparent;
     position: relative;
     transition: all .3s linear;
+    cursor: grabbing;
 }
 .shape-ex11 > p{
     position: relative;
@@ -191,7 +198,11 @@
     height: 100%;
 }
 .backccc{
-    background-color:beige;
+    background-color:#FFFACD;
+}
+.shape-ex11:hover{
+                  color:blue;
+                   transform: scale(1.35);
 }
     </style>
 }
@@ -223,7 +234,7 @@
                     <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
                         <div class="scheduleInfo sizzz">
                             <span class="spacing3">{{item.title}}</span><br />
-                            <hr  style="margin-top:6px; margin-left:15%;margin-right:15%; margin-bottom:6px;   font-weight: bold;"/>
+                            <hr  style="cursor:grabbing	; margin-top:6px; margin-left:15%;margin-right:15%; margin-bottom:6px;font-weight: bold; "/>
                             <span class="spacing3">{{item.startDate}}</span><br />
                             <span class="spacing3">{{item.endDate}}</span><br />
                         </div>
@@ -240,6 +251,7 @@
                     <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
                         <div class="scheduleInfo sizzz">
                             <span class="spacing3">{{item.title}}</span><br>
+                             <hr  style="   cursor: grabbing	; margin-top:6px; margin-left:15%;margin-right:15%; margin-bottom:6px;font-weight: bold; "/>
                             <span class="spacing3">{{item.startDate}}</span><br>
                             <span class="spacing3">{{item.endDate}}</span><br>
                         </div>

@@ -16,10 +16,10 @@
         .titlebar {
             font-weight: bold;
             margin: 10px 30px 55px 30px;
-            color: #2F1000;
+            color: BLACK;
             font-size: 28px;
             border-bottom: 5px solid transparent;
-            border-image: linear-gradient(to right, #7F534B, transparent) 1;
+            border-image: linear-gradient(to right, #808080, transparent) 1;
             min-width:auto;
 
         }
@@ -32,24 +32,26 @@
         .schedule:hover {
                 transition: all 1s ease;
             transform: scale(1.1);
-            box-shadow: 0 0 5px;
-            opacity: 0.7;
+            box-shadow: 0 0 10px;
+            opacity: 0.8;
                  border-radius: 15px;
                 cursor: grab;
+                  border: 3px solid #FFFF;
+                outline: 10px ridge#deb887;
+  
+                border-radius: 1rem;
 
-                outline: 9px ridge#F0E68C;
-border-radius: 1rem;
         }
 
         .schedule {
             margin:30px;
             /* margin: auto; */
-            border: 5px solid #f0f4f4;
+            border: 5px solid #d3d3d3;
             height: 200px;
             border-radius: 10px;
             box-shadow: 0 0 3px;
             opacity: 0.9;
-            background-color: #e9e9be;
+            background-color: 	#dcdcdc;
             width:270px;
            min-width:245px;
         }
@@ -58,12 +60,12 @@ border-radius: 1rem;
         .blog {
             /* margin-top: ;  往下一點*/
             margin:30px;
-            border: 4px solid#f0f4f4;
+            border: 4px solid#d3d3d3;
             height: 200px;
             border-radius: 20px;
             box-shadow: 0 0 3px;
             opacity: 0.7;
-            background-color:#e9e9be ;
+            background-color:	#dcdcdc;
             width:270px;
                     min-width:245px;
 
@@ -78,8 +80,8 @@ border-radius: 1rem;
             opacity: 0.7;
                  border-radius: 15px;
                 cursor: grab;
-                border: 5px solid #f0f4f4;
-                outline: 9px ridge#F0E68C;
+                border: 3px solid #FFFF;
+                outline: 10px ridge#deb887;
 border-radius: 1rem;
 
                
@@ -90,11 +92,7 @@ border-radius: 1rem;
             margin-top: 5%;
         }
 
-        .font1:hover {
-            font-size: 115%;
-            margin-left: 10px;
-            margin-right: 15px;
-        }
+ 
 
         /* 編輯字體樣式 */
 
@@ -167,16 +165,16 @@ border-radius: 1rem;
                      cursor: grabbing;
                 color: rgb(17, 17, 242);
             }
+
+           
      .box1111{
             height:95%;
             width:13vw;
             opacity: 0.5;
          background-color:transparent;
                cursor: grab;
-       
      }
-
-
+       /* 左邊三個標題CSS特效控制*/
      .shape-ex11{
     width: 150px;
     height: 40px;
@@ -228,14 +226,16 @@ border-radius: 1rem;
     width: 100%;
     height: 100%;
 }
+       /* 背景顏色*/
 .backccc{
-    background-color:#FFFACD;
+    background-color:#FFFF;
+      
 }
 .shape-ex11:hover{
-                  color:	#1E90FF;
+                  color:red;
                    transform: scale(1.2);
 }
-
+       /* 框格內第1條線間距*/
 .hrhr{
     margin-top:6px;
     margin-bottom:10px;
@@ -247,6 +247,7 @@ border-radius: 1rem;
     min-width:auto;
 
 }
+ /* 框格內第2條線間距*/
 .hrhr2{
     margin-top:10px;
     margin-bottom:10px;

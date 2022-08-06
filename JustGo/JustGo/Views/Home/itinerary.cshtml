@@ -135,7 +135,7 @@
                 }
             },
 
-            initMap(state, payload) {
+            initMap(state) {
                 state.map = new google.maps.Map(document.getElementById("map"), {
                     center: { lat: 23.573837, lng: 120.97969 },
                     zoom: 8,  // 0-20
@@ -204,7 +204,7 @@
                         content: contentString,
                         disableAutoPan: false,
                     });
-                    // 滑過marker開啟infowindow
+                    // 點擊marker開啟infowindow
                     marker.addListener("click", () => {
                         if (state.infowindow) { state.infowindow.close() };
                         infowindow.open({
@@ -214,10 +214,6 @@
                         });
                         state.infowindow = infowindow
                     });
-                    // marker.addListener("mouseout", () => {
-                    //    infowindow.close();
-                    //    state.infowindow = infowindow
-                    // });
                     state.markers.push(marker);
                 });
                 // 地點群組marker Cluster
@@ -241,7 +237,6 @@
                         });
                         state.markers = [];
                     }
-                    //markers.setMap(null);
                     // 產生地點marker
                     let iofSpots = 0
                     for (i = 0; i < state.travel.length; i++) {
@@ -292,7 +287,7 @@
                                 content: contentString,
                                 disableAutoPan: false,
                             });
-                            // 滑過marker開啟infowindow
+                            // 點擊marker開啟infowindow
                             marker.addListener("click", () => {
                                 if (this.state.infowindow) { this.state.infowindow.close() };
                                 infowindow.open({
@@ -302,20 +297,143 @@
                                 });
                                 state.infowindow = infowindow
                             });
-                            // marker.addListener("mouseout", () => {
-                            //    infowindow.close();
-                            //    state.infowindow = infowindow
-                            // });
                             state.markers.push(marker);
                         });
                     }
                 }
             },
 
+            setDailyMarker(state, day) {
+                if (state.markers && state.markerCluster) {
+                    state.markerCluster.clearMarkers();
+                    state.markerCluster = null
+                    state.markers = [];
+                } else if (state.markers) {
+                    this.state.markers.forEach((marker) => {
+                        marker.setMap(null)
+                    });
+                    state.markers = [];
+                    state.directionsRenderer.setMap(null)
+                }
+                // 產生地點marker
+                let iofSpots = 0
+
+                state.travel[day].map((position, j) => {
+                    iofSpots++
+                    const marker = new google.maps.Marker({
+                        position: { lat: position.lat, lng: position.lng },
+                        label: `${iofSpots}`,   //其他屬性，可以先略過
+                        // title: position.title,
+                        map: state.map,
+                    });
+                    // 產生infowindow
+                    let contentString =
+                        `
+                                <div class="infowindow">
+                                    <div class="infowindow_bar row row-cols-2" >
+                                        <div class="infowindow_bar_title col-10">
+                                         ${position.name}
+                                        </div>
+                                        <div class="infowindow_bar_divbutton col-2">
+                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infowindow_part row">
+                                        <div class="infowindow_img col-4">
+                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        </div>
+                                        <div class="infowindow_info col-8">
+                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
+                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
+                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                        </div>
+                                    </div>
+                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        景點介紹
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="infowindow_detail" style="text-indent:2em">
+                                            ${position.description}
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        disableAutoPan: false,
+                    });
+                    // 點擊marker開啟infowindow
+                    marker.addListener("click", () => {
+                        if (this.state.infowindow) { this.state.infowindow.close() };
+                        infowindow.open({
+                            anchor: marker,
+                            map: state.map,
+                            shouldFocus: false,
+                        });
+                        state.infowindow = infowindow
+                    });
+                    state.markers.push(marker);
+                });
+
+                // 畫路線
+                let request = null;
+                let route = [];
+                let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                
+                state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                    suppressMarkers: true,
+                });
+                //行程變成同一條路徑，上限25個
+
+                for (j = 0; j < state.travel[day].length; j++) {
+                    route.push(state.travel[day][j])
+                }
+
+                // 總行程數 = 1 離開方程式
+                if (route.length < 2) {
+                    console.log(`行程數<2 行程數為 ${route.length}`)
+                    return
+                    // 總行程數 = 2 只需要起始點和終點
+                } else if (route.length == 2) {
+                    console.log(`行程數=2 行程數為 ${route.length}`)
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[1].lat, lng: route[1].lng },  //終點
+                        travelMode: 'DRIVING', //開車
+                    }
+                } else {
+                    // 總行程數 > 2 加入停靠站
+                    console.log(`行程數>2 行程數為 ${route.length}`)
+                    const waypts = [];
+                    for (i = 1; i < route.length - 1; i++) {
+                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                    }
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                        waypoints: waypts, //中途停靠點
+                        travelMode: 'DRIVING', //開車
+                    };
+                }
+                state.directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
+                // request放入Google行程服務，得到結果
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        state.directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                        //儲存行程時間陣列
+                        for (i = 0; i < result.routes[0].legs.length; i++) {
+                            console.log(result.routes[0].legs[i].duration.value)
+                            state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+                        }
+                    }
+                });
+            }
+
             // 計算行程時間 & 畫路線
             calcRoute(state) {
                 if (state.isTravel) {
-                    console.log(state.travel)
                     state.travelTime = [];
                     let request = null;
                     let route = [];

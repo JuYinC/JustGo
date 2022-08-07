@@ -13,16 +13,24 @@
 
 
     @section Scripts{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../js/vue.js"></script>   
+    <script src="../js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'><link rel="stylesheet" href="./style.css">
+    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+     <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
 
     <script>
         $("body").attr('data-bs-spy','scroll')
@@ -30,7 +38,8 @@
         $("body").attr('data-bs-offset','0')
         $("body").attr('tabindex','0')
 
-       let id = 0;
+      
+let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,
             data: {
@@ -40,7 +49,7 @@
                             id: id++,
                             p_Add:"",                            
                             placeId: 1,
-                            p_Name: "北部1",
+                            P_Name: "北部1",
                             p_tel:"",
                             score:0,
                             // like:0,
@@ -54,7 +63,7 @@
                             id: id++,
                             p_Add:"",                            
                             placeId: 1,
-                            p_Name: "南部2",
+                            P_Name: "南部2",
                             p_tel:"",
                             score:0,
                             // like:0,
@@ -70,7 +79,7 @@
                             id: id++,
                             p_Add:"",                            
                             placeId: 1,
-                            p_Name: "外島3",
+                            P_Name: "外島3",
                             p_tel:"",
                             score:0,
                             // like:0,
@@ -88,7 +97,7 @@
                             id: id++,
                             p_Add:"",                            
                             placeId: 1,
-                            p_Name: "東部1",
+                            P_Name: "東部1",
                             p_tel:"",
                             score:0,
                             // like:0,
@@ -103,7 +112,7 @@
                             id: id++,
                             p_Add:"",                            
                             placeId: 1,
-                            p_Name: "中部2",
+                            P_Name: "中部2",
                             p_tel:"",
                             score:0,
                             // like:0,
@@ -121,7 +130,7 @@
                 ],
                 UserId: ["Alley", "Beca", "Cindy"],
                 UserImage: "https://unsplash.it/1800/1600/?random/view",
-                CoverImageName: 'https://unsplash.it/1800/1600/?random/view',
+                CoverImageName: 'https://unsplash.it/1800/1600?random=200',
                 Title: '請輸入標題~~~~~~~',
                 Describe: '',
                 // like:0,//只存總數喜歡
@@ -154,9 +163,10 @@
                     return "list-item-"+dayIndex+"-"+viewIndex
                 },    
                 saveBlog(){
-                    axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
-                            .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
-                            .catch(err => console.log("err"))
+                    console.log("HI");
+                     axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
+                             .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
+                             .catch(err => console.log("err"))
                 },     
                 fileChange(e) {
                     let file = e.target.files[0]
@@ -279,16 +289,19 @@
                     }
                 }
             },
-            mounted() {
-                let id = window.location.search.substring(1) 
-                console.log(id)
-                if (id != "") {
-                    axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )
-                }
-            }
+             mounted() {
+                 let id = window.location.search.substring(1) 
+                 console.log(id)
+                 if (id != "") {
+                     axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )
+                 }
+             }
             
         },
         )
+
+
+
 
 
     </script>
@@ -297,148 +310,111 @@
    
 
     <div id="bloginfo">
-            <img :src="CoverImageName" id="coverimg" alt="封面圖片">  
-            <div id="covertitle">
-                <Label style="color: white; font-size:16px;float: left;">標題</Label><br>
-                <input type="text" id="TitleId" v-model="Title" maxlength="15" size="20">
-                <label class="btn btn-primary">
-                <input id="upload_img" style="display:none;" type="file" @@change="fileChange" size="10">
-                <i class="fa fa-photo"></i> 挑選我的封面
-                </label>  
-            </div>     
-            <!--左邊欄位-->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3" id="sidebar" style="margin-left: 20px;">  
-                    <div class="sticky-top">
-                        <label class="mb-2">景點日程</label>
-                        <!-- <div id="list-example" class="list-group">
-                            <div v-for="(day,dayIndex) in Details">                            
-                                <ul> 第{{dayIndex+1}}天
-                                    <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details ">
-                                    <a class="list-group-item list-group-item-action" :href="gethref(dayIndex,viewIndex)">{{p_Name.p_Name}}</a></li>
-                                </ul>
-                            </div>
-                        </div> -->
-                        <ul class="list-group">
-                            <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天 
-                            <li class="list-group-item  justify-content-between align-items-center px-0">
-                                <ul>
-                                    <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details ">
-                                    <a class="list-group-item list-group-item-action" :href="gethref(dayIndex,viewIndex)">{{p_Name.p_Name}}</a></li>
-                                </ul>
-                            </li>
-                            </div>
-                        </ul>
-                       
-                        <div class="my-3">
-                            <img src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded" width="80%" />
+        <img :src="CoverImageName" id="coverimg" alt="封面圖片">  
+        <div id="covertitle">
+            <Label style="color: white; font-size:16px;float: left;">標題</Label><br>
+            <input type="text" id="TitleId" v-model="Title" maxlength="15" size="20">
+            <label class="btn btn-primary">
+            <input id="upload_img" style="display:none;" type="file" @@change="fileChange" size="10">
+            <i class="fa fa-photo"></i> 挑選我的封面
+            </label>  
+        </div>     
+        <!--左邊欄位-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3" id="sidebar" style="margin-left: 20px;">  
+                <div class="sticky-top">
+                    <label class="my-2">景點日程</label>
+                    <!-- <div id="list-example" class="list-group">
+                        <div v-for="(day,dayIndex) in Details">                            
+                            <ul> 第{{dayIndex+1}}天
+                                <li v-for="(P_Name,viewIndex) in day" :key="P_Name.id" class="Details ">
+                                <a class="list-group-item list-group-item-action" :href="gethref(dayIndex,viewIndex)">{{P_Name.P_Name}}</a></li>
+                            </ul>
                         </div>
-                        <div style="width:80%">
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea                           
+                    </div> -->
+                    <ul class="list-group">
+                        <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天 
+                        <li class="list-group-item  justify-content-between align-items-center px-0">
+                            <ul>
+                                <li v-for="(P_Name,viewIndex) in day" :key="P_Name.id" class="Details ">
+                                <a class="list-group-item list-group-item-action" :href="gethref(dayIndex,viewIndex)">{{P_Name.P_Name}}</a></li>
+                            </ul>
+                        </li>
                         </div>
+                    </ul>
+                   
+                    <div class="my-3">
+                        <img src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded" width="80%" />
                     </div>
-                    
+                    <div style="width:80%">
+                        <h6 class="mb-1">旅遊就從Just Go開始</h6>
+                        <p>For what it's worth: it's never too late or, in my case, too early to be whoever you want to be</p>
+
+                    </div>
                 </div>
-                <!--右邊欄位-->
-                <div class="col-sm-8" style="margin-left: 30px;" >
-                    <div class="user">
-                        <div class="py-3">
-                            <span><img :src="UserImage" id="userimg" alt=""></span>
-                            <span class="px-3 py-1">{{UserId[0]}}</span></div>
-                        <textarea rows="4" class="" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe"  style="resize:none"></textarea>
-                    </div>              
-                    <div>
-                        <div v-for="(day,dayIndex) in Details">
-                        <label id="day">第{{dayIndex+1}}天</label> 
-                        <div class="item" v-for="(p_Name,viewIndex) in day" :key="p_Name.id">
-                            
-                            <span><i class="fa-solid fa-map-location-dot" :id=getanchor(dayIndex,viewIndex)></i></span>
-                            <span class="Details">{{p_Name.p_Name}}</span>
-                            <div class="Details"><span>地址:{{p_Name.PlaceId}}</span></div>
-
-                            <div>
-                                <i class="fa fa-star" :style="{color:color}"
-                                :class="item<=p_Name.score?'fa-star':'fa-star-o'" 
-                                v-for="item in count" 
-                                @@mouseenter="p_Name.score=item" 
-                                @@mouseleave="p_Name.score=myscore"
-                                @@click="myscore=item"></i>
-                                {{p_Name.score}}分    
-                            </div>
+                
+            </div>
+            <!--右邊欄位-->
+            <div class="col-sm-8" style="margin-left: 30px;" >
+                <div class="user">
+                    <div class="py-3">
+                        <span><img :src="UserImage" id="userimg" alt=""></span>
+                        <span class="px-3 py-1">{{UserId[0]}}</span></div>
+                    <textarea rows="4" class="" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe"  style="resize:none"></textarea>
+                </div>              
+                <div>
+                    <div v-for="(day,dayIndex) in Details">
+                    <label id="day">第{{dayIndex+1}}天</label> 
+                    <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id">
                         
-                            <textarea rows="6" class="" maxlength="400" v-model="p_Name.Describe" placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>
-
-
-                            <div class="mb-3">
-                                <label class="btn btn-primary btn-sm">
-                                    <input type="file" accept="image/*" multiple @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg" style="display:none;" size="10">
-                                    <i class="fa fa-photo"></i> 上傳圖片
-                                </label> 
-                                <button @@click="(e)=>reset(dayIndex,viewIndex,e)" class="btn btn-outline-secondary btn-sm">取消上傳</button>                                
-                                
-                                    <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
-                                        <div class="d-flex" style="display:inline">
-                                            <img :src="imgURL"/>                                           
-                                        </div>
-                                    </div>                                
-                            </div>
-                                                        
-
-                        </div>
+                        <span><i class="fa-solid fa-map-location-dot" :id=getanchor(dayIndex,viewIndex)></i></span>
+                        <span class="Details">{{P_Name.P_Name}}</span>
+                        <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
 
                         <div>
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
-                            </div>
-                            <div>
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
-                            </div>
-                            <div>
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
-                            </div>
-                             <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
-                            </div>
-                            <div>
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
-                            </div>
+                            <i class="fa fa-star" :style="{color:color}"
+                            :class="item<=P_Name.score?'fa-star':'fa-star-o'" 
+                            v-for="item in count" 
+                            @@mouseenter="P_Name.score=item" 
+                            @@mouseleave="P_Name.score=myscore"
+                            @@click="myscore=item"></i>
+                            {{P_Name.score}}分    
+                        </div>
+                    
+                        <textarea rows="6" class="" maxlength="400" v-model="P_Name.Describe" placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>
+
+
+                        <div class="mb-3">
+                            <label class="btn btn-primary btn-sm">
+                                <input type="file" accept="image/*" multiple @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg" style="display:none;" size="6">
+                                <i class="fa fa-photo"></i> 上傳圖片
+                            </label> 
+                            <button @@click="(e)=>reset(dayIndex,viewIndex,e)" class="btn btn-outline-secondary btn-sm">取消上傳</button>                                
+                                <div class="groupimg img-fluid">
+                                    <template v-for="(imgURL,index) in P_Name.previewlist">
+                                      <img :src="imgURL" :key="image">
+                                    </template>
+                                  </div>                         
+                        </div>
+                                                    
+
                     </div>
-                </div>
-                </div>
-                <div style="display: flex; justify-content: center">
-                    <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">取消編輯</button>
-                    <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;" @@click="saveBlog">儲存行程</button>
-                    <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">發佈行程</button>
-                </div>
 
+                    <div>
+                       
+                </div>
             </div>
-        </div>
-        
-        
-    </div>
-        
-        
-    
-        <footer style="height:300px; background-color:antiquewhite"> I am footer</footer>
+            </div>
+            <div style="display: flex; justify-content: center">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">取消編輯</button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;" @@click="saveBlog">儲存行程</button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">發佈行程</button>
+            </div>
 
+        </div>
+    </div>
+    
+    
+</div>
     

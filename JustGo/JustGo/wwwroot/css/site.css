@@ -89,8 +89,20 @@ html {
 }
 /* infowindow不要顯示x */
 button.gm-ui-hover-effect {
-    visibility: hidden;
+   /* visibility:visible;*/
 }
+
+
+
+.gm-style .gm-style-iw-c {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.infowindow {
+    max-height: 700px;
+    overflow-y: auto;
+}
+
 body {
-  
 }

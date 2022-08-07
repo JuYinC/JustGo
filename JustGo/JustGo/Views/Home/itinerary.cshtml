@@ -57,7 +57,7 @@
             </div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
-                    @* <button @@click="changeView" class="btn btn-primary">切換</button> *@
+                    <button @@click="testDaily" class="btn btn-primary">第一天行程</button>
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="100" alt="gps"
                         type="button">
                     <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="100" alt="map" type="button">
@@ -259,7 +259,6 @@
 
             // 產生行程標示
             setTravelMarker(state) {
-                console.log(state.travel[0][0])
                 if (state.isTravel) {
                     if (state.markers && state.markerCluster) {
                         state.markerCluster.clearMarkers();
@@ -272,6 +271,7 @@
                         state.markers = [];
                     }
                     // 產生地點marker
+                    const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
@@ -283,6 +283,7 @@
                                 map: state.map,
                                 icon: state.icon[3],
                             });
+                            bounds.extend(marker.position);
                             // 產生infowindow
                             let contentString =
                                 `
@@ -335,37 +336,43 @@
                             state.markers.push(marker);
                         });
                     }
+                    state.map.fitBounds(bounds);
                 }
             },
 
             //單日行程標示與路線
             setDailyMarker(state, day) {
-                if (state.markers && state.markerCluster) {
-                    state.markerCluster.clearMarkers();
-                    state.markerCluster = null
-                    state.markers = [];
-                } else if (state.markers) {
-                    this.state.markers.forEach((marker) => {
-                        marker.setMap(null)
-                    });
-                    state.markers = [];
-                    state.directionsRenderer.setMap(null)
-                }
-                // 產生地點marker
-                let iofSpots = 0
+                if (state.travel[day].length > 0) {
+                    if (state.markers && state.markerCluster) {
+                        state.markerCluster.clearMarkers();
+                        state.markerCluster = null
+                        state.markers = [];
+                    } else if (state.markers) {
+                        this.state.markers.forEach((marker) => {
+                            marker.setMap(null)
+                        });
+                        state.markers = [];
+                    }
 
-                state.travel[day].map((position, j) => {
-                    iofSpots++
-                    const marker = new google.maps.Marker({
-                        position: { lat: position.lat, lng: position.lng },
-                        label: `${iofSpots}`,   //其他屬性，可以先略過
-                        // title: position.title,
-                        map: state.map,
-                        icon: state.icon[3],
-                    });
-                    // 產生infowindow
-                    let contentString =
-                        `
+                    if (state.directionsRenderer) {
+                        state.directionsRenderer.setMap(null)
+                    }
+                    // 產生地點marker
+                    let iofSpots = 0
+                    const bounds = new google.maps.LatLngBounds();
+                    state.travel[day].map((position, j) => {
+                        iofSpots++
+                        const marker = new google.maps.Marker({
+                            position: { lat: position.lat, lng: position.lng },
+                            label: `${iofSpots}`,   //其他屬性，可以先略過
+                            // title: position.title,
+                            map: state.map,
+                            icon: state.icon[3],
+                        });
+                        bounds.extend(marker.position);
+                        // 產生infowindow
+                        let contentString =
+                            `
                                 <div class="infowindow">
                                     <div class="infowindow_bar row row-cols-2" >
                                         <div class="infowindow_bar_title col-10">
@@ -398,74 +405,68 @@
                                     </div>
                                 </div>
                                 `
-                    const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                        disableAutoPan: false,
-                    });
-                    // 點擊marker開啟infowindow
-                    marker.addListener("click", () => {
-                        if (this.state.infowindow) { this.state.infowindow.close() };
-                        infowindow.open({
-                            anchor: marker,
-                            map: state.map,
-                            shouldFocus: false,
+                        const infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            disableAutoPan: false,
                         });
-                        state.infowindow = infowindow
+                        // 點擊marker開啟infowindow
+                        marker.addListener("click", () => {
+                            if (this.state.infowindow) { this.state.infowindow.close() };
+                            infowindow.open({
+                                anchor: marker,
+                                map: state.map,
+                                shouldFocus: false,
+                            });
+                            state.infowindow = infowindow
+                        });
+                        state.markers.push(marker);
                     });
-                    state.markers.push(marker);
-                });
 
-                // 畫路線
-                let request = null;
-                let route = [];
-                let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                
-                state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                    suppressMarkers: true,
-                });
-                //行程變成同一條路徑，上限25個
+                    // 畫路線
+                    let request = null;
+                    let route = [];
+                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                
+                    state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                        suppressMarkers: true,
+                    });
+                    //行程變成同一條路徑，上限25個
 
-                for (j = 0; j < state.travel[day].length; j++) {
-                    route.push(state.travel[day][j])
-                }
-
-                // 總行程數 = 1 離開方程式
-                if (route.length < 2) {
-                    console.log(`行程數<2 行程數為 ${route.length}`)
-                    return
-                    // 總行程數 = 2 只需要起始點和終點
-                } else if (route.length == 2) {
-                    console.log(`行程數=2 行程數為 ${route.length}`)
-                    request = {
-                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                        destination: { lat: route[1].lat, lng: route[1].lng },  //終點
-                        travelMode: 'DRIVING', //開車
+                    for (j = 0; j < state.travel[day].length; j++) {
+                        route.push(state.travel[day][j])
                     }
-                } else {
-                    // 總行程數 > 2 加入停靠站
-                    console.log(`行程數>2 行程數為 ${route.length}`)
-                    const waypts = [];
-                    for (i = 1; i < route.length - 1; i++) {
-                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
-                    }
-                    request = {
-                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                        waypoints: waypts, //中途停靠點
-                        travelMode: 'DRIVING', //開車
-                    };
-                }
-                state.directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
-                // request放入Google行程服務，得到結果
-                directionsService.route(request, function (result, status) {
-                    if (status == 'OK') {
-                        state.directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                        //儲存行程時間陣列
-                        for (i = 0; i < result.routes[0].legs.length; i++) {
-                            console.log(result.routes[0].legs[i].duration.value)
-                            state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+
+                    // 總行程數 = 1 離開方程式
+                    if (route.length < 2) {
+                        console.log(`行程數<2 行程數為 ${route.length}`)
+                        state.map.fitBounds(bounds);
+                        return
+                    } else {
+                        // 總行程數 >=  2 加入停靠站
+                        console.log(`行程數>2 行程數為 ${route.length}`)
+                        const waypts = [];
+                        for (i = 1; i < route.length - 1; i++) {
+                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
                         }
+                        request = {
+                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                            waypoints: waypts, //中途停靠點
+                            travelMode: 'DRIVING', //開車
+                        };
                     }
-                });
+                    state.directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
+                    // request放入Google行程服務，得到結果
+                    directionsService.route(request, function (result, status) {
+                        if (status == 'OK') {
+                            state.directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                            //儲存行程時間陣列
+                            for (i = 0; i < result.routes[0].legs.length; i++) {
+                                console.log(result.routes[0].legs[i].duration.value)
+                                state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+                            }
+                        }
+                    });
+                }
             },
 
             // 計算行程時間 & 畫路線
@@ -491,16 +492,8 @@
                     if (route.length < 2) {
                         console.log(`行程數<2 行程數為 ${route.length}`)
                         return
-                        // 總行程數 = 2 只需要起始點和終點
-                    } else if (route.length == 2) {
-                        console.log(`行程數=2 行程數為 ${route.length}`)
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[1].lat, lng: route[1].lng },  //終點
-                            travelMode: 'DRIVING', //開車
-                        }
                     } else {
-                        // 總行程數 > 2 加入停靠站
+                        // 總行程數 >= 2 加入停靠站
                         console.log(`行程數>2 行程數為 ${route.length}`)
                         const waypts = [];
                         for (i = 1; i < route.length - 1; i++) {
@@ -845,6 +838,9 @@
         methods: {
             changeView() {
                 this.$store.commit('changeView')
+            },
+            testDaily() {
+                this.$store.commit('setDailyMarker', 0)
             }
         },
     })

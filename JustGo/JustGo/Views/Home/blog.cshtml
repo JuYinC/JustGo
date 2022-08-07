@@ -11,17 +11,20 @@
 
 
     @section Scripts{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../js/vue.js"></script>   
+    <script src="../js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
+
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'><link rel="stylesheet" href="./style.css">
     <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
@@ -30,13 +33,13 @@
     
         
     <script>
+        
+    $("body").attr('data-bs-spy','scroll')
+    $("body").attr('data-bs-target','#list-example')
+    $("body").attr('data-bs-offset','0')
+    $("body").attr('tabindex','0')
 
-        $("body").attr('data-bs-spy','scroll')
-        $("body").attr('data-bs-target','#list-example')
-        $("body").attr('data-bs-offset','0')
-        $("body").attr('tabindex','0')
-
-        Vue.use(VueViewer.default)
+    Vue.use(VueViewer.default)
     console.log(VueViewer.default)
 
     let id = 0;
@@ -49,7 +52,7 @@
                         id: id++,
                         P_Add:"",                            
                         PlaceId: "a01-1",
-                        p_Name: "北部1",
+                        P_Name: "北部1",
                         P_tel:"",
                         score:4,
                         // like:0,
@@ -63,7 +66,7 @@
                         id: id++,
                         P_Add:"",                            
                         PlaceId: "a01-1",
-                        p_Name: "南部2",
+                        P_Name: "南部2",
                         P_tel:"",
                         score:3,
                         // like:0,
@@ -79,7 +82,7 @@
                         id: id++,
                         P_Add:"",                            
                         PlaceId: "a01-1",
-                        p_Name: "外島3",
+                        P_Name: "外島3",
                         P_tel:"",
                         score:2,
                         // like:0,
@@ -97,7 +100,7 @@
                         id: id++,
                         P_Add:"",                            
                         PlaceId: "a01-1",
-                        p_Name: "東部1",
+                        P_Name: "東部1",
                         P_tel:"",
                         score:5,
                         // like:0,
@@ -112,7 +115,7 @@
                         id: id++,
                         P_Add:"",                            
                         PlaceId: "a01-1",
-                        p_Name: "中部2",
+                        P_Name: "中部2",
                         P_tel:"",
                         score:1,
                         // like:0,
@@ -238,10 +241,10 @@
                 }
             },
             add: function (day) {
-                this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, p_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
+                this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
             },
-            remove: function (day, p_Name) {
-                this.Details[day].splice(p_Name, 1)
+            remove: function (day, P_Name) {
+                this.Details[day].splice(P_Name, 1)
             },
             onChange(dayIndex) {
 
@@ -300,23 +303,21 @@
                     }
                 }
             },
-             mounted() {
-             let id = window.location.search.substring(1) 
+            mounted() {
+            let id = window.location.search.substring(1) 
              console.log(id)
              if (id != "") {
                  axios.post("@Url.Action("selectUserBlog","Blog")", { Blog : 100 }).then(res =>  this.Details = res.data.details )
              }
         }
         },
-     },
+    },
     )
 
     </script>
     }
     
 
-
-        
     <div id="bloginfo">
     <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
@@ -449,16 +450,13 @@
 
                     <!-- Single Image -->
                     <div class="mb-5">
-                        <img src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded" />
+                        <img  src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded mb-2" />
+                        <p>For what it's worth, it's never too late or, in my case, too early to be whoever you want
+                            to be</p>
                     </div>
                     
                     
 
-                    <!-- Plain Text -->
-                    <div>
-                        <h2 class="mb-4">Plain Text</h2>
-                        雨果曾講過，人生是花，而愛便是花的蜜。這是撼動人心的。做好旅行這件事，可以說已經成為了全民運動。
-                    </div>
                 </div>
                 
             </div>
@@ -522,7 +520,7 @@
 
                             <div v-viewer class="groupimg img-fluid">
                                 <template v-for="(imgURL,index) in p_Name.previewlist">
-                                  <img :src="imgURL" :key="image">
+                                  <img :src="imgURL">
                                 </template>
                               </div>
                             <!-- <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
@@ -610,6 +608,3 @@
     </div>
     <!-- Detail End -->
 </div>
-
-
-

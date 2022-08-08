@@ -43,9 +43,7 @@
                                 p_Name: "北部1",
                                 p_tel: "07-123456",
                                 score: 0,
-                                Describe: "",
-                         
-                                previewlist: [],
+                                describe: "",
                                 images: [],
 
                             },
@@ -56,9 +54,7 @@
                                 p_Name: "南部2",
                                 p_tel: "",
                                 score: 0,
-                                Describe: "",
-                            
-                                previewlist: [],
+                                describe: "",
                                 images: [],
 
 
@@ -70,8 +66,7 @@
                                 p_Name: "外島3",
                                 p_tel: "",
                                 score: 0,
-                                Describe: "",
-                      
+                                describe: "",
                                 previewlist: [],
                                 images: [],
 
@@ -87,10 +82,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                              
-                                previewlist: [],
-                                images: [],
-
+                                preview: null,
                             },
                             {
                                 id: id++,
@@ -100,12 +92,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                        
-                                previewlist: [],
-                                images: [],
-
-
-                            },
+                                preview: null,
 
 
                         ],
@@ -143,7 +130,9 @@
                         return "list-item-" + dayIndex + "-" + viewIndex
                     },
                     saveBlog() {
-                        console.log("HI");
+                        {
+
+                        }
                         axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
                                  .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
                                  .catch(err => console.log("err"))
@@ -154,8 +143,7 @@
                         readFile.readAsDataURL(file)
                         readFile.addEventListener('load', () => {
                             let image = document.getElementById('image')
-                            this.CoverImageName = readFile.result
-                            // console.log(this.CoverImageName);
+                            this.CoverImageName = readFile.result                            
                             this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
                             console.log(this.CoverImageName);
                         })
@@ -164,7 +152,6 @@
                     copyURL: function () {                         
                         let myurl = document.createElement('input'),
                         geturl = window.location.toString()
-
                         document.body.appendChild(myurl);
                         myurl.value = geturl;
                         myurl.select();
@@ -175,28 +162,21 @@
                     loadimg: function (dayIndex, viewIndex, e) {
                         var input = e.target;
                         var count = input.files.length;
-                        var index = 0;
-                        this.Details[dayIndex][viewIndex].images = []
-                        if (input.files) {
-                            console.log(input.files);
-                            while (count--) {
-                                var reader = new FileReader();
-                                reader.onload = (e) => {                                   
+                            this.Details[dayIndex][viewIndex].images = [];
+                            for (let i = 0; i < input.files.length;i++){
+                                const reader = new FileReader();
+                                reader.readAsDataURL(input.files[i]);
+                                reader.onload = (e) => {
                                     this.Details[dayIndex][viewIndex].images.push(e.target.result);
-                                }                                
-                                reader.readAsDataURL(input.files[index]);
-                                index++;
+                                }                                                                                               
                             }
                         }
                     },
                     reset: function (dayIndex, viewIndex, e) {
-                        this.Details[dayIndex][viewIndex].image = null;
-                        this.Details[dayIndex][viewIndex].preview = null;
-                        this.Details[dayIndex][viewIndex].images = [];
-                        this.Details[dayIndex][viewIndex].previewlist = [];
+                        this.Details[dayIndex][viewIndex].images.length = 0;
+                        this.Details[dayIndex][viewIndex].images=[];
                     },
                     onChange(dayIndex) {
-
                         for (let j = 0; j < this.Details.length; j++) {
                             let timestamp = this.datetime[j]
                             console.log(timestamp)
@@ -251,7 +231,7 @@
                      let id = window.location.search.substring(1) 
                      console.log(id)
                      if (id != "") {
-                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )
+                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )                         
                      }
                  }
 
@@ -323,27 +303,27 @@
                                 <span><img :src="UserImage" id="userimg" alt=""></span>
                                 <span class="px-3 py-1">{{UserId[0]}}</span>
                             </div>
-                            <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe"
+                            <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe"
                                 style="resize:none"></textarea>
                         </div>
                         <div>
                             <div v-for="(day,dayIndex) in Details">
                                 <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
-                                <div class="item" v-for="(p_Name,viewIndex) in day" :key="p_Name.id">
+                                <div class="item" v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
                                     <span><i class="fa-solid fa-map-location-dot px-1 mb-1"
-                                            :id=getanchor(dayIndex,viewIndex)></i>{{p_Name.p_Name}}</span>
-                                    <div class="mb-1">地址:{{p_Name.placeId}}</div>
-                                    <div class="mb-1">電話:{{p_Name.p_tel}}</div>
+                                            :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
+                                    <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
+                                    <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
 
                                     <div>
                                         評分:<i class="fa fa-star mb-2" :style="{color:color}"
-                                            :class="item<=p_Name.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                            @@mouseenter="p_Name.score=item" @@mouseleave="p_Name.score=myscore"
+                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                            @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
                                             @@click="myscore=item"></i>
                                         <!-- {{p_Name.score}} -->
                                     </div>
 
-                                    <textarea rows="6" class="mb-2" maxlength="400" v-model="p_Name.Describe"
+                                    <textarea rows="6" class="mb-2" maxlength="400" v-model="dayDetails.Describe"
                                         placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>
 
 
@@ -357,19 +337,14 @@
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
                                         <div class="groupimg img-fluid">
-                                            <template v-for="(imgURL,index) in p_Name.images">
+                                            <template v-for="(imgURL,index) in p_Name.previewlist">
                                                 <img :src="imgURL">
                                             </template>
                                         </div>
-                                    </div>
-
-
-                        
+                                    </div>                        
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                  </div>
             </div>

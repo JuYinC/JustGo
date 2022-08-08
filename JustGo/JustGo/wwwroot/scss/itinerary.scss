@@ -387,8 +387,8 @@
 
     @media(min-aspect-ratio:16/9) {
         .arrange__contain-video {
-            width: 100%;
-            height: auto;
+          object-fit: cover;
+         
         }
     }
 
@@ -471,6 +471,16 @@
                 flex: 0 0 330px;
                 margin: 1.5rem;
                 overflow-y: scroll;
+                ::before{
+                    content: "";
+                    flex: 0 0 0px;
+                    margin: 0;
+                    overflow-y: scroll;
+                }
+
+                & .sift{
+
+                }
 
                 & button {
                     width: 100px;

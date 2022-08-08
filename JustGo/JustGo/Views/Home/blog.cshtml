@@ -41,7 +41,7 @@
     let vm = new Vue({
         el: `#bloginfo`,            
         data: {
-            url : @Url.Content("~/")
+            //url : @* Url.Content("~/")*@
             Details: [
                         [
                             {
@@ -136,20 +136,20 @@
             mytempscore: this.score
 
         },
-        props: {
-            count: {
-                type: Number,
-                default: 5
-            },
-            score: {
-                type: Number,
-                default: 1
-            },
-            color: {
-                type: String,
-                default: '#FFC100'
-            }
-        },
+        //props: {
+        //    count: {
+        //        type: Number,
+        //        default: 5
+        //    },
+        //    score: {
+        //        type: Number,
+        //        default: 1
+        //    },
+        //    color: {
+        //        type: String,
+        //        default: '#FFC100'
+        //    }
+        //},
         methods: {
             gethref(dayIndex,viewIndex){
                 return "#list-item-"+dayIndex+"-"+viewIndex
@@ -180,36 +180,7 @@
                 document.execCommand('copy');
                 document.body.removeChild(myurl);
                
-            },                
-            loadimg: function (dayIndex,viewIndex,e) {
-                var input = e.target;
-                var count = input.files.length;
-                console.log(count);
-                var index = 0;
-                if (input.files) {
-                    console.log("---------------");
-                    console.log(input.files);
-                    while (count--) {
-                        var reader = new FileReader();                            
-                        reader.onload = (e) => {
-                            this.Details[dayIndex][viewIndex].previewlist=e.target.result;
-                            //console.log(e.target.result)
-                            //console.log(dayIndex)
-                            //console.log(viewIndex)
-                            
-                        }
-                        this.Details[dayIndex][viewIndex].Images=(input.files[index]);
-                        reader.readAsDataURL(input.files[index]);
-                        index++;
-                    }
-                }
-            },
-            reset: function () {
-                this.image = null;
-                this.preview = null;
-                this.Images = [];
-                this.previewlist = [];
-            },
+            },      
             likeblog: function(){  
                 var heart = document.getElementsByClassName("fa-heart");
                 var totallike = document.getElementsByClassName("totallike");
@@ -261,12 +232,6 @@
                         this.Details[j][i].endtime = timestamp
                     }
                 }
-            },
-            onStart() {
-                this.drag = true;
-            },
-            onEnd() {
-                this.drag = false;
             },
             caltime(dayIndex) {
                 for (let j = 0; j < this.Details.length; j++) {
@@ -352,8 +317,8 @@
                             <div v-for="(day,dayIndex) in Details" >第{{dayIndex+1}}天 
                             <li class="list-group-item justify-content-between align-items-center px-0">
                                 <ul>
-                                    <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details ">
-                                    <a class="list-group-item list-group-item-action mb-1" :href="gethref(dayIndex,viewIndex)">{{p_Name.p_Name}}</a></li>
+                                    <li v-for="dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details ">
+                                    <a class="list-group-item list-group-item-action mb-1" :href="gethref(dayIndex,viewIndex)">{{dayDetails.p_Name}}</a></li>
                                 </ul>
                             </li>
                             </div>
@@ -377,6 +342,18 @@
                     <!-- Single Image -->
                     <div class="mb-5">
                         <img src="https://unsplash.it/1800/1600/?random/201" alt="" class="img-fluid rounded" />
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <div class="mb-5">
+                        <h2 class="mb-4">Tag Cloud</h2>
+                        <div class="d-flex flex-wrap m-n1">                  
+                            <a href="" class="btn btn-primary m-1">溫泉</a>
+                            <a href="" class="btn btn-primary m-1">生態</a>
+                            <a href="" class="btn btn-primary m-1">小吃特產</a>
+                            <a href="" class="btn btn-primary m-1">國家公園</a>
+                            <a href="" class="btn btn-primary m-1">休閒農業</a>                         
+                        </div>
                     </div>
 
                     <!-- Recent Post -->
@@ -420,23 +397,7 @@
                         </div>
                     </div>
 
-                    <!-- Single Image -->
-                    <div class="mb-5">
-                        <img src="https://unsplash.it/1800/1600/?random/view2" alt="" class="img-fluid rounded" />
-                    </div>
-
-                    <!-- Tag Cloud -->
-                    <div class="mb-5">
-                        <h2 class="mb-4">Tag Cloud</h2>
-                        <div class="d-flex flex-wrap m-n1">                  
-                            <a href="" class="btn btn-primary m-1">溫泉</a>
-                            <a href="" class="btn btn-primary m-1">生態</a>
-                            <a href="" class="btn btn-primary m-1">小吃特產</a>
-                            <a href="" class="btn btn-primary m-1">國家公園</a>
-                            <a href="" class="btn btn-primary m-1">休閒農業</a>                         
-                        </div>
-                    </div>
-
+                  
                     <!-- Single Image -->
                     <div class="mb-5">
                         <img  src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded mb-2" />
@@ -469,25 +430,27 @@
                 <div class="mb-5">
                     <img class="img-fluid rounded w-100 mb-4" :src="CoverImageName"
                         alt="Image" />
-                    <p class="mb-2">{{Describe}}</p>
+                    <p class="mb-2">{{describe}}</p>
                 
                         <div v-for="(day,dayIndex) in Details">
                             <label id="day">第{{dayIndex+1}}天</label>
-                            <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id">
+                            <div class="item" v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
 
-                                <span><i class="fa-solid fa-map-location-dot"
-                                        :id=getanchor(dayIndex,viewIndex)></i></span>
-                                <span class="Details">{{P_Name.P_Name}}</span>
-                                <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
+                                <span><i class="fa-solid fa-map-location-dot px-1 mb-1"
+                                            :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
+                                    <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
+                                    <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
+                                    <div class="mb-1">開始時間:{{dayDetails.startTime}}</div>
+                                    <div class="mb-1">結束時間:{{dayDetails.endTime}}</div>
 
                                 <div>
                                     <i class="fa fa-star" :style="{color:color}"
-                                        :class="item<=P_Name.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                         @@load="myscore=item"></i>
-                                    {{P_Name.score}}分
+                                    {{dayDetails.score}}分
                                 </div>
 
-                                <p>{{P_Name.Describe}}</p>I am Describe<br>
+                                <p>{{dayDetails.describe}}</p>I am Describe<br>
                                 Diam dolor est labore duo invidunt ipsum clita et, sed et lorem
                                 voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit
                                 kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos.
@@ -508,11 +471,11 @@
 
 
                                 <div v-viewer class="groupimg img-fluid">
-                                    <template v-for="(imgURL,index) in P_Name.previewlist">
-                                        <img :src="imgURL" :key="image">
+                                    <template v-for="(image,index) in dayDetails.images">
+                                        <img :src="image.base64">
                                     </template>
                                 </div>
-                               
+
                             </div>
                         </div>
                

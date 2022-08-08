@@ -113,21 +113,24 @@
                     StartDate:null,
                     EndDate:null,
 
+                    myscore: this.score,
+                    mytempscore: this.score
+
                 },
-                //props: {
-                //    count: {
-                //        type: Number,
-                //        default: 5
-                //    },
-                //    score: {
-                //        type: Number,
-                //        default: 1
-                //    },
-                //    color: {
-                //        type: String,
-                //        default: '#FFC100'
-                //    }
-                //},
+                props: {
+                    count: {
+                        type: Number,
+                        default: 5
+                    },
+                    score: {
+                        type: Number,
+                        default: 1
+                    },
+                    color: {
+                        type: String,
+                        default: '#FFC100'
+                    }
+                },
                 methods: {
                     gethref(dayIndex, viewIndex) {
                         return "#list-item-" + dayIndex + "-" + viewIndex
@@ -154,17 +157,7 @@
                             console.log(this.CoverImageName);
                         })
 
-                    },
-                    copyURL: function () {                         
-                        let myurl = document.createElement('input'),
-                        geturl = window.location.toString()
-                        document.body.appendChild(myurl);
-                        myurl.value = geturl;
-                        myurl.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(myurl);
-
-                    },
+                    },                   
                     loadimg: function (dayIndex, viewIndex, e) {
                         let input = e.target;                                           
                         if (input.files) {                            
@@ -304,6 +297,13 @@
                                     <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
                                     <div class="mb-1">開始時間:{{dayDetails.startTime}}</div>
                                     <div class="mb-1">結束時間:{{dayDetails.endTime}}</div>
+                                    <div class="mb-1">
+                                    評分:<i class="fa fa-star mb-2" :style="{color:color}"
+                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                        @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
+                                        @@click="myscore=item"></i>
+                                        {{dayDetails.score}}
+                                    </div>
                                
                                     
 

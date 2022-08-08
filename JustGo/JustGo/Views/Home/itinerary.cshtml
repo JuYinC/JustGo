@@ -57,7 +57,6 @@
             </div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
-                    <button @@click="testDaily" class="btn btn-primary">第一天行程</button>
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="100" alt="gps"
                         type="button">
                     <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="100" alt="map" type="button">
@@ -1203,6 +1202,7 @@
                 }
                 console.log(this.calpositiontotal)
                 document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
+                this.$store.commit('setDailyMarker', k)
             },
         },
 

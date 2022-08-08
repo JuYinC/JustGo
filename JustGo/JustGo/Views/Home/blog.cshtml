@@ -13,12 +13,9 @@
     @section Scripts{
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
-        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"/>
 
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
@@ -318,7 +315,7 @@
     }
     
 
-    <div id="bloginfo">
+   <div id="bloginfo">
     <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
             style="min-height: 400px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
@@ -438,13 +435,12 @@
                     <!-- Tag Cloud -->
                     <div class="mb-5">
                         <h2 class="mb-4">Tag Cloud</h2>
-                        <div class="d-flex flex-wrap m-n1">
-                            <a href="" class="btn btn-primary m-1">Design</a>
-                            <a href="" class="btn btn-primary m-1">Development</a>
-                            <a href="" class="btn btn-primary m-1">Marketing</a>
-                            <a href="" class="btn btn-primary m-1">SEO</a>
-                            <a href="" class="btn btn-primary m-1">Writing</a>
-                            <a href="" class="btn btn-primary m-1">Consulting</a>
+                        <div class="d-flex flex-wrap m-n1">                  
+                            <a href="" class="btn btn-primary m-1">溫泉</a>
+                            <a href="" class="btn btn-primary m-1">生態</a>
+                            <a href="" class="btn btn-primary m-1">小吃特產</a>
+                            <a href="" class="btn btn-primary m-1">國家公園</a>
+                            <a href="" class="btn btn-primary m-1">休閒農業</a>                         
                         </div>
                     </div>
 
@@ -520,7 +516,7 @@
 
                             <div v-viewer class="groupimg img-fluid">
                                 <template v-for="(imgURL,index) in p_Name.previewlist">
-                                  <img :src="imgURL">
+                                  <img :src="imgURL" >
                                 </template>
                               </div>
                             <!-- <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">

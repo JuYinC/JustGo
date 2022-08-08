@@ -14,7 +14,7 @@ namespace JustGo.Repository
     public class ScheduleRepostioy : IScheduleRepostioy
     {
         readonly IDbConnection _con;
-        readonly TravelContext _context;
+        readonly TravelContext _context;        
 
         public ScheduleRepostioy(TravelContext context, IDbConnection con)
         {
@@ -33,6 +33,34 @@ namespace JustGo.Repository
                 return false;
             }            
             return true;
+        }
+
+        public ScheduleVM copyScheduleByBlog(DateTime startTime, int blogId)
+        {
+            Blog blog = _context.Blog.Include(e => e.BlogDetails).SingleOrDefault(e => e.BlogId == blogId)?? new Blog();
+            int setDays = (startTime-blog.StartDate).Days;
+            ScheduleVM vm = new ScheduleVM()
+            {
+                StartDate = blog.StartDate.AddDays(setDays),
+                EndDate = blog.EndDate.AddDays(setDays),
+                Details = new List<IList<ScheduleDetailVM>>()
+            };            
+            for (int i = 0; i <= (blog.EndDate - blog.StartDate).Days; i++)
+            {
+                var dl = new List<ScheduleDetailVM>();
+                foreach(var item in blog.BlogDetails.Where(e => e.StartTime.Day == blog.StartDate.Day + i))
+                {
+                    ScheduleDetailVM detailVM = new ScheduleDetailVM()
+                    {
+                        StartTime = item.StartTime.AddDays(setDays),
+                        EndTime = item.EndtTime.AddDays(setDays),
+                        Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId),
+                    };
+                    dl.Add(detailVM);
+                }
+                vm.Details.Add(dl);
+            }
+                return vm;
         }
 
         public bool deleteScedule(int SceduleId)
@@ -59,7 +87,7 @@ namespace JustGo.Repository
 
         public ScheduleVM selectScedule(int SceduleId ,string UserId)
         {
-            return modelToView(_context.Schedule.Where(e => e.UserId == UserId).Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
+            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId && e.UserId == UserId) ?? new Schedule());
             //return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
         }
 
@@ -153,6 +181,6 @@ namespace JustGo.Repository
                 }                
             }
             return vm;
-        }
+        }        
     }    
 }

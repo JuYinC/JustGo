@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using JustGo.Repository;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 namespace JustGo.Controllers
 {
@@ -22,8 +23,8 @@ namespace JustGo.Controllers
         [HttpPost]
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
-        {
-            Console.WriteLine(vm.CoverImageName);
+        {                        
+            
             foreach (var day in vm.Details)
             {
                 foreach(var item in day)
@@ -31,10 +32,8 @@ namespace JustGo.Controllers
                     if (item.Images != null)
                     {
                         for (int i = 0; i < item.Images.Count; i++)
-                        {
-                            string image = item.Images[i];
-                            saveImage(ref image);
-                            item.Images[i] = image;
+                        {                                          
+                            saveImage(item.Images[i]);                            
                         }
                     }                    
                 }
@@ -81,32 +80,66 @@ namespace JustGo.Controllers
         }
 
 
-        void saveImage(ref string imageName)
+        void saveImage(blogImage blogImage)
         {
-            string[] imageString= imageName.Split(',');
-            Console.WriteLine(imageString[0]);
-            Console.WriteLine(imageName);
+            string[] imageString;
+            try
+            {
+                imageString = blogImage.base64.Split(",");
+            }
+            catch
+            {
+                return;
+            }
+            blogImage.base64 = "";            
             byte[] bytes;
             try
             {
                 bytes = Convert.FromBase64String(imageString[1]);
             }
             catch
-            {
-                bytes = null;
-                Console.WriteLine("sss");
+            {                
+                return;
             }
-            Image image;
-            Random random = new Random();
-            imageName = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString() + ".png";
+            Image image;            
+            string WebRootPatch = _webHostEnvironment.WebRootPath;
             using (MemoryStream ms = new MemoryStream(bytes))
             {
                 image = Image.FromStream(ms);
+                if (blogImage.name == "")
+                {
+                    Random random = new Random();
+                    blogImage.name = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString();
+                }
             }
-            string WebRootPatch = _webHostEnvironment.WebRootPath;
-            string TargetFilename = Path.Combine(WebRootPatch, "Uploads", imageName);
-            Console.WriteLine(TargetFilename);
-            image.Save(TargetFilename, ImageFormat.Png);
+            string TargetFilename = Path.Combine(WebRootPatch, "blogImages", blogImage.name);
+            switch (imageString[0]) {
+                case "data:image/png;base64":
+                    TargetFilename += ".png";
+                    blogImage.name += ".png";
+                    image.Save(TargetFilename, ImageFormat.Png);
+                    break;
+                case "data:image/jpeg;base64":
+                    TargetFilename += ".jpg";
+                    blogImage.name +=".jpg";
+                    try
+                    {
+                        image.Save(TargetFilename, ImageFormat.Jpeg);
+                    }
+                    catch
+                    {
+                        var i = new Bitmap(image);
+                        i.Save(TargetFilename, ImageFormat.Jpeg);
+                    }                    
+                    break;
+                case "data:image/gif;base64":
+                    TargetFilename += ".gif";
+                    blogImage.name += ".gif";
+                    image.Save(TargetFilename, ImageFormat.Gif);
+                    break;
+                default:
+                    return;                    
+            }                                    
         }
     }
 }

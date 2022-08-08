@@ -7,9 +7,8 @@
         public string UserName { get; set; }
         public string UserImage { get; set; }
         public string Title { get; set; }
-        public string Describe { get; set; }
-        public string CoverImageName { get; set; }
-        public string? CoverImage { get; set; }
+        public string Describe { get; set; }        
+        public blogImage? CoverImage { get; set; }
         public int? Like { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -26,8 +25,7 @@
         public string P_tel { get; set; }
         public string P_Add { get; set; }
         public string Describe { get; set; }
-        public IList<string> ImageNames { get; set; }
-        public IList<string>? Images { get; set; }
+        public IList<blogImage>? Images { get; set; }
         public double? Score { get; set; }
     }
 

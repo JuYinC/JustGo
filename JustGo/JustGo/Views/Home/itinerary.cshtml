@@ -185,21 +185,21 @@
                     let viewObj = {};
                     // 產生地點marker
                     state.selectPlaces.map((position, i) => {
-                        if (position.class == 15) {
-                        //餐廳
-                        iconPlace = state.icon[1]
-                    } else if (position.class == 16) {
-                        //旅館
-                        iconPlace = state.icon[2]
-                    } else {
-                        // 一般景點
-                        iconPlace = state.icon[0]
-                    }
-                    const marker = new google.maps.Marker({
-                        position: { lat: position.lat, lng: position.lng },
-                        title: position.name,
-                        icon: iconPlace,
-                    });
+                            if (position.class == 15) {
+                            //餐廳
+                            iconPlace = state.icon[1]
+                        } else if (position.class == 16) {
+                            //旅館
+                            iconPlace = state.icon[2]
+                        } else {
+                            // 一般景點
+                            iconPlace = state.icon[0]
+                        }
+                        const marker = new google.maps.Marker({
+                            position: { lat: position.lat, lng: position.lng },
+                            title: position.name,
+                            icon: iconPlace,
+                        });
                         
                         bounds.extend(marker.position);
                         // 產生infowindow

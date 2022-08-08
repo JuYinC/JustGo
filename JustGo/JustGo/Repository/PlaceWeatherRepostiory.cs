@@ -54,7 +54,7 @@ namespace JustGo.Repository
                     sqlStr += " and Class in @selectAcitivity";
                 }
             }
-            sqlStr += "and Class <16";
+            sqlStr += " and Class <16";
             return _con.Query<Place>(sqlStr, vm).ToList();
         }
 

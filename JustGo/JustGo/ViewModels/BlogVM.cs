@@ -8,7 +8,7 @@
         public string UserImage { get; set; }
         public string Title { get; set; }
         public string Describe { get; set; }
-        public string CoverImageName { get; set; }
+        public string CoverImage { get; set; }
         public int? Like { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

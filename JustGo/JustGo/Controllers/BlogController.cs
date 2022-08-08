@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using JustGo.Repository;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace JustGo.Controllers
 {
@@ -21,6 +23,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
         {
+
             if(vm != null)
             {
                 if(vm.BlogId != 0)
@@ -33,28 +36,7 @@ namespace JustGo.Controllers
             }
             return Json(vm);
         }
-
-        //傳圖 (測試)
-        [HttpPost]
-        public async Task<IActionResult> uploadImage(IEnumerable<IFormFile> image)
-        {
-            if (image.First() != null)
-            {
-                foreach(IFormFile file in image)
-                {
-                    string WebRootPatch = _webHostEnvironment.WebRootPath;
-                    string ProjectPath = _webHostEnvironment.ContentRootPath;
-                    string SourcFilename = Path.GetFileName(file.FileName);
-                    string TargetFilename = Path.Combine(WebRootPatch,"Uploads",SourcFilename);
-                    using(FileStream stream = new FileStream(TargetFilename, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                }
-            }
-            return Json("ok");
-        }
-
+        
         [HttpPost]
         [Authorize]
         public IActionResult creatBlog([FromBody]ScheduleVM vm)
@@ -81,6 +63,32 @@ namespace JustGo.Controllers
         public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
         {
             return Json(_blog.getBlogFilter(vm));
+        }
+
+
+        void seveImage(string base64string)
+        {
+            string[] imageString=base64string.Split(',');
+            byte[] bytes;
+            try
+            {
+                bytes = Convert.FromBase64String(imageString[1]);
+            }
+            catch
+            {
+                bytes = null;
+                Console.WriteLine("sss");
+            }
+            Image image;
+            Random random = new Random();
+            string imageName = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString() + ".png";
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = Image.FromStream(ms);
+            }
+            string WebRootPatch = _webHostEnvironment.WebRootPath;
+            string TargetFilename = Path.Combine(WebRootPatch, "Uploads", imageName);
+            image.Save(TargetFilename, ImageFormat.Png);
         }
     }
 }

@@ -203,7 +203,11 @@ namespace JustGo.Repository
                 {
                     foreach (BlogDetailsVM item in vm.Details[i])
                     {
-                        model.BlogDetails.Add(
+                        if(item.Images==null)
+                        {
+                            item.Images = new List<string>();
+                        }
+                        model.BlogDetails.Add(                            
                             new BlogDetails()
                             {
                                 PlaceId = item.PlaceId,

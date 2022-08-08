@@ -23,7 +23,22 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
         {
-
+            Console.WriteLine(vm.CoverImageName);
+            foreach (var day in vm.Details)
+            {
+                foreach(var item in day)
+                {
+                    if (item.Images != null)
+                    {
+                        for (int i = 0; i < item.Images.Count; i++)
+                        {
+                            string image = item.Images[i];
+                            saveImage(ref image);
+                            item.Images[i] = image;
+                        }
+                    }                    
+                }
+            }
             if(vm != null)
             {
                 if(vm.BlogId != 0)
@@ -66,9 +81,11 @@ namespace JustGo.Controllers
         }
 
 
-        void seveImage(string base64string)
+        void saveImage(ref string imageName)
         {
-            string[] imageString=base64string.Split(',');
+            string[] imageString= imageName.Split(',');
+            Console.WriteLine(imageString[0]);
+            Console.WriteLine(imageName);
             byte[] bytes;
             try
             {
@@ -81,13 +98,14 @@ namespace JustGo.Controllers
             }
             Image image;
             Random random = new Random();
-            string imageName = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString() + ".png";
+            imageName = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString() + ".png";
             using (MemoryStream ms = new MemoryStream(bytes))
             {
                 image = Image.FromStream(ms);
             }
             string WebRootPatch = _webHostEnvironment.WebRootPath;
             string TargetFilename = Path.Combine(WebRootPatch, "Uploads", imageName);
+            Console.WriteLine(TargetFilename);
             image.Save(TargetFilename, ImageFormat.Png);
         }
     }

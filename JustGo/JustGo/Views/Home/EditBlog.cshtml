@@ -8,7 +8,8 @@
 @section Style{
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
 }
 
 
@@ -18,9 +19,8 @@
  
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
 
@@ -44,7 +44,7 @@
                                 p_tel: "07-123456",
                                 score: 0,
                                 Describe: "",
-                                image: null,
+                         
                                 previewlist: [],
                                 images: [],
 
@@ -57,8 +57,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                                preview: null,
-                                image: null,
+                            
                                 previewlist: [],
                                 images: [],
 
@@ -72,8 +71,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                                preview: null,
-                                image: null,
+                      
                                 previewlist: [],
                                 images: [],
 
@@ -89,8 +87,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                                preview: null,
-                                image: null,
+                              
                                 previewlist: [],
                                 images: [],
 
@@ -103,8 +100,7 @@
                                 p_tel: "",
                                 score: 0,
                                 Describe: "",
-                                preview: null,
-                                image: null,
+                        
                                 previewlist: [],
                                 images: [],
 
@@ -180,14 +176,14 @@
                         var input = e.target;
                         var count = input.files.length;
                         var index = 0;
+                        this.Details[dayIndex][viewIndex].images = []
                         if (input.files) {
                             console.log(input.files);
                             while (count--) {
                                 var reader = new FileReader();
-                                reader.onload = (e) => {
-                                    this.Details[dayIndex][viewIndex].previewlist.push(e.target.result);
-                                }
-                                this.Details[dayIndex][viewIndex].images.push(input.files[index]);
+                                reader.onload = (e) => {                                   
+                                    this.Details[dayIndex][viewIndex].images.push(e.target.result);
+                                }                                
                                 reader.readAsDataURL(input.files[index]);
                                 index++;
                             }
@@ -312,7 +308,7 @@
                                     width="80%" />
                             </div>
                             <div style="width:80%">
-                                <h6 class="mb-1">旅遊就從Just Go開始</h6>
+                                <h6 class="mb-1">旅遊就從JustGO開始</h6>
                                 <p>For what it's worth, it's never too late or, in my case, too early to be whoever you want
                                     to be</p>
 
@@ -361,8 +357,8 @@
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
                                         <div class="groupimg img-fluid">
-                                            <template v-for="(imgURL,index) in p_Name.previewlist">
-                                                <img :src="imgURL" :key="image">
+                                            <template v-for="(imgURL,index) in p_Name.images">
+                                                <img :src="imgURL">
                                             </template>
                                         </div>
                                     </div>

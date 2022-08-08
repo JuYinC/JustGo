@@ -4,6 +4,7 @@
 }
 @section Style{
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+ <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
 
 
 }
@@ -47,10 +48,10 @@
                 [
                     {
                         id: id++,
-                        P_Add:"",                            
+                        P_Add:"台北市",                            
                         PlaceId: "a01-1",
                         P_Name: "北部1",
-                        P_tel:"",
+                        P_tel:"0712-456",
                         score:4,
                         // like:0,
                         Describe:"",                         
@@ -132,7 +133,7 @@
             UserImage:"https://unsplash.it/1800/1600/?random/person",
             CoverImageName: "https://unsplash.it/1800/1600/?random/person",
             Title: '三天兩夜台東之旅',
-            Describe:'美好旅程的回憶從Just Go開始',
+            Describe:'美好旅程的回憶從JustGO開始',
             // like:0,//只存總數喜歡 
             //(個別喜歡存UserKeep)
             totallike:0,
@@ -357,7 +358,7 @@
                         <h2 class="mb-3" >景點日程</h2>
                         <ul class="list-group list-group-flush">
                             <div v-for="(day,dayIndex) in Details" >第{{dayIndex+1}}天 
-                            <li class="list-group-item  justify-content-between align-items-center px-0">
+                            <li class="list-group-item justify-content-between align-items-center px-0">
                                 <ul>
                                     <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details ">
                                     <a class="list-group-item list-group-item-action mb-1" :href="gethref(dayIndex,viewIndex)">{{p_Name.p_Name}}</a></li>
@@ -474,68 +475,55 @@
                     </div>
                 </div>
                 <div class="mb-5">
-                    <img class="img-fluid rounded w-100 mb-4" src="https://unsplash.it/1800/1600/?random/view0"
+                    <img class="img-fluid rounded w-100 mb-4" :src="CoverImageName"
                         alt="Image" />
-                    <p>{{Describe}}</p>
-                    <div>
+                    <p class="mb-2">{{Describe}}</p>
+                
                         <div v-for="(day,dayIndex) in Details">
-                        <label id="day">第{{dayIndex+1}}天</label> 
-                        <div class="item" v-for="(p_Name,viewIndex) in day" :key="p_Name.id">
-                            
-                            <span><i class="fa-solid fa-map-location-dot" :id=getanchor(dayIndex,viewIndex)></i></span>
-                            <span class="Details">{{p_Name.p_Name}}</span>
-                            <div class="Details"><span>地址:{{p_Name.PlaceId}}</span></div>
-                            
-                            <div>
-                                <i class="fa fa-star" :style="{color:color}"
-                                :class="item<=p_Name.score?'fa-star':'fa-star-o'" 
-                                v-for="item in count"
-                                @@load="myscore=item"></i>
-                                {{p_Name.score}}分    
-                            </div>
-                        
-                            <p>{{p_Name.Describe}}</p>I am Describe<br>
-                            Diam dolor est labore duo invidunt ipsum clita et, sed et lorem
-                            voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit
-                            kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos.
-                            Clita no magna no dolor erat diam tempor rebum consetetur, sanctus
-                            labore sed nonumy diam lorem amet eirmod. No at tempor sea diam
-                            kasd, takimata ea nonumy elitr sadipscing gubergren erat.
-                            Gubergren at lorem invidunt sadipscing rebum sit amet ut ut,
-                            voluptua diam dolores at sadipscing stet. Clita dolor amet dolor
-                            ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor
-                            dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed
-                            et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et.
-                            Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo
-                            est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos
-                            labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam
-                            takimata sea kasd dolores diam, amet et est accusam labore eirmod
-                            vero et voluptua. Amet labore clita duo et no. Rebum voluptua
-                            magna eos magna, justo gubergren labore sit voluptua eos.
-    
+                            <label id="day">第{{dayIndex+1}}天</label>
+                            <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id">
 
-                            <div v-viewer class="groupimg img-fluid">
-                                <template v-for="(imgURL,index) in p_Name.previewlist">
-                                  <img :src="imgURL" >
-                                </template>
-                              </div>
-                            <!-- <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
-                                <div class="d-flex">
-                                    <img :src="imgURL"/>    
-                                    </div>                                       
-                                                
+                                <span><i class="fa-solid fa-map-location-dot"
+                                        :id=getanchor(dayIndex,viewIndex)></i></span>
+                                <span class="Details">{{P_Name.P_Name}}</span>
+                                <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
+
+                                <div>
+                                    <i class="fa fa-star" :style="{color:color}"
+                                        :class="item<=P_Name.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                        @@load="myscore=item"></i>
+                                    {{P_Name.score}}分
                                 </div>
-                            </div>             -->
-                            <!-- <div class="mb-3">
-                                <p>I am images</p>
-                                <img class="img-fluid rounded w-50 float-left mr-4 mb-3"
-                                :src="https://unsplash.it/1800/1600/?random/view1" alt="Image" />
-                            
-                            </div> -->
+
+                                <p>{{P_Name.Describe}}</p>I am Describe<br>
+                                Diam dolor est labore duo invidunt ipsum clita et, sed et lorem
+                                voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit
+                                kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos.
+                                Clita no magna no dolor erat diam tempor rebum consetetur, sanctus
+                                labore sed nonumy diam lorem amet eirmod. No at tempor sea diam
+                                kasd, takimata ea nonumy elitr sadipscing gubergren erat.
+                                Gubergren at lorem invidunt sadipscing rebum sit amet ut ut,
+                                voluptua diam dolores at sadipscing stet. Clita dolor amet dolor
+                                ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor
+                                dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed
+                                et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et.
+                                Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo
+                                est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos
+                                labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam
+                                takimata sea kasd dolores diam, amet et est accusam labore eirmod
+                                vero et voluptua. Amet labore clita duo et no. Rebum voluptua
+                                magna eos magna, justo gubergren labore sit voluptua eos.
+
+
+                                <div v-viewer class="groupimg img-fluid">
+                                    <template v-for="(imgURL,index) in P_Name.previewlist">
+                                        <img :src="imgURL" :key="image">
+                                    </template>
+                                </div>
+                               
+                            </div>
                         </div>
-                        </div>
-                    </div>
-                    
+               
                     
                     
                 </div>

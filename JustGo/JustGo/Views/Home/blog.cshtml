@@ -11,595 +11,600 @@
 
 
     @section Scripts{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../js/vue.js"></script>   
+    <script src="../js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        $("body").attr('data-bs-spy','scroll')
-        $("body").attr('data-bs-target','#list-example')
-        $("body").attr('data-bs-offset','0')
-        $("body").attr('tabindex','0')
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'><link rel="stylesheet" href="./style.css">
+    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
+
+    
         
     <script>
-        let id = 0;
-        let vm = new Vue({
-            el: `#bloginfo`,            
-            data: {
-                Details: [
-                    [
-                        {
-                            id: id++,
-                            P_Add:"",                            
-                            PlaceId: "a01-1",
-                            P_Name: "北部1",
-                            P_tel:"",
-                            score:4,
-                            // like:0,
-                            Describe:"",                         
-                            image: null,
-                            previewlist: [],
-                            Images: [],                      
-                 
-                        },
-                        {
-                            id: id++,
-                            P_Add:"",                            
-                            PlaceId: "a01-1",
-                            P_Name: "南部2",
-                            P_tel:"",
-                            score:3,
-                            // like:0,
-                            Describe:"", 
-                            preview: null,
-                            image: null,
-                            previewlist: [],
-                            Images: [] ,                           
-                           
+        
+    $("body").attr('data-bs-spy','scroll')
+    $("body").attr('data-bs-target','#list-example')
+    $("body").attr('data-bs-offset','0')
+    $("body").attr('tabindex','0')
 
-                        },
-                        {
-                            id: id++,
-                            P_Add:"",                            
-                            PlaceId: "a01-1",
-                            P_Name: "外島3",
-                            P_tel:"",
-                            score:2,
-                            // like:0,
-                            Describe:"", 
-                            preview: null,
-                            image: null,
-                            previewlist: [],
-                            Images: [],                            
-                          
-                        }
+    Vue.use(VueViewer.default)
+    console.log(VueViewer.default)
 
-                    ],
-                    [
-                        {
-                            id: id++,
-                            P_Add:"",                            
-                            PlaceId: "a01-1",
-                            P_Name: "東部1",
-                            P_tel:"",
-                            score:5,
-                            // like:0,
-                            Describe:"", 
-                            preview: null,
-                            image: null,
-                            previewlist: [],
-                            Images: [],                            
-                            
-                        },
-                        {
-                            id: id++,
-                            P_Add:"",                            
-                            PlaceId: "a01-1",
-                            P_Name: "中部2",
-                            P_tel:"",
-                            score:1,
-                            // like:0,
-                            Describe:"", 
-                            preview: null,
-                            image: null,
-                            previewlist: [],
-                            Images: [],                       
-                          
+    let id = 0;
+    let vm = new Vue({
+        el: `#bloginfo`,            
+        data: {
+            Details: [
+                [
+                    {
+                        id: id++,
+                        P_Add:"",                            
+                        PlaceId: "a01-1",
+                        P_Name: "北部1",
+                        P_tel:"",
+                        score:4,
+                        // like:0,
+                        Describe:"",                         
+                        image: null,
+                        previewlist: ["https://source.unsplash.com/random/120","https://source.unsplash.com/random/300","https://source.unsplash.com/random/120","https://source.unsplash.com/random/300","https://source.unsplash.com/random/120","https://source.unsplash.com/random/300"],
+                        Images: ["https://source.unsplash.com/random/300","https://source.unsplash.com/random/300"],                      
+             
+                    },
+                    {
+                        id: id++,
+                        P_Add:"",                            
+                        PlaceId: "a01-1",
+                        P_Name: "南部2",
+                        P_tel:"",
+                        score:3,
+                        // like:0,
+                        Describe:"", 
+                        preview: null,
+                        image: null,
+                        previewlist: ["https://source.unsplash.com/random/120","https://source.unsplash.com/random/300"],
+                        Images: ["https://source.unsplash.com/random/120","https://source.unsplash.com/random/300"],                      
+             
 
-                        },
+                    },
+                    {
+                        id: id++,
+                        P_Add:"",                            
+                        PlaceId: "a01-1",
+                        P_Name: "外島3",
+                        P_tel:"",
+                        score:2,
+                        // like:0,
+                        Describe:"", 
+                        preview: null,
+                        image: null,
+                        previewlist: ["https://source.unsplash.com/random/120","https://source.unsplash.com/random/300","https://source.unsplash.com/random/120","https://source.unsplash.com/random/300","https://source.unsplash.com/random/120"],
+                        Images: ["https://source.unsplash.com/random/170","https://source.unsplash.com/random/300"],                      
+             
+                    }
 
-
-                    ],
                 ],
-                UserId: ["Alley", "Beca", "Cindy"],
-                UserImage:"https://unsplash.it/1800/1600/?random/person",
-                CoverImageName: "https://unsplash.it/1800/1600/?random/person",
-                Title: '三天兩夜台東之旅',
-                Describe:'美好旅程的回憶從Just Go開始',
-                // like:0,//只存總數喜歡 
-                //(個別喜歡存UserKeep)
-                totallike:0,
-                srcimg:"https://unsplash.it/?random/view",     
-                 
+                [
+                    {
+                        id: id++,
+                        P_Add:"",                            
+                        PlaceId: "a01-1",
+                        P_Name: "東部1",
+                        P_tel:"",
+                        score:5,
+                        // like:0,
+                        Describe:"", 
+                        preview: null,
+                        image: null,
+                        previewlist: ["https://source.unsplash.com/random/400","https://source.unsplash.com/random/300"],
+                        Images: ["https://source.unsplash.com/random/520","https://source.unsplash.com/random/300"],                      
+             
+                    },
+                    {
+                        id: id++,
+                        P_Add:"",                            
+                        PlaceId: "a01-1",
+                        P_Name: "中部2",
+                        P_tel:"",
+                        score:1,
+                        // like:0,
+                        Describe:"", 
+                        preview: null,
+                        image: null,
+                        previewlist: ["https://source.unsplash.com/random/320","https://source.unsplash.com/random/460"],
+                        Images: ["https://source.unsplash.com/random/244","https://source.unsplash.com/random/300"],                      
+             
 
-                myscore: this.score,
-                mytempscore: this.score
+                    },
 
-            },
-            props: {
-                count: {
-                    type: Number,
-                    default: 5
-                },
-                score: {
-                    type: Number,
-                    default: 1
-                },
-                color: {
-                    type: String,
-                    default: '#FFC100'
-                }
-            },
-            methods: {
-                gethref(dayIndex,viewIndex){
-                    return "#list-item-"+dayIndex+"-"+viewIndex
-                },
-                getanchor(dayIndex,viewIndex){                    
-                    return "list-item-"+dayIndex+"-"+viewIndex
-                },               
-                fileChange(e) {
-                    let file = e.target.files[0]
-                    let readFile = new FileReader()
-                    readFile.readAsDataURL(file)
-                    readFile.addEventListener('load', () => {
-                        let image = document.getElementById('image')
-                        this.CoverImageName = readFile.result 
-                        // console.log(this.CoverImageName);
-                        this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
-                        console.log(this.CoverImageName);
-                    })
 
-                },
-                copyURL:function() {
-                    // let url = window.location.toString()
-                    let myurl = document.createElement('input'),
-                    geturl = window.location.toString()
-                    document.body.appendChild(myurl);
-                    myurl.value = geturl;
-                    myurl.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(myurl);
-                   
-                },                
-                loadimg: function (dayIndex,viewIndex,e) {
-                    var input = e.target;
-                    var count = input.files.length;
-                    console.log(count);
-                    var index = 0;
-                    if (input.files) {
-                        console.log("---------------");
-                        console.log(input.files);
-                        while (count--) {
-                            var reader = new FileReader();                            
-                            reader.onload = (e) => {
-                                this.Details[dayIndex][viewIndex].previewlist=e.target.result;
-                                //console.log(e.target.result)
-                                //console.log(dayIndex)
-                                //console.log(viewIndex)
-                                
-                            }
-                            this.Details[dayIndex][viewIndex].Images=(input.files[index]);
-                            reader.readAsDataURL(input.files[index]);
-                            index++;
-                        }
-                    }
-                },
-                reset: function () {
-                    this.image = null;
-                    this.preview = null;
-                    this.Images = [];
-                    this.previewlist = [];
-                },
-                likeblog: function(){  
-                    var heart = document.getElementsByClassName("fa-heart");
-                    var totallike = document.getElementsByClassName("totallike");
-                    var totallike;
+                ],
+            ],
+            UserId: ["Alley", "Beca", "Cindy"],
+            UserImage:"https://unsplash.it/1800/1600/?random/person",
+            CoverImageName: "https://unsplash.it/1800/1600/?random/person",
+            Title: '三天兩夜台東之旅',
+            Describe:'美好旅程的回憶從Just Go開始',
+            // like:0,//只存總數喜歡 
+            //(個別喜歡存UserKeep)
+            totallike:0,
+            srcimg:"https://unsplash.it/?random/view",     
+             
 
-                    var bool = true; 
-                    i = 0
-                    heart[i].onclick = function () {
-                        
-                        if (bool) {
-                            bool = false;
-                            this.className = "fa fa-heart active";
-                            ++totallike[i].innerHTML; 
-                        } else { 
-                            bool = true;
-                            this.className = "fa fa-heart";
-                            --totallike[i].innerHTML;
-                        }
-                    }
-                },
-                add: function (day) {
-                    this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
-                },
-                remove: function (day, P_Name) {
-                    this.Details[day].splice(P_Name, 1)
-                },
-                onChange(dayIndex) {
+            myscore: this.score,
+            mytempscore: this.score
 
-                    for (let j = 0; j < this.Details.length; j++) {
-                        let timestamp = this.datetime[j]
-                        console.log(timestamp)
-                        for (let i = 0; i < this.Details[j].length; i++) {
-                            this.Details[j][i].starttime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
-
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
-
-                            if (hr < 10) {
-                                hr = '0' + hr
-                            }
-                            if (min < 10) {
-                                min = '0' + min
-                            }
-
-                            timestamp = hr + ':' + min
-                            this.Details[j][i].endtime = timestamp
-                        }
-                    }
-                },
-                onStart() {
-                    this.drag = true;
-                },
-                onEnd() {
-                    this.drag = false;
-                },
-                caltime(dayIndex) {
-                    for (let j = 0; j < this.Details.length; j++) {
-                        let timestamp = this.datetime[j]
-                        console.log(timestamp)
-                        for (let i = 0; i < this.Details[j].length; i++) {
-                            this.Details[j][i].starttime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
-
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
-
-                            if (hr < 10) {
-                                hr = '0' + hr
-                            }
-                            if (min < 10) {
-                                min = '0' + min
-                            }
-
-                            timestamp = hr + ':' + min
-                            this.Details[j][i].endtime = timestamp
-                        }
-                    }
-                },
-                mounted() {
-                let id = window.location.search.substring(1) 
-                console.log(id)
-                if (id != "") {
-                    axios.post("@Url.Action("selectUserBlog","Blog")", { Blog : 100 }).then(res =>  this.Details = res.data.details )
-                }
-            }
-            },
         },
-        )
+        props: {
+            count: {
+                type: Number,
+                default: 5
+            },
+            score: {
+                type: Number,
+                default: 1
+            },
+            color: {
+                type: String,
+                default: '#FFC100'
+            }
+        },
+        methods: {
+            gethref(dayIndex,viewIndex){
+                return "#list-item-"+dayIndex+"-"+viewIndex
+            },
+            getanchor(dayIndex,viewIndex){                    
+                return "list-item-"+dayIndex+"-"+viewIndex
+            },               
+            fileChange(e) {
+                let file = e.target.files[0]
+                let readFile = new FileReader()
+                readFile.readAsDataURL(file)
+                readFile.addEventListener('load', () => {
+                    let image = document.getElementById('image')
+                    this.CoverImageName = readFile.result 
+                    // console.log(this.CoverImageName);
+                    this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
+                    console.log(this.CoverImageName);
+                })
+
+            },
+            copyURL:function() {
+                // let url = window.location.toString()
+                let myurl = document.createElement('input'),
+                geturl = window.location.toString()
+                document.body.appendChild(myurl);
+                myurl.value = geturl;
+                myurl.select();
+                document.execCommand('copy');
+                document.body.removeChild(myurl);
+               
+            },                
+            loadimg: function (dayIndex,viewIndex,e) {
+                var input = e.target;
+                var count = input.files.length;
+                console.log(count);
+                var index = 0;
+                if (input.files) {
+                    console.log("---------------");
+                    console.log(input.files);
+                    while (count--) {
+                        var reader = new FileReader();                            
+                        reader.onload = (e) => {
+                            this.Details[dayIndex][viewIndex].previewlist=e.target.result;
+                            //console.log(e.target.result)
+                            //console.log(dayIndex)
+                            //console.log(viewIndex)
+                            
+                        }
+                        this.Details[dayIndex][viewIndex].Images=(input.files[index]);
+                        reader.readAsDataURL(input.files[index]);
+                        index++;
+                    }
+                }
+            },
+            reset: function () {
+                this.image = null;
+                this.preview = null;
+                this.Images = [];
+                this.previewlist = [];
+            },
+            likeblog: function(){  
+                var heart = document.getElementsByClassName("fa-heart");
+                var totallike = document.getElementsByClassName("totallike");
+                var totallike;
+
+                var bool = true; 
+                i = 0
+                heart[i].onclick = function () {
+                    
+                    if (bool) {
+                        bool = false;
+                        this.className = "fa fa-heart active";
+                        ++totallike[i].innerHTML; 
+                    } else { 
+                        bool = true;
+                        this.className = "fa fa-heart";
+                        --totallike[i].innerHTML;
+                    }
+                }
+            },
+            add: function (day) {
+                this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
+            },
+            remove: function (day, P_Name) {
+                this.Details[day].splice(P_Name, 1)
+            },
+            onChange(dayIndex) {
+
+                for (let j = 0; j < this.Details.length; j++) {
+                    let timestamp = this.datetime[j]
+                    console.log(timestamp)
+                    for (let i = 0; i < this.Details[j].length; i++) {
+                        this.Details[j][i].starttime = timestamp
+                        let hr = timestamp.substring(0, 2)
+                        let min = timestamp.substring(3, 5)
+                        let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+
+                        hr = Number(hr) + Number(addhr)
+                        min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                        if (hr < 10) {
+                            hr = '0' + hr
+                        }
+                        if (min < 10) {
+                            min = '0' + min
+                        }
+
+                        timestamp = hr + ':' + min
+                        this.Details[j][i].endtime = timestamp
+                    }
+                }
+            },
+            onStart() {
+                this.drag = true;
+            },
+            onEnd() {
+                this.drag = false;
+            },
+            caltime(dayIndex) {
+                for (let j = 0; j < this.Details.length; j++) {
+                    let timestamp = this.datetime[j]
+                    console.log(timestamp)
+                    for (let i = 0; i < this.Details[j].length; i++) {
+                        this.Details[j][i].starttime = timestamp
+                        let hr = timestamp.substring(0, 2)
+                        let min = timestamp.substring(3, 5)
+                        let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+
+                        hr = Number(hr) + Number(addhr)
+                        min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                        if (hr < 10) {
+                            hr = '0' + hr
+                        }
+                        if (min < 10) {
+                            min = '0' + min
+                        }
+
+                        timestamp = hr + ':' + min
+                        this.Details[j][i].endtime = timestamp
+                    }
+                }
+            },
+            mounted() {
+            let id = window.location.search.substring(1) 
+             console.log(id)
+             if (id != "") {
+                 axios.post("@Url.Action("selectUserBlog","Blog")", { Blog : 100 }).then(res =>  this.Details = res.data.details )
+             }
+        }
+        },
+    },
+    )
 
     </script>
     }
     
 
-
-
-     <div id="bloginfo">
-        <div class="container-fluid">
-            <div class="d-flex flex-column align-items-center justify-content-center"
-                style="min-height: 400px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
-                <!-- <img :style="{ 'background-image': 'url(' + image + ')' }" id="coverimg" alt="封面圖片"> -->
-                <h5 class="font-weight-bold text-white">Blog Detail</h5>
-                <div class="d-inline-flex text-white">
-                    <p class="m-0"><a class="text-white" href="">Home</a></p>
-                    <p class="m-0 px-2">/</p>
-                    <p class="m-0">Blog Detail</p>
-                </div>
+    <div id="bloginfo">
+    <div class="container-fluid">
+        <div class="d-flex flex-column align-items-center justify-content-center"
+            style="min-height: 400px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            <!-- <img :style="{ 'background-image': 'url(' + image + ')' }" id="coverimg" alt="封面圖片"> -->
+            <h5 class="font-weight-bold text-white">Blog Detail</h5>
+            <div class="d-inline-flex text-white">
+                <p class="m-0"><a class="text-white" href="">Home</a></p>
+                <p class="m-0 px-2">/</p>
+                <p class="m-0">Blog Detail</p>
             </div>
         </div>
-        <!-- Header End -->
+    </div>
+    <!-- Header End -->
 
-        <!-- Detail Start -->
-        <div class="container py-3" >
-            <div class="row pt-5">
-                <div class="col-lg-4 mt-4 mt-lg-2 ">
-                    <div class="sticky-top">
-                        <!-- Author Bio -->
-                        <div class="d-flex flex-column text-center bg-primary rounded mb-4 py-4 px-4">
-                            <span><img img :src="UserImage"  id="userimg" alt=""/>
-                            <h4 class="text-secondary mb-3 text-white py-1">{{UserId[0]}}</h4></span>
-                            <p class="text-white m-0  py-1">
-                                {{Describe}}<br>
-                                Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum,
-                                ipsum ipsum sit no ut est. Guber ea ipsum erat kasd amet est elitr
-                                ea sit.
-                            </p>
-                            <div class="text-end" >
-                            <label class="btn btn-outline-dark btn-sm">
-                                <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
-                            </label>
-                            </div>                   
-                        </div>
-                        
-                        <!-- Category List -->
-                        <div class="mb-5" >
-                            <h2 class="mb-4" >景點日程</h2>
-                            <ul class="list-group list-group-flush">
-                                <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天 
-                                <li class="list-group-item  justify-content-between align-items-center px-0">
-                                    <ul>
-                                        <li v-for="(P_Name,viewIndex) in day" :key="P_Name.id" class="Details ">
-                                        <a class="list-group-item list-group-item-action" :href="gethref(dayIndex,viewIndex)">{{P_Name.P_Name}}</a></li>
-                                    </ul>
-                                </li>
-                                </div>
-                            </ul>
-                        </div>
-                        
+    <!-- Detail Start -->
+    <div class="container py-3" >
+        <div class="row pt-5">
+            <div class="col-lg-4 mt-4 mt-lg-2 ">
+                <div class="sticky-top">
+                    <!-- Author Bio -->
+                    <div class="d-flex flex-column text-center bg-primary rounded mb-4 py-4 px-4">
+                        <span><img img :src="UserImage"  id="userimg" class="img-fluid rounded-circle mx-auto my-2" style="width: 100px" alt=""/>
+                        <h4 class="text-secondary mb-2 text-white py-1">{{UserId[0]}}</h4></span>
+                        <p class="text-white mb-1 py-1">
+                            {{Describe}}<br>
+                            Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum,
+                            ipsum ipsum sit no ut est. Guber ea ipsum erat kasd amet est elitr
+                            ea sit.
+                        </p>
+                        <div class="text-end" >
+                        <label class="btn btn-outline-dark btn-sm">
+                            <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
+                        </label>
+                        </div>                   
+                    </div>
+                    
+                    <!-- Category List -->
+                    <div class="mb-5" >
+                        <h2 class="mb-3" >景點日程</h2>
+                        <ul class="list-group list-group-flush">
+                            <div v-for="(day,dayIndex) in Details" >第{{dayIndex+1}}天 
+                            <li class="list-group-item  justify-content-between align-items-center px-0">
+                                <ul>
+                                    <li v-for="(p_Name,viewIndex) in day" :key="p_Name.id" class="Details ">
+                                    <a class="list-group-item list-group-item-action mb-1" :href="gethref(dayIndex,viewIndex)">{{p_Name.p_Name}}</a></li>
+                                </ul>
+                            </li>
+                            </div>
+                        </ul>
+                    </div>
+                    
 
-                        <!-- Search Form -->
-                        <div class="mb-5">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Keyword" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i></span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Single Image -->
-                        <div class="mb-5">
-                            <img src="https://unsplash.it/1800/1600/?random/view1" alt="" class="img-fluid rounded" />
-                        </div>
-
-                        <!-- Recent Post -->
-                        <div class="mb-5">
-                            <h2 class="mb-4">Recent Post</h2>
-                            <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                                <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
-                                    style="width: 80px; height: 80px" />
-                                <div class="pl-3">
-                                    <h5 class="">Diam amet eos at no eos</h5>
-                                    <div class="d-flex">
-                                        <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                        <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                        <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                    </div>
+                    <!-- Search Form -->
+                    <div class="mb-5">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-lg" placeholder="Keyword" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <i class="fa fa-search"></i></span>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                                <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/male"
-                                    style="width: 80px; height: 80px" />
-                                <div class="pl-3">
-                                    <h5 class="">Diam amet eos at no eos</h5>
-                                    <div class="d-flex">
-                                        <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                        <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                        <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                                <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
-                                    style="width: 80px; height: 80px" />
-                                <div class="pl-3">
-                                    <h5 class="">Diam amet eos at no eos</h5>
-                                    <div class="d-flex">
-                                        <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                        <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                        <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                    </div>
+                        </form>
+                    </div>
+
+                    <!-- Single Image -->
+                    <div class="mb-5">
+                        <img src="https://unsplash.it/1800/1600/?random/201" alt="" class="img-fluid rounded" />
+                    </div>
+
+                    <!-- Recent Post -->
+                    <div class="mb-5">
+                        <h2 class="mb-4">Recent Post</h2>
+                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
+                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
+                                style="width: 80px; height: 80px" />
+                            <div class="pl-3">
+                                <h5 class="">Diam amet eos at no eos</h5>
+                                <div class="d-flex">
+                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Single Image -->
-                        <div class="mb-5">
-                            <img src="https://unsplash.it/1800/1600/?random/view2" alt="" class="img-fluid rounded" />
-                        </div>
-
-                        <!-- Tag Cloud -->
-                        <div class="mb-5">
-                            <h2 class="mb-4">Tag Cloud</h2>
-                            <div class="d-flex flex-wrap m-n1">
-                                <a href="" class="btn btn-primary m-1">Design</a>
-                                <a href="" class="btn btn-primary m-1">Development</a>
-                                <a href="" class="btn btn-primary m-1">Marketing</a>
-                                <a href="" class="btn btn-primary m-1">SEO</a>
-                                <a href="" class="btn btn-primary m-1">Writing</a>
-                                <a href="" class="btn btn-primary m-1">Consulting</a>
+                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
+                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/male"
+                                style="width: 80px; height: 80px" />
+                            <div class="pl-3">
+                                <h5 class="">Diam amet eos at no eos</h5>
+                                <div class="d-flex">
+                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Single Image -->
-                        <div class="mb-5">
-                            <img src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded" />
+                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
+                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
+                                style="width: 80px; height: 80px" />
+                            <div class="pl-3">
+                                <h5 class="">Diam amet eos at no eos</h5>
+                                <div class="d-flex">
+                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
+                                </div>
+                            </div>
                         </div>
-                        
-                        
+                    </div>
 
-                        <!-- Plain Text -->
-                        <div>
-                            <h2 class="mb-4">Plain Text</h2>
-                            Aliquyam sed lorem stet diam dolor sed ut sit. Ut sanctus erat ea
-                            est aliquyam dolor et. Et no consetetur eos labore ea erat voluptua
-                            et. Et aliquyam dolore sed erat. Magna sanctus sed eos tempor rebum
-                            dolor, tempor takimata clita sit et elitr ut eirmod.
+                    <!-- Single Image -->
+                    <div class="mb-5">
+                        <img src="https://unsplash.it/1800/1600/?random/view2" alt="" class="img-fluid rounded" />
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <div class="mb-5">
+                        <h2 class="mb-4">Tag Cloud</h2>
+                        <div class="d-flex flex-wrap m-n1">
+                            <a href="" class="btn btn-primary m-1">Design</a>
+                            <a href="" class="btn btn-primary m-1">Development</a>
+                            <a href="" class="btn btn-primary m-1">Marketing</a>
+                            <a href="" class="btn btn-primary m-1">SEO</a>
+                            <a href="" class="btn btn-primary m-1">Writing</a>
+                            <a href="" class="btn btn-primary m-1">Consulting</a>
+                        </div>
+                    </div>
+
+                    <!-- Single Image -->
+                    <div class="mb-5">
+                        <img  src="https://unsplash.it/1800/1600/?random/view3" alt="" class="img-fluid rounded mb-2" />
+                        <p>For what it's worth, it's never too late or, in my case, too early to be whoever you want
+                            to be</p>
+                    </div>
+                    
+                    
+
+                </div>
+                
+            </div>
+            <div class="col-lg-8">
+                <div class="d-flex flex-column text-left mb-3">
+                    <h1 class="my-3">{{Title}}</h1>
+                    <div class="d-flex">
+                        <p class="mr-3"><i class="fa fa-user text-primary"></i> User</p>
+                        <p class="mr-3">
+                            <i class="fa fa-folder text-primary"></i> Blog
+                        </p>
+                        <p class="mr-3"><i class="fa fa-comments text-primary"></i> 15 </p>
+                        <p class="mr-3"><i class="fa-brands fa-facebook text-primary"></i> 推文 </p>
+                        <p class="mr-3"><i class="fa-brands fa-instagram-square text-primary"></i> 推文 </p>
+                        <p class="mr-3"><i class="fa-brands fa-twitter text-primary"></i> 推文 </p>
+                        <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
+                        
+              
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <img class="img-fluid rounded w-100 mb-4" src="https://unsplash.it/1800/1600/?random/view0"
+                        alt="Image" />
+                    <p>{{Describe}}</p>
+                    <div>
+                        <div v-for="(day,dayIndex) in Details">
+                        <label id="day">第{{dayIndex+1}}天</label> 
+                        <div class="item" v-for="(p_Name,viewIndex) in day" :key="p_Name.id">
+                            
+                            <span><i class="fa-solid fa-map-location-dot" :id=getanchor(dayIndex,viewIndex)></i></span>
+                            <span class="Details">{{p_Name.p_Name}}</span>
+                            <div class="Details"><span>地址:{{p_Name.PlaceId}}</span></div>
+                            
+                            <div>
+                                <i class="fa fa-star" :style="{color:color}"
+                                :class="item<=p_Name.score?'fa-star':'fa-star-o'" 
+                                v-for="item in count"
+                                @@load="myscore=item"></i>
+                                {{p_Name.score}}分    
+                            </div>
+                        
+                            <p>{{p_Name.Describe}}</p>I am Describe<br>
+                            Diam dolor est labore duo invidunt ipsum clita et, sed et lorem
+                            voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit
+                            kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos.
+                            Clita no magna no dolor erat diam tempor rebum consetetur, sanctus
+                            labore sed nonumy diam lorem amet eirmod. No at tempor sea diam
+                            kasd, takimata ea nonumy elitr sadipscing gubergren erat.
+                            Gubergren at lorem invidunt sadipscing rebum sit amet ut ut,
+                            voluptua diam dolores at sadipscing stet. Clita dolor amet dolor
+                            ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor
+                            dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed
+                            et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et.
+                            Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo
+                            est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos
+                            labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam
+                            takimata sea kasd dolores diam, amet et est accusam labore eirmod
+                            vero et voluptua. Amet labore clita duo et no. Rebum voluptua
+                            magna eos magna, justo gubergren labore sit voluptua eos.
+    
+
+                            <div v-viewer class="groupimg img-fluid">
+                                <template v-for="(imgURL,index) in p_Name.previewlist">
+                                  <img :src="imgURL">
+                                </template>
+                              </div>
+                            <!-- <div v-for="(imgURL,index) in p_Name.previewlist" :key="index">
+                                <div class="d-flex">
+                                    <img :src="imgURL"/>    
+                                    </div>                                       
+                                                
+                                </div>
+                            </div>             -->
+                            <!-- <div class="mb-3">
+                                <p>I am images</p>
+                                <img class="img-fluid rounded w-50 float-left mr-4 mb-3"
+                                :src="https://unsplash.it/1800/1600/?random/view1" alt="Image" />
+                            
+                            </div> -->
+                        </div>
                         </div>
                     </div>
                     
+                    
+                    
                 </div>
-                <div class="col-lg-8">
-                    <div class="d-flex flex-column text-left mb-3">
-                        <p class="section-title pr-5">
-                            <span class="pr-2">Blog Detail</span>
-                        </p>
-                        <h1 class="mb-3">{{Title}}</h1>
-                        <div class="d-flex">
-                            <p class="mr-3"><i class="fa fa-user text-primary"></i> Admin</p>
-                            <p class="mr-3">
-                                <i class="fa fa-folder text-primary"></i> Web Design
+
+
+                <!-- Comment List 替換為fb-->
+                <div class="mb-5">
+                    <h2 class="mb-4">3 Comments</h2>
+                    <div class="media mb-4">
+                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
+                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
+                        <div class="media-body">
+                            <h6>
+                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
+                            </h6>
+                            <p>
+                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
+                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
+                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
+                                sadipscing, at tempor amet ipsum diam tempor consetetur at
+                                sit.
                             </p>
-                            <p class="mr-3"><i class="fa fa-comments text-primary"></i> 15 </p>
-                            
-                            <span id="iconfb"><i class="fa-brands fa-facebook text-primary"></i><span>推文</span></span>
-                            <span id="iconig"><i class="fa-brands fa-instagram-square text-primary"></i><span>推文</span></span>
-                            <span id="icontw"><i class="fa-brands fa-twitter text-primary"></i><span>推文</span>
-                            <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
+                            <button class="btn btn-sm btn-light">Reply</button>
                         </div>
                     </div>
-                    <div class="mb-5">
-                        <img class="img-fluid rounded w-100 mb-4" src="https://unsplash.it/1800/1600/?random/view0"
-                            alt="Image" />
-                        <p>{{Describe}}<br>
-                            Sadipscing labore amet rebum est et justo gubergren. Et eirmod
-                            ipsum sit diam ut magna lorem. Nonumy vero labore lorem sanctus
-                            rebum et lorem magna kasd, stet amet magna accusam consetetur
-                            eirmod. Kasd accusam sit ipsum sadipscing et at at sanctus et.
-                            Ipsum sit gubergren dolores et, consetetur justo invidunt at et
-                            aliquyam ut et vero clita. Diam sea sea no sed dolores diam
-                            nonumy, gubergren sit stet no diam kasd vero.
-                        </p>
-                        <div>
-                            <div v-for="(day,dayIndex) in Details">
-                            <label id="day">第{{dayIndex+1}}天</label> 
-                            <div class="item" v-for="(P_Name,viewIndex) in day" :key="P_Name.id">
-                                
-                                <span><i class="fa-solid fa-map-location-dot" :id=getanchor(dayIndex,viewIndex)></i></span>
-                                <span class="Details">{{P_Name.P_Name}}</span>
-                                <div class="Details"><span>地址:{{P_Name.PlaceId}}</span></div>
-                                
-                                <div>
-                                    <i class="fa fa-star" :style="{color:color}"
-                                    :class="item<=P_Name.score?'fa-star':'fa-star-o'" 
-                                    v-for="item in count"
-                                    @@load="myscore=item"></i>
-                                    {{P_Name.score}}分    
-                                </div>
-                            
-                                <p>{{P_Name.Describe}}</p>I am Describe<br>
-                                Diam dolor est labore duo invidunt ipsum clita et, sed et lorem
-                                voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit
-                                kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos.
-                                Clita no magna no dolor erat diam tempor rebum consetetur, sanctus
-                                labore sed nonumy diam lorem amet eirmod. No at tempor sea diam
-                                kasd, takimata ea nonumy elitr sadipscing gubergren erat.
-                                Gubergren at lorem invidunt sadipscing rebum sit amet ut ut,
-                                voluptua diam dolores at sadipscing stet. Clita dolor amet dolor
-                                ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor
-                                dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed
-                                et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et.
-                                Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo
-                                est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos
-                                labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam
-                                takimata sea kasd dolores diam, amet et est accusam labore eirmod
-                                vero et voluptua. Amet labore clita duo et no. Rebum voluptua
-                                magna eos magna, justo gubergren labore sit voluptua eos.
-        
-    
-                                <div class="mb-3">
-                                    <p>I am images</p>
-                                    <img class="img-fluid rounded w-50 float-left mr-4 mb-3"
-                                    src="https://unsplash.it/1800/1600/?random/view1" alt="Image" />
-                                
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                    </div>
-
-
-                    <!-- Comment List 替換為fb-->
-                    <div class="mb-5">
-                        <h2 class="mb-4">3 Comments</h2>
-                        <div class="media mb-4">
-                            <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                                class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                            <div class="media-body">
-                                <h6>
-                                    John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                                </h6>
-                                <p>
-                                    Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                    accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                    sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                    sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                    sit.
-                                </p>
-                                <button class="btn btn-sm btn-light">Reply</button>
-                            </div>
-                        </div>
-                        <div class="media mb-4">
-                            <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                                class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                            <div class="media-body">
-                                <h6>
-                                    John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                                </h6>
-                                <p>
-                                    Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                    accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                    sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                    sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                    sit.
-                                </p>
-                                <button class="btn btn-sm btn-light">Reply</button>
-                                <div class="media mt-4">
-                                    <img src="https://unsplash.it/1800/1600/?random/user" alt="Image"
-                                        class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                                    <div class="media-body">
-                                        <h6>
-                                            John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                                        </h6>
-                                        <p>
-                                            Diam amet duo labore stet elitr ea clita ipsum, tempor
-                                            labore accusam ipsum et no at. Kasd diam tempor rebum
-                                            magna dolores sed sed eirmod ipsum. Gubergren clita
-                                            aliquyam consetetur, at tempor amet ipsum diam tempor at
-                                            sit.
-                                        </p>
-                                        <button class="btn btn-sm btn-light">Reply</button>
-                                    </div>
+                    <div class="media mb-4">
+                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
+                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
+                        <div class="media-body">
+                            <h6>
+                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
+                            </h6>
+                            <p>
+                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
+                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
+                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
+                                sadipscing, at tempor amet ipsum diam tempor consetetur at
+                                sit.
+                            </p>
+                            <button class="btn btn-sm btn-light">Reply</button>
+                            <div class="media mt-4">
+                                <img src="https://unsplash.it/1800/1600/?random/user" alt="Image"
+                                    class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
+                                <div class="media-body">
+                                    <h6>
+                                        John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
+                                    </h6>
+                                    <p>
+                                        Diam amet duo labore stet elitr ea clita ipsum, tempor
+                                        labore accusam ipsum et no at. Kasd diam tempor rebum
+                                        magna dolores sed sed eirmod ipsum. Gubergren clita
+                                        aliquyam consetetur, at tempor amet ipsum diam tempor at
+                                        sit.
+                                    </p>
+                                    <button class="btn btn-sm btn-light">Reply</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Comment Form -->
-
                 </div>
+
+                <!-- Comment Form -->
+
             </div>
         </div>
-        <!-- Detail End -->
     </div>
-
-
+    <!-- Detail End -->
+</div>

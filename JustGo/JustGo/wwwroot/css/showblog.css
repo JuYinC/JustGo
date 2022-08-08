@@ -199,3 +199,32 @@ textarea::-webkit-scrollbar-thumb {
     padding: 2px 8px;
     margin-bottom: 5px;
 }
+
+/* .multiimage {
+    height: 200px;
+    cursor: pointer;
+    margin: 5px;
+    display: inline-block;
+  } */
+
+.groupimg {
+    width: 600px;
+    margin: 10px 0px;
+    display: row;
+    flex-wrap: wrap;
+    /* display: flex;
+    justify-content: space-evenly */
+}
+
+    .groupimg > img {
+        width: 180px;
+        height: 150px;
+        margin: 10px 10px;
+        cursor: pointer;
+        justify-content: space-around;
+    }
+
+    .groupimg::after {
+        display: block;
+        width: 180px;
+    }

@@ -512,7 +512,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 1.5rem 5.5rem; }
+    margin: 1.5rem 10rem; }
   .card {
     width: 29rem;
     height: 20rem;
@@ -978,15 +978,18 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-x: hidden; }
+      .journey__map .sidebar-tg {
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-x: hidden;
+        width: 100%; }
       .journey__map .sidebar-hide {
-        flex: 0 0 330px;
-        margin: 1.5rem;
+        flex: 0 0 0;
+        margin: 0;
         overflow-y: scroll; }
-        .journey__map .sidebar-hide ::before {
-          content: "";
-          flex: 0 0 0px;
-          margin: 0;
-          overflow-y: scroll; }
+        .journey__map .sidebar-hide-tg {
+          flex: 0 0 330px;
+          margin: 1.5rem 0 0 1.5rem; }
         .journey__map .sidebar-hide button {
           width: 100px;
           height: 20px; }
@@ -1004,23 +1007,28 @@
           text-align: left; }
         .journey__map .sidebar-hide .lbl button {
           width: 160px; }
-        .journey__map .sidebar-hide .lbl .cy {
-          justify-items: center;
-          width: 100%;
-          display: grid;
-          grid-template-columns: 25% 25% 25% 25%;
-          align-items: center; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] {
-            display: none; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] + label {
-            border: 1px solid black;
-            border-radius: 0.7rem;
-            cursor: pointer;
-            padding: 5px 10px;
-            margin-bottom: 0.2rem;
-            font-size: 1.7rem; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"]:checked + label {
-            background-color: #f3d42e; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] {
+          display: none; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] + label {
+          border: 1px solid #6c757d;
+          cursor: pointer;
+          padding: 3px 10px;
+          margin-bottom: 0.2rem;
+          font-size: 2rem;
+          font-family: 'cwTeXYen', sans-serif; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"]:checked + label {
+          background-color: #f3d42e; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"] {
+          display: none; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"] + label {
+          border: 1px solid #6c757d;
+          cursor: pointer;
+          padding: 3px 10px;
+          margin-bottom: 0.2rem;
+          font-size: 2rem;
+          font-family: 'cwTeXYen', sans-serif; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"]:checked + label {
+          background-color: #f3d42e; }
         .journey__map .sidebar-hide .lbl .cat {
           justify-items: center;
           width: 100%;
@@ -1028,12 +1036,12 @@
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"] {
             display: none; }
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"] + label {
-            border: 1px solid black;
-            border-radius: 0.7rem;
+            border: 1px solid #6c757d;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 3px 10px;
             margin-bottom: 0.2rem;
-            font-size: 1.7rem; }
+            font-size: 2rem;
+            font-family: 'cwTeXYen', sans-serif; }
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"]:checked + label {
             background-color: #f3d42e; }
       .journey__map .sidebar__grid {

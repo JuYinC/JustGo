@@ -44,8 +44,7 @@
                                 p_tel: "07-123456",
                                 score: 0,
                                 describe: "",
-                                images: [],
-
+                                images: {Name:"",base64:""},
                             },
                             {
                                 id: id++,
@@ -132,10 +131,10 @@
                         return "list-item-" + dayIndex + "-" + viewIndex
                     },
                     saveBlog() {
-                        {
-
+                        let blog = {
+                            CoverImageName:this.CoverImageName,Details:this.Details
                         }
-                        axios.post("@Url.Action("setBlog","Blog")", {Details:this.Details})
+                        axios.post("@Url.Action("setBlog","Blog")", blog)
                                  .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
                                  .catch(err => console.log("err"))
                     },
@@ -169,7 +168,8 @@
                                 const reader = new FileReader();
                                 reader.readAsDataURL(input.files[i]);
                                 reader.onload = (e) => {
-                                    this.Details[dayIndex][viewIndex].images.push(e.target.result);
+                                    let image = {name:"",base64:e.target.result}
+                                    this.Details[dayIndex][viewIndex].images.push(image);
                                 }                                                                                               
                             }
                         }
@@ -339,8 +339,8 @@
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
                                         <div class="groupimg img-fluid">
-                                            <template v-for="(imgURL,index) in dayDetails.images">
-                                                <img :src="imgURL" :key="image">
+                                            <template v-for="(image,index) in dayDetails.images">
+                                                <img :src="image.base64">
                                             </template>
                                         </div>
                                     </div>                        
@@ -356,6 +356,5 @@
                     @@click="saveBlog">儲存行程</button>
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">發佈行程</button>
             </div>
-
         </div>
     

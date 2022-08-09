@@ -57,9 +57,8 @@
             </div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
-                    <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="100" alt="gps"
-                        type="button">
-                    <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="100" alt="map" type="button">
+                    <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
+                    <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="50" alt="map" type="button">
                 </div>
                 <div id="map"></div>
             </div>
@@ -162,6 +161,7 @@
                     mapId: '1d3a304bcea5789e',
                     mapTypeControl: false,  // 換地圖類型
                     streetViewControl: false,  // 街道檢視
+                    fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
             },

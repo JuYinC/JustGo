@@ -5,12 +5,13 @@
     font-family: "Poppins", serif;
 }
 
+
 #coverimg {
     width: 100%;
     height: 420px;
     /* position: absolute; */
     z-index: -5;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 
 #covertitle {
@@ -40,11 +41,11 @@
     z-index: 2;
 }
 
+
     #TitleId:hover {
         -webkit-text-stroke: 1px #fff;
         color: transparent;
         z-index: 2;
-
     }
 
 textarea {
@@ -53,8 +54,7 @@ textarea {
     border-bottom: 1px dashed #909cc2;
 }
 
-    input:focus,
-    textarea:focus {
+    input:focus, textarea:focus {
         outline: none;
         border-bottom: 1px dashed #084887;
     }
@@ -76,10 +76,44 @@ textarea::-webkit-scrollbar-thumb {
     background-color: #c3c3c3;
 }
 
+
+
+
+
+.fa-heart {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.active {
+    color: #E1251B;
+}
+
+.active {
+    animation: heart 0.5s linear;
+}
+
+@keyframes heart {
+    from {
+        font-size: 15px;
+    }
+
+    75% {
+        font-size: 20px;
+    }
+
+    to {
+        font-size: 15px;
+    }
+}
+
 #userimg {
     border-radius: 50%;
-    height: 55px;
+    width: 70px;
+    height: 70px;
 }
+
+
 
 .Details {
     list-style-type: none;
@@ -87,32 +121,32 @@ textarea::-webkit-scrollbar-thumb {
 
 
 .list-group-item {
-    size: 12px !important;
-    color: #f9ab55 !important;
-    font-weight: bold !important;
-    box-shadow: 0 !important;
-    border: none !important;
-    padding: 2px !important;
+    /* background-color: darkblue; */
+    size: 12px;
+    color: #f9ab55;
+    font-weight: bold;
+    box-shadow: 0;
+    border: none;
+    padding: 2px;
 }
 
     .list-group-item:hover {
-        background-color: transparent !important;
-        color: #f58a07 !important;
-        border: none !important;
-        font-weight: bold !important;
-        size: 12px !important;
-        box-shadow: 0 !important;
-        transition: width 2s, height 2s !important;
-        -webkit-transform: rotate(1deg) !important;
+        background-color: transparent;
+        color: #f58a07;
+        border: none;
+        font-weight: bold;
+        size: 12px;
+        box-shadow: 0;
+        transition: width 2s, height 2s;
     }
 
     .list-group-item.active {
-        background-color: transparent !important;
-        color: #f58a07 !important;
-        border: none !important;
-        font-weight: bold !important;
-        size: 12px !important;
-        box-shadow: 0 !important;
+        background-color: transparent;
+        color: #f58a07;
+        border: none;
+        font-weight: bold;
+        size: 12px;
+        box-shadow: 0
     }
 
 .btn-primary {
@@ -132,7 +166,9 @@ textarea::-webkit-scrollbar-thumb {
     color: #fff;
     border-radius: 8px;
     padding: 2px 8px;
+    margin-bottom: 5px;
 }
+
 
 .groupimg {
     width: 600px;
@@ -140,7 +176,7 @@ textarea::-webkit-scrollbar-thumb {
     display: row;
     flex-wrap: wrap;
     /* display: flex;
-            justify-content: space-evenly */
+    justify-content: space-evenly */
 }
 
     .groupimg > img {

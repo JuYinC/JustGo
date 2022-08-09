@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using Newtonsoft.Json;
 using JustGo.ViewModels;
 using System.Data;
 using System.Diagnostics;
@@ -153,10 +154,10 @@ namespace JustGo.Repository
                 UserId = model.UserId,
                 Title = model.Title,
                 Describe = model.Describe,
-                CoverImageName = model.ImageName,
+                CoverImage = new blogImage() { name=model.ImageName},
                 Like = model.Like,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
+                StartDate = model.StartDate.AddHours(8),
+                EndDate = model.EndDate.AddHours(8),
                 Details = new List<IList<BlogDetailsVM>>()
             };
             if(model.BlogDetails.Count>0)
@@ -169,14 +170,14 @@ namespace JustGo.Repository
                         var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
                         vm.Details[i].Add(new BlogDetailsVM()
                         {
-                            StartTime = item.StartTime,
-                            EndtTime = item.EndtTime,
+                            StartTime = item.StartTime.AddHours(8),
+                            EndtTime = item.EndtTime.AddHours(8),
                             PlaceId = item.PlaceId,
                             P_Name = p.Name,
                             P_Add = p.Add,
                             P_tel = p.Name,
                             Describe = item.Describe,
-                            Images = new List<string>(),
+                            Images = JsonConvert.DeserializeObject<List<blogImage>>(item.Images),
                             Score = item.Score
                         });
                     }
@@ -191,26 +192,31 @@ namespace JustGo.Repository
                 BlogId = vm.BlogId,
                 UserId = vm.UserId,
                 Describe = vm.Describe,
-                ImageName = vm.CoverImageName,
+                ImageName = "",
                 Like = vm.Like,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,
             };
-            if (vm.Details.Count > 0)
+            if (vm.CoverImage != null)
+            {
+                model.ImageName = vm.CoverImage.name;
+            }
+            if (vm.Details!=null&&vm.Details.Count>0)
             {
                 model.BlogDetails = new List<BlogDetails>();
                 for(int i = 0; i < vm.Details.Count; i++)
                 {
                     foreach (BlogDetailsVM item in vm.Details[i])
                     {
-                        model.BlogDetails.Add(
+                        Console.WriteLine(JsonConvert.SerializeObject(item.Images));
+                        model.BlogDetails.Add(                            
                             new BlogDetails()
                             {
                                 PlaceId = item.PlaceId,
                                 StartTime = item.StartTime,
                                 EndtTime = item.EndtTime,
                                 Describe = item.Describe,
-                                Images = item.Images.ToString(),
+                                Images = JsonConvert.SerializeObject(item.Images),
                                 Score = item.Score
                             }
                         );

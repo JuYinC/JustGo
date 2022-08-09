@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using JustGo.Repository;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 namespace JustGo.Controllers
 {
@@ -20,7 +23,21 @@ namespace JustGo.Controllers
         [HttpPost]
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
-        {
+        {                        
+            
+            foreach (var day in vm.Details)
+            {
+                foreach(var item in day)
+                {
+                    if (item.Images != null)
+                    {
+                        for (int i = 0; i < item.Images.Count; i++)
+                        {                                          
+                            saveImage(item.Images[i]);                            
+                        }
+                    }                    
+                }
+            }
             if(vm != null)
             {
                 if(vm.BlogId != 0)
@@ -33,28 +50,7 @@ namespace JustGo.Controllers
             }
             return Json(vm);
         }
-
-        //傳圖 (測試)
-        [HttpPost]
-        public async Task<IActionResult> uploadImage(IEnumerable<IFormFile> image)
-        {
-            if (image.First() != null)
-            {
-                foreach(IFormFile file in image)
-                {
-                    string WebRootPatch = _webHostEnvironment.WebRootPath;
-                    string ProjectPath = _webHostEnvironment.ContentRootPath;
-                    string SourcFilename = Path.GetFileName(file.FileName);
-                    string TargetFilename = Path.Combine(WebRootPatch,"Uploads",SourcFilename);
-                    using(FileStream stream = new FileStream(TargetFilename, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                }
-            }
-            return Json("ok");
-        }
-
+        
         [HttpPost]
         [Authorize]
         public IActionResult creatBlog([FromBody]ScheduleVM vm)
@@ -81,6 +77,69 @@ namespace JustGo.Controllers
         public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
         {
             return Json(_blog.getBlogFilter(vm));
+        }
+
+
+        void saveImage(blogImage blogImage)
+        {
+            string[] imageString;
+            try
+            {
+                imageString = blogImage.base64.Split(",");
+            }
+            catch
+            {
+                return;
+            }
+            blogImage.base64 = "";            
+            byte[] bytes;
+            try
+            {
+                bytes = Convert.FromBase64String(imageString[1]);
+            }
+            catch
+            {                
+                return;
+            }
+            Image image;            
+            string WebRootPatch = _webHostEnvironment.WebRootPath;
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = Image.FromStream(ms);
+                if (blogImage.name == "")
+                {
+                    Random random = new Random();
+                    blogImage.name = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString();
+                }
+            }
+            string TargetFilename = Path.Combine(WebRootPatch, "blogImages", blogImage.name);
+            switch (imageString[0]) {
+                case "data:image/png;base64":
+                    TargetFilename += ".png";
+                    blogImage.name += ".png";
+                    image.Save(TargetFilename, ImageFormat.Png);
+                    break;
+                case "data:image/jpeg;base64":
+                    TargetFilename += ".jpg";
+                    blogImage.name +=".jpg";
+                    try
+                    {
+                        image.Save(TargetFilename, ImageFormat.Jpeg);
+                    }
+                    catch
+                    {
+                        var i = new Bitmap(image);
+                        i.Save(TargetFilename, ImageFormat.Jpeg);
+                    }                    
+                    break;
+                case "data:image/gif;base64":
+                    TargetFilename += ".gif";
+                    blogImage.name += ".gif";
+                    image.Save(TargetFilename, ImageFormat.Gif);
+                    break;
+                default:
+                    return;                    
+            }                                    
         }
     }
 }

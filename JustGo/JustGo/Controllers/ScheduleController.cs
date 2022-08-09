@@ -35,6 +35,11 @@ namespace JustGo.Controllers
             return Json(_place.getPlaceFilter(vm));
         }
 
+        [HttpPost]
+        public IActionResult copySchedule(DateTime time,int blogId)
+        {
+            return Json(_schedule.copyScheduleByBlog(time, blogId));
+        }
         //--------------------------------------------------
         //搜尋使用者行程清單/無細項
         public IActionResult selectUserSchedule()

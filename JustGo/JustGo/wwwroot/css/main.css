@@ -959,14 +959,17 @@
       display: flex;
       position: absolute;
       top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%); }
+      width: 100%;
+      margin: 0 auto;
+      justify-content: center; }
       .datepicker__content input {
         font-size: 2rem;
         border-style: none;
         background: transparent;
         font-weight: 700;
         margin-left: 3rem; }
+        .datepicker__content input:focus {
+          width: 250px; }
         .datepicker__content input::placeholder {
           color: #eee; }
       .datepicker__content button {
@@ -975,8 +978,10 @@
         margin-left: 3rem;
         border-radius: 15px; }
   .journey__map {
-    height: 100vh;
-    display: flex; }
+    height: 88vh;
+    display: flex;
+    position: inherit;
+    top: 10vh; }
     .journey__map .sidebar {
       flex: 0 0 300px;
       flex-direction: column;
@@ -1039,9 +1044,13 @@
           padding: 3px 10px;
           margin-bottom: 0.2rem;
           font-size: 2rem;
-          font-family: 'cwTeXYen', sans-serif; }
+          font-family: 'cwTeXYen', sans-serif;
+          transition: all .2s; }
+          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] + label:hover {
+            box-shadow: 1px 1px 3px; }
         .journey__map .sidebar-hide .lbl .cy input[type="checkbox"]:checked + label {
-          background-color: #f3d42e; }
+          background-color: #f3d42e;
+          box-shadow: 1px 1px 3px; }
         .journey__map .sidebar-hide .lbl .picker input[type="radio"] {
           display: none; }
         .journey__map .sidebar-hide .lbl .picker input[type="radio"] + label {
@@ -1050,9 +1059,13 @@
           padding: 3px 10px;
           margin-bottom: 0.2rem;
           font-size: 2rem;
-          font-family: 'cwTeXYen', sans-serif; }
+          font-family: 'cwTeXYen', sans-serif;
+          transition: all .2s; }
+          .journey__map .sidebar-hide .lbl .picker input[type="radio"] + label:hover {
+            box-shadow: 1px 1px 3px; }
         .journey__map .sidebar-hide .lbl .picker input[type="radio"]:checked + label {
-          background-color: #f3d42e; }
+          background-color: #f3d42e;
+          box-shadow: 1px 1px 3px; }
         .journey__map .sidebar-hide .lbl .cat {
           justify-items: center;
           width: 100%;
@@ -1065,9 +1078,13 @@
             padding: 3px 10px;
             margin-bottom: 0.2rem;
             font-size: 2rem;
-            font-family: 'cwTeXYen', sans-serif; }
+            font-family: 'cwTeXYen', sans-serif;
+            transition: all .2s; }
+            .journey__map .sidebar-hide .lbl .cat input[type="checkbox"] + label:hover {
+              box-shadow: 1px 1px 3px; }
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"]:checked + label {
-            background-color: #f3d42e; }
+            background-color: #f3d42e;
+            box-shadow: 1px 1px 3px; }
       .journey__map .sidebar__grid {
         height: 100%;
         display: grid;
@@ -1101,7 +1118,7 @@
             position: absolute;
             top: 48px;
             width: 25px;
-            height: 50px;
+            height: 46px;
             display: flex;
             align-items: center;
             left: -5px; }
@@ -1118,7 +1135,7 @@
             position: absolute;
             left: 255px;
             width: 25px;
-            height: 50px;
+            height: 46px;
             display: flex;
             align-items: center; }
             .journey__map .sidebar__grid .grid-item-t .btnbox-r .right {

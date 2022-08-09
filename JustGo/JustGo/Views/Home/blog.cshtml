@@ -251,7 +251,17 @@
             let id = window.location.search.substring(1) 
              console.log(id)
              if (id != "") {
-                 axios.post("@Url.Action("selectUserBlog","Blog")", { Blog : 100 }).then(res =>  this.Details = res.data.details )
+                 axios.post("@Url.Action("selectblogDetails","Blog")", { Blog: id }).then(res => {  
+
+                    this.Details = res.data.details;
+                    this.EndDate = res.data.endDate;
+                    this.StartDate = res.data.startDate;
+                    this.Title = res.data.Title;
+                    this.Describe = res.data.describe;
+                    this.StartDate = res.data.startDate;
+                    this.EndDate = res.data.endDate;
+                  }
+                 )
              }
         }
         },

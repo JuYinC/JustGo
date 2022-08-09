@@ -60,7 +60,7 @@ namespace JustGo.Repository
                 }
                 vm.Details.Add(dl);
             }
-                return vm;
+            return vm;
         }
 
         public bool deleteScedule(int SceduleId)

@@ -20,7 +20,7 @@ namespace JustGo.Controllers
             _logger = logger;
             _pwr = pwr;
             _schedule = schedule;
-            _blog = blog;           
+            _blog = blog;                        
         }
 
         public IActionResult Index()

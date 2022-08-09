@@ -3,88 +3,155 @@
 }
 
 @section Style{
-<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
-<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<style>
-    header{
-        display:none;
-    }
-    .footer__waves {
-        display: none;
-    }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+    <style>
+                header{
+                    display:none;
+                }
+                .footer__waves {
+                    display: none;
+                }
+                #map{
+                    width:800px;
+                    height:600px;
+                }
+
+                .nav-fill .nav-item .nav-link, .nav-justified .nav-item .nav-link {
+            width: 100%;
+            border-radius: 20px;
+        }
+        .daysBar{
+            justify-content:center
+        }
+        .days{
+            margin:0px 20px;
+        }
+        .scheduleDay{
+            margin:20px;
+            border:1px solid black;
+            vertical-align: top;
+            min-width:250px;
+           
+        }
+        .scheduletab1{
+            overflow-y:auto;
+            flex-wrap: nowrap;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 }
 
-<div id="app">
-    <div>
-        
-        <div>
-            <div v-for="day in schedule.details">
-             <div v-for="view in day">
-                 {{view.place.name}}
+    <div id="app">
+        <div class="container">
+            <div class="checkbar">
+                <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">行程</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">路線規劃</button>
+                    </li>
+                </ul>
             </div>
-            </div>
-        </div>
-
-    </div>
-    <div>
-        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button">{{index+1}}</div>
-        <div id="map"></div>
-        <div v-for="view in daySchedule">{{view.place.name}}</div>
-    </div>
-</div>
-
-
-
-@section Scripts{
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
-<script src="https://unpkg.com/axios/dist/axios.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-
-<script>
-    new Vue({
-        el: '#app',
-        data() {
-            return {
-                schedule: [],
-                daySchedule: [],
-                map: null,
-            }
-        },
-        methods: {
-            initMap() {
-                this.map = new google.maps.Map(document.getElementById("map"), {
-                    center: { lat: 23.573837, lng: 120.97969 },
-                    zoom: 8,  // 0-20
-                    mapId: '1d3a304bcea5789e',
-                    mapTypeControl: false,  // 換地圖類型
-                    streetViewControl: false,  // 街道檢視
-                    fullscreenControl: false, // 全螢幕顯示
-                    clickableIcons: false,   // 可不可以點地圖上的點                    
-                });
-            },
-            showDaySchedule(index) {
+            <div class="tab-content" id="pills-tabContent">
                 
-                this.daySchedule = this.schedule.details[index]
-                console.log(this.daySchedule)
-            },
-        },
-        computed: {
+                <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="row cols-100 ">
+                    <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
+                        <div v-for="view in day">
+                            {{view.place.name}}
+                        </div>
+                    </div>
+                </div>
+                </div>
 
-        },
-        mounted() {
-            //let id = window.location.search.substring(1)
-            //if (id != "") {
-            axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
-                .then(res => this.schedule = res.data)
-                .catch(err => console.log("err"))
-            //}
-            this.initMap()
-        },
-    })
-</script>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div>
+                        <div class="daysBar">
+                        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button" style="display:inline-block" class="days">{{index+1}}</div>
+                        </div>
+                        <div class="row cols-2">
+                        <div class="col">
+                        <div v-for="view in daySchedule">{{view.place.name}}</div>
+                        </div>
+                        <div id="map" class="col"></div>
+
+                        </div>
+                        
+                        
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+    @section Scripts{
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+
+
+
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    schedule: [],
+                    daySchedule: [],
+                    map: null,
+                }
+            },
+            methods: {
+                initMap() {
+                    this.map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: 23.573837, lng: 120.97969 },
+                        zoom: 8,  // 0-20
+                        mapId: '1d3a304bcea5789e',
+                        mapTypeControl: false,  // 換地圖類型
+                        streetViewControl: false,  // 街道檢視
+                        fullscreenControl: false, // 全螢幕顯示
+                        clickableIcons: false,   // 可不可以點地圖上的點
+                    });
+                },
+                showDaySchedule(index) {
+
+                    this.daySchedule = this.schedule.details[index]
+                    console.log(this.daySchedule)
+                },
+            },
+            computed: {
+
+            },
+            mounted() {
+                //let id = window.location.search.substring(1)
+                //if (id != "") {
+                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
+                    .then(res => { this.schedule = res.data; this.daySchedule = this.schedule.details[0] })
+                    .catch(err => console.log("err"))
+                //}
+                this.initMap()
+            },
+        })
+    </script>
 }

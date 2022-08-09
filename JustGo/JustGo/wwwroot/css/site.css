@@ -76,8 +76,8 @@ html {
 /*¦a¹Ï«ö¶s*/
 #floating-panel {
     position: absolute;
-    top: 10%;
-    left: 10%;
+    top: 3%;
+    left: 3%;
     z-index: 5;
     padding: 5px;
 

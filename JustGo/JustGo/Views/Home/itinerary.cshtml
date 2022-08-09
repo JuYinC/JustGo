@@ -18,30 +18,30 @@
 
 }
 
-    <div class="arrange__body">
-        <div class="arrange__contain">
-            <video autoplay muted loop plays-inline class="arrange__contain-video">
-                <source src="~/file/video/highway-f.mp4" type="video/mp4">
-            </video>
-            <div class="datepicker"></div>
-            <div class="datepicker__content">
-                <div id="app">
-                    <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDatelocal">
-                    <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDateEndlocal">
-                    <button @@click="culDate" class="btn btn-primary">開始</button>
-                    <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
-                </div>
+<div class="arrange__body">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content">
+            <div id="app">
+                <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDatelocal">
+                <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDateEndlocal">
+                <button @@click="culDate" class="btn btn-primary">開始</button>
+                <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
             </div>
-            <div class="journey__map">
-                <div class="sidebar" id="sidebar" >
-                    <div class="sidebar__grid">
-                        <div class="grid-item-t" id="grid-item-t" >
-                            <div id="app5"></div>
+        </div>
+        <div class="journey__map">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t" id="grid-item-t">
+                        <div id="app5"></div>
 
-                        </div>
-                        <div class="grid-item-m" id="grid-item-m">
+                    </div>
+                    <div class="grid-item-m" id="grid-item-m">
 
                         <div id="app4"></div>
 
@@ -52,10 +52,10 @@
                 </div>
             </div>
             <div class="sidebar-hide" id="sidebar-hide">
-                
+
                 <div id="app2"></div>
             </div>
-             <button class="sift" id="sift">篩選</button>
+            <button class="sift" id="sift">篩選</button>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
@@ -81,35 +81,35 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-        hidebtn = document.getElementById("sift").addEventListener('click',function(){
+    hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
-        $('#open').click(function(){
-            if($('#sidebar')[0].clientWidth<301){
-                console.log("1234")
-                $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
-                $('#grid-item-t').css('width','100%')
-                $('#grid-item-m').css('width','100%')
-                $('.btnbox-r').css('display','none')
-                $('.btnbox-l').css('display','none')
-                $('.col').css('display','inline-block')
-                $('.daysbox').css('left','0px')
+    $('#open').click(function () {
+        if ($('#sidebar')[0].clientWidth < 301) {
+            console.log("1234")
+            $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
+            $('#grid-item-t').css('width', '100%')
+            $('#grid-item-m').css('width', '100%')
+            $('.btnbox-r').css('display', 'none')
+            $('.btnbox-l').css('display', 'none')
+            $('.col').css('display', 'inline-block')
+            $('.daysbox').css('left', '0px')
 
-            }else{
-                $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
-                $('#grid-item-t').css('width','270px')
-                $('#grid-item-m').css('width','300px')
-                $('.btnbox-r').css('display','')
-                $('.btnbox-l').css('display','')
-                $('.col').css('display','')
+        } else {
+            $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
+            $('#grid-item-t').css('width', '270px')
+            $('#grid-item-m').css('width', '300px')
+            $('.btnbox-r').css('display', '')
+            $('.btnbox-l').css('display', '')
+            $('.col').css('display', '')
 
-            }
-        })
-      
+        }
+    })
+
 </script>
 
 
-<script> 
+<script>
     const store = new Vuex.Store({
         state: {
             map: null,
@@ -200,12 +200,12 @@
                     state.markerCluster.clearMarkers();
                     state.markerCluster = null
                     state.markers = [];
-                } else if (state.markers) {
+                } else if (state.markers && state.directionsRenderer) {
                     this.state.markers.forEach((marker) => {
                         marker.setMap(null)
                     });
                     state.markers = [];
-                    // state.directionsRenderer.setMap(null)
+                    state.directionsRenderer.setMap(null)
                 }
 
                 const bounds = new google.maps.LatLngBounds();
@@ -1117,8 +1117,8 @@
             },
         },
 
-            template:
-                `
+        template:
+            `
                     <div class="itxst">
                         <div class="lbl">
                             <div class="cy">
@@ -1162,7 +1162,7 @@
                             </div>
                         </div>
                         `
-        })
+    })
 
     //下方選擇日期vue
     new Vue({
@@ -1230,21 +1230,21 @@
                 this.daysindex = k
                 d = this.travel.length
 
-                if(document.getElementById('sidebar').clientWidth<301){
+                if (document.getElementById('sidebar').clientWidth < 301) {
                     this.calpositiontotal = 0
                     for (i = 0; i < k; i++) {
                         this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
                     }
                     document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
-                    this.$store.commit('setDailyMarker', k) 
+                    this.$store.commit('setDailyMarker', k)
                 }
-               
 
-                for (i=0;i<d;i++){
-                     document.getElementsByClassName('col')[i].style.backgroundColor=""
+
+                for (i = 0; i < d; i++) {
+                    document.getElementsByClassName('col')[i].style.backgroundColor = ""
                 }
-                document.getElementsByClassName('col')[k].style.backgroundColor="#CCC"
-                
+                document.getElementsByClassName('col')[k].style.backgroundColor = "#CCC"
+
             },
         },
 
@@ -1268,7 +1268,7 @@
                             `
     })
 
-    </script>
-  
+</script>
+
 
 }

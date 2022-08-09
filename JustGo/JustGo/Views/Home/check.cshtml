@@ -167,9 +167,7 @@
             axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 113 })
                 .then(res => this.schedule = res.data).then(() => this.initMap()).then(() => this.setMarker())
                 .catch(err => console.log(err))
-            //}
-            //this.initMap()
-            //this.setMarker()
+            //}            
         },
     })
 </script>

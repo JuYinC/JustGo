@@ -158,7 +158,7 @@
                         readFile.addEventListener('load', () => {
                             let image = document.getElementById('image')
                             this.CoverImageName = readFile.result                            
-                            this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
+                            this.Details.CoverImageName = this.CoverImageName
                             console.log(this.CoverImageName);
                         })
 
@@ -191,7 +191,9 @@
                                 }
                             } else {
                                 //alert("最大上傳數量為6張")
-                                $("#shoeError").append(`<div>最大上傳數量為6張</div>`)
+
+                                $("#shoeError").after(`<span style="color:red;"> 最大上傳數量為6張</span>`)
+                                
                                 
                             }
                         }
@@ -250,7 +252,7 @@
                             }
                         }
                     }
-                },
+                },             
                  mounted() {
                      let id = window.location.search.substring(1) 
                      console.log(id)
@@ -259,14 +261,15 @@
                              this.Details = res.data.details;
                              this.EndDate = res.data.endDate;
                              this.StartDate = res.data.startDate;
-                             this.Title = res.data.Title;
+                             //this.Title = res.data.Title;
                              this.Describe = res.data.describe;
                              this.StartDate = res.data.startDate;
                              this.EndDate = res.data.endDate;
-                             
-                                              
-                     }
-                 }
+                              }
+                            )
+                    }
+
+                 },
 
             },
             )
@@ -294,7 +297,7 @@
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar" style="margin-left: 20px;">
                         <div class="sticky-top">
-                            <label class="my-2">景點日程</label>                           
+                            <label class="mt-5 mb-2">景點日程</label>                           
                             <ul class="list-group">
                                 <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天
                                     <li class="list-group-item  justify-content-between align-items-center px-0">

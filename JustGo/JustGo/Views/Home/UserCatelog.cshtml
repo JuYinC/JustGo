@@ -85,7 +85,8 @@
         /* 編輯字體樣式 */
 
         .item_scheduleId {
-            font-size: 22px;
+            font-size: 25px;
+            margin-left:10%;
         }
             /* 滑鼠移動字體變色 */
 
@@ -96,7 +97,8 @@
             }
         /* 刪除字體樣式 */
         .DeleteSchedule_Style {
-            font-size: 22px;
+            font-size: 25px;
+            margin-right:10%;
         }
             /* 刪除滑鼠移動變色*/
 
@@ -105,8 +107,8 @@
                 color: red;
             }
         /* 框內5行字的上間距*/
-        .sizzz {
-            margin-top: 8%;
+        .scheduleInfo_Margin {
+            margin-top: 6%;
         }
         /* 框內第1行字的樣式*/
         .item_title {
@@ -131,10 +133,9 @@
         }
         /* 分享行程樣式間距*/
         .CreateBlog_Style {
-            font-size: 19px;
-            margin-left: 11%;
-            margin-right: 5%;
-            min-width: auto;
+            font-size: 25px;
+            margin-left: 10%;
+      
         }
             /* 分享行程滑鼠移動放大*/
             .CreateBlog_Style:hover {
@@ -148,7 +149,7 @@
 
         /* 框格內第1條線間距*/
         .hr_Style {
-            margin-top: 6px;
+            margin-top: 10px;
             margin-bottom: 10px;
             margin-left: 11%;
             margin-right: 11%;
@@ -218,7 +219,7 @@
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                     @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
                     <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
-                        <div class="scheduleInfo sizzz">
+                        <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br/>
                             <hr class="hr_Style" />
                             <span class="item_startDate">{{item.startDate}}</span><br />
@@ -237,7 +238,7 @@
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                     <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
-                        <div class="scheduleInfo sizzz">
+                        <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br>
                             <hr class="hr_Style" />
                             <span class="item_startDate">{{item.startDate}}</span><br>
@@ -245,8 +246,8 @@
                         </div>
                         <hr class="hr_Style" />
                         <div class="buttonBar schedule_word_margin">
-                            <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)">分享行程</span>
-                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)">刪除</span>
+                            <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)"><i class="fa-solid fa-share-from-square"></i></span>
+                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
                         </div>
                     </div>
                 </div>

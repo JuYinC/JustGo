@@ -76,8 +76,8 @@ html {
 /*地圖按鈕*/
 #floating-panel {
     position: absolute;
-    top: 10%;
-    left: 10%;
+    top: 3%;
+    left: 3%;
     z-index: 5;
     padding: 5px;
 
@@ -85,6 +85,8 @@ html {
 /*    line-height: 30px;*/
     padding-left: 10px;
 }
+
+
 /* infowindow不要顯示x */
 button.gm-ui-hover-effect {
    /* visibility:visible;*/

@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 <style>
+    header{
+        display:none;
+    }
     .footer__waves {
         display: none;
     }
@@ -17,9 +20,21 @@
 }
 
 <div id="app">
-    <div></div>
     <div>
+        
+        <div>
+            <div v-for="day in schedule.details">
+             <div v-for="view in day">
+                 {{view.place.name}}
+            </div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button">{{index+1}}</div>
         <div id="map"></div>
+        <div v-for="view in daySchedule">{{view.place.name}}</div>
     </div>
 </div>
 
@@ -36,6 +51,7 @@
         data() {
             return {
                 schedule: [],
+                daySchedule: [],
                 map: null,
             }
         },
@@ -51,6 +67,11 @@
                     clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
             },
+            showDaySchedule(index) {
+                
+                this.daySchedule = this.schedule.details[index]
+                console.log(this.daySchedule)
+            },
         },
         computed: {
 
@@ -58,7 +79,7 @@
         mounted() {
             //let id = window.location.search.substring(1)
             //if (id != "") {
-            axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 113 })
+            axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
                 .then(res => this.schedule = res.data)
                 .catch(err => console.log("err"))
             //}

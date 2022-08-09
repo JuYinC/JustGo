@@ -17,14 +17,14 @@ namespace JustGo.Controllers
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
-            _blog = blog;
+            _blog = blog;            
         }
 
         [HttpPost]
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
-        {                        
-            
+        {
+            saveImage(vm.CoverImage);
             foreach (var day in vm.Details)
             {
                 foreach(var item in day)

@@ -193,7 +193,8 @@ namespace JustGo.Repository
                 UserId = vm.UserId,
                 Describe = vm.Describe,
                 ImageName = "",
-                Like = vm.Like,
+                Like = _context.UserKeep.Where(e=>e.KeepClass==0&&e.KeepId==vm.BlogId).Count(),
+                Title = vm.Title,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,
             };
@@ -223,6 +224,7 @@ namespace JustGo.Repository
                     }
                 }                
             }
+            Console.WriteLine(model);
             return model;            
         }
     }

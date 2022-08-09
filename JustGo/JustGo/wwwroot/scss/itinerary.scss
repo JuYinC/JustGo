@@ -482,9 +482,7 @@
                     margin: 1.5rem 0 0 1.5rem;
                 }
 
-                & .sift{
-
-                }
+               
 
                 & button {
                     width: 100px;
@@ -492,17 +490,61 @@
                 }
 
                 & .item2 {
-                    display: grid;
+                    // display: grid;
                     min-height: 50px;
-                    height: auto;
+                    // height: auto;
                     min-width: 200px;
-                    width: auto;
-                    padding: 6px 12px;
-                    margin: 10px 10px 0px 10px;
-                    border: solid 1px #eee;
-                    background-color: #FAF0E6;
-                    border-radius: 10px;
-                    text-align: left;
+                    display: grid;
+                    // width: auto;
+                    // padding: 6px 12px;
+                    margin-bottom: 1rem;
+                    // border: solid 1px #eee;
+                    background-color: #ffffffd2;
+                    // border-radius: 10px;
+                    // text-align: left;
+                 
+                    & *{
+                        // font-family: cwTeXYen, sans-serif;
+                        font-size: 1.4rem;
+                        margin-bottom:0.3rem;
+                    }
+                    & h3{
+                        background-color: #5fd3ba6c;
+                        font-size: 2.1rem;
+                        // margin-left: 1%;
+                        border-bottom: 1px solid rgb(199, 199, 199);
+                        width: 100%;
+                        font-weight: bold;
+                        
+                    }
+                    & p{
+                        color: rgb(0, 0, 0);
+                        margin-left: 6%;
+                        display: inline;
+                        
+                    }
+                    & .adto{
+                        width: 100%;
+                        height: 3px;
+                        font-size: 10;
+                        background-color: #6c757d;
+                        justify-content: center;
+                        display: flex;
+                        transition: all .3s;
+
+                        &:hover{
+                            height: 2.2rem;
+                            background-color: #f5b733b0;
+                            font-size: 1.8rem;
+                            cursor: pointer;
+                            // font-family: 'cwTeXYen', sans-serif;
+                            
+                            
+                            
+                            
+                        }
+                    }
+
                 }
 
                 & .lbl {
@@ -685,44 +727,85 @@
 
 
                         & .col {
-                            width: 25.5rem;
                             flex: 1;
                             min-width: 250px;
-                            padding: 10px;
-                            border: solid 1px #333;
-                            border-radius: 5px;
-                            margin: 3px 0px 5px 17px;
+                            max-width: 300px;
+                            border: solid 1px #6c757d;
+                            margin: 3px;
+
+                            & *{
+                                // font-family: cwTeXYen, sans-serif;
+                                font-size: 1.4rem;
+                                margin-bottom:0.3rem;
+                            }
 
                             & .title {
-                                font-size: 1.5rem;
+                               
+                                background-color: var(--primary-bule);
+                                width: 100%;
+                                color: #eee;
+                                display: inline-grid;
+                               
+    
+                            }
+                            & p{
+                                color: rgb(0, 0, 0);
+                                margin-left: 6%;
+                                display: inline;
+                                
+                            }
+                            & input{
+                                font-size: 1.4rem;
+                                display: inline;
+                                margin-top: 0.3rem;
                             }
 
                         }
 
                         & .item {
-                            min-height: 5rem;
-                            height: auto;
-                            min-width: 20rem;
-                            width: auto;
-                            padding: 0.6rem 1.2rem;
-                            margin-top: 1rem;
+                            display: grid;
+                            flex-direction: column;
+                            margin-bottom: 0;
+                            margin-top: 0.3rem;
                             border: solid 1px #eee;
-                            background-color: #F5F5DC;
-                            border-radius: 1rem;
-                            text-align: left;
-                            font-size: 1.4rem;
+                           
+                            & h3{
+                                font-size: 2.1rem;
+                                margin-left: 5%;
+                                border-bottom: 1px solid #333;
+                                width: 90%;
+                                font-weight: bold;
+                            }
 
 
                             & .adjtime {
                                 display: flex;
                                 align-items: center;
-                                justify-content: space-between;
+                                // justify-content: space-between;
                             }
 
                             & button {
-                                width: 40px;
                                 border-style: none;
-                                background: #ff5568;
+                                height: 5px;
+                                transition: all .3;
+                                font-size: 0;
+                                // display: none;
+
+                                & i{
+                                    font-size: 0;
+                                }
+
+                                &:hover{
+                                    border-style: none;
+                                    background: #fd9090da;
+                                    font-size: 10px;
+                                    height: 20px;
+
+                                    & i{
+                                        font-size: 10px;
+                                    }
+                                }
+                               
                             }
                         }
 
@@ -764,4 +847,13 @@
 
     }
 
+}
+
+.sift{
+    background: #6c757d;
+    width: 1rem;
+
+    &:hover{
+        background: #333;
+    }
 }

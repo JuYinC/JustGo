@@ -58,13 +58,14 @@ namespace JustGo.Repository
                         var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
                         var vm = new BlogDetailsVM()
                         {
-                            StartTime = item.StartTime,
-                            EndtTime = item.EndtTime,
+                            StartTime = item.StartTime.AddHours(8),
+                            EndTime = item.EndtTime.AddHours(8),
                             PlaceId = item.PlaceId,
                             P_Name = p.Name,
                             P_tel = p.Tel,
                             P_Add = p.Add,
-
+                            Describe = "",
+                            Score=1,
                         };
                         blogVm.Details[i].Add(vm);
                     }
@@ -171,7 +172,7 @@ namespace JustGo.Repository
                         vm.Details[i].Add(new BlogDetailsVM()
                         {
                             StartTime = item.StartTime.AddHours(8),
-                            EndtTime = item.EndtTime.AddHours(8),
+                            EndTime = item.EndtTime.AddHours(8),
                             PlaceId = item.PlaceId,
                             P_Name = p.Name,
                             P_Add = p.Add,
@@ -215,7 +216,7 @@ namespace JustGo.Repository
                             {
                                 PlaceId = item.PlaceId,
                                 StartTime = item.StartTime,
-                                EndtTime = item.EndtTime,
+                                EndtTime = item.EndTime,
                                 Describe = item.Describe,
                                 Images = JsonConvert.SerializeObject(item.Images),
                                 Score = item.Score

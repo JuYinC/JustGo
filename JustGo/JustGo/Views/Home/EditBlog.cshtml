@@ -164,16 +164,33 @@
 
                     },                   
                     loadimg: function (dayIndex, viewIndex, e) {
-                        let input = e.target;                                           
+                        //let input = e.target;                                        
+                        //if (input.files) {                            
+                        //    this.Details[dayIndex][viewIndex].images = [];
+                        //    for (let i = 0; i < input.files.length;i++){
+                        //        const reader = new FileReader();
+                        //        reader.readAsDataURL(input.files[i]);
+                        //        reader.onload = (e) => {
+                        //            let image = {name:"",base64:e.target.result}
+                        //            this.Details[dayIndex][viewIndex].images.push(image);
+                                                                    
+                        //        }                                                                                               
+                        //    }
+                        //}
+                        let input = e.target;                                        
                         if (input.files) {                            
                             this.Details[dayIndex][viewIndex].images = [];
-                            for (let i = 0; i < input.files.length;i++){
-                                const reader = new FileReader();
-                                reader.readAsDataURL(input.files[i]);
-                                reader.onload = (e) => {
-                                    let image = {name:"",base64:e.target.result}
-                                    this.Details[dayIndex][viewIndex].images.push(image);
-                                }                                                                                               
+                            if (input.files.length < 7) {
+                                for (let i = 0; i < input.files.length; i++) {
+                                    const reader = new FileReader();
+                                    reader.readAsDataURL(input.files[i]);
+                                    reader.onload = (e) => {
+                                        let image = { name: "", base64: e.target.result }
+                                        this.Details[dayIndex][viewIndex].images.push(image);
+                                    }
+                                }
+                            } else {
+                                alert("最大上傳數量為6張")
                             }
                         }
                     },
@@ -313,13 +330,11 @@
                                         @@click="myscore=item"></i>
                                         {{dayDetails.score}}
                                     </div>
-                               
-                                    
 
 
                                     <div class="mb-3">
                                         <label class="btn btn-primary btn-sm">
-                                            <input type="file" accept="image/*" multiple
+                                            <input type="file" accept="image/gif, image/jpeg, image/png" multiple
                                                 @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
                                                 style="display:none;" size="6">
                                             <i class="fa fa-photo"></i> 上傳圖片
@@ -328,12 +343,17 @@
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
 
                                         
-
-                                        <div class="groupimg img-fluid">
-                                            <template v-for="(image,index) in dayDetails.images">
-                                                <img :src="image.base64">
-                                            </template>
+                                        <div class="groupimg img-fluid" >
+                                           <template v-for="(image,index) in dayDetails.images">
+                                                    <img :src="image.base64">                  
+                                           </template>
                                         </div>
+
+                                        @*<div class="groupimg img-fluid"   v-if="previewlist.length">
+                                            <div v-for="(image,index) in dayDetails.images" id="append">
+                                                <img :src="image.base64">
+                                            </div>
+                                        </div>*@
 
                                         <textarea rows="6" class="mb-2" maxlength="400" v-model="dayDetails.describe"
                                         placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>

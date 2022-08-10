@@ -112,6 +112,7 @@
                     Like: 5,
                     StartDate:null,
                     EndDate:null,
+                    showError:'張數限制六張',
 
                     myscore: this.score,
                     mytempscore: this.score
@@ -189,10 +190,13 @@
                                         this.Details[dayIndex][viewIndex].images.push(image);
                                     }
                                 }
+                              
+                                 $("#showErr").css("color", "black");
+                                 this.showError = "上傳成功!"
                             } else {
-                                //alert("最大上傳數量為6張")
-
-                                $("#shoeError").after(`<span style="color:red;"> 最大上傳數量為6張</span>`)
+                                
+                                 $("#showErr").css("color", "red");
+                                this.showError = "上傳失敗，張數限制6張"
                                 
                                 
                             }
@@ -201,6 +205,8 @@
                     reset: function (dayIndex, viewIndex, e) {
                         this.Details[dayIndex][viewIndex].images.length = 0;
                         this.Details[dayIndex][viewIndex].images=[];
+                        this.showError = "張數限制6張"
+                        $("#showErr").css("color", "black");
                     },
                     onChange(dayIndex) {
                         for (let j = 0; j < this.Details.length; j++) {
@@ -295,7 +301,7 @@
         <!--左邊欄位-->
         <div class="container py-3">
             <div class="row">
-                    <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar" style="margin-left: 20px;">
+                    <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
                         <div class="sticky-top">
                             <label class="mt-5 mb-2">景點日程</label>                           
                             <ul class="list-group">
@@ -314,7 +320,7 @@
 
                     </div>
                     <!--右邊欄位-->
-                    <div class="col-sm-8" style="margin-left: 20px;">
+                    <div class="col-sm-8">
                         <div class="user">
                             <div class="py-3">
                                 <span><img :src="UserImage" id="userimg" alt=""></span>
@@ -350,7 +356,8 @@
                                             <i class="fa fa-photo"></i> 上傳圖片
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
-                                            class="btn btn-outline-secondary btn-sm" id="shoeError">取消上傳</button>
+                                            class="btn btn-outline-secondary btn-sm">取消上傳</button>
+                                         <span style="vertical-align: bottom;font-size:12px" id="showErr">{{showError}}</span>
 
                                         
                                         <div class="groupimg img-fluid" >
@@ -374,7 +381,7 @@
                     </div>
                  </div>
             </div>
-            <div style="display: flex; justify-content: space-around">
+            <div style="display: flex; justify-content: center">
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">取消編輯</button>
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;"
                     @@click="saveBlog">儲存行程</button>

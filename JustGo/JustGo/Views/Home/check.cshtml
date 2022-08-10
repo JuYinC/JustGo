@@ -160,6 +160,11 @@
                     schedule: [],
                     daySchedule: [],
                     map: null,
+                icon: {
+                    url: "@Url.Content("~/file/photo/location_Yuju.png")",
+                    scaledSize: new google.maps.Size(45, 45),
+                    labelOrigin: new google.maps.Point(22, 17)
+                },
                 }
             },
             methods: {
@@ -207,7 +212,79 @@
                             this.schedule.details[i][j].endTime = hour + ":" + min
                         }
                     }
+                },
+                    setMarker() {
+                const markers = [];
+                const bounds = new google.maps.LatLngBounds();
+                let iofSpots = 0
+                for (i = 0; i < this.schedule.details.length; i++) {
+                    this.schedule.details[i].map((position, j) => {
+                        iofSpots++
+                        const marker = new google.maps.Marker({
+                            position: { lat: position.place.lat, lng: position.place.lng },
+                            label: {
+                                text: `${iofSpots}`,
+                                fontWeight: "bold",
+                            },
+                            title: position.place.name,
+                            map: this.map,
+                            icon: this.icon,
+                        });
+                        bounds.extend(marker.position);
+                        // 產生infowindow
+                        let contentString =
+                            `
+                            <div class="infowindow">
+                                <div class="infowindow_bar row row-cols-2" >
+                                    <div class="infowindow_bar_title col-10">
+                                        ${position.place.name}
+                                    </div>
+                                    <div class="infowindow_bar_divbutton col-2">
+                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="infowindow_part row">
+                                    <div class="infowindow_img col-4">
+                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                    </div>
+                                    <div class="infowindow_info col-8">
+                                        <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>                                     
+                                        <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                        <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                    </div>
+                                </div>
+                                <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    景點介紹
+                                </button>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="infowindow_detail" style="text-indent:2em">
+                                        ${position.place.description}
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                        const infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            disableAutoPan: false,
+                        });
+                        // 點擊marker開啟infowindow
+                        marker.addListener("click", () => {
+                            if (this.infowindow) { this.infowindow.close() }
+                            infowindow.open({
+                                anchor: marker,
+                                map: this.map,
+                                shouldFocus: false,
+                            });
+                            this.infowindow = infowindow
+                        });
+                        markers.push(marker);
+                    });
                 }
+                this.map.fitBounds(bounds);
+            },
             },
             computed: {
 
@@ -220,6 +297,8 @@
                         this.schedule = res.data;
                         this.daySchedule = this.schedule.details[0];
                         this.caltime();
+        this.initMap();
+         this.setMarker();
 
                     })
                     .catch(err => console.log("err"))

@@ -31,8 +31,7 @@ namespace JustGo.Controllers
 
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
-        {
-            Console.WriteLine(vm.selectType);
+        {            
             return Json(_place.getPlaceFilter(vm));
         }
 

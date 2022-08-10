@@ -1029,6 +1029,7 @@
                 selectType: '景點',
                 selectCounty: [],
                 selectAcitivity: [],
+                isDefault : 0,
             }
         },
         mounted() {
@@ -1048,22 +1049,32 @@
         methods: {
             //搜尋景點
             search() {
+                if(this.isDefault){
+                    this.selectCounty.splice(0, 1);
+                    this.isDefault = 0;
+                }
+
                 if (this.selectCounty.length > 3) {
                     this.selectCounty.splice(0, 1)
                 }
                 
                 switch (this.selectType) {
                     case '景點':
-                        this.selectType = '景點'
-                        
+                        this.selectType = '景點'                        
                         break;
                     case '餐飲':
                         this.selectType = '餐飲'
-                        
+                        if(this.selectCounty.length <= 0){
+                            this.selectCounty.push("高雄市")
+                            this.isDefault = 1;
+                        }
                         break;
                     case '旅宿':
                         this.selectType = '旅宿'
-                        
+                        if(this.selectCounty.length <= 0){
+                            this.selectCounty.push("高雄市")
+                            this.isDefault = 1;
+                        }
                         break;
                 }
 

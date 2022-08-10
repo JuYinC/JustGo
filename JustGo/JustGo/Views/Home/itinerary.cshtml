@@ -214,11 +214,27 @@
                     state.markers = [];
                     state.directionsRenderer.setMap(null)
                 }
+                let date = [];
+                let today = new Date();
+                console.log(today)
+                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
+                
 
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
+                let townWeather = [];
                 // 產生地點marker
                 state.selectPlaces.map((position, i) => {
+                    townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
+                    console.log(townWeather);
                     if (position.class == 15) {
                         //餐廳
                         iconPlace = state.icon[1]
@@ -277,6 +293,48 @@
                                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>
                                                         <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                                         <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                        <table>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>${date[0]}</td>
+                                                                    <td>${date[1]}</td>
+                                                                    <td>${date[2]}</td>
+                                                                    <td>${date[3]}</td>
+                                                                    <td>${date[4]}</td>
+                                                                    <td>${date[5]}</td>
+                                                                    <td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td>
+                                                                    <td>${townWeather[0].pop12h}%</td>
+                                                                    <td>${townWeather[1].pop12h}%</td>
+                                                                    <td>${townWeather[2].pop12h}%</td>
+                                                                    <td>${townWeather[3].pop12h}%</td>
+                                                                    <td>${townWeather[4].pop12h}%</td>
+                                                                    <td>${townWeather[5].pop12h}%</td>
+                                                                    <td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td>
+                                                                    <td>${townWeather[0].minT}-${townWeather[0].maxT}</td>
+                                                                    <td>${townWeather[1].minT}-${townWeather[1].maxT}</td>
+                                                                    <td>${townWeather[2].minT}-${townWeather[2].maxT}</td>
+                                                                    <td>${townWeather[3].minT}-${townWeather[3].maxT}</td>
+                                                                    <td>${townWeather[4].minT}-${townWeather[4].maxT}</td>
+                                                                    <td>${townWeather[5].minT}-${townWeather[5].maxT}</td>
+                                                                    <td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td>
+                                                                    <td>${townWeather[0].uvi}</td>
+                                                                    <td>${townWeather[1].uvi}</td>
+                                                                    <td>${townWeather[2].uvi}</td>
+                                                                    <td>${townWeather[3].uvi}</td>
+                                                                    <td>${townWeather[4].uvi}</td>
+                                                                    <td>${townWeather[5].uvi}</td>
+                                                                    <td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                                     </div>
                                                 </div>
                                                 <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"

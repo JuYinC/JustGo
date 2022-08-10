@@ -110,7 +110,7 @@ body {
 
 .infowindow {
     /*width: 375px;*/
-    /* height: 1000px; */
+     /*height: 700px;*/ 
     /* border:0.5px solid #FDC11D; */
     /*border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
@@ -135,11 +135,11 @@ body {
 
 
 .infowindow_part {
-    height: 150px;
+    height: 200px;
 }
 
 .infowindow_img {
-    width: 150px;
+    width: 200px;
     /* border: 1px solid black; */
 }
 
@@ -185,10 +185,9 @@ body {
 .infowindow p {
     color: #514D54;
     font-size: 14px;
-    font-family: "·L³n¥¿¶ÂÅé";
     padding: 0px;
-    margin: 5px;
-    margin-bottom: 25px;
+    /*margin: 5px;*/
+    margin-bottom: 10px;
 }
 
 .infowindow i {
@@ -205,6 +204,10 @@ body {
 
 .infowindow_intro {
     padding: 3px 0px 3px 0px;
+}
+
+.infowindow td {
+    padding:5px;
 }
 
 

@@ -3,108 +3,93 @@
 }
 
 @section Style{
-    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
+<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <style>
-        header {
-            display: none;
-        }
+<style>
+    header {
+        display: none;
+    }
 
-        .footer__waves {
-            display: none;
-        }
+    .footer__waves {
+        display: none;
+    }
 
-        #map {
-            width: 800px;
-        }
+    #map {
+        width: 800px;
+        height: 500px;
+    }
 
-        .nav-fill .nav-item .nav-link, .nav-justified .nav-item .nav-link {
-            width: 100%;
-            border-radius: 20px;
-        }
+    .nav-fill .nav-item .nav-link,
+    .nav-justified .nav-item .nav-link {
+        width: 100%;
+        border-radius: 20px;
+    }
 
-        .daysBar {
-            justify-content: center
-        }
+    .daysBar {
+        justify-content: center
+    }
 
-        .days {
-            margin: 0px 20px;
-        }
+    .days {
+        margin: 0px 20px;
+    }
 
-        .scheduleDay {
-            margin: 20px;
-            /*border: 1px solid black;*/
-            vertical-align: top;
-            /*min-width:250px;*/
-        }
+    .scheduleDay {
+        margin: 20px;
+        /*border: 1px solid black;*/
+        vertical-align: top;
+        /*min-width:250px;*/
+    }
 
-        .scheduletab1 {
-            margin-top: 20px;
-            /*overflow-y:auto;
-                                            flex-wrap: nowrap;*/
-        }
+    .scheduletab1 {
+        margin-top: 20px;
+        /*overflow-y:auto;
+                                                    flex-wrap: nowrap;*/
+    }
 
-        .betweenBox {
-            height: 50px;
-            border-left-style: dashed;
-            border-left-color: black;
-            border-left-width: 1px;
+    .betweenBox {
+        height: 50px;
+        border-left-style: dashed;
+        border-left-color: black;
+        border-left-width: 1px;
+    }
+</style>
 
-        }
-
-    </style>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" /> *@
 }
 
-    <div id="app">
+<div id="app">
 
-        <div class="container">
-            <div class="checkbar">
-                <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">行程</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">路線規劃</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content" id="pills-tabContent">
+    <div class="container">
+        <div class="checkbar">
+            <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">行程</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">路線規劃</button>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
 
-                <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row">
-                        <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
-                            <div class="viewbox ">
-                                <div v-for="view in day">
-                                    <div>
-                                        {{view.startTime}}-{{view.endTime}}<br>
-                                        {{view.place.name}}
-                                    </div>
-                                    <div class="row cols-2">
-                                        <div class="col-2">
-                                        </div>
-                                        <div class="col-10 betweenBox">
-                                            <br>
-                                            <i class="fa-solid fa-car-side"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
+                aria-labelledby="pills-home-tab">
+
+                <div>
+                    <div class="daysBar">
+                        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
+                            style="display:inline-block" class="days">{{index+1}}</div>
                     </div>
-                </div>
-
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div>
-                        <div class="daysBar">
-                            <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button" style="display:inline-block" class="days">{{index+1}}</div>
-                        </div>
                         <div class="row cols-2">
-                            <div class="col-4 fade">
+                            <div class="col-4 ">
                                 <div v-for="view in daySchedule">
                                     <div>
                                         {{view.startTime}}-{{view.endTime}}<br>
@@ -121,19 +106,32 @@
                                 </div>
                             </div>
                             <div id="map" class="col-8"></div>
-
                         </div>
-
-
                     </div>
-
-
                 </div>
             </div>
-
-
-
-
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row">
+                    <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
+                        <div class="viewbox ">
+                            <div v-for="view in day">
+                                <div>
+                                    {{view.startTime}}-{{view.endTime}}<br>
+                                    {{view.place.name}}
+                                </div>
+                                <div class="row cols-2">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-10 betweenBox">
+                                        <br>
+                                        <i class="fa-solid fa-car-side"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -141,7 +139,8 @@
 
 
     @section Scripts{
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -160,11 +159,12 @@
                     schedule: [],
                     daySchedule: [],
                     map: null,
-                icon: {
-                    url: "@Url.Content("~/file/photo/location_Yuju.png")",
-                    scaledSize: new google.maps.Size(45, 45),
-                    labelOrigin: new google.maps.Point(22, 17)
-                },
+                    icon: {
+                        url: "@Url.Content("~/file/photo/location_Yuju.png")",
+                        scaledSize: new google.maps.Size(45, 45),
+                        labelOrigin: new google.maps.Point(22, 17)
+                    },
+                    markers: [],
                 }
             },
             methods: {
@@ -183,6 +183,8 @@
 
                     this.daySchedule = this.schedule.details[index]
                     console.log(this.daySchedule)
+                    this.setDayMarker()
+                    this.calcDayRoute()
                 },
                 caltime() {
                     for (let i = 0; i < this.schedule.details.length; i++) {
@@ -213,12 +215,130 @@
                         }
                     }
                 },
-                    setMarker() {
-                const markers = [];
-                const bounds = new google.maps.LatLngBounds();
-                let iofSpots = 0
-                for (i = 0; i < this.schedule.details.length; i++) {
-                    this.schedule.details[i].map((position, j) => {
+                setMarker() {
+                    if (this.markers) {
+                        this.markers.forEach((marker) => {
+                            marker.setMap(null)
+                        });
+                        this.markers = []
+                    }
+                    const bounds = new google.maps.LatLngBounds();
+                    let iofSpots = 0
+                    for (i = 0; i < this.schedule.details.length; i++) {
+                        this.schedule.details[i].map((position, j) => {
+                            iofSpots++
+                            const marker = new google.maps.Marker({
+                                position: { lat: position.place.lat, lng: position.place.lng },
+                                label: {
+                                    text: `${iofSpots}`,
+                                    fontWeight: "bold",
+                                },
+                                title: position.place.name,
+                                map: this.map,
+                                icon: this.icon,
+                            });
+                            bounds.extend(marker.position);
+                            // 產生infowindow
+                            let contentString =
+                                `
+                                <div class="infowindow">
+                                    <div class="infowindow_bar row row-cols-2" >
+                                        <div class="infowindow_bar_title col-10">
+                                            ${position.place.name}
+                                        </div>
+                                        <div class="infowindow_bar_divbutton col-2">
+                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infowindow_part row">
+                                        <div class="infowindow_img col-4">
+                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        </div>
+                                        <div class="infowindow_info col-8">
+                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                        </div>
+                                    </div>
+                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        景點介紹
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="infowindow_detail" style="text-indent:2em">
+                                            ${position.place.description}
+                                        </div>
+                                    </div>
+                                </div>
+                             `
+                            const infowindow = new google.maps.InfoWindow({
+                                content: contentString,
+                                disableAutoPan: false,
+                            });
+                            // 點擊marker開啟infowindow
+                            marker.addListener("click", () => {
+                                if (this.infowindow) { this.infowindow.close() }
+                                infowindow.open({
+                                    anchor: marker,
+                                    map: this.map,
+                                    shouldFocus: false,
+                                });
+                                this.infowindow = infowindow
+                            });
+                            this.markers.push(marker);
+                        });
+                    }
+                    this.map.fitBounds(bounds);
+                },
+                calcRoute() {
+                    let request = null;
+                    let route = [];
+                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                    
+                    directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                        suppressMarkers: true,
+                    });
+                    //行程變成同一條路徑，上限25個
+                    for (i = 0; i < this.schedule.details.length; i++) {
+                        for (j = 0; j < this.schedule.details[i].length; j++) {
+                            route.push(this.schedule.details[i][j].place)
+                        }
+                    }
+                    // 總行程數 = 1 離開方程式
+                    if (route.length < 2) {
+                        return
+                    } else {
+                        // 總行程數 >= 2 加入停靠站                        
+                        const waypts = [];
+                        for (i = 1; i < route.length - 1; i++) {
+                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                        }
+                        request = {
+                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                            waypoints: waypts, //中途停靠點
+                            travelMode: 'DRIVING', //開車
+                        };
+                    }
+                    directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
+                    // request放入Google行程服務，得到結果
+                    directionsService.route(request, function (result, status) {
+                        if (status == 'OK') {
+                            directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                        }
+                    });
+                },
+                setDayMarker() {
+                    if (this.markers) {
+                        this.markers.forEach((marker) => {
+                            marker.setMap(null)
+                        });
+                        this.markers = []
+                    }
+                    const bounds = new google.maps.LatLngBounds();
+                    let iofSpots = 0
+                    this.daySchedule.map((position, j) => {
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.place.lat, lng: position.place.lng },
@@ -234,38 +354,38 @@
                         // 產生infowindow
                         let contentString =
                             `
-                            <div class="infowindow">
-                                <div class="infowindow_bar row row-cols-2" >
-                                    <div class="infowindow_bar_title col-10">
-                                        ${position.place.name}
-                                    </div>
-                                    <div class="infowindow_bar_divbutton col-2">
-                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                <div class="infowindow">
+                                    <div class="infowindow_bar row row-cols-2" >
+                                        <div class="infowindow_bar_title col-10">
+                                            ${position.place.name}
+                                        </div>
+                                        <div class="infowindow_bar_divbutton col-2">
+                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infowindow_part row">
+                                        <div class="infowindow_img col-4">
+                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        </div>
+                                        <div class="infowindow_info col-8">
+                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                        </div>
+                                    </div>
+                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        景點介紹
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="infowindow_detail" style="text-indent:2em">
+                                            ${position.place.description}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="infowindow_part row">
-                                    <div class="infowindow_img col-4">
-                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                    </div>
-                                    <div class="infowindow_info col-8">
-                                        <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>                                     
-                                        <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                        <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                    </div>
-                                </div>
-                                <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                    aria-expanded="false" aria-controls="collapseExample">
-                                    景點介紹
-                                </button>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="infowindow_detail" style="text-indent:2em">
-                                        ${position.place.description}
-                                    </div>
-                                </div>
-                            </div>
-                            `
+                             `
                         const infowindow = new google.maps.InfoWindow({
                             content: contentString,
                             disableAutoPan: false,
@@ -280,11 +400,48 @@
                             });
                             this.infowindow = infowindow
                         });
-                        markers.push(marker);
+                        this.markers.push(marker);
                     });
-                }
-                this.map.fitBounds(bounds);
-            },
+                    this.map.fitBounds(bounds);
+                },
+                calcDayRoute() {
+                    let request = null;
+                    let route = [];
+                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
+                    directionsRenderer.setMap(null)
+                    directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                        suppressMarkers: true,
+                    });
+                    //行程變成同一條路徑，上限25個
+
+                    for (j = 0; j < this.daySchedule.length; j++) {
+                        route.push(this.daySchedule[j].place)
+                    }
+
+                    // 總行程數 = 1 離開方程式
+                    if (route.length < 2) {
+                        return
+                    } else {
+                        // 總行程數 >= 2 加入停靠站                        
+                        const waypts = [];
+                        for (i = 1; i < route.length - 1; i++) {
+                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                        }
+                        request = {
+                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                            waypoints: waypts, //中途停靠點
+                            travelMode: 'DRIVING', //開車
+                        };
+                    }
+                    directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
+                    // request放入Google行程服務，得到結果
+                    directionsService.route(request, function (result, status) {
+                        if (status == 'OK') {
+                            directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                        }
+                    });
+                },
             },
             computed: {
 
@@ -292,19 +449,18 @@
             mounted() {
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
-                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
+                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 113 })
                     .then(res => {
                         this.schedule = res.data;
                         this.daySchedule = this.schedule.details[0];
                         this.caltime();
-        this.initMap();
-         this.setMarker();
-
+                        this.initMap();
+                        this.setMarker();
+                        this.calcRoute();
                     })
-                    .catch(err => console.log("err"))
-                //}
-                this.initMap()
+                    .catch(err => console.log(err))
+                //}            
             },
         })
     </script>
-}
+    }

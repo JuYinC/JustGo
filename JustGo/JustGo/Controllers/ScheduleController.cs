@@ -61,7 +61,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult setSchedule([FromBody] ScheduleVM vm)
         {
-            if (vm.UserId != null)
+            if (vm.ScheduleId != 0)
             {
                 vm.UserId = GetUserId();
                 return Json(_schedule.editScedule(vm));

@@ -147,6 +147,7 @@
                     labelOrigin: new google.maps.Point(25, 17)
                 },
             ],
+            selectWeather : []
         },
 
         //由action傳入值,更新state狀態
@@ -155,6 +156,10 @@
             updateData(state, status) {
                 state.selectPlaces.length = 0;
                 state.selectPlaces = status
+            },
+            updateWeather(state, status) {
+                state.selectWeather.length = 0;
+                state.selectWeather = status
             },
 
             //計算行程表時間
@@ -766,6 +771,7 @@
                 axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
                     .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
                     .catch(err => console.log(err))
+                
             },
 
             //載入地圖 設置中心點
@@ -773,7 +779,7 @@
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
                     .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-
+                axios.post("@Url.Action("selectWeather","Schedule")").then(res => {commit('updateWeather', res.data) })
             },
         }
     })
@@ -1305,7 +1311,7 @@
                                          <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                                                                                                                        v-model="selectDatelocal">
                                          <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                                                                    v-model="selectDateEndlocal">
+                                                                                                                        v-model="selectDateEndlocal">
                                          <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>                                        
                                     </div>
                                         <ul class="daysbox" :style="move">

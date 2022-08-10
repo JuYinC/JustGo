@@ -91,9 +91,9 @@ namespace JustGo.Repository
 
         }
 
-        public Weather getWeatherByLocation(string location)
+        public ICollection<Weather> getWeatherByLocation(string location)
         {
-            throw new NotImplementedException();
+            return _con.Query<Weather>("select * from weather").ToList();
         }
     }
 }

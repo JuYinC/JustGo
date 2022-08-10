@@ -171,10 +171,10 @@
    
 
 
-        /*#setting{
-            position:fixed;
-            text-align:end;
-        }*/
+        #setting{
+	        position:fixed; right:5%; bottom:10%;
+            font-size: 28px;
+        }
     </style>
     }
 
@@ -555,11 +555,7 @@
                                     </div>                        
                                 </div>
                             </div>
-                        </div>
-                        <div style="display: flex; justify-content:end">
-                        <button class="btn btn-outline-primary btn-sm  mx-1" style="margin: 20px 20px;">取消編輯</button>
-                        <button class="btn btn-outline-primary btn-sm  mx-1" style="margin: 20px 20px;" @@click="saveBlog">儲存行程</button>
-                        </div>
+                        </div>                        
                     </div>
                  </div>
             </div>
@@ -568,7 +564,19 @@
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;"
                     @@click="saveBlog">儲存行程</button>
             </div>*@
-            @*儲存及返回*@
             <i class="fa-solid fa-objects-align-right" id="setting"></i>
+            <div class="dropdown" id="setting" >
+	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	              <i class="fa-solid fa-list-check" ></i>
+	            </button>
+	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	              <li><a class="dropdown-item" href="#">取消編輯</a></li>
+	              <li><a class="dropdown-item" href="#" @@click="saveBlog">發布行程</a></li>
+	            </ul>
+            </div>
+
+
+
+
         </div>
     

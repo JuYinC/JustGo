@@ -75,6 +75,11 @@ namespace JustGo.Controllers
         public IActionResult deleteSchedule([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.deleteScedule(vm.ScheduleId));
-        }       
+        }
+
+        public IActionResult selectWeather()
+        {
+            return Json(_place.getWeatherByLocation("dd"));
+        }
     }
 }

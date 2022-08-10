@@ -15,7 +15,6 @@ namespace JustGo.Models
         public int? MinT { get; set; }
         public int? MaxT { get; set; }
         public int? Uvi { get; set; }
-        public string Wx { get; set; }
-        public string WeatherDescription { get; set; }
+        public string Wx { get; set; }        
     }
 }

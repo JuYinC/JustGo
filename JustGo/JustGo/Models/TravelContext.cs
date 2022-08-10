@@ -207,10 +207,7 @@ namespace JustGo.Models
                     .HasColumnName("startTime");
 
                 entity.Property(e => e.Uvi).HasColumnName("uvi");
-
-                entity.Property(e => e.WeatherDescription)
-                    .HasMaxLength(150)
-                    .HasColumnName("weatherDescription");
+                
 
                 entity.Property(e => e.Wx)
                     .HasMaxLength(50)

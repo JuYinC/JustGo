@@ -30,7 +30,7 @@
 
         $("#sh").click(function(e){
             $("#sh").toggleClass("sh")
-            if($('#sh')[0].clientWidth >200){
+            if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
                 $('#shbox').addClass('tgshow')
                 $('#shbtn').addClass('tgshow')
             }else{
@@ -234,7 +234,7 @@
         <div>北部</div>
         <div>中部</div>
         <div>南部</div>
-        <div id="check">東部</div>
+        <div id="findw">東部</div>
         <div id="sh" class="">
             <i class="fa-solid fa-magnifying-glass"></i>篩選
             <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" value="" />

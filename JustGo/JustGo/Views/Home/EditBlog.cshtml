@@ -8,13 +8,180 @@
 @section Style{
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
+    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", serif;
+    }
 
-}
+    #coverimg {
+        width: 100%;
+        height: 420px;
+        /* position: absolute; */
+        z-index: -5;
+        margin-bottom: 3%;
+    }
+
+    #covertitle {
+        position: absolute;
+        z-index: 2;
+        text-align: center;
+        top: 300px;
+        left: 10%;
+    }
+
+    .fa-flag {
+        font-size: 22px;
+        color: aliceblue;
+    }
+
+    #TitleId {
+        display: inline-block;
+        border-style: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 22px;
+        color: aliceblue;
+        font-weight: auto;
+        text-align: center;
+        top: 60%;
+        left: 45%;
+        z-index: 2;
+    }
+
+        #TitleId:hover {
+            -webkit-text-stroke: 1px #fff;
+            color: transparent;
+            z-index: 2;
+
+        }
+
+    textarea {
+        width: 100%;
+        border: none;
+        border-bottom: 1px dashed #909cc2;
+    }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-bottom: 1px dashed #084887;
+        }
+
+    .container-fluid {
+        position: relative;
+    }
+
+    textarea::-webkit-scrollbar {
+        width: 8px;
+        width: 8px;
+        border-radius: 40px;
+        background-color: #c3c3c3;
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        width: 8px;
+        border-radius: 40px;
+        background-color: #c3c3c3;
+    }
+
+    #userimg {
+        border-radius: 50%;
+        height: 55px;
+    }
+
+    .Details {
+        list-style-type: none;
+    }
+
+
+    .list-group-item {
+        size: 12px !important;
+        color: #f9ab55 !important;
+        font-weight: bold !important;
+        box-shadow: 0 !important;
+        border: none !important;
+        padding: 2px !important;
+    }
+
+        .list-group-item:hover {
+            background-color: transparent !important;
+            color: #f58a07 !important;
+            border: none !important;
+            font-weight: bold !important;
+            size: 12px !important;
+            box-shadow: 0 !important;
+            transition: width 2s, height 2s !important;
+            -webkit-transform: rotate(1deg) !important;
+        }
+
+        .list-group-item.active {
+            background-color: transparent !important;
+            color: #f58a07 !important;
+            border: none !important;
+            font-weight: bold !important;
+            size: 12px !important;
+            box-shadow: 0 !important;
+        }
+
+    .btn-primary {
+        background-color: #669ed6;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #084887;
+            color: #fff;
+            border: none;
+        }
+
+    #day {
+        background-color: #084887;
+        color: #fff;
+        border-radius: 8px;
+        padding: 4px 9px;
+        margin-bottom: 5px;
+    }
+
+    .groupimg {
+        width: 600px;
+        margin: 10px -10px;
+        display: row;
+        flex-wrap: wrap;
+        /* display: flex;
+                justify-content: space-evenly */
+    }
+
+        .groupimg > img {
+            width: 180px;
+            height: 150px;
+            margin: 10px 10px;
+            cursor: pointer;
+            justify-content: space-around;
+        }
+
+        .groupimg::after {
+            display: block;
+            width: 180px;
+        }
+   
+
+
+        #setting{
+            position:fixed;
+            text-align:end;
+        }
+    </style>
+    }
 
 
     @section Scripts{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
  
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -22,6 +189,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
 
 
     <script>
@@ -29,6 +197,7 @@
         $("body").attr('data-bs-target','#list-example')
         $("body").attr('data-bs-offset','0')
         $("body").attr('tabindex','0')
+
 
     let id = 0;
             let vm = new Vue({
@@ -133,6 +302,12 @@
                     }
                 },
                 methods: {
+                    getdate(date) {
+                        return moment(date).format('YYYY/MM/DD')
+                    },
+                    gettime(time) {
+                        return moment(time).format('A HH')
+                    },
                     gethref(dayIndex, viewIndex) {
                         return "#list-item-" + dayIndex + "-" + viewIndex
                     },
@@ -309,8 +484,9 @@
                                     <li class="list-group-item  justify-content-between align-items-center px-0">
                                         <ul>
                                             <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details ">
-                                                <a class="list-group-item list-group-item-action"
-                                                    :href="gethref(dayIndex,viewIndex)">{{dayDetails.p_Name}}</a>
+                                                <span style="display:inline;">{{gettime(dayDetails.startTime)}}</span> 
+                                                <a class="list-group-item list-group-item-action" style="display:inline;"
+                                                    :href="gethref(dayIndex,viewIndex)">{{dayDetails.p_Name}}</a>                                               
                                             </li>
                                         </ul>
                                     </li>
@@ -337,8 +513,10 @@
                                             :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
                                     <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
                                     <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
-                                    <div class="mb-1">開始時間:{{dayDetails.startTime}}</div>
-                                    <div class="mb-1">結束時間:{{dayDetails.endTime}}</div>
+                                    <div class="mb-1">開始日期:{{getdate(dayDetails.startDate)}}</div>
+                                    <div class="mb-1">結束日期:{{getdate(dayDetails.endDate)}}</div>
+                                    <div class="mb-1">開始時間:{{gettime(dayDetails.startTime)}}</div>
+                                    <div class="mb-1">結束時間:{{gettime(dayDetails.endTime)}}</div>
                                     <div class="mb-1">
                                     評分:<i class="fa fa-star mb-2" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"

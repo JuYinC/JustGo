@@ -2,6 +2,7 @@
 {
     public class SelectPlaceVM
     {        
+        public string selectType { get; set; }
         public string[]? selectCounty { get; set; }
         public int[]? selectAcitivity { get; set; }
         public double? Lat { get; set; }

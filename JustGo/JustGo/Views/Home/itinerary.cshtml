@@ -1026,13 +1026,13 @@
                     '臺東縣', '澎湖縣', '連江縣', '金門縣'
                 ],
                 acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
-                selectType: [],
+                selectType: '景點',
                 selectCounty: [],
                 selectAcitivity: [],
             }
         },
         mounted() {
-            this.selectType = '景點'
+            
         },
         computed: {
             travel() {
@@ -1051,38 +1051,30 @@
                 if (this.selectCounty.length > 3) {
                     this.selectCounty.splice(0, 1)
                 }
-                if (this.selectAcitivity.length > 1) {
-                    if (this.selectAcitivity[0] == 15 || this.selectAcitivity[0] == 16) {
-                        this.selectAcitivity.splice(0, 1)
+                
+                switch (this.selectType) {
+                    case '景點':
                         this.selectType = '景點'
-                    }
+                        
+                        break;
+                    case '餐飲':
+                        this.selectType = '餐飲'
+                        
+                        break;
+                    case '旅宿':
+                        this.selectType = '旅宿'
+                        
+                        break;
                 }
 
-                if (this.selectAcitivity.length > 3) {
+                if (this.selectAcitivity.length > 5) {
                     this.selectAcitivity.splice(0, 1)
                 }
 
-                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0 ) {
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType : this.selectType })
                 }
-            },
-            searchType() {
-                switch (this.selectType) {
-                    case '景點':
-                        break;
-                    case '餐飲':
-                        this.selectAcitivity = [15]
-                        this.selectCounty = []
-                        //this.search()
-                        break;
-                    case '旅宿':
-                        this.selectAcitivity = [16]
-                        this.selectCounty = []
-                        //this.search()
-                        break;
-                }
-
-            },
+            },            
 
             // 新增景點
             addview: function (index) {
@@ -1123,7 +1115,7 @@
                             <hr>
                              <div class="picker">
                                 <span v-for="(atype,index) in type">
-                                    <input @@change="searchType" type="radio" :value="atype" v-model="selectType" :id="atype">
+                                    <input @@change="search" type="radio" :value="atype" v-model="selectType" :id="atype">
                                     <label :for="atype">{{atype}}</label>
                                 </span>
                             </div>

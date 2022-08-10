@@ -12,14 +12,11 @@ namespace JustGo.Controllers
         {
             _signInManager = signInManager;
         }
-
-        
-
+       
         public IActionResult index()
         {
             return View("Login");
         }
-
         
         public async Task<IActionResult> Login(InputModel Input)
         {
@@ -31,7 +28,6 @@ namespace JustGo.Controllers
             }
             return View("Login");
         }
-
 
         public async Task<IActionResult> Logout()
         {

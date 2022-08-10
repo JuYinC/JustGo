@@ -218,7 +218,7 @@
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                     @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
-                    <div class="schedule" v-for="(item,index) in schedule" v-if="nextSchedule(index)">
+                    <div class="schedule" v-for="(item,index) in nextSchedule">
                         <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br/>
                             <hr class="hr_Style" />
@@ -227,7 +227,6 @@
                         </div>
                         <hr class="hr_Style" />
                         <div class="buttonBar schedule_word_margin">
-
                             <span class="item_scheduleId " @@click="editSchedule(item.scheduleId)"><i class="fa-solid fa-file-pen"></i></span>
                             <span class=" DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
                         </div>
@@ -237,7 +236,7 @@
             <div class="travel">過往行程</div>
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                    <div class="schedule" v-for="(item,index) in schedule" v-if="exSchedule(index)">
+                    <div class="schedule" v-for="(item,index) in exSchedule">
                         <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br>
                             <hr class="hr_Style" />
@@ -275,38 +274,24 @@
                 dateNow: "",
             }
         },
-        computed: {
+        computed: { 
             schedule() {
-                return this.showSchedule;
+                return this.showSchedule
+            },
+            nextSchedule() {
+                return this.showSchedule.filter( e=> new Date(e.endDate) > new Date());
+            },
+            exSchedule() {
+                return this.showSchedule.filter( e=> new Date(e.endDate) < new Date());
             }
         },
-        methods: {
-            nextSchedule(index) {
-                this.dateNow = new Date();
-                let datetime = new Date(this.showSchedule[index].endDate)
-
-                if (this.dateNow < new Date(this.showSchedule[index].endDate)) {
-                    return true
-                } else {
-                    return false
-                }
-            },
-            exSchedule(index) {
-                this.dateNow = new Date();
-                let datetime = new Date(this.showSchedule[index].endDate)
-
-                if (this.dateNow < new Date(this.showSchedule[index].endDate)) {
-                    return false
-                } else {
-                    return true
-                }
-            },
+        methods: {            
             editSchedule(scheduleId) {
                 window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId
                 //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
             },
-            deleteSchedule(scheduleId, index) {
-                this.showSchedule.splice(index, 1);
+            deleteSchedule(scheduleId) {
+                this.showSchedule.splice(this.showSchedule.findIndex(e=>e.scheduleId==scheduleId), 1);
                 axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
                     .catch(err => console.log("err"))
             },

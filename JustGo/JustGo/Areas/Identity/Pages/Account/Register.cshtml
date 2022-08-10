@@ -8,9 +8,13 @@
 
 <div class="row justify-content-center">
     <div class="col-md-4">
+        <br />
+        <br />
+        <br />
         <h2 class="mb-4 mt-4 ms-5 me-5">@ViewData["Title"]</h2>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <hr  class="mb-3 mt-3 ms-5 me-5"/>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-3 mt-3 ms-5 me-5">
                 <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" />
@@ -37,7 +41,9 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+               
              <hr  class="mb-3 mt-3 ms-5 me-5"/>
+
             <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg btn-block mt-2 ms-5 me-5">註冊</button>
         </form>
     </div>

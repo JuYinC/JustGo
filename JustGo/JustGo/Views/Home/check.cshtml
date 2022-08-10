@@ -8,37 +8,50 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <style>
-                header{
-                    display:none;
-                }
-                .footer__waves {
-                    display: none;
-                }
-                #map{
-                    width:800px;
-                    height:600px;
-                }
+        header {
+            display: none;
+        }
 
-                .nav-fill .nav-item .nav-link, .nav-justified .nav-item .nav-link {
+        .footer__waves {
+            display: none;
+        }
+
+        #map {
+            width: 800px;
+        }
+
+        .nav-fill .nav-item .nav-link, .nav-justified .nav-item .nav-link {
             width: 100%;
             border-radius: 20px;
         }
-        .daysBar{
-            justify-content:center
+
+        .daysBar {
+            justify-content: center
         }
-        .days{
-            margin:0px 20px;
+
+        .days {
+            margin: 0px 20px;
         }
-        .scheduleDay{
-            margin:20px;
-            border:1px solid black;
+
+        .scheduleDay {
+            margin: 20px;
+            /*border: 1px solid black;*/
             vertical-align: top;
-            min-width:250px;
-           
+            /*min-width:250px;*/
         }
-        .scheduletab1{
-            overflow-y:auto;
-            flex-wrap: nowrap;
+
+        .scheduletab1 {
+            margin-top: 20px;
+            /*overflow-y:auto;
+                                            flex-wrap: nowrap;*/
+        }
+
+        .betweenBox {
+            height: 50px;
+            border-left-style: dashed;
+            border-left-color: black;
+            border-left-width: 1px;
+
         }
 
     </style>
@@ -48,6 +61,7 @@
 }
 
     <div id="app">
+
         <div class="container">
             <div class="checkbar">
                 <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
@@ -60,31 +74,57 @@
                 </ul>
             </div>
             <div class="tab-content" id="pills-tabContent">
-                
+
                 <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row cols-100 ">
-                    <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
-                        <div v-for="view in day">
-                            {{view.place.name}}
+                    <div class="row">
+                        <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
+                            <div class="viewbox ">
+                                <div v-for="view in day">
+                                    <div>
+                                        {{view.startTime}}-{{view.endTime}}<br>
+                                        {{view.place.name}}
+                                    </div>
+                                    <div class="row cols-2">
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-10 betweenBox">
+                                            <br>
+                                            <i class="fa-solid fa-car-side"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div>
                         <div class="daysBar">
-                        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button" style="display:inline-block" class="days">{{index+1}}</div>
+                            <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button" style="display:inline-block" class="days">{{index+1}}</div>
                         </div>
                         <div class="row cols-2">
-                        <div class="col">
-                        <div v-for="view in daySchedule">{{view.place.name}}</div>
-                        </div>
-                        <div id="map" class="col"></div>
+                            <div class="col-4 fade">
+                                <div v-for="view in daySchedule">
+                                    <div>
+                                        {{view.startTime}}-{{view.endTime}}<br>
+                                        {{view.place.name}}
+                                    </div>
+                                    <div class="row cols-2">
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-10 betweenBox">
+                                            <br>
+                                            <i class="fa-solid fa-car-side"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="map" class="col-8"></div>
 
                         </div>
-                        
-                        
+
+
                     </div>
 
 
@@ -139,6 +179,35 @@
                     this.daySchedule = this.schedule.details[index]
                     console.log(this.daySchedule)
                 },
+                caltime() {
+                    for (let i = 0; i < this.schedule.details.length; i++) {
+                        for (let j = 0; j < this.schedule.details[i].length; j++) {
+
+                            let startTime = new Date(this.schedule.details[i][j].startTime)
+                            let endTime = new Date(this.schedule.details[i][j].endTime)
+                            let hour = startTime.getHours()
+                            let min = startTime.getMinutes()
+
+                            if (Number(hour) < 10) {
+                                hour = "0" + hour
+                            }
+                            if (Number(min) < 10) {
+                                min = "0" + min
+                            }
+                            this.schedule.details[i][j].startTime = hour + ":" + min
+
+                            hour = endTime.getHours()
+                            min = endTime.getMinutes()
+                            if (Number(hour) < 10) {
+                                hour = "0" + hour
+                            }
+                            if (Number(min) < 10) {
+                                min = "0" + min
+                            }
+                            this.schedule.details[i][j].endTime = hour + ":" + min
+                        }
+                    }
+                }
             },
             computed: {
 
@@ -147,7 +216,12 @@
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
                 axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
-                    .then(res => { this.schedule = res.data; this.daySchedule = this.schedule.details[0] })
+                    .then(res => {
+                        this.schedule = res.data;
+                        this.daySchedule = this.schedule.details[0];
+                        this.caltime();
+
+                    })
                     .catch(err => console.log("err"))
                 //}
                 this.initMap()

@@ -167,8 +167,8 @@ namespace JustGo.Repository
                     {                        
                         ScheduleDetailVM vmDetail = new ScheduleDetailVM()
                         {
-                            StartTime = item.StartTime,
-                            EndTime = item.EndtTime,
+                            StartTime = item.StartTime.AddHours(8),
+                            EndTime = item.EndtTime.AddHours(8),
                             WeatherWarning = item.WeatherWarning,
                             Pop = item.Pop,
                             Temperature = item.Temperature,

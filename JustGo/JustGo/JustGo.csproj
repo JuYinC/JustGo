@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\blogImages\" />
+    <Folder Include="wwwroot\NewFolder\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

@@ -1175,21 +1175,17 @@
         data() {
             return {
                 toleft: 0,
-                calpositiontotal: 0
-
+                calpositiontotal: 0,
+                selectDatelocal: [],
+                selectDateEndlocal: [],
+                saveData: [],
             }
         },
 
-        computed: {
-            travel() {
-                return this.$store.state.travel;
-            },
+        computed: {            
             selectPlaces() {
                 return this.$store.state.selectPlaces
-            },
-            datetime() {
-                return this.$store.state.datetime
-            },
+            },            
             duringDate() {
                 return this.$store.state.duringDate
             },
@@ -1201,13 +1197,56 @@
                     left: this.toleft + 'px',
                 }
             },
+            travel() {
+                return this.$store.state.travel
+            },
+            datetime() {
+                return this.$store.state.datetime
+            },
+            
         },
-
-        mounted() {
-
-        },
-
         methods: {
+            culDate() {
+                let startTime = new Date(this.selectDatelocal)
+                let endTime = new Date(this.selectDateEndlocal)
+                let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+                this.duringDate.length = 0
+                this.datetime.length = 0
+                if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
+
+                    for (let i = 0; i < day; i++) {
+                        this.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                        this.datetime.push('09:00')
+                    }
+
+                    if (this.travel.length == 0) {
+                        for (let i = 0; i < day; i++) {
+                            this.travel.push([])
+                        }
+                    } else if (this.travel.length <= day) {
+
+                        for (let i = 0; i < day - this.travel.length; i++) {
+                            this.travel.push([])
+                        }
+
+                    } else if (this.travel.length > day) {
+
+                        for (let i = 0; i < this.travel.length - day; i++) {
+                            let lastIndex = this.travel.length - 1
+
+                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
+                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
+                            }
+                            this.travel.pop()
+                        }
+                    }
+                } else {
+                    alert('重新選擇日期')
+                }
+            },
+
             tol() {
                 let x = document.getElementsByClassName('daysbox')[0].clientWidth
                 // let y = document.getElementsByClassName('btnbox')[0].clientWidth
@@ -1263,12 +1302,16 @@
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                        <input type="date">
-                                        <input type="date">
+                                         <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                                                                                                       v-model="selectDatelocal">
+                                         <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                                                                                                    v-model="selectDateEndlocal">
+                                         <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>                                        
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
                                         </ul>
+                                        
                                     <div class="btnbox-l" @@click="tor">
                                             <i class="fa-solid fa-angle-left left"></i>
                                     </div>

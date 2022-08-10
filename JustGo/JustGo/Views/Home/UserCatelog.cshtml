@@ -218,7 +218,7 @@
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                     @*<div class="schedule" v-for="(item,index) in schedule" :key="index">*@
-                    <div class="schedule" v-for="(item,index) in nextSchedule">
+                    <div class="schedule" v-for="(item,index) in nextSchedule" :key="scheduleId">
                         <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br/>
                             <hr class="hr_Style" />
@@ -236,7 +236,7 @@
             <div class="travel">過往行程</div>
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                    <div class="schedule" v-for="(item,index) in exSchedule">
+                    <div class="schedule" v-for="(item,index) in exSchedule" :key="scheduleId">
                         <div class="scheduleInfo scheduleInfo_Margin">
                             <span class="item_title">{{item.title}}</span><br>
                             <hr class="hr_Style" />
@@ -266,34 +266,34 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
 <script>
-    new Vue({
-        el: "#app",
-        data() {
-            return {
-                showSchedule: [],
-                dateNow: "",
-            }
+new Vue({
+    el: "#app",
+    data() {
+        return {
+            showSchedule: [],
+            dateNow: "",
+        }
+    },
+    computed: {
+        schedule() {
+            return this.showSchedule
         },
-        computed: { 
-            schedule() {
-                return this.showSchedule
-            },
-            nextSchedule() {
-                return this.showSchedule.filter( e=> new Date(e.endDate) > new Date());
-            },
-            exSchedule() {
-                return this.showSchedule.filter( e=> new Date(e.endDate) < new Date());
-            }
+        nextSchedule() {
+            return this.showSchedule.filter(e => new Date(e.endDate) > new Date());
         },
-        methods: {            
-            editSchedule(scheduleId) {
-                window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId
-                //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
-            },
-            deleteSchedule(scheduleId) {
-                this.showSchedule.splice(this.showSchedule.findIndex(e=>e.scheduleId==scheduleId), 1);
-                axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
-                    .catch(err => console.log("err"))
+        exSchedule() {
+            return this.showSchedule.filter(e => new Date(e.endDate) < new Date());
+        }
+    },
+    methods: {
+        editSchedule(scheduleId) {
+            window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId
+            //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
+        },
+        deleteSchedule(scheduleId) {
+            axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
+                .then(res => { this.showSchedule.splice(this.showSchedule.findIndex(e => e.scheduleId == res.data), 1) })
+                .catch(err => console.log("err"))
             },
             createBlog(scheduleId) {
                 window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId

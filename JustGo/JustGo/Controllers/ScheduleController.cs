@@ -16,7 +16,7 @@ namespace JustGo.Controllers
         {
             _place = place;
             _schedule = schedule;
-            _logger = logger;
+            _logger = logger;            
         }
         public IActionResult Index()
         {
@@ -36,12 +36,14 @@ namespace JustGo.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult copySchedule(DateTime time,int blogId)
         {
-            return Json(_schedule.copyScheduleByBlog(time, blogId));
+            return Json(_schedule.copyScheduleByBlog(time, blogId,GetUserId()));
         }
         //--------------------------------------------------
         //搜尋使用者行程清單/無細項
+        [Authorize]
         public IActionResult selectUserSchedule()
         {            
             return Json(_schedule.selectUserSchedule(GetUserId()));
@@ -49,32 +51,37 @@ namespace JustGo.Controllers
 
         //搜尋行程細項
         [HttpPost]
+        [Authorize]
         public IActionResult selectDetail([FromBody] ScheduleVM vm)
         {
             return Json(_schedule.selectScedule(vm.ScheduleId,GetUserId()));
         }
 
-        //新增行程
+        //新增行程 修改行程
         [HttpPost]
         [Authorize]
         public IActionResult setSchedule([FromBody] ScheduleVM vm)
         {
-            if (vm.UserId != null)
+            if (vm.ScheduleId != 0)
             {
                 vm.UserId = GetUserId();
                 return Json(_schedule.editScedule(vm));
             }
             vm.UserId = GetUserId();
-            return Json(_schedule.createScedule(vm));
-            //return View("Index");
-
+            return Json(_schedule.createScedule(vm));            
         }
 
         //刪除行程
         [HttpPost]
+        [Authorize]
         public IActionResult deleteSchedule([FromBody] ScheduleVM vm)
         {
-            return Json(_schedule.deleteScedule(vm.ScheduleId));
+            vm.UserId = GetUserId();
+            if(_schedule.deleteScedule(vm))
+            {
+                return Json(vm.ScheduleId);
+            }
+            return Json(0);
         }
 
         public IActionResult selectWeather()

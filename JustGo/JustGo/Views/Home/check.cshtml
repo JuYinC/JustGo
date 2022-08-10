@@ -68,12 +68,12 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                        aria-selected="true">行程</button>
+                        aria-selected="true">路線</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                        aria-selected="false">路線規劃</button>
+                        aria-selected="false">行程</button>
                 </li>
             </ul>
         </div>
@@ -449,7 +449,7 @@
             mounted() {
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
-                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 113 })
+                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
                     .then(res => {
                         this.schedule = res.data;
                         this.daySchedule = this.schedule.details[0];

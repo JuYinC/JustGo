@@ -18,10 +18,6 @@ namespace JustGo.Controllers
             _schedule = schedule;
             _logger = logger;            
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpPost]
         public IActionResult getPlace([FromBody] SelectPlaceVM select)
@@ -31,7 +27,7 @@ namespace JustGo.Controllers
 
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
-        {            
+        {
             return Json(_place.getPlaceFilter(vm));
         }
 
@@ -45,7 +41,7 @@ namespace JustGo.Controllers
         //搜尋使用者行程清單/無細項
         [Authorize]
         public IActionResult selectUserSchedule()
-        {            
+        {
             return Json(_schedule.selectUserSchedule(GetUserId()));
         }
 

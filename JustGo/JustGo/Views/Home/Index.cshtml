@@ -36,10 +36,15 @@
             }else{
                 $('#shbox').removeClass('tgshow')
                 $('#shbtn').removeClass('tgshow')
+                $('#shbox')[0].focus()
             }
             e.stopPropagation();
-            
         });
+         $("#shbtn").click(function(e){
+            console.log('0000')
+             e.stopPropagation();
+         });
+     
 
 
 

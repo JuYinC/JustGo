@@ -28,6 +28,19 @@
         var navbar = document.getElementById("navbarC");
         var menu = document.getElementById("navbarC__menu");
 
+        $("#sh").click(function(e){
+            $("#sh").toggleClass("sh")
+            if($('#sh')[0].clientWidth >200){
+                $('#shbox').addClass('tgshow')
+                $('#shbtn').addClass('tgshow')
+            }else{
+                $('#shbox').removeClass('tgshow')
+                $('#shbtn').removeClass('tgshow')
+            }
+            e.stopPropagation();
+            
+        });
+
 
 
 
@@ -221,8 +234,12 @@
         <div>北部</div>
         <div>中部</div>
         <div>南部</div>
-        <div>東部</div>
-        <div><i class="fa-solid fa-magnifying-glass"></i>篩選</div>
+        <div id="check">東部</div>
+        <div id="sh" class="">
+            <i class="fa-solid fa-magnifying-glass"></i>篩選
+            <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" value="" />
+            <button id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
     </div>
     <div class="wrapper">
         <div class="card">

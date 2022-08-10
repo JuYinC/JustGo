@@ -4,9 +4,6 @@
   --primary-bule: #084887;
   --primary-bule-light: #6bc1e3;
   --btn-color: rgb(255, 255, 255)
-    
-
-
 ; }
 
 @media only screen and (max-width: 576px) {
@@ -511,7 +508,47 @@
       justify-content: center;
       color: white;
       font-size: 3rem;
-      margin: 0.2rem; }
+      margin: 0.2rem;
+      cursor: pointer;
+      transition: width .3s; }
+    .screnbox .sh {
+      width: 70%;
+      font-size: 0;
+      padding: 1.4rem 2rem 1.6rem;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 2px;
+      padding: 1.4rem 2rem 1.6rem;
+      z-index: 50; }
+  .tgshow {
+    display: none; }
+  #shbox {
+    background-color: #333;
+    width: 80%;
+    height: 100%;
+    flex-grow: 1;
+    font-size: 2rem;
+    vertical-align: middle;
+    border-style: none;
+    background: transparent;
+    outline: none; }
+    #shbox::-webkit-input-placeholder {
+      color: #00000053; }
+  #shbtn {
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    vertical-align: middle;
+    transition: color .25s;
+    width: 15%;
+    color: #375cc2; }
+    #shbtn:hover {
+      color: rgba(55, 92, 194, 0.337); }
   .wrapper {
     display: flex;
     flex-wrap: wrap;

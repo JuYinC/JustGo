@@ -68,12 +68,12 @@ html {
     flex-direction: column;
     min-height: 100px;
 }
-/*¦a¹Ï*/
-#map {
+/*ï¿½aï¿½ï¿½*/
+.map-pag2 {
     height: 500px;
     width: 100%;
 }
-/*¦a¹Ï«ö¶s*/
+/*ï¿½aï¿½Ï«ï¿½ï¿½s*/
 #floating-panel {
     position: absolute;
     top: 3%;
@@ -87,7 +87,7 @@ html {
 }
 
 
-/* infowindow¤£­nÅã¥Üx */
+/* infowindowï¿½ï¿½ï¿½nï¿½ï¿½ï¿½x */
 button.gm-ui-hover-effect {
    /* visibility:visible;*/
 }
@@ -185,7 +185,7 @@ body {
 .infowindow p {
     color: #514D54;
     font-size: 14px;
-    font-family: "·L³n¥¿¶ÂÅé";
+    font-family: "ï¿½Lï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     padding: 0px;
     margin: 5px;
     margin-bottom: 25px;

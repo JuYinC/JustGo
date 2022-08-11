@@ -1,60 +1,16 @@
 ﻿@{
     ViewData["Title"] = "check";
 }
+@{
+    Layout = "_Layout";
+}
 
 @section Style{
-<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
-<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/check.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<style>
-    header {
-        display: none;
-    }
 
-    .footer__waves {
-        display: none;
-    }
-
-    #map {
-        width: 800px;
-        height: 500px;
-    }
-
-    .nav-fill .nav-item .nav-link,
-    .nav-justified .nav-item .nav-link {
-        width: 100%;
-        border-radius: 20px;
-    }
-
-    .daysBar {
-        justify-content: center
-    }
-
-    .days {
-        margin: 0px 20px;
-    }
-
-    .scheduleDay {
-        margin: 20px;
-        /*border: 1px solid black;*/
-        vertical-align: top;
-        /*min-width:250px;*/
-    }
-
-    .scheduletab1 {
-        margin-top: 20px;
-        /*overflow-y:auto;
-                                                    flex-wrap: nowrap;*/
-    }
-
-    .betweenBox {
-        height: 50px;
-        border-left-style: dashed;
-        border-left-color: black;
-        border-left-width: 1px;
-    }
-</style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
@@ -64,14 +20,14 @@
 
     <div class="container">
         <div class="checkbar">
-            <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
+            <ul class="nav nav-justified nav-tabs" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="tab"
                         data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                         aria-selected="true">地圖</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="tab"
                         data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                         aria-selected="false">行程</button>
                 </li>
@@ -83,13 +39,17 @@
                 aria-labelledby="pills-home-tab">
 
                 <div>
-                    <div class="daysBar">
+                    @* <div class="daysBar">
                         <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                            style="display:inline-block" class="days">{{index+1}}</div>
-                    </div>
+                            class="days">{{index+1}}</div>
+                    </div> *@
                     <div>
-                        <div class="row cols-2">
-                            <div class="col-4 ">
+                        <div class="row cols-md-2  cols-xs-1">
+                            <div class="col-md-4 xs">
+                                <div class="daysBar">
+                                    <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
+                                        class="days">{{index+1}}</div>
+                                </div>
                                 <div v-for="view in daySchedule">
                                     <div>
                                         {{view.startTime}}-{{view.endTime}}<br>
@@ -105,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="map" class="col-8"></div>
+                            <div id="map" class="col-md-8 cols-xs-1 map-pag3"></div>
                         </div>
                     </div>
                 </div>
@@ -141,6 +101,7 @@
     @section Scripts{
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+    <script src="~/js/site.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

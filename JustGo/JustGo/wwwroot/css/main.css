@@ -145,7 +145,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 1.5rem 0rem; }
+    margin: 1.5rem 0; }
   .card {
     width: 100%;
     height: 20rem;
@@ -553,9 +553,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 1.5rem 10rem; }
+    margin: 1.5rem 10%; }
   .card {
-    width: 29rem;
+    width: 35rem;
     height: 20rem;
     padding: 2rem 1rem;
     background: #fff;
@@ -956,7 +956,7 @@
       position: relative;
       width: 100%;
       height: 100%; }
-      .journey__map .mapbox #map {
+      .journey__map .mapbox map-pag2 {
         width: 100%;
         height: 100%; } }
 
@@ -1015,7 +1015,7 @@
         margin-left: 3rem;
         border-radius: 15px; }
   .journey__map {
-    height: 88vh;
+    height: 90vh;
     display: flex;
     position: inherit;
     top: 10vh; }
@@ -1125,7 +1125,7 @@
       .journey__map .sidebar__grid {
         height: 100%;
         display: grid;
-        grid-template-rows: 125px 620px 1fr; }
+        grid-template-rows: 18% 75% 1fr; }
         .journey__map .sidebar__grid .grid-item-t {
           margin: 12px;
           position: relative;
@@ -1153,9 +1153,8 @@
                 background: #c6eef8; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-l {
             position: absolute;
-            top: 48px;
             width: 25px;
-            height: 46px;
+            height: 100%;
             display: flex;
             align-items: center;
             left: -5px; }
@@ -1172,7 +1171,7 @@
             position: absolute;
             left: 255px;
             width: 25px;
-            height: 46px;
+            height: 100%;
             display: flex;
             align-items: center; }
             .journey__map .sidebar__grid .grid-item-t .btnbox-r .right {
@@ -1194,7 +1193,8 @@
             min-width: 250px;
             max-width: 300px;
             border: solid 1px #6c757d;
-            margin: 3px; }
+            margin: 3px;
+            vertical-align: top; }
             .journey__map .sidebar__grid .grid-item-m .col * {
               font-size: 1.4rem;
               margin-bottom: 0.3rem; }
@@ -1241,14 +1241,17 @@
                 .journey__map .sidebar__grid .grid-item-m .item button:hover i {
                   font-size: 10px; }
         .journey__map .sidebar__grid .grid-item-b {
-          margin: 30px 0 0 100px; }
+          position: sticky;
+          bottom: 0; }
+          .journey__map .sidebar__grid .grid-item-b button {
+            width: 100%; }
     .journey__map .mapbox {
       flex: 1;
       display: flex;
       position: relative;
       width: 100%;
       height: 100%; }
-      .journey__map .mapbox #map {
+      .journey__map .mapbox .map-pag2 {
         width: 100%;
         height: 100%; } }
 

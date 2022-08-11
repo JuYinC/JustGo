@@ -874,10 +874,13 @@
                 }
                 store.commit('calcRoute')
             },
-            getLocation(state, index) {
-                console.log(state.markers[index])
+            getLocation(state, { view, index }) {
+                if (state.isTravel == true) { return }
+                const bounds = new google.maps.LatLngBounds();
+                bounds.extend({ lat: view.lat, lng: view.lng })
+                state.map.fitBounds(bounds);
                 google.maps.event.trigger(state.markers[index], 'click')
-                // 因為setPlaceMarker綁在markerCluster上面，所以用google map api的呼叫方式無效，要看MakerCluster有沒有呼叫方法
+                // marker因為包在cluster裡面，一定要先展開才叫的到，只好先拉近再呼叫
             },
         },
 
@@ -1272,9 +1275,8 @@
                 this.$store.commit('calcRoute')
 
             },
-            focusLocation(index) {
-                console.log(index)
-                this.$store.commit('getLocation', index)
+            focusLocation(view, index) {
+                this.$store.commit('getLocation', { view, index })
             },
         },
 
@@ -1307,7 +1309,7 @@
                         </div>
                         <div class="col2">
                             <div v-for="(view,selIndex) in selectPlaces">
-                                <div class="item2" @@click="focusLocation(selIndex)">
+                                <div class="item2" @@click="focusLocation(view,selIndex)">
                                     <h3>{{view.name}}</h3>
                                     <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
                                     <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>

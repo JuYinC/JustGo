@@ -21,41 +21,14 @@
 
 
 
-    <script>
-        
+    <script>        
          var typed = new Typed(".auto-type", {
             strings: ["還在為排行程煩惱嗎?", "旅行也可以很簡單"], typeSpeed: 100, backSpeed: 100, loop: false
         });
         var navbar = document.getElementById("navbarC");
         var menu = document.getElementById("navbarC__menu"); 
-
-         @* $("#sh").click(function(e){
-          
-            $("#sh").toggleClass("sh")
-            if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
-                $('#shbox').addClass('tgshow')
-                $('#shbtn').addClass('tgshow')
-            }else{
-                $('#shbox').removeClass('tgshow')
-                $('#shbtn').removeClass('tgshow')
-                $('#shbox')[0].focus()
-            }
-            e.stopPropagation();
-        });
-         $("#shbtn").click(function(e){
-            console.log('0000')
-             e.stopPropagation();
-         });  *@
     </script>
     <script>
-
-
-
-
-
-
-        // AJAX 去後端取得資料庫的產品資訊
-
         const {reactive, ref ,onMounted} = Vue;      
           const App = {
               setup() {
@@ -156,10 +129,7 @@
                   }
               },
         }
-        Vue.createApp(App).mount("#app")
-    </script>
-
-    <script>
+        Vue.createApp(App).mount("#app")    
         var mouse = {
             X: 0,
             Y: 0,

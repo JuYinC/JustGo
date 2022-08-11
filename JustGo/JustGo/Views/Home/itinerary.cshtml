@@ -72,7 +72,7 @@
 
 
 @section Scripts{
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
 <script src="https://unpkg.com/@@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -83,7 +83,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 <script>
-let wwwroot = "@Url.Content("~/file/photo")"
+    let wwwroot = "@Url.Content("~/file/photo")"
     hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
@@ -190,32 +190,32 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         this.state.travel[j][i].endTime = timestamp
 
                         let now = new Date()
-                        now.setDate(now.getDate()+7)
+                        now.setDate(now.getDate() + 7)
                         let travelDate = new Date(this.state.duringDate[j])
 
-                        this.state.travel[j][i].minT= 30
-                        this.state.travel[j][i].maxT= ""
-                        this.state.travel[j][i].pop12h= ""
-                        this.state.travel[j][i].uvi=""
+                        this.state.travel[j][i].minT = 30
+                        this.state.travel[j][i].maxT = ""
+                        this.state.travel[j][i].pop12h = ""
+                        this.state.travel[j][i].uvi = ""
 
 
-                        if(now > travelDate){
+                        if (now > travelDate) {
 
-                            this.state.selectWeather.find(object =>{                               
-                                if(this.state.travel[j][i].town == object.locationsName){
+                            this.state.selectWeather.find(object => {
+                                if (this.state.travel[j][i].town == object.locationsName) {
                                     let weatherStart = new Date(object.startTime)
                                     let year = weatherStart.getFullYear()
-                                    let month =weatherStart.getMonth()
+                                    let month = weatherStart.getMonth()
                                     let date = weatherStart.getDate()
-                                    weatherStart = new Date(year,month,date)
+                                    weatherStart = new Date(year, month, date)
 
-                                    if(travelDate.getTime()==weatherStart.getTime()){
-                                    this.state.travel[j][i].minT= object.minT
-                                    this.state.travel[j][i].maxT= object.maxT
-                                    this.state.travel[j][i].pop12h= object.pop12h
-                                    this.state.travel[j][i].uvi= object.uvi
+                                    if (travelDate.getTime() == weatherStart.getTime()) {
+                                        this.state.travel[j][i].minT = object.minT
+                                        this.state.travel[j][i].maxT = object.maxT
+                                        this.state.travel[j][i].pop12h = object.pop12h
+                                        this.state.travel[j][i].uvi = object.uvi
                                     }
-                                    
+
                                 }
                             })
                         }
@@ -259,11 +259,11 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 let date = [];
                 let today = new Date();
                 console.log(today)
-                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
+                for (let i = 0; i < 7; i++) {
+                    date.push(today.getMonth() + 1 + '/' + today.getDate());
+                    today.setDate(today.getDate() + 1)
                 }
-                
+
 
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
@@ -273,7 +273,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     townWeather.length = 0;
                     state.selectWeather.find(object => {
                         if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
+                            townWeather.push(object);
                         };
                     })
                     if (position.class == 15) {
@@ -409,24 +409,24 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         state.directionsRenderer = null
                     }
 
-                                    let date = [];
-                let today = new Date();
-                                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
-                }
+                    let date = [];
+                    let today = new Date();
+                    for (let i = 0; i < 7; i++) {
+                        date.push(today.getMonth() + 1 + '/' + today.getDate());
+                        today.setDate(today.getDate() + 1)
+                    }
                     // 產生地點marker
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
                     let townWeather = [];
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
-                                                townWeather.length = 0;
-                    state.selectWeather.find(object => {
-                        if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
-                        };
-                    })
+                            townWeather.length = 0;
+                            state.selectWeather.find(object => {
+                                if (position.town == object.locationsName) {
+                                    townWeather.push(object);
+                                };
+                            })
                             iofSpots++
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
@@ -532,12 +532,12 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         state.markers = [];
                     }
 
-                                    let date = [];
-                let today = new Date();
-                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
-                }
+                    let date = [];
+                    let today = new Date();
+                    for (let i = 0; i < 7; i++) {
+                        date.push(today.getMonth() + 1 + '/' + today.getDate());
+                        today.setDate(today.getDate() + 1)
+                    }
 
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
@@ -550,11 +550,11 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
                     state.travel[day].map((position, j) => {
                         townWeather.length = 0;
-                    state.selectWeather.find(object => {
-                        if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
-                        };
-                    })
+                        state.selectWeather.find(object => {
+                            if (position.town == object.locationsName) {
+                                townWeather.push(object);
+                            };
+                        })
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.lat, lng: position.lng },
@@ -985,7 +985,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
                     } else if (this.travel.length > day) {
 
-                        let daydiff = this.travel.length-day
+                        let daydiff = this.travel.length - day
                         for (let i = 0; i < daydiff; i++) {
                             let lastIndex = this.travel.length - 1
 
@@ -1153,8 +1153,8 @@ let wwwroot = "@Url.Content("~/file/photo")"
                                     <transition-group>
                                         <div class="item" v-for="(view,veiwIndex) in day" :key="view">
                                             <p>{{view.startTime}}-{{view.endTime}}</p> 
-                                            
-                                            
+
+
                                             <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
                                             <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
                                             <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
@@ -1463,8 +1463,8 @@ let wwwroot = "@Url.Content("~/file/photo")"
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                         
-                                                                                                                        
+
+
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

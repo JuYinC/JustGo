@@ -262,7 +262,7 @@
                         </div>
                         <hr class="hr_Style" />
                         <div class="buttonBar schedule_word_margin">
-                            <span class="CreateBlog_Style" @@click="creatBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
+                            <span class="CreateBlog_Style" @@click="editBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
                             <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.blogId)"><i class="fa-solid fa-trash-can"></i></span>
                         </div>
                     </div>
@@ -309,7 +309,10 @@ new Vue({
                 .catch(err => console.log("err"))
             },
             createBlog(scheduleId) {
-                window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId
+                window.location.href = '@Url.Action("EditBlog","Home")#create?' + scheduleId
+            },
+            editBlog(blogId) {
+                window.location.href = '@Url.Action("EditBlog","Home")#edit?' + blogId
             }
         },
         mounted() {

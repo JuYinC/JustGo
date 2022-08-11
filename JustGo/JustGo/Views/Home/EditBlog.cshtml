@@ -272,24 +272,37 @@
                         }
                     }
                 },             
-                 mounted() {
-                     let id = window.location.search.substring(1) 
-                     
-                     if (id != "") {
-                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {                              
-                             this.Details = res.data.details;
-                             this.EndDate = res.data.endDate;
-                             this.StartDate = res.data.startDate;
-                             //this.Title = res.data.Title;
-                             this.Describe = res.data.describe;
-                             this.StartDate = res.data.startDate;
-                             this.EndDate = res.data.endDate;
-                              }
-                            )
-                    }
-
+                 mounted() {                                       
+                     let hash = window.location.hash.substring(1).split("?")[0]
+                     let id = window.location.hash.substring(1).split("?")[1]
+                     console.log(id)
+                     console.log(hash);
+                     if (hash == "create") {
+                         if (id != "") {
+                             axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {
+                                 this.Details = res.data.details;
+                                 this.EndDate = res.data.endDate;
+                                 this.StartDate = res.data.startDate;
+                                 //this.Title = res.data.Title;
+                                 this.Describe = res.data.describe;
+                                 this.StartDate = res.data.startDate;
+                                 this.EndDate = res.data.endDate;
+                             })
+                         }
+                     }else if(hash == "edit"){
+                         if (id != "") {
+                             axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
+                                 this.Details = res.data.details;
+                                 this.EndDate = res.data.endDate;
+                                 this.StartDate = res.data.startDate;
+                                 //this.Title = res.data.Title;
+                                 this.Describe = res.data.describe;
+                                 this.StartDate = res.data.startDate;
+                                 this.EndDate = res.data.endDate;
+                             })
+                         }
+                     }         
                  },
-
             },
             )
 

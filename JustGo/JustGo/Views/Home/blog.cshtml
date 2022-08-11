@@ -277,20 +277,20 @@
             mytempscore: this.score
 
         },
-        //props: {
-        //    count: {
-        //        type: Number,
-        //        default: 5
-        //    },
-        //    score: {
-        //        type: Number,
-        //        default: 1
-        //    },
-        //    color: {
-        //        type: String,
-        //        default: '#FFC100'
-        //    }
-        //},
+        props: {
+            count: {
+                type: Number,
+                default: 5
+            },
+            score: {
+                type: Number,
+                default: 1
+            },
+            color: {
+                type: String,
+                default: '#FFC100'
+            }
+        },
         methods: {
             getdate(date) {
                 return moment(date).format('YYYY/MM/DD')
@@ -565,22 +565,21 @@
                 
                         <div v-for="(day,dayIndex) in Details">
                             <label id="day">第{{dayIndex+1}}天</label>
-                            <div class="item" v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
 
                                 <span><i class="fa-solid fa-map-location-dot px-1 mb-1"
                                             :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
                                     <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
                                     <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
-                                    <div class="mb-1">開始時間:{{dayDetails.startTime}}</div>
-                                    <div class="mb-1">結束時間:{{dayDetails.endTime}}</div>
+                            
 
-                                <div>
+                                 <div>
                                     <i class="fa fa-star" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                         @@load="myscore=item"></i>
                                     {{dayDetails.score}}分
                                 </div>
-
+                              
                                 <p>{{dayDetails.describe}}</p>I am Describe<br>
 
                                 <div v-viewer class="groupimg img-fluid">

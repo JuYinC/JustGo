@@ -240,6 +240,7 @@
 
             // 產生景點標示
             setPlaceMarker(state) {
+                if (state.isTravel == true) { return }
                 if (state.markers && state.markerCluster) {
                     state.markerCluster.clearMarkers();
                     state.markerCluster = null
@@ -518,6 +519,7 @@
 
             //單日行程標示與路線
             setDailyMarker(state, day) {
+                if (state.isTravel == false) { return }
                 if (state.travel[day].length > 0) {
                     if (state.markers && state.markerCluster) {
                         state.markerCluster.clearMarkers();
@@ -1309,12 +1311,14 @@
                         </div>
                         <div class="col2">
                             <div v-for="(view,selIndex) in selectPlaces">
-                                <div class="item2" @@click="focusLocation(view,selIndex)">
-                                    <h3>{{view.name}}</h3>
-                                    <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
-                                    <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
-                                    <p>營業時間{{view.opentime}}-{{view.closetime}}</p>
-                                    <p>建議停留{{view.timestay}}分</p>
+                                <div class="item2">
+                                    <div @@click="focusLocation(view,selIndex)">
+                                        <h3>{{view.name}}</h3>
+                                        <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
+                                        <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
+                                        <p>營業時間{{view.opentime}}-{{view.closetime}}</p>
+                                        <p>建議停留{{view.timestay}}分</p>
+                                    </div>
                                     <div @@click="addview(selIndex)" class="adto">新增行程</div>
                                 </div>
                             </div>

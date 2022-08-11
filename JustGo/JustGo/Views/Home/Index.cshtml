@@ -56,116 +56,105 @@
 
         // AJAX 去後端取得資料庫的產品資訊
 
-        const { reactive, ref ,onMounted} = Vue;
-       
-
+        const {reactive, ref ,onMounted} = Vue;      
           const App = {
-            setup() {
-                const search = reactive({ results: [] })
-                let searchString = ref("")                
-                const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市','宜蘭縣'];
-                const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
-                const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
-                const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
-                let searchNumber = 12;
-                const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:0,Search:""})
-                function searchBlog(area) {
-                    select.searchNumber = 0;
-                    switch (area) {                       
-                        case "北部":
-                            if (select.selectCounty[0] != northern[0]) {
-                                select.selectCounty = northern;
-                                select.Search = ""; 
-                            }
-                            else {
-                                select.selectCounty = []
-                                select.Search = ""; 
-                            }
-                            break;
-                        case "中部":
-                            if (select.selectCounty[0] != central[0]) {
-                                select.selectCounty = central;
-                                select.Search = ""; 
-                            } else {
-                                select.selectCounty = []
-                                select.Search = ""; 
-                            }
-                            break;
-                        case "南部":
-                        
-                            if (select.selectCounty[0] != south[0]) {
-                                select.selectCounty = south;
-                                select.Search = ""; 
-                            } else {
-                                select.selectCounty = []
-                                select.Search = ""; 
-                            }
-                            break;
-                        case "東部":
-                            if (select.selectCounty[0] != east[0]) {
-                                select.selectCounty = east;
-                                select.Search = ""; 
-                            } else {
-                                select.selectCounty = []
-                                select.Search = ""; 
-                            }
-                            break;
-                        case "搜尋":
-                            select.Search = searchString.value;
-                            searchString.value = "";
-                            break;
-                        default:
-                            select.selectCounty = [];
-                            select.Search = "";
-                            break;
-                    }        
-                    select.searchNumber = 0;
-                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)                                       
-                }
-                function imageSrc(imageName) {
+              setup() {
+                  const search = reactive({ results: [] })
+                  let searchString = ref("")
+                  const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'];
+                  const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
+                  const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
+                  const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
+                  let searchNumber = 12;
+                  const select = reactive({ selectCounty: [], selectAcitivity: [], searchNumber: 0, Search: "" })
+                  function searchBlog(area) {
+                      select.searchNumber = 0;
+                      switch (area) {
+                          case "北部":
+                              if (select.selectCounty[0] != northern[0]) {
+                                  select.selectCounty = northern;
+                                  select.Search = "";
+                              }
+                              else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "中部":
+                              if (select.selectCounty[0] != central[0]) {
+                                  select.selectCounty = central;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "南部":
+
+                              if (select.selectCounty[0] != south[0]) {
+                                  select.selectCounty = south;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "東部":
+                              if (select.selectCounty[0] != east[0]) {
+                                  select.selectCounty = east;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "搜尋":
+                              select.Search = searchString.value;
+                              searchString.value = "";
+                              break;
+                          default:
+                              select.selectCounty = [];
+                              select.Search = "";
+                              break;
+                      }
+                      select.searchNumber = 0;
+                      axios.post("@Url.Action("searchBlog","Blog")", select).then(res => search.results = res.data)
+                  }
+                  function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
-                }
-                function open(e){
+                  }
+                  function userImageSrc(userImage) {
+                      return "@Url.Content("~/userImages")/" + userImage
+                  }
+                  function open(e) {
                       $("#sh").toggleClass("sh")
-                            if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
-                                $('#shbox').addClass('tgshow')
-                                $('#shbtn').addClass('tgshow')
-                            }else{
-                                $('#shbox').removeClass('tgshow')
-                                $('#shbtn').removeClass('tgshow')
-                                $('#shbox')[0].focus()
-                            }                 
-                }
-                function blogUrl(id){
-                    return "@Url.Action("Blog","Home")?"+id
-                }
-                function scroll() {
-                    if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
-                        console.log("123")
-                    }
-                    select.searchNumber += searchNumber;
-                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => Array.prototype.push.apply(search.results,res.data))
-                 }
-                onMounted(() => {
-                    window.addEventListener('scroll', scroll);
-                     searchBlog("");
-                })
-                return {
-                    search,
-                    northern,
-                    central,
-                    south,
-                    east,
-                    searchNumber,                    
-                    select,
-                    searchString,
-                    searchBlog,
-                    imageSrc,
-                    open,                                        
-                    blogUrl,
-                    scroll
-                }
-            },
+                      if ($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth * 1.1) {
+                          $('#shbox').addClass('tgshow')
+                          $('#shbtn').addClass('tgshow')
+                      } else {
+                          $('#shbox').removeClass('tgshow')
+                          $('#shbtn').removeClass('tgshow')
+                          $('#shbox')[0].focus()
+                      }
+                  }
+                  function blogUrl(id) {
+                      return "@Url.Action("Blog","Home")?" + id
+                  }
+                  function scroll() {
+                      if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
+                          select.searchNumber += searchNumber;
+                          axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
+                      }
+                  }
+                  onMounted(() => {
+                      window.addEventListener('scroll', scroll);
+                      searchBlog("");
+                  })
+                  return {
+                      search, northern, central, south, east, searchNumber,
+                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
+                  }
+              },
         }
         Vue.createApp(App).mount("#app")
     </script>
@@ -356,6 +345,7 @@
                 {{item}}
                 <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
+                    <img :src="userImageSrc('Shinnosuke6.png')" alt="">@*頭像*@
                     <h1>{{item.title}}</h1>
                     <p>😎帳號</p>
                     <a :href="blogUrl(item.blogId)" class="btn">read me</a>

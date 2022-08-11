@@ -1,6 +1,7 @@
 * {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  font-size: 1.7rem; }
 
 .navbarC {
   content: "";
@@ -9,27 +10,23 @@
 
 .map-pag3 {
   width: 66%;
-  height: 500px; }
+  height: 70vh; }
 
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
   width: 100%; }
 
-.nav-link[aria-expanded="true"] {
-  background-color: #1ccaff; }
+.nav-link[aria-expanded='true'] {
+  background-color: black; }
 
 .daysBar {
   width: 100%; }
   .daysBar .days {
     display: inline;
-    margin: 0px 20px;
-    background-color: aqua; }
+    margin: 0px 20px; }
 
-.scheduleDay {
-  margin: 20px;
-  /*border: 1px solid black;*/
-  vertical-align: top;
-  /*min-width:250px;*/ }
+.bgposition {
+  background-color: #5fd3ba6c; }
 
 .scheduletab1 {
   margin-top: 20px;

@@ -63,7 +63,6 @@
                               }
                               break;
                           case "南部":
-
                               if (select.selectCounty[0] != south[0]) {
                                   select.selectCounty = south;
                                   select.Search = "";
@@ -89,8 +88,7 @@
                               select.selectCounty = [];
                               select.Search = "";
                               break;
-                      }
-                      select.searchNumber = 0;
+                      }                      
                       axios.post("@Url.Action("searchBlog","Blog")", select).then(res => search.results = res.data)
                   }
                   function imageSrc(imageName) {

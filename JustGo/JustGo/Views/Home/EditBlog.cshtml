@@ -8,173 +8,9 @@
 @section Style{
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Poppins", serif;
-    }
 
-    #coverimg {
-        width: 100%;
-        height: 420px;
-        /* position: absolute; */
-        z-index: -5;
-        margin-bottom: 3%;
-    }
-
-    #covertitle {
-        position: absolute;
-        z-index: 2;
-        text-align: center;
-        top: 300px;
-        left: 10%;
-    }
-
-    .fa-flag {
-        font-size: 22px;
-        color: aliceblue;
-    }
-
-    #TitleId {
-        display: inline-block;
-        border-style: none;
-        outline: none;
-        background-color: transparent;
-        font-size: 22px;
-        color: aliceblue;
-        font-weight: auto;
-        text-align: center;
-        top: 60%;
-        left: 45%;
-        z-index: 2;
-    }
-
-        #TitleId:hover {
-            -webkit-text-stroke: 1px #fff;
-            color: transparent;
-            z-index: 2;
-
-        }
-
-    textarea {
-        width: 100%;
-        border: none;
-        border-bottom: 1px dashed #909cc2;
-    }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-bottom: 1px dashed #084887;
-        }
-
-    .container-fluid {
-        position: relative;
-    }
-
-    textarea::-webkit-scrollbar {
-        width: 8px;
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    textarea::-webkit-scrollbar-thumb {
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    #userimg {
-        border-radius: 50%;
-        height: 65px;
-    }
-
-    .Details {
-        list-style-type: none;
-    }
-
-
-    .list-group-item {
-        font-size: 14px !important;
-        /*color: #f9ab55 !important;*/
-        /*font-weight: bold !important;*/
-        box-shadow: 0 !important;
-        border: none !important;
-        padding: 2px !important;
-    }
-
-        .list-group-item:hover {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-            transition: width 2s, height 2s !important;
-            -webkit-transform: rotate(1deg) !important;
-        }
-
-        .list-group-item.active {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-         
-        }
-
-    .btn-primary, .btn-outline-primary {
-        background-color: #669ed6 !important;
-        color: #fff !important;
-        border: none !important;
-    }
-
-        .btn-primary:hover, .btn-outline-primary:hover {
-            background-color: #084887 !important;
-            color: #fff !important;
-            border: none !important;
-        }
-
-    #day {
-        background-color: #084887;
-        color: #fff;
-        border-radius: 8px;
-        padding: 4px 9px;
-        margin-bottom: 5px;
-    }
-
-    .groupimg {
-        width: 600px;
-        margin: 10px -10px;
-        display: row;
-        flex-wrap: wrap;
-        /* display: flex;
-                justify-content: space-evenly */
-    }
-
-        .groupimg > img {
-            width: 180px;
-            height: 150px;
-            margin: 10px 10px;
-            cursor: pointer;
-            justify-content: space-around;
-        }
-
-        .groupimg::after {
-            display: block;
-            width: 180px;
-        }
-   
-
-
-        #setting{
-	        position:fixed; right:5%; bottom:20%;
-            font-size: 28px;
-        }
     </style>
     }
 
@@ -347,19 +183,7 @@
 
                     },                   
                     loadimg: function (dayIndex, viewIndex, e) {
-                        //let input = e.target;                                        
-                        //if (input.files) {                            
-                        //    this.Details[dayIndex][viewIndex].images = [];
-                        //    for (let i = 0; i < input.files.length;i++){
-                        //        const reader = new FileReader();
-                        //        reader.readAsDataURL(input.files[i]);
-                        //        reader.onload = (e) => {
-                        //            let image = {name:"",base64:e.target.result}
-                        //            this.Details[dayIndex][viewIndex].images.push(image);
-                                                                    
-                        //        }                                                                                               
-                        //    }
-                        //}
+                    
                         let input = e.target;                                        
                         if (input.files) {                            
                             this.Details[dayIndex][viewIndex].images = [];
@@ -476,20 +300,23 @@
     <div id="bloginfo">
         <img :src="CoverImageName" id="coverimg" alt="封面圖片">
         <div id="covertitle">
-            <Label style="color: white; font-size:16px;float: left;">標題</Label><br>
-            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20">
-            <label class="btn btn-primary">
-                <input id="upload_img" style="display:none;" type="file" @@change="fileChange" size="10">
-                <i class="fa fa-photo">變更封面</i> 
+            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
+            <label class="btn btn-primary" style="vertical-align:central">
+                <input id="upload_img" style="display:none;" type="file" @@change="fileChange">
+                <i class="fa fa-photo" style="display:inline-block;">變更封面</i> 
             </label>
         </div>
         <!--左邊欄位-->
-        <div class="container py-3">
+        <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top">
-                            <div class="pt-2">JustGO旅途隨手記</div>                           
-                            <div class="mb-2">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</div>
+                        <div class="sticky-top" style="top:10vh">
+                            <div class="py-3">
+                                <span><img :src="UserImage" id="userimg" alt=""></span>
+                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                            </div>
+                            <div class="pt-2">{{UserId[0]}}旅途隨手記</div>                           
+                            <div class="mb-3">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</div>
                             <ul class="list-group">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
                                     <li class="list-group-item  justify-content-between align-items-center px-0">
@@ -505,18 +332,14 @@
                     </div>
                     <!--右邊欄位-->
                     <div class="col-sm-8">
-                        <div class="user">
-                            <div class="py-3">
-                                <span><img :src="UserImage" id="userimg" alt=""></span>
-                                <span class="px-3 py-1">{{UserId[0]}}</span>
-                            </div>
+                        <div class="user">                            
                             <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe"
                                 style="resize:none"></textarea>
                         </div>
                         <div>
                             <div v-for="(day,dayIndex) in Details">
                                 <label id="day" class="mb-2">第&nbsp;{{dayIndex+1}}天</label>
-                                <div class="item" v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
                                     <span><i class="fa-solid fa-map-location-dot px-1 mb-1" style="color:#084887"
                                             :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
                                     <div class="mb-1">地址&nbsp;{{dayDetails.p_Add}}</div>
@@ -538,7 +361,7 @@
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
-                                         <span style="vertical-align: bottom;font-size:12px" id="showErr">{{dayDetails.showError}}</span>
+                                         <span style="vertical-align: bottom;font-size:12px" id="showErr">&nbsp;{{dayDetails.showError}}</span>
 
                                         
                                         <div class="groupimg img-fluid" >
@@ -573,8 +396,8 @@
 	              <i class="fa-solid fa-list-check" ></i>
 	            </button>
 	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	              <li><a class="dropdown-item" href="#">取消編輯</a></li>
-	              <li><a class="dropdown-item" href="#" @@click="saveBlog">發布行程</a></li>
+	              <li><a class="dropdown-item listcolor" href="#">取消編輯</a></li>
+	              <li><a class="dropdown-item listcolor" href="#" @@click="saveBlog">發布行程</a></li>
 	            </ul>
             </div>
 

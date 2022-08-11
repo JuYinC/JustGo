@@ -295,44 +295,16 @@
                                                         <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
                                                         <table>
                                                                 <tr>
-                                                                    <td></td>
-                                                                    <td>${date[0]}</td>
-                                                                    <td>${date[1]}</td>
-                                                                    <td>${date[2]}</td>
-                                                                    <td>${date[3]}</td>
-                                                                    <td>${date[4]}</td>
-                                                                    <td>${date[5]}</td>
-                                                                    <td>${date[6]}</td>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>降雨機率</td>
-                                                                    <td>${townWeather[0].pop12h}%</td>
-                                                                    <td>${townWeather[1].pop12h}%</td>
-                                                                    <td>${townWeather[2].pop12h}%</td>
-                                                                    <td>${townWeather[3].pop12h}%</td>
-                                                                    <td>${townWeather[4].pop12h}%</td>
-                                                                    <td>${townWeather[5].pop12h}%</td>
-                                                                    <td>${townWeather[6].pop12h}%</td>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>溫度</td>
-                                                                    <td>${townWeather[0].minT}-${townWeather[0].maxT}</td>
-                                                                    <td>${townWeather[1].minT}-${townWeather[1].maxT}</td>
-                                                                    <td>${townWeather[2].minT}-${townWeather[2].maxT}</td>
-                                                                    <td>${townWeather[3].minT}-${townWeather[3].maxT}</td>
-                                                                    <td>${townWeather[4].minT}-${townWeather[4].maxT}</td>
-                                                                    <td>${townWeather[5].minT}-${townWeather[5].maxT}</td>
-                                                                    <td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>紫外線</td>
-                                                                    <td>${townWeather[0].uvi}</td>
-                                                                    <td>${townWeather[1].uvi}</td>
-                                                                    <td>${townWeather[2].uvi}</td>
-                                                                    <td>${townWeather[3].uvi}</td>
-                                                                    <td>${townWeather[4].uvi}</td>
-                                                                    <td>${townWeather[5].uvi}</td>
-                                                                    <td>${townWeather[6].uvi}</td>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
                                                                 </tr>
                                                             </table>
                                                     </div>
@@ -391,11 +363,24 @@
                         });
                         state.markers = [];
                     }
+                                    let date = [];
+                let today = new Date();
+                                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
                     // 產生地點marker
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
+                    let townWeather = [];
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
+                                                townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
                             iofSpots++
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
@@ -430,6 +415,20 @@
                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
                                         <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                         <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                                                                <table>
+                                                                <tr>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                     </div>
                                 </div>
                                 <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -478,13 +477,29 @@
                         state.markers = [];
                     }
 
+                                    let date = [];
+                let today = new Date();
+                console.log(today)
+                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
+
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
                     }
                     // 產生地點marker
                     let iofSpots = 0
                     const bounds = new google.maps.LatLngBounds();
+                    let townWeather = [];
+
                     state.travel[day].map((position, j) => {
+                        townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.lat, lng: position.lng },
@@ -519,6 +534,20 @@
                                             <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
                                             <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                             <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                                                         <table>
+                                                                <tr>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                         </div>
                                     </div>
                                     <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -836,8 +865,9 @@
             initMap({ commit }) {
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
-                    .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-                axios.post("@Url.Action("selectWeather","Schedule")").then(res => {commit('updateWeather', res.data) })
+                    .then(res => { commit('updateData', res.data) }).then(
+                         () => {axios.post("@Url.Action("selectWeather","Schedule")").then(res => {commit('updateWeather', res.data) }).then(() => { commit('setPlaceMarker') })})
+                
             },
         }
     })

@@ -9,14 +9,17 @@
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
 
-}
+    </style>
+    }
 
 
     @section Scripts{
     <script src="~/js/site.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
  
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -24,6 +27,7 @@
     @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" /> *@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
 
 
     <script>
@@ -31,6 +35,7 @@
         $("body").attr('data-bs-target','#list-example')
         $("body").attr('data-bs-offset','0')
         $("body").attr('tabindex','0')
+
 
     let id = 0;
             let vm = new Vue({
@@ -41,7 +46,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "北部1",
                                 p_tel: "07-123456",
@@ -49,11 +54,12 @@
                                 describe : "",
                                 score: 0,
                                 images: {Name:"",base64:""},
+                                showError:'張數限制六張',
                             },
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "高雄2",
                                 p_tel: "02-123456",
@@ -61,11 +67,12 @@
                                 describe : "",
                                 score: 0,
                                 images: {Name:"",base64:""},
+                                showError:'張數限制六張',
                             },
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台中3",
                                 p_tel: "04-123456",
@@ -73,6 +80,7 @@
                                 describe : "",
                                 score: 0,
                                 images: {Name:"",base64:""},
+                                showError:'張數限制六張',
                             }
 
                         ],
@@ -80,7 +88,7 @@
                             {
                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台南4",
                                 p_tel: "06-123456",
@@ -88,11 +96,12 @@
                                 describe : "",
                                 score: 0,
                                 images: {Name:"",base64:""},
+                                showError:'張數限制六張',
                             },
                             {
                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "花蓮5",
                                 p_tel: "123456",
@@ -100,6 +109,7 @@
                                 describe : "",
                                 score: 0,
                                 images: {Name:"",base64:""},
+                                showError:'張數限制六張',
                             },
 
 
@@ -114,6 +124,7 @@
                     Like: 5,
                     StartDate:null,
                     EndDate:null,
+                    
 
                     myscore: this.score,
                     mytempscore: this.score
@@ -134,6 +145,12 @@
                     }
                 },
                 methods: {
+                    getdate(date) {
+                        return moment(date).format('YYYY/MM/DD')
+                    },
+                    gettime(time) {
+                        return moment(time).format('A HH')
+                    },
                     gethref(dayIndex, viewIndex) {
                         return "#list-item-" + dayIndex + "-" + viewIndex
                     },
@@ -160,28 +177,45 @@
                         readFile.addEventListener('load', () => {
                             let image = document.getElementById('image')
                             this.CoverImageName = readFile.result                            
-                            this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
+                            this.Details.CoverImageName = this.CoverImageName
                             console.log(this.CoverImageName);
                         })
 
                     },                   
                     loadimg: function (dayIndex, viewIndex, e) {
-                        let input = e.target;                                           
+                    
+                        let input = e.target;                                        
                         if (input.files) {                            
                             this.Details[dayIndex][viewIndex].images = [];
-                            for (let i = 0; i < input.files.length;i++){
-                                const reader = new FileReader();
-                                reader.readAsDataURL(input.files[i]);
-                                reader.onload = (e) => {
-                                    let image = {name:"",base64:e.target.result}
-                                    this.Details[dayIndex][viewIndex].images.push(image);
-                                }                                                                                               
+                            if (input.files.length < 7) {
+                                for (let i = 0; i < input.files.length; i++) {
+                                    const reader = new FileReader();
+                                    reader.readAsDataURL(input.files[i]);
+                                    reader.onload = (e) => {
+                                        let image = { name: "", base64: e.target.result }
+                                        this.Details[dayIndex][viewIndex].images.push(image);
+                                    }
+                                }
+                              
+                                 $("#showErr").css("color", "black");
+                                 this.Details[dayIndex][viewIndex].showError = "上傳成功!"
+                                 //this.Details[dayIndex][viewIndex].showError.style.color = "black"
+
+                            } else {
+                                
+                                 //$("#showErr").css("color", "red");
+                                this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
+                                this.Details[dayIndex][viewIndex].showError.style.color = "red"
+                                
+                                
                             }
                         }
                     },
                     reset: function (dayIndex, viewIndex, e) {
                         this.Details[dayIndex][viewIndex].images.length = 0;
                         this.Details[dayIndex][viewIndex].images=[];
+                        this.Details[dayIndex][viewIndex].showError = "張數限制6張"
+                        $("#showErr").css("color", "black");
                     },
                     onChange(dayIndex) {
                         for (let j = 0; j < this.Details.length; j++) {
@@ -233,7 +267,7 @@
                             }
                         }
                     }
-                },
+                },             
                  mounted() {
                      let id = window.location.search.substring(1) 
                      
@@ -241,10 +275,16 @@
                          axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {                              
                              this.Details = res.data.details;
                              this.EndDate = res.data.endDate;
-                             this.StartDate = res.data.startDate;                                                          
-                         })                         
-                     }
-                 }
+                             this.StartDate = res.data.startDate;
+                             //this.Title = res.data.Title;
+                             this.Describe = res.data.describe;
+                             this.StartDate = res.data.startDate;
+                             this.EndDate = res.data.endDate;
+                              }
+                            )
+                    }
+
+                 },
 
             },
             )
@@ -260,28 +300,30 @@
     <div id="bloginfo">
         <img :src="CoverImageName" id="coverimg" alt="封面圖片">
         <div id="covertitle">
-            <Label style="color: white; font-size:16px;float: left;">標題</Label><br>
-            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20">
+            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">
-                <input id="upload_img" style="display:none;" type="file" @@change="fileChange" size="10">
-                <i class="fa fa-photo">變更封面</i> 
+                <input style="display:none;" type="file" @@change="fileChange">
+                <i class="fa fa-photo" style="display:inline-block;">變更封面</i> 
             </label>
         </div>
         <!--左邊欄位-->
-        <div class="container py-3">
+        <div class="container pb-3">
             <div class="row">
-                    <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar" style="margin-left: 20px;">
-                        <div class="sticky-top">
-                            <label class="my-2">景點日程</label>                           
+                    <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
+                        <div class="sticky-top" style="top:10vh">
+                            <div class="py-3">
+                                <span><img :src="UserImage" id="userimg" alt=""></span>
+                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                            </div>
+                            <div class="pt-2">{{UserId[0]}}旅途隨手記</div>                           
+                            <div class="mb-3">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</div>
                             <ul class="list-group">
-                                <div v-for="(day,dayIndex) in Details">第{{dayIndex+1}}天
+                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
                                     <li class="list-group-item  justify-content-between align-items-center px-0">
-                                        <ul>
-                                            <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details ">
+                                            <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
                                                 <a class="list-group-item list-group-item-action"
-                                                    :href="gethref(dayIndex,viewIndex)">{{dayDetails.p_Name}}</a>
+                                                    :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏{{dayDetails.p_Name}}</a>                                               
                                             </li>
-                                        </ul>
                                     </li>
                                 </div>
                             </ul>                            
@@ -289,68 +331,78 @@
 
                     </div>
                     <!--右邊欄位-->
-                    <div class="col-sm-8" style="margin-left: 20px;">
-                        <div class="user">
-                            <div class="py-3">
-                                <span><img :src="UserImage" id="userimg" alt=""></span>
-                                <span class="px-3 py-1">{{UserId[0]}}</span>
-                            </div>
+                    <div class="col-sm-8">
+                        <div class="user">                            
                             <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe"
                                 style="resize:none"></textarea>
                         </div>
                         <div>
                             <div v-for="(day,dayIndex) in Details">
-                                <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
-                                <div class="item" v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                    <span><i class="fa-solid fa-map-location-dot px-1 mb-1"
+                                <label id="day" class="mb-2">第&nbsp;{{dayIndex+1}}天</label>
+                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                                    <span><i class="fa-solid fa-map-location-dot px-1 mb-1" style="color:#084887"
                                             :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
-                                    <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
-                                    <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
-                                    <div class="mb-1">開始時間:{{dayDetails.startTime}}</div>
-                                    <div class="mb-1">結束時間:{{dayDetails.endTime}}</div>
-                                    <div class="mb-1">
-                                    評分:<i class="fa fa-star mb-2" :style="{color:color}"
+                                    <div class="mb-1">地址&nbsp;{{dayDetails.p_Add}}</div>
+                                    <div class="mb-1">電話&nbsp;{{dayDetails.p_tel}}</div>                                   
+                                    <div class="mb-1 d-inline"><div class="d-inline">評分</div>
+                                    <i class="fa fa-star mb-2" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                         @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
                                         @@click="myscore=item"></i>
-                                        {{dayDetails.score}}
                                     </div>
-                               
-                                    
 
 
                                     <div class="mb-3">
                                         <label class="btn btn-primary btn-sm">
-                                            <input type="file" accept="image/*" multiple
+                                            <input type="file" accept="image/gif, image/jpeg, image/png" multiple
                                                 @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
-                                                style="display:none;" size="6">
+                                                style="display:none;">
                                             <i class="fa fa-photo"></i> 上傳圖片
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary btn-sm">取消上傳</button>
+                                         <span style="vertical-align: bottom;font-size:12px" id="showErr">&nbsp;{{dayDetails.showError}}</span>
 
                                         
-
-                                        <div class="groupimg img-fluid">
-                                            <template v-for="(image,index) in dayDetails.images">
-                                                <img :src="image.base64">
-                                            </template>
+                                        <div class="groupimg img-fluid" >
+                                           <template v-for="(image,index) in dayDetails.images">
+                                                    <img :src="image.base64">                  
+                                           </template>
                                         </div>
+
+                                        @*<div class="groupimg img-fluid"   v-if="previewlist.length">
+                                            <div v-for="(image,index) in dayDetails.images" id="append">
+                                                <img :src="image.base64">
+                                            </div>
+                                        </div>*@
 
                                         <textarea rows="6" class="mb-2" maxlength="400" v-model="dayDetails.describe"
                                         placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>
                                     </div>                        
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                  </div>
             </div>
-            <div style="display: flex; justify-content: space-around">
+           @* <div style="display: flex; justify-content: ">
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">取消編輯</button>
                 <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;"
                     @@click="saveBlog">儲存行程</button>
-                <button class="btn btn-outline-primary btn-sm" style="margin: 20px 20px;">發佈行程</button>
+            </div>*@
+            <i class="fa-solid fa-objects-align-right" id="setting"></i>
+            <div class="dropdown" id="setting" >
+	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	              <i class="fa-solid fa-list-check" ></i>
+	            </button>
+	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	              <li><a class="dropdown-item listcolor" href="#">取消編輯</a></li>
+	              <li><a class="dropdown-item listcolor" href="#" @@click="saveBlog">發布行程</a></li>
+	            </ul>
             </div>
+
+
+
+
         </div>
     

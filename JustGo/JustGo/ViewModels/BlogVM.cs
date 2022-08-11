@@ -19,7 +19,7 @@
     public partial class BlogDetailsVM
     {
         public DateTime StartTime { get; set; }
-        public DateTime EndtTime { get; set; }
+        public DateTime EndTime { get; set; }
         public int PlaceId { get; set; }
         public string P_Name { get; set; }
         public string P_tel { get; set; }

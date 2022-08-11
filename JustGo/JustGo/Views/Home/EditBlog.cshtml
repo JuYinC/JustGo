@@ -172,7 +172,7 @@
 
 
         #setting{
-	        position:fixed; right:5%; bottom:10%;
+	        position:fixed; right:5%; bottom:20%;
             font-size: 28px;
         }
     </style>
@@ -374,11 +374,13 @@
                               
                                  $("#showErr").css("color", "black");
                                  this.Details[dayIndex][viewIndex].showError = "上傳成功!"
+                                 //this.Details[dayIndex][viewIndex].showError.style.color = "black"
 
                             } else {
                                 
-                                 $("#showErr").css("color", "red");
+                                 //$("#showErr").css("color", "red");
                                 this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
+                                this.Details[dayIndex][viewIndex].showError.style.color = "red"
                                 
                                 
                             }
@@ -485,14 +487,14 @@
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
                         <div class="sticky-top">
-                            <div class="mt-4">JustGO旅途隨手記</div>                           
+                            <div class="pt-2">JustGO旅途隨手記</div>                           
                             <div class="mb-2">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</div>
                             <ul class="list-group">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
                                     <li class="list-group-item  justify-content-between align-items-center px-0">
                                             <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
                                                 <a class="list-group-item list-group-item-action"
-                                                    :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}} ▏ {{dayDetails.p_Name}}</a>                                               
+                                                    :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏{{dayDetails.p_Name}}</a>                                               
                                             </li>
                                     </li>
                                 </div>

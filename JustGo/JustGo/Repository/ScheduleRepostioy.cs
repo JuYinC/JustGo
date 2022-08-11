@@ -35,42 +35,54 @@ namespace JustGo.Repository
             return true;
         }
 
-        public ScheduleVM copyScheduleByBlog(DateTime startTime, int blogId)
+        public ScheduleVM copyScheduleByBlog(DateTime startTime, int blogId,string userId)
         {
-            Blog blog = _context.Blog.Include(e => e.BlogDetails).SingleOrDefault(e => e.BlogId == blogId)?? new Blog();
-            int setDays = (startTime-blog.StartDate).Days;
-            ScheduleVM vm = new ScheduleVM()
+            var copySchedule = new { startTime, blogId, userId };
+            var blog = _context.Blog.Include(e => e.BlogDetails).SingleOrDefault(e => e.BlogId == copySchedule.blogId);            
+            ScheduleVM vm;
+            if (blog != null)
             {
-                StartDate = blog.StartDate.AddDays(setDays),
-                EndDate = blog.EndDate.AddDays(setDays),
-                Details = new List<IList<ScheduleDetailVM>>()
-            };            
-            for (int i = 0; i <= (blog.EndDate - blog.StartDate).Days; i++)
-            {
-                var dl = new List<ScheduleDetailVM>();
-                foreach(var item in blog.BlogDetails.Where(e => e.StartTime.Day == blog.StartDate.Day + i))
+                int setDays = (copySchedule.startTime - blog.StartDate).Days;
+                vm = new ScheduleVM()
                 {
-                    ScheduleDetailVM detailVM = new ScheduleDetailVM()
+                    UserId = copySchedule.userId,
+                    Title = "複製-"+blog.Title,
+                    StartDate = blog.StartDate.AddDays(setDays),
+                    EndDate = blog.EndDate.AddDays(setDays),
+                    Details = new List<IList<ScheduleDetailVM>>()
+                };
+                for (int i = 0; i <= (blog.EndDate - blog.StartDate).Days; i++)
+                {
+                    var dl = new List<ScheduleDetailVM>();
+                    foreach (var item in blog.BlogDetails.Where(e => e.StartTime.Day == blog.StartDate.Day + i))
                     {
-                        StartTime = item.StartTime.AddDays(setDays),
-                        EndTime = item.EndtTime.AddDays(setDays),
-                        Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId),
-                    };
-                    dl.Add(detailVM);
+                        ScheduleDetailVM detailVM = new ScheduleDetailVM()
+                        {
+                            StartTime = item.StartTime.AddDays(setDays),
+                            EndTime = item.EndtTime.AddDays(setDays),
+                            Place = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId),
+                        };
+                        dl.Add(detailVM);
+                    }
+                    vm.Details.Add(dl);
                 }
-                vm.Details.Add(dl);
-            }
-            return vm;
+                _context.Add(viewToModel(vm));
+                _context.SaveChanges();
+                return vm;
+            }            
+            return vm = new ScheduleVM();
         }
 
-        public bool deleteScedule(int SceduleId)
+        public bool deleteScedule(ScheduleVM vm)
         {
-            Schedule deleSchedule = _context.Schedule.Where(e => e.ScheduleId==SceduleId).Include(e=>e.ScheduleDetails).First();
-
-            _context.Remove(deleSchedule);
-            _context.SaveChanges();
-
-            return true;
+            var deleSchedule = _context.Schedule.Include(e=>e.ScheduleDetails).SingleOrDefault(e => e.ScheduleId== vm.ScheduleId && e.UserId==vm.UserId);
+            if (deleSchedule != null)
+            {
+                _context.Remove(deleSchedule);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool editScedule(ScheduleVM vm)

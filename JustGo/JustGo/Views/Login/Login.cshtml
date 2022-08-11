@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "_Layout2";
+}
+
+@using JustGo.Controllers;
+@model InputModel;
+<form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-outline mb-2 mt-2 ms-5 me-5">
+                    <input asp-for="Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" />
+                    <label asp-for="Email" class="form-label"></label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-2 mt-2 ms-5 me-5">
+                    <input asp-for="Password" class="form-control form-control-lg" autocomplete="current-password" aria-required="true" />
+                    <label asp-for="Password" class="form-label"></label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <div class="checkbox mb-2 mt-2 ms-5 me-5">
+                        <label asp-for="RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+<button id="login-submit" type="submit" class="btn btn-primary btn-lg btn-block mt-2 ms-5 me-5">登入</button>
+</form>

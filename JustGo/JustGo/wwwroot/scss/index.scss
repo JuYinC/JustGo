@@ -233,7 +233,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 1.5rem 0rem;
+    margin: 1.5rem 0;
   }
 
   .card {
@@ -845,11 +845,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 1.5rem 10rem;
+    margin: 1.5rem 10%;
   }
 
   .card {
-    width: 29rem;
+    width: 35rem;
     height: 20rem;
     padding: 2rem 1rem;
     background: #fff;

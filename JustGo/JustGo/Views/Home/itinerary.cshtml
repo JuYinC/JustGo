@@ -62,7 +62,7 @@
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
                     <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="50" alt="map" type="button">
                 </div>
-                <div id="map"></div>
+                <div id="map" class="map-pag2"></div>
             </div>
         </div>
 
@@ -83,6 +83,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 <script>
+let wwwroot = "@Url.Content("~/file/photo")"
     hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
@@ -122,6 +123,7 @@
             markers: [], // 地圖Marker
             markerCluster: null, // 地圖Cluster
             travelTime: [], // 行程時間
+            directionResult: null,
             directionsRenderer: null,
             daysindex: 0,
             isTravel: false,
@@ -164,6 +166,7 @@
 
             //計算行程表時間
             cultime() {
+                console.log("cult")
                 for (let j = 0; j < this.state.travel.length; j++) {
                     let timestamp = this.state.datetime[j]
                     for (let i = 0; i < this.state.travel[j].length; i++) {
@@ -185,6 +188,37 @@
                         }
                         timestamp = hr + ':' + min
                         this.state.travel[j][i].endTime = timestamp
+
+                        let now = new Date()
+                        now.setDate(now.getDate()+7)
+                        let travelDate = new Date(this.state.duringDate[j])
+
+                        this.state.travel[j][i].minT= 30
+                        this.state.travel[j][i].maxT= ""
+                        this.state.travel[j][i].pop12h= ""
+                        this.state.travel[j][i].uvi=""
+
+
+                        if(now > travelDate){
+
+                            this.state.selectWeather.find(object =>{                               
+                                if(this.state.travel[j][i].town == object.locationsName){
+                                    let weatherStart = new Date(object.startTime)
+                                    let year = weatherStart.getFullYear()
+                                    let month =weatherStart.getMonth()
+                                    let date = weatherStart.getDate()
+                                    weatherStart = new Date(year,month,date)
+
+                                    if(travelDate.getTime()==weatherStart.getTime()){
+                                    this.state.travel[j][i].minT= object.minT
+                                    this.state.travel[j][i].maxT= object.maxT
+                                    this.state.travel[j][i].pop12h= object.pop12h
+                                    this.state.travel[j][i].uvi= object.uvi
+                                    }
+                                    
+                                }
+                            })
+                        }
                     }
                 }
             },
@@ -199,6 +233,9 @@
                     fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
+                state.map.addListener("zoom_changed", () => {
+                    if (state.infowindow) { state.infowindow.close() };
+                })
             },
 
             // 產生景點標示
@@ -213,14 +250,31 @@
                     });
                     state.markers = [];
                     state.directionsRenderer.setMap(null)
+                    state.directionsRenderer = null
                 }
                 if (state.selectPlaces.length == 0) {
                     return
                 }
+                let date = [];
+                let today = new Date();
+                console.log(today)
+                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
+                
+
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
+                let townWeather = [];
                 // 產生地點marker
                 state.selectPlaces.map((position, i) => {
+                    townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
                     if (position.class == 15) {
                         //餐廳
                         iconPlace = state.icon[1]
@@ -258,6 +312,7 @@
                             min: viewObj.timestay,
                         });
                         store.commit('cultime')
+                        store.commit('calcRoute')
                     };
                     let contentString =
                         `                            <div class="infowindow">
@@ -279,6 +334,20 @@
                                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>
                                                         <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                                         <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                        <table>
+                                                                <tr>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                                     </div>
                                                 </div>
                                                 <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -319,7 +388,11 @@
 
             // 產生行程標示
             setTravelMarker(state) {
-                if (state.isTravel) {
+                let travelPlace = 0
+                for (i = 0; i < state.travel.length; i++) {
+                    travelPlace += state.travel[i].length
+                }
+                if (state.isTravel && travelPlace > 0) {
                     if (state.markers && state.markerCluster) {
                         state.markerCluster.clearMarkers();
                         state.markerCluster = null
@@ -330,11 +403,29 @@
                         });
                         state.markers = [];
                     }
+                    if (state.directionsRenderer) {
+                        state.directionsRenderer.setMap(null)
+                        state.directionsRenderer = null
+                    }
+
+                                    let date = [];
+                let today = new Date();
+                                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
                     // 產生地點marker
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
+                    let townWeather = [];
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
+                                                townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
                             iofSpots++
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
@@ -369,6 +460,20 @@
                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
                                         <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                         <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                                                                <table>
+                                                                <tr>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                     </div>
                                 </div>
                                 <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -399,7 +504,15 @@
                             state.markers.push(marker);
                         });
                     }
-                    if (iofSpots == 1) { state.map.fitBounds(bounds) }
+                    if (iofSpots == 1) {
+                        state.map.fitBounds(bounds)
+                    } else {
+                        state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                            suppressMarkers: true,
+                            directions: state.directionResult,
+                            map: state.map
+                        });
+                    }
                 }
             },
 
@@ -416,13 +529,30 @@
                         });
                         state.markers = [];
                     }
+
+                                    let date = [];
+                let today = new Date();
+                for (let i = 0; i < 7;i++){
+                    date.push(today.getMonth()+1 + '/' + today.getDate());
+                    today.setDate(today.getDate()+1)
+                }
+
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
+                        state.directionsRenderer = null
                     }
                     // 產生地點marker
                     let iofSpots = 0
                     const bounds = new google.maps.LatLngBounds();
+                    let townWeather = [];
+
                     state.travel[day].map((position, j) => {
+                        townWeather.length = 0;
+                    state.selectWeather.find(object => {
+                        if (position.town == object.locationsName) {
+                            townWeather.push(object);                           
+                        };
+                    })
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.lat, lng: position.lng },
@@ -457,6 +587,20 @@
                                             <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
                                             <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.tel}</p>
                                             <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.opentime}-${position.closetime}</p>
+                                                                                         <table>
+                                                                <tr>
+                                                                    <td></td><td>${date[0]}</td><td>${date[1]}</td><td>${date[2]}</td><td>${date[3]}</td><td>${date[4]}</td><td>${date[5]}</td><td>${date[6]}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>降雨機率</td><td>${townWeather[0].pop12h}%</td><td>${townWeather[1].pop12h}%</td><td>${townWeather[2].pop12h}%</td><td>${townWeather[3].pop12h}%</td><td>${townWeather[4].pop12h}%</td><td>${townWeather[5].pop12h}%</td><td>${townWeather[6].pop12h}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溫度</td><td>${townWeather[0].minT}-${townWeather[0].maxT}</td><td>${townWeather[1].minT}-${townWeather[1].maxT}</td><td>${townWeather[2].minT}-${townWeather[2].maxT}</td><td>${townWeather[3].minT}-${townWeather[3].maxT}</td><td>${townWeather[4].minT}-${townWeather[4].maxT}</td><td>${townWeather[5].minT}-${townWeather[5].maxT}</td><td>${townWeather[6].minT}-${townWeather[6].maxT}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>紫外線</td><td>${townWeather[0].uvi}</td><td>${townWeather[1].uvi}</td><td>${townWeather[2].uvi}</td><td>${townWeather[3].uvi}</td><td>${townWeather[4].uvi}</td><td>${townWeather[5].uvi}</td><td>${townWeather[6].uvi}</td>
+                                                                </tr>
+                                                            </table>
                                         </div>
                                     </div>
                                     <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -490,10 +634,7 @@
                     // 畫路線
                     let request = null;
                     let route = [];
-                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                
-                    state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                        suppressMarkers: true,
-                    });
+                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
                     //行程變成同一條路徑，上限25個
 
                     for (j = 0; j < state.travel[day].length; j++) {
@@ -519,16 +660,15 @@
                             travelMode: 'DRIVING', //開車
                         };
                     }
-                    state.directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
+
                     // request放入Google行程服務，得到結果
                     directionsService.route(request, function (result, status) {
                         if (status == 'OK') {
-                            state.directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                            //儲存行程時間陣列
-                            for (i = 0; i < result.routes[0].legs.length; i++) {
-                                console.log(result.routes[0].legs[i].duration.value)
-                                state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
-                            }
+                            state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                                suppressMarkers: true,
+                                directions: result,
+                                map: state.map
+                            })
                         }
                     });
                 }
@@ -536,110 +676,102 @@
 
             // 計算行程時間 & 畫路線
             calcRoute(state) {
-                if (state.isTravel) {
-                    state.travelTime = [];
-                    let request = null;
-                    let route = [];
-                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
-                    if (state.directionsRenderer) {
-                        state.directionsRenderer.setMap(null)
-                    }
-                    state.directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                        suppressMarkers: true,
-                    });
-                    //行程變成同一條路徑，上限25個
-                    for (i = 0; i < state.travel.length; i++) {
-                        for (j = 0; j < state.travel[i].length; j++) {
-                            route.push(state.travel[i][j])
-                        }
-                    }
-                    // 總行程數 = 1 離開方程式
-                    if (route.length < 2) {
-                        console.log(`行程數<2 行程數為 ${route.length}`)
-                        return
-                    } else {
-                        // 總行程數 >= 2 加入停靠站
-                        console.log(`行程數>2 行程數為 ${route.length}`)
-                        const waypts = [];
-                        for (i = 1; i < route.length - 1; i++) {
-                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
-                        }
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                            waypoints: waypts, //中途停靠點
-                            travelMode: 'DRIVING', //開車
-                        };
-                    }
-                    state.directionsRenderer.setMap(state.map); // 設定畫路線顯示在地圖上
-                    // request放入Google行程服務，得到結果
-                    directionsService.route(request, function (result, status) {
-                        if (status == 'OK') {
-                            // state.result = result;
-                            if (state.isTravel) {
-                                state.directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                            }
-                            //儲存行程時間陣列
-                            for (i = 0; i < result.routes[0].legs.length; i++) {
-                                console.log(result.routes[0].legs[i].duration.value)
-                                state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
-                                // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
-                                //result回傳的東西有很多，有興趣可以研究
-                            }
-                        }
-                    });
 
+                state.travelTime = [];
+                let request = null;
+                let route = [];
+                let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
 
-
-                    //不同天的行程分開計算
-                    //for (i = 0; i < state.travel.length; i++) {
-                    //    state.travelTime.push([])
-                    //    console.log(state.travelTime)
-                    //    console.log(`第${i}天`)
-                    //    多個點，加上中間停靠站
-                    //    if (state.travel[i].length > 2) {
-                    //        建立行程request
-                    //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
-                    //        const waypts = [];
-                    //        for (j = 1; j < state.travel[i].length - 1; j++) {
-                    //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
-                    //        }
-                    //        request = {
-                    //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                    //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
-                    //        waypoints: waypts, 中途停靠點
-                    //        travelMode: 'DRIVING', 開車
-                    //        };
-                    //        兩個點，只要給起點和終點就好
-                    //    } else if (state.travel[i].length == 2) {
-                    //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
-                    //        request = {
-                    //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                    //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
-                    //        travelMode: 'DRIVING', 開車
-                    //        }
-                    //        一個點，路線無法計算，跳出
-                    //    } else {
-                    //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
-                    //        continue;
-                    //    }
-                    //    request放入Google行程服務，得到結果
-                    //    directionsService.route(request, function (result, status) {
-                    //        if (status == 'OK') {
-                    //            儲存行程時間陣列
-                    //            for (j = 0; j < result.routes[0].legs.length; j++) {
-                    //                console.log(state.travelTime)
-                    //                console.log(result.routes[0].legs[j].duration.value)
-                    //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
-                    //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
-                    //                result回傳的東西有很多，有興趣可以研究
-                    //            }
-                    //        }
-                    //    });
-                    //}
-                    console.log(`travelTime:`)
-                    console.log(state.travelTime)
+                //行程變成同一條路徑，上限25個
+                for (i = 0; i < state.travel.length; i++) {
+                    for (j = 0; j < state.travel[i].length; j++) {
+                        route.push(state.travel[i][j])
+                    }
                 }
+                // 總行程數 = 1 離開方程式
+                if (route.length < 2) {
+                    console.log(`行程數<2 行程數為 ${route.length}`)
+                    return
+                } else {
+                    // 總行程數 >= 2 加入停靠站
+                    console.log(`行程數>2 行程數為 ${route.length}`)
+                    const waypts = [];
+                    for (i = 1; i < route.length - 1; i++) {
+                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                    }
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                        waypoints: waypts, //中途停靠點
+                        travelMode: 'DRIVING', //開車
+                    };
+                }
+
+                // request放入Google行程服務，得到結果
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        state.directionResult = result;
+                        //儲存行程時間陣列
+                        for (i = 0; i < result.routes[0].legs.length; i++) {
+                            console.log(result.routes[0].legs[i].duration.value)
+                            state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
+                            // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
+                            //result回傳的東西有很多，有興趣可以研究
+                        }
+                    }
+                });
+
+
+
+                //不同天的行程分開計算
+                //for (i = 0; i < state.travel.length; i++) {
+                //    state.travelTime.push([])
+                //    console.log(state.travelTime)
+                //    console.log(`第${i}天`)
+                //    多個點，加上中間停靠站
+                //    if (state.travel[i].length > 2) {
+                //        建立行程request
+                //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
+                //        const waypts = [];
+                //        for (j = 1; j < state.travel[i].length - 1; j++) {
+                //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
+                //        }
+                //        request = {
+                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+                //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
+                //        waypoints: waypts, 中途停靠點
+                //        travelMode: 'DRIVING', 開車
+                //        };
+                //        兩個點，只要給起點和終點就好
+                //    } else if (state.travel[i].length == 2) {
+                //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
+                //        request = {
+                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
+                //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
+                //        travelMode: 'DRIVING', 開車
+                //        }
+                //        一個點，路線無法計算，跳出
+                //    } else {
+                //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
+                //        continue;
+                //    }
+                //    request放入Google行程服務，得到結果
+                //    directionsService.route(request, function (result, status) {
+                //        if (status == 'OK') {
+                //            儲存行程時間陣列
+                //            for (j = 0; j < result.routes[0].legs.length; j++) {
+                //                console.log(state.travelTime)
+                //                console.log(result.routes[0].legs[j].duration.value)
+                //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
+                //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
+                //                result回傳的東西有很多，有興趣可以研究
+                //            }
+                //        }
+                //    });
+                //}
+                console.log(`travelTime:`)
+                console.log(state.travelTime)
+
             },
 
             changeView(state) {
@@ -652,7 +784,6 @@
                 if (state.isTravel == false && numTravel > 0) {
                     state.isTravel = true;
                     store.commit('setTravelMarker')
-                    store.commit('calcRoute')
                 } else {
                     state.isTravel = false;
                     store.commit('setPlaceMarker')
@@ -739,7 +870,9 @@
                             min: timestay,
                         })
                     }
+                    store.commit('cultime')
                 }
+                store.commit('calcRoute')
             },
         },
 
@@ -753,7 +886,7 @@
                     .then(res => {
                         context.commit('updateSchedule', res.data)
                     })
-                    .catch(err => console.log("err"))
+                    .catch(err => console.log(err))
             },
             //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
             axiosSave(context, payload) {
@@ -806,6 +939,7 @@
             let id = window.location.search.substring(1)
             if (id != "") {
                 this.$store.dispatch('axiosLoad', { ScheduleId: id })
+
             }
         },
         methods: {
@@ -815,7 +949,7 @@
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
                 let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
-
+                //console.log(day)
                 this.duringDate.length = 0
                 this.datetime.length = 0
 
@@ -833,14 +967,16 @@
                             this.travel.push([])
                         }
                     } else if (this.travel.length <= day) {
-
-                        for (let i = 0; i < day - this.travel.length; i++) {
+                        let daydiff = day - this.travel.length
+                        console.log(daydiff)
+                        for (let i = 0; i < daydiff; i++) {
                             this.travel.push([])
                         }
 
                     } else if (this.travel.length > day) {
 
-                        for (let i = 0; i < this.travel.length - day; i++) {
+                        let daydiff = this.travel.length-day
+                        for (let i = 0; i < daydiff; i++) {
                             let lastIndex = this.travel.length - 1
 
                             for (let j = 0; j < this.travel[lastIndex].length; j++) {
@@ -848,6 +984,7 @@
                             }
                             this.travel.pop()
                         }
+                        this.$store.commit("cultime")
                     }
 
                 } else {
@@ -1005,7 +1142,15 @@
                                     @@change="cultime()" class="min">
                                     <transition-group>
                                         <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                            <p>{{view.startTime}}-{{view.endTime}}</p>
+                                            <p>{{view.startTime}}-{{view.endTime}}</p> 
+                                            
+                                            
+                                            <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
+                                            <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
+                                            <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
+                                            <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+
+
                                             <h3>{{view.name}}</h3>
                                             <p>{{view.add}}</p>
                                             <div class="adjtime">
@@ -1241,6 +1386,7 @@
                             this.travel.pop()
                         }
                     }
+                    this.$store.commit("cultime")
                 } else {
                     alert('重新選擇日期')
                 }
@@ -1269,7 +1415,8 @@
 
             },
             calposition(k) {
-                this.daysindex = k
+                this.$store.state.daysindex = k
+
                 d = this.travel.length
 
                 if (document.getElementById('sidebar').clientWidth < 301) {
@@ -1301,11 +1448,8 @@
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                         <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                                                                       v-model="selectDatelocal">
-                                         <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                                                                        v-model="selectDateEndlocal">
-                                         <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>                                        
+                                         
+                                                                                                                        
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

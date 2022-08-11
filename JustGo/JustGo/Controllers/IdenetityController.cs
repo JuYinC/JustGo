@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using JustGo.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace JustGo.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
 
@@ -18,9 +19,9 @@ namespace JustGo.Controllers
             return View("Login");
         }
         
-        public async Task<IActionResult> Login(InputModel Input)
+        public async Task<IActionResult> Login(UserVM vm)
         {
-            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password,Input.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, lockoutOnFailure: false);
             string returnUrl = Url.Content("~/");
             if (result.Succeeded)
             {                
@@ -35,19 +36,5 @@ namespace JustGo.Controllers
             await _signInManager.SignOutAsync();            
             return LocalRedirect(returnUrl);            
         }
-    }
-
-    public class InputModel
-    {        
-        [Required]
-        [EmailAddress]
-        public string? Email { get; set; }
-        
-        [Required]
-        [DataType(DataType.Password)]
-        public string? Password { get; set; }
-        
-        [Display(Name = "記住密碼?")]
-        public bool RememberMe { get; set; }
-    }
+    }    
 }

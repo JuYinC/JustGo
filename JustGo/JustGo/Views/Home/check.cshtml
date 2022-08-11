@@ -3,64 +3,64 @@
 }
 
 @section Style{
-<!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
-<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> -->
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<style>
-    header {
-        display: none;
-    }
+    <style>
+        header {
+            display: none;
+        }
 
-    .footer__waves {
-        display: none;
-    }
+        .footer__waves {
+            display: none;
+        }
 
-    #map {
-        width: 800px;
-        height: 500px;
-    }
+        #map {
+            width: 800px;
+            height: 500px;
+        }
 
-    .nav-fill .nav-item .nav-link,
-    .nav-justified .nav-item .nav-link {
-        width: 100%;
-        border-radius: 20px;
-    }
+        .nav-fill .nav-item .nav-link,
+        .nav-justified .nav-item .nav-link {
+            width: 100%;
+            border-radius: 20px;
+        }
 
-    .daysBar {
-        justify-content: center
-    }
+        .daysBar {
+            justify-content: center
+        }
 
-    .days {
-        margin: 0px 20px;
-    }
+        .days {
+            margin: 0px 20px;
+        }
 
-    .scheduleDay {
-        margin: 20px;
-        /*border: 1px solid black;*/
-        vertical-align: top;
-        /*min-width:250px;*/
-    }
+        .scheduleDay {
+            margin: 20px;
+            /*border: 1px solid black;*/
+            vertical-align: top;
+            /*min-width:250px;*/
+        }
 
-    .scheduletab1 {
-        margin-top: 20px;
-        /*overflow-y:auto;
-                                                    flex-wrap: nowrap;*/
-    }
+        .scheduletab1 {
+            margin-top: 20px;
+            /*overflow-y:auto;
+                                                            flex-wrap: nowrap;*/
+        }
 
-    .betweenBox {
-        height: 50px;
-        border-left-style: dashed;
-        border-left-color: black;
-        border-left-width: 1px;
-    }
-</style>
+        .betweenBox {
+            height: 50px;
+            border-left-style: dashed;
+            border-left-color: black;
+            border-left-width: 1px;
+        }
+    </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 }
 
-<div id="app">
+    <div id="app">
 
     <div class="container">
         <div class="checkbar">
@@ -79,18 +79,44 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
 
-            <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
-                aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
+                 aria-labelledby="pills-home-tab">
 
-                <div>
-                    <div class="daysBar">
-                        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                            style="display:inline-block" class="days">{{index+1}}</div>
-                    </div>
                     <div>
-                        <div class="row cols-2">
-                            <div class="col-4 ">
-                                <div v-for="view in daySchedule">
+                        <div class="daysBar">
+                            <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
+                             style="display:inline-block" class="days">
+                                {{index+1}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row cols-2">
+                                <div class="col-4 ">
+                                    <div v-for="view in daySchedule">
+                                        <div>
+                                            {{view.startTime}}-{{view.endTime}}<br>
+                                            {{view.place.name}}
+                                        </div>
+                                        <div class="row cols-2">
+                                            <div class="col-2">
+                                            </div>
+                                            <div class="col-10 betweenBox">
+                                                <br>
+                                                <i class="fa-solid fa-car-side"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="map" class="col-8"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="row">
+                        <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
+                            <div class="viewbox ">
+                                <div v-for="view in day">
                                     <div>
                                         {{view.startTime}}-{{view.endTime}}<br>
                                         {{view.place.name}}
@@ -105,48 +131,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="map" class="col-8"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="row">
-                    <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
-                        <div class="viewbox ">
-                            <div v-for="view in day">
-                                <div>
-                                    {{view.startTime}}-{{view.endTime}}<br>
-                                    {{view.place.name}}
-                                </div>
-                                <div class="row cols-2">
-                                    <div class="col-2">
-                                    </div>
-                                    <div class="col-10 betweenBox">
-                                        <br>
-                                        <i class="fa-solid fa-car-side"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+            </div>
         </div>
     </div>
 
 
+        @section Scripts{
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+        <script src="https://unpkg.com/axios/dist/axios.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    @section Scripts{
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
+        <script>
 
 
 
@@ -184,73 +186,73 @@
                 },
                 showDaySchedule(index) {
 
-                    this.daySchedule = this.schedule.details[index]
-                    console.log(this.daySchedule)
-                    this.setDayMarker()
-                    this.calcDayRoute()
-                },
-                caltime() {
-                    for (let i = 0; i < this.schedule.details.length; i++) {
-                        for (let j = 0; j < this.schedule.details[i].length; j++) {
+                        this.daySchedule = this.schedule.details[index]
+                        console.log(this.daySchedule)
+                        this.setDayMarker()
+                        this.calcDayRoute()
+                    },
+                    caltime() {
+                        for (let i = 0; i < this.schedule.details.length; i++) {
+                            for (let j = 0; j < this.schedule.details[i].length; j++) {
 
-                            let startTime = new Date(this.schedule.details[i][j].startTime)
-                            let endTime = new Date(this.schedule.details[i][j].endTime)
-                            let hour = startTime.getHours()
-                            let min = startTime.getMinutes()
+                                let startTime = new Date(this.schedule.details[i][j].startTime)
+                                let endTime = new Date(this.schedule.details[i][j].endTime)
+                                let hour = startTime.getHours()
+                                let min = startTime.getMinutes()
 
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
-                            }
-                            if (Number(min) < 10) {
-                                min = "0" + min
-                            }
-                            this.schedule.details[i][j].startTime = hour + ":" + min
+                                if (Number(hour) < 10) {
+                                    hour = "0" + hour
+                                }
+                                if (Number(min) < 10) {
+                                    min = "0" + min
+                                }
+                                this.schedule.details[i][j].startTime = hour + ":" + min
 
-                            hour = endTime.getHours()
-                            min = endTime.getMinutes()
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
+                                hour = endTime.getHours()
+                                min = endTime.getMinutes()
+                                if (Number(hour) < 10) {
+                                    hour = "0" + hour
+                                }
+                                if (Number(min) < 10) {
+                                    min = "0" + min
+                                }
+                                this.schedule.details[i][j].endTime = hour + ":" + min
                             }
-                            if (Number(min) < 10) {
-                                min = "0" + min
-                            }
-                            this.schedule.details[i][j].endTime = hour + ":" + min
                         }
-                    }
-                },
-                setMarker() {
-                    if (this.markers) {
-                        this.markers.forEach((marker) => {
-                            marker.setMap(null)
-                        });
-                        this.markers = []
-                    }
-                    const bounds = new google.maps.LatLngBounds();
-                    let iofSpots = 0
-                    for (i = 0; i < this.schedule.details.length; i++) {
-                        this.schedule.details[i].map((position, j) => {
-                            iofSpots++
-                            const marker = new google.maps.Marker({
-                                position: { lat: position.place.lat, lng: position.place.lng },
-                                label: {
-                                    text: `${iofSpots}`,
-                                    fontWeight: "bold",
-                                },
-                                title: position.place.name,
-                                map: this.map,
-                                icon: this.icon,
+                    },
+                    setMarker() {
+                        if (this.markers) {
+                            this.markers.forEach((marker) => {
+                                marker.setMap(null)
                             });
-                            bounds.extend(marker.position);
-                            // 產生infowindow
-                            let contentString =
-                                `
-                                <div class="infowindow">
-                                    <div class="infowindow_bar row row-cols-2" >
-                                        <div class="infowindow_bar_title col-10">
-                                            ${position.place.name}
-                                        </div>
-                                        <div class="infowindow_bar_divbutton col-2">
-                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
+                            this.markers = []
+                        }
+                        const bounds = new google.maps.LatLngBounds();
+                        let iofSpots = 0
+                        for (i = 0; i < this.schedule.details.length; i++) {
+                            this.schedule.details[i].map((position, j) => {
+                                iofSpots++
+                                const marker = new google.maps.Marker({
+                                    position: { lat: position.place.lat, lng: position.place.lng },
+                                    label: {
+                                        text: `${iofSpots}`,
+                                        fontWeight: "bold",
+                                    },
+                                    title: position.place.name,
+                                    map: this.map,
+                                    icon: this.icon,
+                                });
+                                bounds.extend(marker.position);
+                                // 產生infowindow
+                                let contentString =
+                                    `
+                                            <div class="infowindow">
+                                                <div class="infowindow_bar row row-cols-2" >
+                                                    <div class="infowindow_bar_title col-10">
+                                                        ${position.place.name}
+                                                    </div>
+                                                    <div class="infowindow_bar_divbutton col-2">
+                                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
 
                                             </div>
                                         </div>
@@ -420,36 +422,36 @@
                     });
                     //行程變成同一條路徑，上限25個
 
-                    for (j = 0; j < this.daySchedule.length; j++) {
-                        route.push(this.daySchedule[j].place)
-                    }
+                        for (j = 0; j < this.daySchedule.length; j++) {
+                            route.push(this.daySchedule[j].place)
+                        }
 
-                    // 總行程數 = 1 離開方程式
-                    if (route.length < 2) {
-                        return
-                    } else {
-                        // 總行程數 >= 2 加入停靠站                        
-                        const waypts = [];
-                        for (i = 1; i < route.length - 1; i++) {
-                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                        // 總行程數 = 1 離開方程式
+                        if (route.length < 2) {
+                            return
+                        } else {
+                            // 總行程數 >= 2 加入停靠站
+                            const waypts = [];
+                            for (i = 1; i < route.length - 1; i++) {
+                                waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                            }
+                            request = {
+                                origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                                destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                                waypoints: waypts, //中途停靠點
+                                travelMode: 'DRIVING', //開車
+                            };
                         }
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                            waypoints: waypts, //中途停靠點
-                            travelMode: 'DRIVING', //開車
-                        };
-                    }
-                    directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
-                    // request放入Google行程服務，得到結果
-                    directionsService.route(request, function (result, status) {
-                        if (status == 'OK') {
-                            directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                        }
-                    });
+                        directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
+                        // request放入Google行程服務，得到結果
+                        directionsService.route(request, function(result, status) {
+                            if (status == 'OK') {
+                                directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                            }
+                        });
+                    },
                 },
-            },
-            computed: {
+                computed: {
 
             },
             mounted() {

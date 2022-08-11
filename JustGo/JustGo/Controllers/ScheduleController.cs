@@ -33,9 +33,14 @@ namespace JustGo.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult copySchedule(DateTime time,int blogId)
+        public IActionResult copySchedule([FromBody]BlogVM vm)
         {
-            return Json(_schedule.copyScheduleByBlog(time, blogId,GetUserId()));
+            vm.UserId = GetUserId();
+            if (_schedule.copyScheduleByBlog(vm))
+            {
+                return Json("複製成功");
+            }
+            return Json("複製失敗");
         }
         //--------------------------------------------------
         //搜尋使用者行程清單/無細項

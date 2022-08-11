@@ -157,8 +157,8 @@ namespace JustGo.Repository
                 Describe = model.Describe,
                 CoverImage = new blogImage() { name=model.ImageName},
                 Like = model.Like,
-                StartDate = model.StartDate.AddHours(8),
-                EndDate = model.EndDate.AddHours(8),
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
                 Details = new List<IList<BlogDetailsVM>>()
             };
             if(model.BlogDetails.Count>0)

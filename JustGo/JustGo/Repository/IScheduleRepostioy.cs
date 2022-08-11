@@ -15,7 +15,7 @@ namespace JustGo.Repository
 
         public bool createScedule(ScheduleVM vm);
 
-        public ScheduleVM copyScheduleByBlog(DateTime startTime, int blogId,string userId);
+        public bool copyScheduleByBlog(BlogVM vm);
 
         public bool deleteScedule(ScheduleVM vm);
     }

@@ -127,7 +127,7 @@
                     select.Search = searchString.value;
                     axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)
                 }
-                 function urlReturn(imageName) {
+                 function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
                 }
                 return {
@@ -139,7 +139,7 @@
                     searchNumber,                    
                     select,
                     searchBlog,
-                    urlReturn
+                    imageSrc
                 }
             },
         }
@@ -329,7 +329,8 @@
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">           
             <div class="card">
-                <img :src="urlReturn(item.coverImage.name)" alt="">
+                {{item}}
+                <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
                     <h1>{{item.title}}</h1>
                     <p>😎帳號</p>

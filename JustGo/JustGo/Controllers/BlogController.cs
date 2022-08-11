@@ -62,9 +62,7 @@ namespace JustGo.Controllers
         [HttpPost]
         [Authorize]
         public IActionResult selectUserBlog()
-        {
-            var blog = _blog.selectUserBlog(GetUserId());
-            Console.WriteLine(blog);
+        {           
             return Json(_blog.selectUserBlog(GetUserId()));
         }
 

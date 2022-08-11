@@ -676,7 +676,7 @@
                     //
                     datetime = new Date(status.details[i][0].startTime)
                     let time = ""
-                    let hour = datetime.getHours() + 8
+                    let hour = datetime.getHours()
                     let minute = datetime.getMinutes()
                     //處理時分
                     if (Number(hour) > 24) {
@@ -698,7 +698,7 @@
 
                         let timestay = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
                         console.log(timestay)
-                        hour = startTime.getHours() + 8
+                        hour = startTime.getHours()
                         minute = startTime.getMinutes()
                         if (Number(hour) > 24) {
                             hour = hour - 24
@@ -711,7 +711,7 @@
                         }
                         startTime = hour + ":" + minute
 
-                        hour = endTime.getHours() + 8
+                        hour = endTime.getHours()
                         minute = endTime.getMinutes()
                         if (Number(hour) > 24) {
                             hour = hour - 24
@@ -868,9 +868,6 @@
                             startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
                             endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
                             weatherWarning: false,
-                            pop: 10,
-                            temperature: 25,
-                            uvi: 5,
                             place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                         })
                     }

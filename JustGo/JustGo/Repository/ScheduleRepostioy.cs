@@ -99,8 +99,8 @@ namespace JustGo.Repository
 
         public ScheduleVM selectScedule(int SceduleId ,string UserId)
         {
-            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId && e.UserId == UserId) ?? new Schedule());
-            //return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
+            //return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId && e.UserId == UserId) ?? new Schedule());
+            return modelToView(_context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == SceduleId) ?? new Schedule());
         }
 
         public IList<ScheduleVM> selectUserSchedule(string UserId)
@@ -179,8 +179,8 @@ namespace JustGo.Repository
                     {                        
                         ScheduleDetailVM vmDetail = new ScheduleDetailVM()
                         {
-                            StartTime = item.StartTime,
-                            EndTime = item.EndtTime,
+                            StartTime = item.StartTime.AddHours(8),
+                            EndTime = item.EndtTime.AddHours(8),
                             WeatherWarning = item.WeatherWarning,
                             Pop = item.Pop,
                             Temperature = item.Temperature,

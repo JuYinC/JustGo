@@ -163,16 +163,18 @@ namespace JustGo.Repository
             };
             if(model.BlogDetails.Count>0)
             {
+                Console.WriteLine((model.EndDate - model.StartDate).Days);
+                Console.WriteLine();
                 for (int i = 0; i <= (model.EndDate - model.StartDate).Days; i++)
                 {
+                    vm.Details.Add(new List<BlogDetailsVM>());
                     foreach (BlogDetails item in model.BlogDetails.Where(e => e.StartTime.Day == model.StartDate.Day + i))
-                    {
-                        vm.Details.Add(new List<BlogDetailsVM>());
+                    {                        
                         var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
                         vm.Details[i].Add(new BlogDetailsVM()
                         {
-                            StartTime = item.StartTime.AddHours(8),
-                            EndTime = item.EndtTime.AddHours(8),
+                            StartTime = item.StartTime,
+                            EndTime = item.EndtTime,
                             PlaceId = item.PlaceId,
                             P_Name = p.Name,
                             P_Add = p.Add,

@@ -19,27 +19,27 @@
 
 }
 
-    <div class="arrange__body">
-        <div class="arrange__contain">
-            <video autoplay muted loop plays-inline class="arrange__contain-video">
-                <source src="~/file/video/highway-f.mp4" type="video/mp4">
-            </video>
-            <div class="datepicker"></div>
-            <div class="datepicker__content">
-                <div id="app">
-                    <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDatelocal">
-                    <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDateEndlocal">
-                    <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
-                    <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
-                </div>
+<div class="arrange__body">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content">
+            <div id="app">
+                <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDatelocal">
+                <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDateEndlocal">
+                <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
+                <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
             </div>
-            <div class="journey__map">
-                <div class="sidebar" id="sidebar" >
-                    <div class="sidebar__grid">
-                        <div class="grid-item-t" id="grid-item-t" >
-                            <div id="app5"></div>
+        </div>
+        <div class="journey__map">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t" id="grid-item-t">
+                        <div id="app5"></div>
 
                     </div>
                     <div class="grid-item-m" id="grid-item-m">
@@ -56,7 +56,7 @@
 
                 <div id="app2"></div>
             </div>
-             <div class="sift" id="sift"></div>
+            <div class="sift" id="sift"></div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
@@ -142,12 +142,12 @@
                     labelOrigin: new google.maps.Point(25, 17)
                 },
                 { // 行程
-                    url: "@Url.Content("~/file/photo/location_Yuju.png")",
+                    url: "@Url.Content("~/file/photo/placeholder.png")",
                     scaledSize: new google.maps.Size(50, 50),
                     labelOrigin: new google.maps.Point(25, 17)
                 },
             ],
-            selectWeather : []
+            selectWeather: []
         },
 
         //由action傳入值,更新state狀態
@@ -214,7 +214,9 @@
                     state.markers = [];
                     state.directionsRenderer.setMap(null)
                 }
-
+                if (state.selectPlaces.length == 0) {
+                    return
+                }
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
                 // 產生地點marker
@@ -295,7 +297,6 @@
                     });
                     // 點marker開啟infowindow
                     marker.addListener("click", () => {
-
                         if (state.infowindow) { state.infowindow.close() };
                         infowindow.open({
                             anchor: marker,
@@ -306,10 +307,6 @@
                         viewObj = position
                         state.infowindow = infowindow
                     });
-                    // marker.addListener("mouseout", () => {
-                    //    infowindow.close();
-                    //    state.infowindow = infowindow
-                    // });
                     state.markers.push(marker);
                 });
                 // 地點群組marker Cluster
@@ -402,7 +399,7 @@
                             state.markers.push(marker);
                         });
                     }
-                    state.map.fitBounds(bounds);
+                    if (iofSpots == 1) { state.map.fitBounds(bounds) }
                 }
             },
 
@@ -419,7 +416,6 @@
                         });
                         state.markers = [];
                     }
-
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
                     }
@@ -771,7 +767,7 @@
                 axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
                     .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
                     .catch(err => console.log(err))
-                
+
             },
 
             //載入地圖 設置中心點
@@ -779,7 +775,7 @@
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
                     .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-                axios.post("@Url.Action("selectWeather","Schedule")").then(res => {commit('updateWeather', res.data) })
+                axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) })
             },
         }
     })
@@ -992,8 +988,8 @@
         },
 
 
-            template:
-                `
+        template:
+            `
                 <div>
                     <div class="itxst schedule">
                         <div class="col" v-for="(day,dayIndex) in travel">
@@ -1001,8 +997,8 @@
 
                                  <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
                             </div>
-                               
-                               
+
+
 
                                 <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
                                     ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
@@ -1026,7 +1022,7 @@
                     </div>
                 </div>
                 `
-        })
+    })
 
     //搜尋組件vue
     new Vue({
@@ -1044,11 +1040,11 @@
                 selectType: '景點',
                 selectCounty: [],
                 selectAcitivity: [],
-                isDefault : 0,
+                isDefault: 0,
             }
         },
         mounted() {
-            
+
         },
         computed: {
             travel() {
@@ -1064,7 +1060,7 @@
         methods: {
             //搜尋景點
             search() {
-                if(this.isDefault){
+                if (this.isDefault) {
                     this.selectCounty.splice(0, 1);
                     this.isDefault = 0;
                 }
@@ -1072,21 +1068,21 @@
                 if (this.selectCounty.length > 3) {
                     this.selectCounty.splice(0, 1)
                 }
-                
+
                 switch (this.selectType) {
                     case '景點':
-                        this.selectType = '景點'                        
+                        this.selectType = '景點'
                         break;
                     case '餐飲':
                         this.selectType = '餐飲'
-                        if(this.selectCounty.length <= 0){
+                        if (this.selectCounty.length <= 0) {
                             this.selectCounty.push("高雄市")
                             this.isDefault = 1;
                         }
                         break;
                     case '旅宿':
                         this.selectType = '旅宿'
-                        if(this.selectCounty.length <= 0){
+                        if (this.selectCounty.length <= 0) {
                             this.selectCounty.push("高雄市")
                             this.isDefault = 1;
                         }
@@ -1097,10 +1093,10 @@
                     this.selectAcitivity.splice(0, 1)
                 }
 
-                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0 ) {
-                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType : this.selectType })
+                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
                 }
-            },            
+            },
 
             // 新增景點
             addview: function (index) {
@@ -1169,7 +1165,7 @@
                         </div>
                     </div>
                 `
-        })
+    })
 
     //下方選擇日期vue
     new Vue({
@@ -1185,10 +1181,10 @@
             }
         },
 
-        computed: {            
+        computed: {
             selectPlaces() {
                 return this.$store.state.selectPlaces
-            },            
+            },
             duringDate() {
                 return this.$store.state.duringDate
             },
@@ -1206,7 +1202,7 @@
             datetime() {
                 return this.$store.state.datetime
             },
-            
+
         },
         methods: {
             culDate() {
@@ -1286,18 +1282,18 @@
                 }
 
 
-                for (i=0;i<d;i++){
-                    document.getElementsByClassName('col')[i].style.backgroundColor=""
-                    document.getElementsByClassName('title')[i].style.backgroundColor=""
-                    document.getElementsByClassName('title')[i].style.color="#fff"
+                for (i = 0; i < d; i++) {
+                    document.getElementsByClassName('col')[i].style.backgroundColor = ""
+                    document.getElementsByClassName('title')[i].style.backgroundColor = ""
+                    document.getElementsByClassName('title')[i].style.color = "#fff"
                 }
-                document.getElementsByClassName('col')[k].style.backgroundColor="#FFF7B0"
-        
-                document.getElementsByClassName('title')[k].style.backgroundColor="#FBCB0A"
+                document.getElementsByClassName('col')[k].style.backgroundColor = "#FFF7B0"
 
-                 document.getElementsByClassName('title')[k].style.color="#000"
-                
-                
+                document.getElementsByClassName('title')[k].style.backgroundColor = "#FBCB0A"
+
+                document.getElementsByClassName('title')[k].style.color = "#000"
+
+
             },
         },
 
@@ -1314,7 +1310,7 @@
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
                                         </ul>
-                                        
+
                                     <div class="btnbox-l" @@click="tor">
                                             <i class="fa-solid fa-angle-left left"></i>
                                     </div>

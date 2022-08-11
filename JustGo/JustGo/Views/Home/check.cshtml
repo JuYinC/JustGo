@@ -57,7 +57,7 @@
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" /> *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 }
 
 <div id="app">
@@ -68,7 +68,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                        aria-selected="true">路線</button>
+                        aria-selected="true">地圖</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
@@ -160,7 +160,7 @@
                     daySchedule: [],
                     map: null,
                     icon: {
-                        url: "@Url.Content("~/file/photo/location_Yuju.png")",
+                        url: "@Url.Content("~/file/photo/placeholder.png")",
                         scaledSize: new google.maps.Size(45, 45),
                         labelOrigin: new google.maps.Point(22, 17)
                     },
@@ -336,6 +336,9 @@
                         });
                         this.markers = []
                     }
+                    if (this.daySchedule.length == 0) {
+                        return
+                    }
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
                     this.daySchedule.map((position, j) => {
@@ -402,7 +405,7 @@
                         });
                         this.markers.push(marker);
                     });
-                    this.map.fitBounds(bounds);
+                    if (this.daySchedule.length == 1) { this.map.fitBounds(bounds) }
                 },
                 calcDayRoute() {
                     let request = null;
@@ -449,7 +452,7 @@
             mounted() {
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
-                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 116 })
+                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 123 })
                     .then(res => {
                         this.schedule = res.data;
                         this.daySchedule = this.schedule.details[0];

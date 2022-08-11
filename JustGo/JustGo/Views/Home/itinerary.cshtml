@@ -199,6 +199,9 @@
                     fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
+                state.map.addListener("dragend", () => {
+                    if (state.infowindow) { state.infowindow.close() };
+                })
             },
 
             // 產生景點標示

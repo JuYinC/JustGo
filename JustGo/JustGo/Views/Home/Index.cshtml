@@ -140,11 +140,14 @@
                     return "@Url.Action("Blog","Home")?"+id
                 }
                 function scroll() {
+                    if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
+                        console.log("123")
+                    }
                     select.searchNumber += searchNumber;
                     axios.post("@Url.Action("searchBlog","Blog")",select).then(res => Array.prototype.push.apply(search.results,res.data))
                  }
                 onMounted(() => {
-                     
+                    window.addEventListener('scroll', scroll);
                      searchBlog("");
                 })
                 return {

@@ -301,8 +301,8 @@
         <img :src="CoverImageName" id="coverimg" alt="封面圖片">
         <div id="covertitle">
             <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
-            <label class="btn btn-primary" style="vertical-align:central">
-                <input id="upload_img" style="display:none;" type="file" @@change="fileChange">
+            <label class="btn btn-primary">
+                <input style="display:none;" type="file" @@change="fileChange">
                 <i class="fa fa-photo" style="display:inline-block;">變更封面</i> 
             </label>
         </div>

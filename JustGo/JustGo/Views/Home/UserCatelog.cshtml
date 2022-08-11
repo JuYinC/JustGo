@@ -254,7 +254,17 @@
             <div class="travel">遊記</div>
             <div class="block">
                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                    <div class="blog" v-for="item in 4">
+                    <div class="blog" v-for="(item) in blog" :key="blogId">
+                         <div class="scheduleInfo scheduleInfo_Margin">
+                            <span class="item_title">{{item.title}}</span><br>
+                            <hr class="hr_Style" />    
+                            <span class="item_startDate">{{item.describe}}</span><br>
+                        </div>
+                        <hr class="hr_Style" />
+                        <div class="buttonBar schedule_word_margin">
+                            <span class="CreateBlog_Style" @@click="creatBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
+                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.blogId)"><i class="fa-solid fa-trash-can"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,8 +280,8 @@ new Vue({
     el: "#app",
     data() {
         return {
-            showSchedule: [],
-            dateNow: "",
+            showSchedule: [],            
+            showBlog:[],
         }
     },
     computed: {
@@ -283,6 +293,9 @@ new Vue({
         },
         exSchedule() {
             return this.showSchedule.filter(e => new Date(e.endDate) < new Date());
+        },
+        blog() {
+            return this.showBlog;
         }
     },
     methods: {
@@ -303,6 +316,7 @@ new Vue({
             axios.post("@Url.Action("selectUserSchedule","Schedule")")
                 .then(res => this.showSchedule = res.data)
                 .catch(err => console.log("err"))
+            axios.post("@Url.Action("selectUserBlog","Blog")").then(res=>this.showBlog = res.data).catch(err => console.log(err))
         },
 
     })

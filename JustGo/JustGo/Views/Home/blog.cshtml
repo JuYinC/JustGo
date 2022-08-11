@@ -395,11 +395,9 @@
             
         },
         mounted() {                
-                let id = window.location.search.substring(1)                            
-                id = 82;
-                console.log(id)                
+                let id = window.location.search.substring(1)                                                            
                 if (id != "") {
-                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:83,}).then(res => {  
+                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:id,}).then(res => {  
                        console.log(res.data);
                        this.Details = res.data.details;
                        this.Enddate = res.data.enddate;

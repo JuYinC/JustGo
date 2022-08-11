@@ -53,49 +53,8 @@
 
         // AJAX 去後端取得資料庫的產品資訊
 
-        const { reactive, ref } = Vue;
-        //const App = {
-        //    setup() {
-        //        const search = reactive({ results: [] })
-        //        let searchString = ref("")                
-        //        const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市','宜蘭縣'];
-        //        const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
-        //        const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
-        //        const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
-        //        let searchNumber = ref(10);
-        //        const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:10,Search:""})
-
-        //        function searchBlog(area) {
-        //            switch area{
-        //                case "北部":
-        //                    select.selectCounty = northern;
-        //                    break;
-        //                case "中部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                case "南部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                case "東部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                default:
-        //                    select.selectCounty = [];
-        //            }                    
-        //            axios.post("@Url.Action("testSearch","Search")",select).then(res => search.results = res.data)
-        //        }
-        //        return {
-        //            search,
-        //            northern,
-        //            central,
-        //            south,
-        //            east,
-        //            searchNumber,                    
-        //            select,
-        //            searchBlog,
-                    
-        //        },          
-        //}
+        const { reactive, ref ,onMounted} = Vue;
+       
 
           const App = {
             setup() {
@@ -130,6 +89,12 @@
                  function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
                 }
+                function blogUrl(id){
+                    return "@Url.Action("Blog","Home")?"+id
+                }
+                 onMounted(() => {
+                     searchBlog("");
+                })
                 return {
                     search,
                     northern,
@@ -139,7 +104,8 @@
                     searchNumber,                    
                     select,
                     searchBlog,
-                    imageSrc
+                    imageSrc,
+                    blogUrl
                 }
             },
         }
@@ -334,7 +300,7 @@
                 <div class="info">
                     <h1>{{item.title}}</h1>
                     <p>😎帳號</p>
-                    <a href="#" class="btn">read me</a>
+                    <a :href="blogUrl(item.blogId)" class="btn">read me</a>
                 </div>
             </div>                        
         </div>   

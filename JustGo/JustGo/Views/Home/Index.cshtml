@@ -67,29 +67,62 @@
                 const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
                 const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
                 const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
-                let searchNumber = ref(10);
-                const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:10,Search:""})
+                let searchNumber = 12;
+                const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:0,Search:""})
                 function searchBlog(area) {
-                    switch(area){
+                    select.searchNumber = 0;
+                    switch (area) {                       
                         case "北部":
-                            select.selectCounty = northern;
+                            if (select.selectCounty[0] != northern[0]) {
+                                select.selectCounty = northern;
+                                select.Search = ""; 
+                            }
+                            else {
+                                select.selectCounty = []
+                                select.Search = ""; 
+                            }
                             break;
                         case "中部":
-                        select.selectCounty = central;
+                            if (select.selectCounty[0] != central[0]) {
+                                select.selectCounty = central;
+                                select.Search = ""; 
+                            } else {
+                                select.selectCounty = []
+                                select.Search = ""; 
+                            }
                             break;
                         case "南部":
-                        select.selectCounty = south;
+                        
+                            if (select.selectCounty[0] != south[0]) {
+                                select.selectCounty = south;
+                                select.Search = ""; 
+                            } else {
+                                select.selectCounty = []
+                                select.Search = ""; 
+                            }
                             break;
                         case "東部":
-                        select.selectCounty = east;
+                            if (select.selectCounty[0] != east[0]) {
+                                select.selectCounty = east;
+                                select.Search = ""; 
+                            } else {
+                                select.selectCounty = []
+                                select.Search = ""; 
+                            }
+                            break;
+                        case "搜尋":
+                            select.Search = searchString.value;
+                            searchString.value = "";
                             break;
                         default:
                             select.selectCounty = [];
-                    }
-                    select.Search = searchString.value;
-                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)
+                            select.Search = "";
+                            break;
+                    }        
+                    select.searchNumber = 0;
+                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)                                       
                 }
-                 function imageSrc(imageName) {
+                function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
                 }
                 function open(e){
@@ -106,7 +139,12 @@
                 function blogUrl(id){
                     return "@Url.Action("Blog","Home")?"+id
                 }
-                 onMounted(() => {
+                function scroll() {
+                    select.searchNumber += searchNumber;
+                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => Array.prototype.push.apply(search.results,res.data))
+                 }
+                onMounted(() => {
+                     
                      searchBlog("");
                 })
                 return {
@@ -117,10 +155,12 @@
                     east,
                     searchNumber,                    
                     select,
+                    searchString,
                     searchBlog,
                     imageSrc,
-                    open                                        
-                    blogUrl
+                    open,                                        
+                    blogUrl,
+                    scroll
                 }
             },
         }
@@ -304,8 +344,8 @@
         <div @@click="open($event)" id="sh" class="">
             <i class="fa-solid fa-magnifying-glass"></i>篩選
             <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" v-model="searchString" />
-            <button @@click="searchBlog()" id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
+            <button @@click="searchBlog('搜尋')" id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>        
     </div>
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">           
@@ -318,7 +358,8 @@
                     <a :href="blogUrl(item.blogId)" class="btn">read me</a>
                 </div>
             </div>                        
-        </div>   
+        </div>  
+    </div> 
 </div>
 
 

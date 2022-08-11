@@ -107,7 +107,7 @@ namespace JustGo.Repository
             {
                 filterAcitivity = "and Class in @selectAcitivity";
             }            
-            string strSQL = $"select * from Blog as b where {strSerarch} exists(Select DetailsID from BlogDetails as bd where b.BlogID = BlogID and exists(select PlaceID from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity}))";
+            string strSQL = $"select * from Blog as b where {strSerarch} exists(Select DetailsID from BlogDetails as bd where b.BlogID = BlogID and exists(select PlaceID from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity})) order by BlogId offset @SearchNumber rows fetch next 12 rows only";
             List<Blog> mList = _con.Query<Blog>(strSQL, vm).ToList();
             List<BlogVM> vmList = new List<BlogVM>();
             if (mList.Count > 0)

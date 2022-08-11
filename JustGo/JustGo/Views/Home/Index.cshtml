@@ -16,19 +16,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="~/js/site.js"></script>
-   
+   <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
 
 
     <script>
         
-        var typed = new Typed(".auto-type", {
+         var typed = new Typed(".auto-type", {
             strings: ["還在為排行程煩惱嗎?", "旅行也可以很簡單"], typeSpeed: 100, backSpeed: 100, loop: false
         });
         var navbar = document.getElementById("navbarC");
-        var menu = document.getElementById("navbarC__menu");
+        var menu = document.getElementById("navbarC__menu"); 
 
-        $("#sh").click(function(e){
+         @* $("#sh").click(function(e){
+          
             $("#sh").toggleClass("sh")
             if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
                 $('#shbox').addClass('tgshow')
@@ -43,28 +45,77 @@
          $("#shbtn").click(function(e){
             console.log('0000')
              e.stopPropagation();
-         });
-     
+         });  *@
+    </script>
+    <script>
 
 
 
 
 
-        // AJAX 去後端取得資料庫的產品資訊
+        const { reactive, ref } = Vue;
+        
 
-        const productDiv = document.querySelector('#product');
-        let myHtml = '';
-
-        for (let i = 0; i < 8; i++) {
-            myHtml += `
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <div class="img-wrap">
-                            <img src="" alt="">
-                        </div>
-                        <h3>Lounge Tunic / Black</h3>
-                        <p>$50.00</p>
-                    </div>`
+          const App = {
+            setup() {
+                const search = reactive({ results: [] })
+                let searchString = ref("")                
+                const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市','宜蘭縣'];
+                const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
+                const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
+                const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
+                let searchNumber = ref(10);
+                const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:10,Search:""})
+                function searchBlog(area) {
+                    switch(area){
+                        case "北部":
+                            select.selectCounty = northern;
+                            break;
+                        case "中部":
+                        select.selectCounty = central;
+                            break;
+                        case "南部":
+                        select.selectCounty = south;
+                            break;
+                        case "東部":
+                        select.selectCounty = east;
+                            break;
+                        default:
+                            select.selectCounty = [];
+                    }
+                    select.Search = searchString.value;
+                    axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)
+                }
+                 function imageSrc(imageName) {
+                      return "@Url.Content("~/blogImages")/" + imageName
+                }
+                function open(e){
+                      $("#sh").toggleClass("sh")
+                            if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
+                                $('#shbox').addClass('tgshow')
+                                $('#shbtn').addClass('tgshow')
+                            }else{
+                                $('#shbox').removeClass('tgshow')
+                                $('#shbtn').removeClass('tgshow')
+                                $('#shbox')[0].focus()
+                            }                 
+                }
+                return {
+                    search,
+                    northern,
+                    central,
+                    south,
+                    east,
+                    searchNumber,                    
+                    select,
+                    searchBlog,
+                    imageSrc,
+                    open
+                    
+                }
+            },
         }
+        Vue.createApp(App).mount("#app")
     </script>
 
     <script>
@@ -235,115 +286,31 @@
             <div class="idx__title-2-bt"></div>
         </div>
     </div>
-    <div class="screnbox">  
-        <div>北部</div>
-        <div>中部</div>
-        <div>南部</div>
-        <div id="findw">東部</div>
-        <div id="sh" class="">
+    <div id="app">
+        <div class="screnbox">  
+        <div @@click="searchBlog('北部')">北部</div>
+        <div @@click="searchBlog('中部')">中部</div>
+        <div @@click="searchBlog('南部')">南部</div>
+        <div id="findw"  @@click="searchBlog('東部')">東部</div>
+        <div @@click="open($event)" id="sh" class="">
             <i class="fa-solid fa-magnifying-glass"></i>篩選
-            <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" value="" />
-            <button id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" v-model="searchString" />
+            <button @@click="searchBlog()" id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
     <div class="wrapper">
-        <div class="card">
-            <img src="~/file/photo/1.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😎帳號</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="~/file/photo/2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="~/file/photo/3.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="~/file/photo/4.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="~/file/photo/5.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="~/file/photo/1.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="../poto/p2.jpg" alt="">
-            <div class="info">
-                <h1>台中</h1>
-                <p>😘好好玩</p>
-                <a href="#" class="btn">read me</a>
-            </div>
-        </div>
-    </div>
+       <div v-for="(item) in search.results" class="card" :key="item.blogId">           
+            <div class="card">
+                {{item}}
+                <img :src="imageSrc(item.coverImage.name)" alt="">
+                <div class="info">
+                    <h1>{{item.title}}</h1>
+                    <p>😎帳號</p>
+                    <a href="#" class="btn">read me</a>
+                </div>
+            </div>                        
+        </div>   
+</div>
 
 
 

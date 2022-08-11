@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile:scss-main": "node-sass wwwroot/scss/main.scss wwwroot/css/main.css -w",
-    "compile:scss-layout": "node-sass wwwroot/scss/layout.scss wwwroot/css/__layout.css -w"
+    "compile:scss-layout": "node-sass wwwroot/scss/layout.scss wwwroot/css/__layout.css -w",
+    "compile:scss-check": "node-sass wwwroot/scss/check.scss wwwroot/css/check.css -w"
   },
   "author": "",
   "license": "ISC"

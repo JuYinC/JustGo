@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0; }
+
+.navbarC {
+  content: "";
+  background-color: #0000005e;
+  position: inherit; }
+
+.map-pag3 {
+  width: 66%;
+  height: 500px; }
+
+.nav-fill .nav-item .nav-link,
+.nav-justified .nav-item .nav-link {
+  width: 100%; }
+
+.nav-link[aria-expanded="true"] {
+  background-color: #1ccaff; }
+
+.daysBar {
+  width: 100%; }
+  .daysBar .days {
+    display: inline;
+    margin: 0px 20px;
+    background-color: aqua; }
+
+.scheduleDay {
+  margin: 20px;
+  /*border: 1px solid black;*/
+  vertical-align: top;
+  /*min-width:250px;*/ }
+
+.scheduletab1 {
+  margin-top: 20px;
+  /*overflow-y:auto;
+                                                    flex-wrap: nowrap;*/ }
+
+.betweenBox {
+  height: 50px;
+  border-left-style: dashed;
+  border-left-color: black;
+  border-left-width: 1px; }

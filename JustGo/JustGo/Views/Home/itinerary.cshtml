@@ -62,7 +62,7 @@
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
                     <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="50" alt="map" type="button">
                 </div>
-                <div id="map"></div>
+                <div id="map" class="map-pag2"></div>
             </div>
         </div>
 
@@ -1448,11 +1448,8 @@ let wwwroot = "@Url.Content("~/file/photo")"
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                         <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                                                                       v-model="selectDatelocal">
-                                         <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                                                                        v-model="selectDateEndlocal">
-                                         <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>                                        
+                                         
+                                                                                                                        
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

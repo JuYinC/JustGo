@@ -39,17 +39,14 @@
                 aria-labelledby="pills-home-tab">
 
                 <div>
-                    @* <div class="daysBar">
+                    <div class="daysBar">
                         <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
                             class="days">{{index+1}}</div>
-                    </div> *@
+                    </div>
                     <div>
                         <div class="row cols-md-2  cols-xs-1">
                             <div class="col-md-4 xs">
-                                <div class="daysBar">
-                                    <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                                        class="days">{{index+1}}</div>
-                                </div>
+                               
                                 <div v-for="view in daySchedule">
                                     <div>
                                         {{view.startTime}}-{{view.endTime}}<br>

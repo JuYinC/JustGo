@@ -14,9 +14,9 @@
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
   width: 100%; }
-  .nav-fill .nav-item .nav-link:focus,
-  .nav-justified .nav-item .nav-link:focus {
-    background-color: aqua; }
+
+.nav-link[aria-expanded="true"] {
+  background-color: #1ccaff; }
 
 .daysBar {
   width: 100%; }

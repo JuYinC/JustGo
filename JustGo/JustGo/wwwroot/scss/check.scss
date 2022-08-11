@@ -27,9 +27,12 @@
     width: 100%;
     // border-radius: 20px;
     
-    &:focus{
-        background-color: aqua;
-    }
+    // &:focus{
+    //     background-color: rgb(255, 183, 28);
+    // }
+}
+.nav-link[aria-expanded="true"]{
+    background-color: rgb(28, 202, 255);
 }
 
 .daysBar {

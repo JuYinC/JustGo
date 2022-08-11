@@ -23,13 +23,14 @@
 
     <script>
         
-        var typed = new Typed(".auto-type", {
+         var typed = new Typed(".auto-type", {
             strings: ["還在為排行程煩惱嗎?", "旅行也可以很簡單"], typeSpeed: 100, backSpeed: 100, loop: false
         });
         var navbar = document.getElementById("navbarC");
-        var menu = document.getElementById("navbarC__menu");
+        var menu = document.getElementById("navbarC__menu"); 
 
-        $("#sh").click(function(e){
+         @* $("#sh").click(function(e){
+          
             $("#sh").toggleClass("sh")
             if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
                 $('#shbox').addClass('tgshow')
@@ -44,58 +45,16 @@
          $("#shbtn").click(function(e){
             console.log('0000')
              e.stopPropagation();
-         });
-     
+         });  *@
+    </script>
+    <script>
 
 
 
 
-
-        // AJAX 去後端取得資料庫的產品資訊
 
         const { reactive, ref } = Vue;
-        //const App = {
-        //    setup() {
-        //        const search = reactive({ results: [] })
-        //        let searchString = ref("")                
-        //        const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市','宜蘭縣'];
-        //        const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
-        //        const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
-        //        const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
-        //        let searchNumber = ref(10);
-        //        const select = reactive({selectCounty:[],selectAcitivity:[],searchNumber:10,Search:""})
-
-        //        function searchBlog(area) {
-        //            switch area{
-        //                case "北部":
-        //                    select.selectCounty = northern;
-        //                    break;
-        //                case "中部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                case "南部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                case "東部":
-        //                select.selectCounty = northern;
-        //                    break;
-        //                default:
-        //                    select.selectCounty = [];
-        //            }                    
-        //            axios.post("@Url.Action("testSearch","Search")",select).then(res => search.results = res.data)
-        //        }
-        //        return {
-        //            search,
-        //            northern,
-        //            central,
-        //            south,
-        //            east,
-        //            searchNumber,                    
-        //            select,
-        //            searchBlog,
-                    
-        //        },          
-        //}
+        
 
           const App = {
             setup() {
@@ -130,6 +89,17 @@
                  function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
                 }
+                function open(e){
+                      $("#sh").toggleClass("sh")
+                            if($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth*1.1){
+                                $('#shbox').addClass('tgshow')
+                                $('#shbtn').addClass('tgshow')
+                            }else{
+                                $('#shbox').removeClass('tgshow')
+                                $('#shbtn').removeClass('tgshow')
+                                $('#shbox')[0].focus()
+                            }                 
+                }
                 return {
                     search,
                     northern,
@@ -139,7 +109,9 @@
                     searchNumber,                    
                     select,
                     searchBlog,
-                    imageSrc
+                    imageSrc,
+                    open
+                    
                 }
             },
         }
@@ -320,10 +292,10 @@
         <div @@click="searchBlog('中部')">中部</div>
         <div @@click="searchBlog('南部')">南部</div>
         <div id="findw"  @@click="searchBlog('東部')">東部</div>
-        <div id="sh" class="">
+        <div @@click="open($event)" id="sh" class="">
             <i class="fa-solid fa-magnifying-glass"></i>篩選
             <input id="shbox" class="tgshow"   type="text" placeholder="請輸入關鍵字" v-model="searchString" />
-            <button id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button @@click="searchBlog()" id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
     <div class="wrapper">

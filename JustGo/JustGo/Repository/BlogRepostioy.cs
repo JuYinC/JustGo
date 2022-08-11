@@ -193,7 +193,8 @@ namespace JustGo.Repository
                 UserId = vm.UserId,
                 Describe = vm.Describe,
                 ImageName = "",
-                Like = vm.Like,
+                Like = _context.UserKeep.Where(e=>e.KeepClass==0&&e.KeepId==vm.BlogId).Count(),
+                Title = vm.Title,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,
             };
@@ -207,8 +208,7 @@ namespace JustGo.Repository
                 for(int i = 0; i < vm.Details.Count; i++)
                 {
                     foreach (BlogDetailsVM item in vm.Details[i])
-                    {
-                        Console.WriteLine(JsonConvert.SerializeObject(item.Images));
+                    {                       
                         model.BlogDetails.Add(                            
                             new BlogDetails()
                             {
@@ -223,6 +223,7 @@ namespace JustGo.Repository
                     }
                 }                
             }
+            Console.WriteLine(model);
             return model;            
         }
     }

@@ -20,7 +20,7 @@ namespace JustGo.Controllers
             _logger = logger;
             _pwr = pwr;
             _schedule = schedule;
-            _blog = blog;           
+            _blog = blog;                        
         }
 
         public IActionResult Index()
@@ -44,6 +44,10 @@ namespace JustGo.Controllers
         }
 
         public IActionResult UserCatelog()
+        {
+            return View();
+        }
+        public IActionResult check()
         {
             return View();
         }

@@ -142,7 +142,12 @@
                     },
                     saveBlog() {
                         let blog = {
-                            CoverImageName:this.CoverImageName,Details:this.Details
+                            CoverImage: { base64 : this.CoverImageName,name:"" },
+                            Details:this.Details,
+                            Title:this.Title,
+                            describe:this.describe,
+                            StartDate:this.StartDate,
+                            EndDate:this.EndDate
                         }
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                                  .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
@@ -233,7 +238,11 @@
                      let id = window.location.search.substring(1) 
                      
                      if (id != "") {
-                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res =>  this.Details = res.data.details )                         
+                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {                              
+                             this.Details = res.data.details;
+                             this.EndDate = res.data.endDate;
+                             this.StartDate = res.data.startDate;                                                          
+                         })                         
                      }
                  }
 

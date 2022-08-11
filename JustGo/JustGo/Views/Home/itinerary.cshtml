@@ -19,30 +19,30 @@
 
 }
 
-    <div class="arrange__body">
-        <div class="arrange__contain">
-            <video autoplay muted loop plays-inline class="arrange__contain-video">
-                <source src="~/file/video/highway-f.mp4" type="video/mp4">
-            </video>
-            <div class="datepicker"></div>
-            <div class="datepicker__content">
-                <div id="app">
-                    <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDatelocal">
-                    <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                       v-model="selectDateEndlocal">
-                    <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
-                    <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
-                </div>
+<div class="arrange__body">
+    <div class="arrange__contain">
+        <video autoplay muted loop plays-inline class="arrange__contain-video">
+            <source src="~/file/video/highway-f.mp4" type="video/mp4">
+        </video>
+        <div class="datepicker"></div>
+        <div class="datepicker__content">
+            <div id="app">
+                <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDatelocal">
+                <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                    v-model="selectDateEndlocal">
+                <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
+                <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
             </div>
-            <div class="journey__map">
-                <div class="sidebar" id="sidebar" >
-                    <div class="sidebar__grid">
-                        <div class="grid-item-t" id="grid-item-t" >
-                            <div id="app5"></div>
+        </div>
+        <div class="journey__map">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar__grid">
+                    <div class="grid-item-t" id="grid-item-t">
+                        <div id="app5"></div>
 
-                        </div>
-                        <div class="grid-item-m" id="grid-item-m">
+                    </div>
+                    <div class="grid-item-m" id="grid-item-m">
 
                         <div id="app4"></div>
 
@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="sidebar-hide" id="sidebar-hide">
-                
+
                 <div id="app2"></div>
             </div>
-             <div class="sift" id="sift"></div>
+            <div class="sift" id="sift"></div>
             <div class="mapbox" id="app3">
                 <div id="floating-panel">
                     <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
@@ -83,35 +83,35 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 <script>
-        hidebtn = document.getElementById("sift").addEventListener('click',function(){
+    hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
-        $('#open').click(function(){
-            if($('#sidebar')[0].clientWidth<301){
-                console.log("1234")
-                $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
-                $('#grid-item-t').css('width','100%')
-                $('#grid-item-m').css('width','100%')
-                $('.btnbox-r').css('display','none')
-                $('.btnbox-l').css('display','none')
-                $('.col').css('display','inline-block')
-                $('.daysbox').css('left','0px')
+    $('#open').click(function () {
+        if ($('#sidebar')[0].clientWidth < 301) {
+            console.log("1234")
+            $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
+            $('#grid-item-t').css('width', '100%')
+            $('#grid-item-m').css('width', '100%')
+            $('.btnbox-r').css('display', 'none')
+            $('.btnbox-l').css('display', 'none')
+            $('.col').css('display', 'inline-block')
+            $('.daysbox').css('left', '0px')
 
-            }else{
-                $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
-                $('#grid-item-t').css('width','270px')
-                $('#grid-item-m').css('width','300px')
-                $('.btnbox-r').css('display','')
-                $('.btnbox-l').css('display','')
-                $('.col').css('display','')
+        } else {
+            $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
+            $('#grid-item-t').css('width', '270px')
+            $('#grid-item-m').css('width', '300px')
+            $('.btnbox-r').css('display', '')
+            $('.btnbox-l').css('display', '')
+            $('.col').css('display', '')
 
-            }
-        })
-      
+        }
+    })
+
 </script>
 
 
-<script> 
+<script>
     const store = new Vuex.Store({
         state: {
             map: null,
@@ -142,11 +142,12 @@
                     labelOrigin: new google.maps.Point(25, 17)
                 },
                 { // 行程
-                    url: "@Url.Content("~/file/photo/location_Yuju.png")",
+                    url: "@Url.Content("~/file/photo/placeholder.png")",
                     scaledSize: new google.maps.Size(50, 50),
                     labelOrigin: new google.maps.Point(25, 17)
                 },
             ],
+            selectWeather: []
         },
 
         //由action傳入值,更新state狀態
@@ -155,6 +156,10 @@
             updateData(state, status) {
                 state.selectPlaces.length = 0;
                 state.selectPlaces = status
+            },
+            updateWeather(state, status) {
+                state.selectWeather.length = 0;
+                state.selectWeather = status
             },
 
             //計算行程表時間
@@ -202,14 +207,16 @@
                     state.markerCluster.clearMarkers();
                     state.markerCluster = null
                     state.markers = [];
-                } else if (state.markers) {
+                } else if (state.markers && state.directionsRenderer) {
                     this.state.markers.forEach((marker) => {
                         marker.setMap(null)
                     });
                     state.markers = [];
-                    // state.directionsRenderer.setMap(null)
+                    state.directionsRenderer.setMap(null)
                 }
-
+                if (state.selectPlaces.length == 0) {
+                    return
+                }
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
                 // 產生地點marker
@@ -290,7 +297,6 @@
                     });
                     // 點marker開啟infowindow
                     marker.addListener("click", () => {
-
                         if (state.infowindow) { state.infowindow.close() };
                         infowindow.open({
                             anchor: marker,
@@ -301,10 +307,6 @@
                         viewObj = position
                         state.infowindow = infowindow
                     });
-                    // marker.addListener("mouseout", () => {
-                    //    infowindow.close();
-                    //    state.infowindow = infowindow
-                    // });
                     state.markers.push(marker);
                 });
                 // 地點群組marker Cluster
@@ -397,7 +399,7 @@
                             state.markers.push(marker);
                         });
                     }
-                    state.map.fitBounds(bounds);
+                    if (iofSpots == 1) { state.map.fitBounds(bounds) }
                 }
             },
 
@@ -414,7 +416,6 @@
                         });
                         state.markers = [];
                     }
-
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
                     }
@@ -671,7 +672,7 @@
                     //
                     datetime = new Date(status.details[i][0].startTime)
                     let time = ""
-                    let hour = datetime.getHours() + 8
+                    let hour = datetime.getHours()
                     let minute = datetime.getMinutes()
                     //處理時分
                     if (Number(hour) > 24) {
@@ -693,7 +694,7 @@
 
                         let timestay = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
                         console.log(timestay)
-                        hour = startTime.getHours() + 8
+                        hour = startTime.getHours()
                         minute = startTime.getMinutes()
                         if (Number(hour) > 24) {
                             hour = hour - 24
@@ -706,7 +707,7 @@
                         }
                         startTime = hour + ":" + minute
 
-                        hour = endTime.getHours() + 8
+                        hour = endTime.getHours()
                         minute = endTime.getMinutes()
                         if (Number(hour) > 24) {
                             hour = hour - 24
@@ -766,6 +767,7 @@
                 axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
                     .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
                     .catch(err => console.log(err))
+
             },
 
             //載入地圖 設置中心點
@@ -773,7 +775,7 @@
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
                     .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-
+                axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) })
             },
         }
     })
@@ -862,9 +864,6 @@
                             startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
                             endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
                             weatherWarning: false,
-                            pop: 10,
-                            temperature: 25,
-                            uvi: 5,
                             place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
                         })
                     }
@@ -989,8 +988,8 @@
         },
 
 
-            template:
-                `
+        template:
+            `
                 <div>
                     <div class="itxst schedule">
                         <div class="col" v-for="(day,dayIndex) in travel">
@@ -998,8 +997,8 @@
 
                                  <input type="time" v-model="datetime[dayIndex]" @@change="cultime()">
                             </div>
-                               
-                               
+
+
 
                                 <draggable v-model="travel[dayIndex]" group="site" animation="300" dragClass="dragClass"
                                     ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
@@ -1023,7 +1022,7 @@
                     </div>
                 </div>
                 `
-        })
+    })
 
     //搜尋組件vue
     new Vue({
@@ -1038,13 +1037,14 @@
                     '臺東縣', '澎湖縣', '連江縣', '金門縣'
                 ],
                 acitivitys: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
-                selectType: [],
+                selectType: '景點',
                 selectCounty: [],
                 selectAcitivity: [],
+                isDefault: 0,
             }
         },
         mounted() {
-            this.selectType = '景點'
+
         },
         computed: {
             travel() {
@@ -1060,40 +1060,42 @@
         methods: {
             //搜尋景點
             search() {
+                if (this.isDefault) {
+                    this.selectCounty.splice(0, 1);
+                    this.isDefault = 0;
+                }
+
                 if (this.selectCounty.length > 3) {
                     this.selectCounty.splice(0, 1)
                 }
-                if (this.selectAcitivity.length > 1) {
-                    if (this.selectAcitivity[0] == 15 || this.selectAcitivity[0] == 16) {
-                        this.selectAcitivity.splice(0, 1)
+
+                switch (this.selectType) {
+                    case '景點':
                         this.selectType = '景點'
-                    }
+                        break;
+                    case '餐飲':
+                        this.selectType = '餐飲'
+                        if (this.selectCounty.length <= 0) {
+                            this.selectCounty.push("高雄市")
+                            this.isDefault = 1;
+                        }
+                        break;
+                    case '旅宿':
+                        this.selectType = '旅宿'
+                        if (this.selectCounty.length <= 0) {
+                            this.selectCounty.push("高雄市")
+                            this.isDefault = 1;
+                        }
+                        break;
                 }
 
-                if (this.selectAcitivity.length > 3) {
+                if (this.selectAcitivity.length > 5) {
                     this.selectAcitivity.splice(0, 1)
                 }
 
                 if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity })
+                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
                 }
-            },
-            searchType() {
-                switch (this.selectType) {
-                    case '景點':
-                        break;
-                    case '餐飲':
-                        this.selectAcitivity = [15]
-                        this.selectCounty = []
-                        //this.search()
-                        break;
-                    case '旅宿':
-                        this.selectAcitivity = [16]
-                        this.selectCounty = []
-                        //this.search()
-                        break;
-                }
-
             },
 
             // 新增景點
@@ -1122,8 +1124,8 @@
             },
         },
 
-            template:
-                `
+        template:
+            `
                     <div class="itxst">
                         <div class="lbl">
                             <div class="cy">
@@ -1135,7 +1137,7 @@
                             <hr>
                              <div class="picker">
                                 <span v-for="(atype,index) in type">
-                                    <input @@change="searchType" type="radio" :value="atype" v-model="selectType" :id="atype">
+                                    <input @@change="search" type="radio" :value="atype" v-model="selectType" :id="atype">
                                     <label :for="atype">{{atype}}</label>
                                 </span>
                             </div>
@@ -1163,7 +1165,7 @@
                         </div>
                     </div>
                 `
-        })
+    })
 
     //下方選擇日期vue
     new Vue({
@@ -1172,20 +1174,16 @@
         data() {
             return {
                 toleft: 0,
-                calpositiontotal: 0
-
+                calpositiontotal: 0,
+                selectDatelocal: [],
+                selectDateEndlocal: [],
+                saveData: [],
             }
         },
 
         computed: {
-            travel() {
-                return this.$store.state.travel;
-            },
             selectPlaces() {
                 return this.$store.state.selectPlaces
-            },
-            datetime() {
-                return this.$store.state.datetime
             },
             duringDate() {
                 return this.$store.state.duringDate
@@ -1198,13 +1196,56 @@
                     left: this.toleft + 'px',
                 }
             },
+            travel() {
+                return this.$store.state.travel
+            },
+            datetime() {
+                return this.$store.state.datetime
+            },
+
         },
-
-        mounted() {
-
-        },
-
         methods: {
+            culDate() {
+                let startTime = new Date(this.selectDatelocal)
+                let endTime = new Date(this.selectDateEndlocal)
+                let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+                this.duringDate.length = 0
+                this.datetime.length = 0
+                if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
+
+                    for (let i = 0; i < day; i++) {
+                        this.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                        this.datetime.push('09:00')
+                    }
+
+                    if (this.travel.length == 0) {
+                        for (let i = 0; i < day; i++) {
+                            this.travel.push([])
+                        }
+                    } else if (this.travel.length <= day) {
+
+                        for (let i = 0; i < day - this.travel.length; i++) {
+                            this.travel.push([])
+                        }
+
+                    } else if (this.travel.length > day) {
+
+                        for (let i = 0; i < this.travel.length - day; i++) {
+                            let lastIndex = this.travel.length - 1
+
+                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
+                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
+                            }
+                            this.travel.pop()
+                        }
+                    }
+                } else {
+                    alert('重新選擇日期')
+                }
+            },
+
             tol() {
                 let x = document.getElementsByClassName('daysbox')[0].clientWidth
                 // let y = document.getElementsByClassName('btnbox')[0].clientWidth
@@ -1231,28 +1272,28 @@
                 this.daysindex = k
                 d = this.travel.length
 
-                if(document.getElementById('sidebar').clientWidth<301){
+                if (document.getElementById('sidebar').clientWidth < 301) {
                     this.calpositiontotal = 0
                     for (i = 0; i < k; i++) {
                         this.calpositiontotal += document.getElementsByClassName('col')[i].clientHeight
                     }
                     document.getElementsByClassName('grid-item-m')[0].scrollTop = this.calpositiontotal
-                    this.$store.commit('setDailyMarker', k) 
+                    this.$store.commit('setDailyMarker', k)
                 }
-               
 
-                for (i=0;i<d;i++){
-                    document.getElementsByClassName('col')[i].style.backgroundColor=""
-                    document.getElementsByClassName('title')[i].style.backgroundColor=""
-                    document.getElementsByClassName('title')[i].style.color="#fff"
+
+                for (i = 0; i < d; i++) {
+                    document.getElementsByClassName('col')[i].style.backgroundColor = ""
+                    document.getElementsByClassName('title')[i].style.backgroundColor = ""
+                    document.getElementsByClassName('title')[i].style.color = "#fff"
                 }
-                document.getElementsByClassName('col')[k].style.backgroundColor="#FFF7B0"
-        
-                document.getElementsByClassName('title')[k].style.backgroundColor="#FBCB0A"
+                document.getElementsByClassName('col')[k].style.backgroundColor = "#FFF7B0"
 
-                 document.getElementsByClassName('title')[k].style.color="#000"
-                
-                
+                document.getElementsByClassName('title')[k].style.backgroundColor = "#FBCB0A"
+
+                document.getElementsByClassName('title')[k].style.color = "#000"
+
+
             },
         },
 
@@ -1260,12 +1301,16 @@
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                        <input type="date">
-                                        <input type="date">
+                                         <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                                                                                                       v-model="selectDatelocal">
+                                         <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                                                                                                        v-model="selectDateEndlocal">
+                                         <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>                                        
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
                                         </ul>
+
                                     <div class="btnbox-l" @@click="tor">
                                             <i class="fa-solid fa-angle-left left"></i>
                                     </div>
@@ -1276,7 +1321,7 @@
                             `
     })
 
-    </script>
-  
+</script>
+
 
 }

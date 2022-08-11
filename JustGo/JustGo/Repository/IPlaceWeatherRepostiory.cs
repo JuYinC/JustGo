@@ -10,6 +10,6 @@ namespace JustGo.Repository
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm);
         public Place getPlaceId(string id);
 
-        public Weather getWeatherByLocation(string location);
+        public ICollection<Weather> getWeatherByLocation(string location);
     }
 }

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Uploads\**" />
+    <Content Remove="wwwroot\Uploads\**" />
+    <EmbeddedResource Remove="wwwroot\Uploads\**" />
+    <None Remove="wwwroot\Uploads\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
@@ -24,8 +31,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\blogImages\" />
-    <Folder Include="wwwroot\NewFolder\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

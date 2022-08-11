@@ -209,8 +209,7 @@ namespace JustGo.Repository
                 for(int i = 0; i < vm.Details.Count; i++)
                 {
                     foreach (BlogDetailsVM item in vm.Details[i])
-                    {
-                        Console.WriteLine(JsonConvert.SerializeObject(item.Images));
+                    {                       
                         model.BlogDetails.Add(                            
                             new BlogDetails()
                             {

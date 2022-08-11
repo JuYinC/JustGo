@@ -174,7 +174,8 @@
     align-items: center;
     justify-content: space-between;
     z-index: 5;
-    transition: padding 0.7s; }
+    transition: padding 0.7s;
+    height: 10vh; }
     .sticky ul {
       width: auto; }
   .footer__waves {

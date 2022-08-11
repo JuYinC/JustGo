@@ -413,11 +413,11 @@
 
         &__content {
             display: flex;
-            // background-color: aqua;
             position: absolute;
             top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100%;
+            margin: 0 auto;
+            justify-content: center;
 
             & input {
                 font-size: 2rem;
@@ -425,6 +425,11 @@
                 background: transparent;
                 font-weight: 700;
                 margin-left: 3rem;
+
+                &:focus{
+                    width:250px;
+                  
+                }
 
                 &::placeholder {
                     color: #eee;
@@ -443,20 +448,14 @@
 
         }
 
-
-
-        // &__btn{
-        //     position: absolute;
-        //     display: inline-block;
-        //     top: 55%;
-        // }
-
     }
 
     .journey__map {
-        height: 100vh;
+        height: 88vh;
         // background-color: brown;
         display: flex;
+        position: inherit;
+        top:10vh;
 
 
         & .sidebar {
@@ -490,18 +489,12 @@
                 }
 
                 & .item2 {
-                    // display: grid;
                     min-height: 50px;
-                    // height: auto;
                     min-width: 200px;
                     display: grid;
-                    // width: auto;
-                    // padding: 6px 12px;
                     margin-bottom: 1rem;
-                    // border: solid 1px #eee;
                     background-color: #ffffffd2;
-                    // border-radius: 10px;
-                    // text-align: left;
+                   
                  
                     & *{
                         // font-family: cwTeXYen, sans-serif;
@@ -568,11 +561,17 @@
                             margin-bottom: 0.2rem;
                             font-size: 2rem;
                             font-family: 'cwTeXYen', sans-serif;
+                            transition: all .2s;
+                            
+                            &:hover{
+                                box-shadow: 1px 1px 3px;
+                            }
 
                         }
 
                         & input[type="checkbox"]:checked+label {
                             background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
                         }
 
                     }
@@ -590,11 +589,17 @@
                             margin-bottom: 0.2rem;
                             font-size: 2rem;
                             font-family: 'cwTeXYen', sans-serif;
+                            transition: all .2s;
+                            
+                            &:hover{
+                                box-shadow: 1px 1px 3px;
+                            }
 
                         }
 
                         & input[type="radio"]:checked+label {
                             background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
                         }
                     }
 
@@ -614,11 +619,17 @@
                             margin-bottom: 0.2rem;
                             font-size: 2rem;
                             font-family: 'cwTeXYen', sans-serif;
+                            transition: all .2s;
+                            
+                            &:hover{
+                                box-shadow: 1px 1px 3px;
+                            }
 
                         }
 
                         & input[type="checkbox"]:checked+label {
                             background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
                         }
 
 
@@ -671,7 +682,7 @@
                             position: absolute;
                             top: 48px;
                             width: 25px;
-                            height: 50px;
+                            height: 46px;
                             display: flex;
                             align-items: center;
                             left: -5px;
@@ -695,7 +706,7 @@
                             position: absolute;
                             left: 255px;
                             width: 25px;
-                            height: 50px;
+                            height: 46px;
                             display: flex;
                             align-items: center;
 

@@ -21,8 +21,6 @@ builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>()
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 builder.Services.AddTransient<IBlogRepostioy, BlogRepostioy>();
 
-
-
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
 //連線字串替換
 //地端連線字串TravelWindows,雲端連線字串TravelPssP

@@ -22,7 +22,7 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 16", vm).ToList();
+            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
             Console.WriteLine(getPlace.GetType());
 
             return getPlace;
@@ -43,18 +43,44 @@ namespace JustGo.Repository
                     i = false;
                 }
             }
-            if (vm.selectAcitivity.Length > 0)
+            switch (vm.selectType)
             {
-                if (i)
-                {
-                    sqlStr += " Class in @selectAcitivity ";
-                }
-                else
-                {
-                    sqlStr += " and Class in @selectAcitivity ";
-                }
+
+                case "景點":
+                    if (vm.selectAcitivity.Length > 0)
+                    {
+                        if (i)
+                        {
+                            sqlStr += " Class in @selectAcitivity ";
+                        }
+                        else
+                        {
+                            sqlStr += " and Class in @selectAcitivity ";
+                        }
+                    }
+                    sqlStr += " and Class <15";                    
+                    break;
+                case "餐飲":
+                    if (i)
+                    {
+                        sqlStr += " Class = '15' ";
+                    }
+                    else
+                    {
+                        sqlStr += " and Class = '15' ";
+                    }
+                    break;
+                case "旅宿":
+                    if (i)
+                    {
+                        sqlStr += " Class = '16' ";
+                    }
+                    else
+                    {
+                        sqlStr += " and Class = '16' ";
+                    }
+                    break;
             }
-            sqlStr += " and Class <16";
             return _con.Query<Place>(sqlStr, vm).ToList();
         }
 
@@ -65,9 +91,9 @@ namespace JustGo.Repository
 
         }
 
-        public Weather getWeatherByLocation(string location)
+        public ICollection<Weather> getWeatherByLocation(string location)
         {
-            throw new NotImplementedException();
+            return _con.Query<Weather>("select * from weather").ToList();
         }
     }
 }

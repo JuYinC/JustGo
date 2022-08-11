@@ -83,6 +83,7 @@ namespace JustGo.Controllers
         void saveImage(blogImage blogImage)
         {
             string[] imageString;
+            Console.WriteLine(blogImage.base64);
             try
             {
                 imageString = blogImage.base64.Split(",");

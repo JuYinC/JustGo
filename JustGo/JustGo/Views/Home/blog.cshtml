@@ -5,7 +5,7 @@
     ViewData["Title"] = "blog";
 }
 @section Style{
-
+ <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
  <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
  <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
@@ -177,6 +177,7 @@
     <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
     <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
      <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+     <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
     
         
@@ -391,24 +392,26 @@
                     }
                 }
             },
-            mounted() {
-            let id = window.location.search.substring(1) 
-             console.log(id)
-             if (id != "") {
-                 axios.post("@Url.Action("selectblogDetails","Blog")", { Blog: id }).then(res => {  
-
-                    this.Details = res.data.details;
-                    this.EndDate = res.data.endDate;
-                    this.StartDate = res.data.startDate;
-                    this.Title = res.data.Title;
-                    this.Describe = res.data.describe;
-                    this.StartDate = res.data.startDate;
-                    this.EndDate = res.data.endDate;
-                  }
-                 )
-             }
-        }
+            
         },
+        mounted() {                
+                let id = window.location.search.substring(1)                            
+                id = 82;
+                console.log(id)                
+                if (id != "") {
+                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:71, }).then(res => {  
+                       console.log(res.data);
+                       this.Details = res.data.details;
+                       this.Enddate = res.data.enddate;
+                       this.Startdate = res.data.startdate;
+                       this.Title = res.data.title;
+                       this.describe = res.data.describe;
+                       this.startdate = res.data.startdate;
+                       this.enddate = res.data.enddate;
+                     }
+                    )
+                }
+            },
     },
     )
 
@@ -419,14 +422,7 @@
    <div id="bloginfo">
     <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
-            style="min-height: 400px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
-           
-            <h5 class="font-weight-bold text-white">Blog Detail</h5>
-            <div class="d-inline-flex text-white">
-                <p class="m-0"><a class="text-white" href="">Home</a></p>
-                <p class="m-0 px-2">/</p>
-                <p class="m-0">Blog Detail</p>
-            </div>
+            style="height: 420px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
         </div>
     </div>
     <!-- Header End -->
@@ -437,14 +433,14 @@
             <div class="col-lg-4 mt-4 mt-lg-2 ">
                 <div class="sticky-top" style="top:10vh">
                     <!-- Author Bio -->
-                    <div class="d-flex flex-column text-center rounded mb-4 py-4 px-4">
+                    <div class="d-flex flex-column rounded mb-4 py-4">
                         <div class="py-3">
                                 <span><img :src="UserImage" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
                         </div>
                         <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
-                        <div class="mb-4">{{describe}}</div>
-                        <div class="text-center" >
+                        <div class="mb-4">美好旅程的回憶從JustGO開始</div>
+                        <div class="text-end" >
                         <label class="btn btn-outline-dark btn-sm">
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
@@ -483,7 +479,7 @@
 
                     <!-- Tag Cloud -->
                     <div class="mb-4">
-                        <h2 class="mb-4">Tag</h2>
+                        <h2 class="mb-4">#Tag</h2>
                         <div class="d-flex flex-wrap m-n1">                  
                             <a href="" class="btn btn-primary m-1 btn-sm">溫泉</a>
                             <a href="" class="btn btn-primary m-1 btn-sm">生態</a>
@@ -577,7 +573,6 @@
                                     <i class="fa fa-star" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                         @@load="myscore=item"></i>
-                                    {{dayDetails.score}}分
                                 </div>
                               
                                 <p>{{dayDetails.describe}}</p>I am Describe<br>

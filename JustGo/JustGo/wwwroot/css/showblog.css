@@ -21,14 +21,13 @@
     to {
         font-size: 15px;
     }
-} 
+}
 
- #userimg {
+#userimg {
     border-radius: 50%;
+    height: 65px;
     width: 70px;
-    height: 70px;
-} 
-
+}
 
 
 .Details {
@@ -63,10 +62,7 @@
         font-weight: bold !important;
         size: 12px !important;
         box-shadow: 0 !important;
-        transition:none !important;
-        -webkit-transform: rotate(1deg) !important;
     }
-
 
 .btn-primary, .btn-outline-primary {
     background-color: #669ed6 !important;

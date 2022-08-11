@@ -67,10 +67,10 @@ namespace JustGo.Controllers
         }
 
         //Blog細項
-      
-        public IActionResult selectblogDetails(int id)
+        [HttpPost]
+        public IActionResult selectblogDetails([FromBody]BlogVM vm)
         {
-            return Json(_blog.selectBlog(id));
+            return Json(_blog.selectBlog(vm.BlogId));
         }
 
         //搜尋部落格

@@ -77,7 +77,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 
-
+/*
 
 
 .fa-heart {
@@ -105,7 +105,7 @@ textarea::-webkit-scrollbar-thumb {
     to {
         font-size: 15px;
     }
-}
+}*/
 
 #userimg {
     border-radius: 50%;

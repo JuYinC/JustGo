@@ -89,7 +89,7 @@
 
     #userimg {
         border-radius: 50%;
-        height: 55px;
+        height: 65px;
     }
 
     .Details {
@@ -209,7 +209,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "北部1",
                                 p_tel: "07-123456",
@@ -222,7 +222,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "高雄2",
                                 p_tel: "02-123456",
@@ -235,7 +235,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台中3",
                                 p_tel: "04-123456",
@@ -251,7 +251,7 @@
                             {
                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台南4",
                                 p_tel: "06-123456",
@@ -264,7 +264,7 @@
                             {
                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "花蓮5",
                                 p_tel: "123456",
@@ -485,8 +485,8 @@
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
                         <div class="sticky-top">
-                            <label class="mt-4">JustGO旅途隨手記</label>                           
-                            <label class="mb-2">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</label>
+                            <div class="mt-4">JustGO旅途隨手記</div>                           
+                            <div class="mb-2">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</div>
                             <ul class="list-group">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
                                     <li class="list-group-item  justify-content-between align-items-center px-0">

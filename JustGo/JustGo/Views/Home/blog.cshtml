@@ -8,6 +8,173 @@
  <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"/>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", serif;
+    }
+
+
+    #coverimg {
+        width: 100%;
+        height: 420px;
+        /* position: absolute; */
+        z-index: -5;
+        margin-bottom: 5%;
+    }
+
+    #covertitle {
+        position: absolute;
+        z-index: 2;
+        text-align: center;
+        top: 300px;
+        left: 10%;
+    }
+
+    .fa-flag {
+        font-size: 22px;
+        color: aliceblue;
+    }
+
+    #TitleId {
+        display: inline-block;
+        border-style: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 22px;
+        color: aliceblue;
+        font-weight: auto;
+        text-align: center;
+        top: 60%;
+        left: 45%;
+        z-index: 2;
+    }
+
+
+        #TitleId:hover {
+            -webkit-text-stroke: 1px #fff;
+            color: transparent;
+            z-index: 2;
+        }
+
+    textarea {
+        width: 100%;
+        border: none;
+        border-bottom: 1px dashed #909cc2;
+    }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-bottom: 1px dashed #084887;
+        }
+
+    .container-fluid {
+        position: relative;
+    }
+
+    textarea::-webkit-scrollbar {
+        width: 8px;
+        width: 8px;
+        border-radius: 40px;
+        background-color: #c3c3c3;
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        width: 8px;
+        border-radius: 40px;
+        background-color: #c3c3c3;
+    }
+
+    #userimg {
+        border-radius: 50%;
+        width: 65px;
+        height: 65px;
+    }
+
+
+
+    .Details {
+        list-style-type: none;
+    }
+
+    .list-group-item {
+        font-size: 14px !important;
+        /*color: #f9ab55 !important;*/
+        /*font-weight: bold !important;*/
+        box-shadow: 0 !important;
+        border: none !important;
+        padding: 2px !important;
+    }
+
+        .list-group-item:hover {
+            background-color: transparent !important;
+            color: #f58a07 !important;
+            border: none !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            box-shadow: 0 !important;
+            transition: width 2s, height 2s !important;
+            -webkit-transform: rotate(1deg) !important;
+        }
+
+        .list-group-item.active {
+            background-color: transparent !important;
+            color: #f58a07 !important;
+            border: none !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            box-shadow: 0 !important;
+         
+        }
+
+    .btn-primary, .btn-outline-primary {
+        background-color: #669ed6 !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+        .btn-primary:hover, .btn-outline-primary:hover {
+            background-color: #084887 !important;
+            color: #fff !important;
+            border: none !important;
+        }
+
+    #day {
+        background-color: #084887;
+        color: #fff;
+        border-radius: 8px;
+        padding: 4px 9px;
+        margin-bottom: 5px;
+    }
+
+
+    .groupimg {
+        width: 600px;
+        margin: 10px -10px;
+        display: row;
+        flex-wrap: wrap;
+        /* display: flex;
+        justify-content: space-evenly */
+    }
+
+        .groupimg > img {
+            width: 180px;
+            height: 150px;
+            margin: 10px 10px;
+            cursor: pointer;
+            justify-content: space-around;
+        }
+
+        .groupimg::after {
+            display: block;
+            width: 180px;
+        }
+
+</style>
 
 
 }
@@ -46,7 +213,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "北部1",
                                 p_tel: "07-123456",
@@ -58,7 +225,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "高雄2",
                                 p_tel: "02-123456",
@@ -70,7 +237,7 @@
                             {
                                 id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台中3",
                                 p_tel: "04-123456",
@@ -83,9 +250,9 @@
                         ],
                         [
                             {
-                               id: id++,
+                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "台南4",
                                 p_tel: "06-123456",
@@ -95,9 +262,9 @@
                                 images: {Name:"",base64:""},
                             },
                             {
-                               id: id++,
+                                id: id++,
                                 startTime:null,
-                                endtTime:null,
+                                endTime:null,
                                 placeId: 1,
                                 p_Name: "花蓮5",
                                 p_tel: "123456",
@@ -139,24 +306,17 @@
             }
         },
         methods: {
+            getdate(date) {
+                return moment(date).format('YYYY/MM/DD')
+            },
+            gettime(time) {
+                return moment(time).format('A HH')
+            },
             gethref(dayIndex,viewIndex){
                 return "#list-item-"+dayIndex+"-"+viewIndex
             },
             getanchor(dayIndex,viewIndex){                    
                 return "list-item-"+dayIndex+"-"+viewIndex
-            },               
-            fileChange(e) {
-                let file = e.target.files[0]
-                let readFile = new FileReader()
-                readFile.readAsDataURL(file)
-                readFile.addEventListener('load', () => {
-                    let image = document.getElementById('image')
-                    this.CoverImageName = readFile.result 
-                    // console.log(this.CoverImageName);
-                    this.Details[dayIndex][viewIndex].CoverImageName = this.CoverImageName
-                    console.log(this.CoverImageName);
-                })
-
             },
             copyURL:function() {
                 let myurl = document.createElement('input'),
@@ -295,7 +455,7 @@
                         <span><img img :src="UserImage"  id="userimg" class="img-fluid rounded-circle mx-auto my-2" style="width: 100px" alt=""/>
                         <h4 class="text-secondary mb-2 text-white py-1">{{UserId[0]}}</h4></span>
                         <p class="text-white mb-1 py-1">
-                            {{Describe}}<br>
+                            {{describe}}<br>
                             Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum,
                             ipsum ipsum sit no ut est. Guber ea ipsum erat kasd amet est elitr
                             ea sit.
@@ -308,16 +468,17 @@
                     </div>
                     
                     <!-- Category List -->
-                    <div class="mb-5" >
-                        <h2 class="mb-3" >景點日程</h2>
+                    <div class="mb-4" >
+                        <h2 class="mb-2" >JustGO</h2>
+                        <div class="mb-2">{{getdate(Details.startDate)}}~{{getdate(Details.endDate)}}</label>
                         <ul class="list-group list-group-flush">
-                            <div v-for="(day,dayIndex) in Details" >第{{dayIndex+1}}天 
-                            <li class="list-group-item justify-content-between align-items-center px-0">
-                                <ul>
-                                    <li v-for="dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details ">
-                                    <a class="list-group-item list-group-item-action mb-1" :href="gethref(dayIndex,viewIndex)">{{dayDetails.p_Name}}</a></li>
-                                </ul>
-                            </li>
+                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
+                                <li class="list-group-item  justify-content-between align-items-center px-0">
+                                        <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                            <a class="list-group-item list-group-item-action"
+                                                :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}} ▏ {{dayDetails.p_Name}}</a>                                               
+                                        </li>
+                                </li>
                             </div>
                         </ul>
                     </div>

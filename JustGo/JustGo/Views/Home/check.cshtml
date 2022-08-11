@@ -22,12 +22,12 @@
         <div class="checkbar">
             <ul class="nav nav-justified nav-tabs" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="tab"
+                    <button class="nav-link active fw-bold" id="pills-home-tab" data-bs-toggle="tab"
                         data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                         aria-selected="true">地圖</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="tab"
+                    <button class="nav-link fw-bold" id="pills-profile-tab" data-bs-toggle="tab"
                         data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                         aria-selected="false">行程</button>
                 </li>
@@ -41,7 +41,7 @@
                 <div>
                     <div class="daysBar">
                         <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                            class="days fs-4">{{index+1}}</div>
+                            class="days fs-4 col-1 m-2 text-center btn btn-outline-secondary">第{{index+1}}天</div>
                     </div>
                     <div>
                         <div class="row cols-md-2  cols-xs-1">
@@ -49,8 +49,8 @@
                                
                                 <div v-for="view in daySchedule">
                                     <div class="row">
-                                        <p class="col-6 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
-                                        <p class="col-6 m-0 fs-2 d-flex justify-content-center fw-bold" >{{view.place.name}}</p>
+                                        <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
+                                        <p class="col-6 m-0 fs-2 fw-bold bgposition " >{{view.place.name}}</p>
                                     </div>
                                     <div class="row cols-2">
                                         <div class="col-2">
@@ -70,11 +70,11 @@
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="row">
                     <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
-                        <div class="viewbox ">
+                        <div class="viewbox border border-info p-1">
                             <div v-for="view in day">
-                                <div>
-                                    {{view.startTime}}-{{view.endTime}}<br>
-                                    {{view.place.name}}
+                                <div class="row p-0 m-0">
+                                    <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
+                                    <p class="col-6 m-0 fs-3  fw-bold bgposition">{{view.place.name}}</p>
                                 </div>
                                 <div class="row cols-2">
                                     <div class="col-2">

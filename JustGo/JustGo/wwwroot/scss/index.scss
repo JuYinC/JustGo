@@ -779,9 +779,10 @@
       font-size: 3rem;
       margin: 0.2rem;
       cursor: pointer;
-      transition: width .3s;
+      transition: width .3s cubic-bezier(0.4, 0, 1, 1) 0s;;
 
     }
+
 
     & .sh {
       width: 70%;
@@ -799,6 +800,8 @@
   }
 
   .tgshow{
+    width: 0;
+    height: 0;
     display: none;
   }
   #shbox {
@@ -844,12 +847,14 @@
   .wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 1.5rem 10%;
+    // justify-content: space-around;
+    margin: 1.5rem 7%;
+
+   
   }
 
   .card {
-    width: 35rem;
+    width: 24%;
     height: 20rem;
     padding: 2rem 1rem;
     background: #fff;
@@ -859,6 +864,11 @@
     box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
     transition: 0.5s ease-in-out;
     margin: .5rem;
+
+    &:last-child {
+      margin-right: auto;
+  }
+
 
     /* overflow: hidden; */
     &:hover {
@@ -879,6 +889,7 @@
       z-index: 2;
       transition: all .5s;
       opacity: 0;
+    
     }
 
     &:hover:before {

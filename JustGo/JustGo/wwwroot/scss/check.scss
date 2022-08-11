@@ -1,10 +1,9 @@
 * {
     padding: 0;
     margin: 0;
+    font-size: 1.7rem;
 
-    & p{
-        font-size: 2rem;
-    }
+ 
 }
 
 .navbarC{
@@ -16,7 +15,7 @@
 
 .map-pag3 {
     width: 66%;
-    height: 500px;
+    height: 70vh;
 }
 
 .nav-fill .nav-item .nav-link,
@@ -38,14 +37,13 @@
     & .days {
         display: inline;
         margin: 0px 20px;
-        background-color: aqua;
     }
 }
-
-
-.col-6{
-    margin: 0;
+.bgposition{
+    background-color: #5fd3ba6c;
 }
+
+
 // .test{
 //     display: flex;
 
@@ -61,6 +59,7 @@
 //     /*min-width:250px;*/
 // }
 
+
 .scheduletab1 {
     margin-top: 20px;
     /*overflow-y:auto;
@@ -73,3 +72,4 @@
     border-left-color: black;
     border-left-width: 1px;
 }
+

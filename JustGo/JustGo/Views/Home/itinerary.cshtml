@@ -1144,11 +1144,12 @@ let wwwroot = "@Url.Content("~/file/photo")"
                                         <div class="item" v-for="(view,veiwIndex) in day" :key="view">
                                             <p>{{view.startTime}}-{{view.endTime}}</p> 
                                             
-                                            
-                                            <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
-                                            <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
-                                            <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
-                                            <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+                                            <div class="weather-icon-box">
+                                                <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
+                                                <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
+                                                <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
+                                                <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+                                            </div>
 
 
                                             <h3>{{view.name}}</h3>

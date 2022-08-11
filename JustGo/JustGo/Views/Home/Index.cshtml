@@ -49,10 +49,6 @@
     </script>
     <script>
 
-
-
-
-
         const { reactive, ref } = Vue;
         
 
@@ -299,8 +295,7 @@
         </div>
     </div>
     <div class="wrapper">
-       <div v-for="(item) in search.results" class="card" :key="item.blogId">           
-            <div class="card">
+       <div v-for="(item) in search.results" class="card" :key="item.blogId">     
                 {{item}}
                 <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
@@ -308,7 +303,7 @@
                     <p>😎帳號</p>
                     <a href="#" class="btn">read me</a>
                 </div>
-            </div>                        
+
         </div>   
 </div>
 

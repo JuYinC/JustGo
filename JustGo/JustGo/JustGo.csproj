@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\blogImages\" />
+    <Folder Include="wwwroot\CoverImageName\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -41,16 +41,16 @@
                 <div>
                     <div class="daysBar">
                         <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                            class="days">{{index+1}}</div>
+                            class="days fs-4">{{index+1}}</div>
                     </div>
                     <div>
                         <div class="row cols-md-2  cols-xs-1">
                             <div class="col-md-4 xs">
                                
                                 <div v-for="view in daySchedule">
-                                    <div>
-                                        {{view.startTime}}-{{view.endTime}}<br>
-                                        {{view.place.name}}
+                                    <div class="row">
+                                        <p class="col-6 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
+                                        <p class="col-6 m-0 fs-2 d-flex justify-content-center fw-bold" >{{view.place.name}}</p>
                                     </div>
                                     <div class="row cols-2">
                                         <div class="col-2">

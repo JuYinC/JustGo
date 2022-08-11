@@ -399,15 +399,15 @@
                 id = 82;
                 console.log(id)                
                 if (id != "") {
-                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:71, }).then(res => {  
+                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:83, }).then(res => {  
                        console.log(res.data);
                        this.Details = res.data.details;
                        this.Enddate = res.data.enddate;
                        this.Startdate = res.data.startdate;
                        this.Title = res.data.title;
                        this.describe = res.data.describe;
-                       this.startdate = res.data.startdate;
-                       this.enddate = res.data.enddate;
+                       //this.startdate = res.data.startdate;
+                       //this.enddate = res.data.enddate;
                      }
                     )
                 }

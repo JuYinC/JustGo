@@ -413,12 +413,12 @@
         mounted() {
             //let id = window.location.search.substring(1)
             //if (id != "") {
-            this.initMap();
             axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 123 })
                 .then(res => {
                     this.schedule = res.data;
                     this.daySchedule = this.schedule.details[0];
-                    this.caltime();                    
+                    this.caltime();
+                    this.initMap();
                     this.setMarker();
                     this.calcRoute();
                 })

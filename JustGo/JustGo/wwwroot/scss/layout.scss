@@ -22,14 +22,7 @@
          }
     
         & #navbarC__menu{
-            display: none;
-            float: right;
-            text-align: center;
-            width: 100%;
-            height: 0;
-            background: var(--primary-bule);
-            padding: 0;
-            opacity: 0;
+          
             
             & li{
                 margin: 30px;
@@ -224,7 +217,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    padding: 20px 8%;
+    padding: 20px 8% !important;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -273,10 +266,10 @@
 }
 
 .sticky {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
-    padding: 10px 5%;
+    padding: 10px 5% !important;
     background: rgb(253, 193, 29);
     display: flex;
     align-items: center;

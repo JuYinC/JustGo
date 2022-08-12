@@ -1174,7 +1174,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                                             <div class="adjtime">
                                                 <p>停留時間:</p>
                                                 <p><i class="fas fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i></p>
-                                                <p>{{view.min/60}}小時</p>
+                                                <p class="mw-25 min-w-25">{{view.min/60}}小時</p>
                                                 <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
                                             </div>
                                             <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
@@ -1356,7 +1356,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
             },
             move() {
                 return {
-                    left: this.toleft + 'px',
+                    left: this.toleft + '%',
                 }
             },
             travel() {
@@ -1416,7 +1416,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 let y = 270
                 let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
                 if (y < x && z < x) {
-                    this.toleft -= 100
+                    this.toleft -= 50
                 }
                 else {
                     this.toleft = this.toleft
@@ -1425,7 +1425,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
             },
             tor() {
                 if (this.toleft != 0) {
-                    this.toleft += 100
+                    this.toleft += 50
                 }
                 else {
                     this.toleft = 0

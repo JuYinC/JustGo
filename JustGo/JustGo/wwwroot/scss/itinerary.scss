@@ -32,7 +32,7 @@
         // width: 100%;
 
         &__content {
-            
+            margin: 0 20px;
             
             & input{
                 width: 90%;
@@ -62,7 +62,7 @@
 
             &-hide {
                 flex: 0 0 330px;
-                margin: 1rem;
+                margin: 0.6rem;
                 overflow-y: scroll;
 
                 & button {
@@ -170,11 +170,13 @@
             &__grid {
                 height: 100%;
                 display: grid;
-                grid-template-rows: 15% 75% ;
+                grid-template-rows: 9% 75% ;
+
+              
 
                 & .grid-item {
                     &-t {
-                        margin: 12px auto;
+                        margin: 10px auto;
                         position: relative;
                         width: 400px;
                         text-align: center;
@@ -214,12 +216,12 @@
 
                         & .btnbox-l {
                             position: absolute;
-                            top: 26px;
+                            top: 0;
                             width: 25px;
                             height: 100%;
                             left: -5px;
                             background-color: white;
-                            display: inline-block;
+                            
 
 
                             & .left {
@@ -238,7 +240,7 @@
 
                         & .btnbox-r {
                             position: absolute;
-                            right: 2%;
+                            right: 0;
                             width: 25px;
                             height: 100%;
                             display: flex;
@@ -681,13 +683,13 @@
             &__grid {
                 height: 100%;
                 display: grid;
-                grid-template-rows: 18% 75% 1fr;
+                grid-template-rows: 12% 75% 1fr;
 
                 & .grid-item {
                     &-t {
-                        margin: 12px;
+                        margin: 5px;
                         position: relative;
-                        width: 270px;
+                        width: 96%;
                         overflow: hidden;
 
                         & .daysbox {
@@ -721,12 +723,12 @@
 
                         & .btnbox-l {
                             position: absolute;
-                            // top: 45%;
+                            top: 40%;
                             width: 25px;
-                            height: 100%;
+                            height: 60%;
                             display: flex;
                             align-items: center;
-                            left: -5px;
+                            left: -3px;
 
 
                             & .left {
@@ -745,12 +747,12 @@
 
                         & .btnbox-r {
                             position: absolute;
-                            left: 255px;
+                            right: -5px;
                             width: 25px;
-                            height: 100%;
+                            height: 60%;
                             display: flex;
                             align-items: center;
-                            // top: 45%;
+                            top: 40%;
 
 
                             & .right {
@@ -781,8 +783,8 @@
 
                         & .col {
                             flex: 1;
-                            min-width: 250px;
-                            max-width: 300px;
+                            min-width: 280px;
+                            max-width: 280px;
                             border: solid 1px #6c757d;
                             margin: 3px;
                             vertical-align: top;
@@ -847,6 +849,12 @@
                                 display: flex;
                                 align-items: center;
                                 // justify-content: space-between;
+
+                                & .mw-25, min-w-25{
+                                    width: 25%;
+                                    text-align: center;
+                                
+                                }
                             }
 
                             & button {

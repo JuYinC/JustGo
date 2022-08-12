@@ -14,7 +14,7 @@
 
         .travel {
             font-weight: bold;
-                   margin:30px;
+            margin: 30px 25px 30px 25px;
             color: BLACK;
             font-size: 28px;
             border-bottom: 5px solid transparent;
@@ -23,57 +23,51 @@
 
         .schedules {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 17px;
         }
+
         .schedule:hover {
             transition: all 1s ease;
-            transform: scale(1.1);
-            box-shadow: 0 0 10px;
-            opacity: 0.8;
-            border-radius: 15px;
+            transform: scale(1.05);
+            box-shadow: 0 0 5px;
+            opacity: 0.9;
+            border-radius: 10px;
             cursor: grab;
-            border: 4px solid #FFFAF0;
-            outline: 10px ridge#87CEFA;
-            border-radius: 1rem;
+            border: 4px solid #Ffff;
         }
 
         .schedule {
-            margin:30px;
+            margin: 30px;
             /* margin: auto; */
-            border: 5px solid #d3d3d3;
+            border: 5px solid #ffff;
             height: 200px;
             border-radius: 10px;
             box-shadow: 0 0 3px;
-            opacity: 0.9;
-            background-color: #dcdcdc;
+            background-image: linear-gradient(to top left,#F0F0F0	,#FFFF,#F0F0F0	);
             width: 270px;
             min-width: 245px;
         }
         /* 底下部分框 */
 
         .blog {
-                   margin:230px 30px 30px 30px;
-            border: 4px solid#d3d3d3;
+            margin: 30px;
+            border: 4px solid#ffff;
             height: 200px;
-            border-radius: 20px;
+            border-radius: 10px;
             box-shadow: 0 0 3px;
-            opacity: 0.7;
-            background-color: #dcdcdc;
+            background-image: linear-gradient(to top left,#F0F0F0	,#FFFF,#F0F0F0	 );
             width: 270px;
             min-width: 245px;
         }
             /* 底下部分部落格框放大 */
-
             .blog:hover {
                 transition: all 1s ease;
-                transform: scale(1.1);
+                transform: scale(1.05);
                 box-shadow: 0 0 5px;
-                opacity: 0.7;
+                opacity: 0.9;
                 border-radius: 15px;
                 cursor: grab;
-                border: 4px solid #FFFAF0;
-                outline: 10px ridge#87CEFA;
-                border-radius: 1rem;
+                border: 4px solid #FFff;
             }
         /* 3行字跟編輯的上下間距 */
         .schedule_word_margin {
@@ -86,7 +80,7 @@
 
         .item_scheduleId {
             font-size: 25px;
-            margin-left:10%;
+            margin-left: 10%;
         }
             /* 滑鼠移動字體變色 */
 
@@ -98,7 +92,7 @@
         /* 刪除字體樣式 */
         .DeleteSchedule_Style {
             font-size: 25px;
-            margin-right:10%;
+            margin-right: 10%;
         }
             /* 刪除滑鼠移動變色*/
 
@@ -113,7 +107,7 @@
         /* 框內第1行字的樣式*/
         .item_title {
             font-weight: bold;
-            font-size: 19px;
+            font-size: 18px;
             margin-left: 11%;
             margin-right: 5%;
             min-width: auto;
@@ -122,7 +116,7 @@
         .item_startDate {
             margin-top: 13px;
             margin-bottom: 13px;
-            font-size: 17px;
+            font-size: 15px;
             margin-left: 11%;
             margin-right: 5%;
             min-width: auto;
@@ -135,7 +129,6 @@
         .CreateBlog_Style {
             font-size: 25px;
             margin-left: 10%;
-      
         }
             /* 分享行程滑鼠移動放大*/
             .CreateBlog_Style:hover {
@@ -144,7 +137,8 @@
             }
         /* 背景顏色*/
         .Background-color_Style {
-            background-color: #F5F5F5;
+            background-image: linear-gradient(to top left, #C4E1FF,#FFFF,#C4E1FF );
+            opacity: 0.9;
         }
 
         /* 框格內第1條線間距*/
@@ -170,47 +164,62 @@
             min-width: auto;
         }
 
-        @@media screen and (max-width:774px) {
-   
-        }
+            .titlemargin{
+            margin-top:65px;
+            margin-button:65px;
+            margin-left:20px;
 
-        @@media screen and (max-width:380px) {
-    
         }
-       .col{
+        .col {
+            font-size: 25PX;
             display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-       }
-       .col:hover{     
-           color:blue;
-             background-color:red;
-             border-radius:10px;
-             border:3px solid #ffff;
-             border-color:aliceblue;
-                          transition: all 0.9s ease;
-                             cursor: grab;
-                                transform: scale(1.1);
-       }
-
-        .schedule_word_margin{
-            display:flex;
-            justify-content:space-between ;
+            justify-content: flex-start;
+            align-items: flex-start;
+            font-weight: bold;
         }
+
+            .col:hover {
+                cursor: grab;
+            }
+
+        .schedule_word_margin {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @@media screen and (max-width:600px) {
+            .col {
+                font-size: 15px;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                font-weight: bold;
+            }
+        }
+
+        @@media screen and (max-width:430px) {
+            .col {
+                font-size: 8px;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                font-weight: bold;
+            }
+        }
+
     </style>
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
     <div class="Background-color_Style">
-                  <div class="container"style="padding-top:40px; padding-bottom:40px;">
-                      <div class="row">
-               <div class="col">行程行程</div>
-               <div class="col">行程</div>
-                 <div class="col">行程</div>
-                 <div class="col">行程</div>
-                 <div class="col">行程</div>
-                
-            </div>
+
+        <div class="d-flex align-items-start col">
+            <div class="nav flex-column nav-pills me-3 " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <span class="nav-link active titlemargin" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" aria-controls="v-pills-home" aria-selected="true">行程</span>
+                <span class="nav-link titlemargin" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">過往行程</span>
+                <span class="nav-link titlemargin" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">遊記</span>
+                <span class="nav-link titlemargin" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">收藏</span>
+                <span class="nav-link titlemargin" id="v-pills-member-tab" data-bs-toggle="pill" data-bs-target="#v-pills-member" role="tab" aria-controls="v-pills-member" aria-selected="false">會員</span>
             </div>
         <div class="container" id="app">
         <div class="row">
@@ -322,7 +331,7 @@ new Vue({
             axios.post("@Url.Action("selectUserBlog","Blog")").then(res=>this.showBlog = res.data).catch(err => console.log(err))
         },
 
-    })
-</script>
-}
+            })
+        </script>
+    }
 

@@ -49,8 +49,9 @@
 
                                 <div v-for="view in daySchedule">
                                     <div class="row">
-                                        <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
-                                        <p class="col-6 m-0 fs-2 fw-bold bgposition " >{{view.place.name}}</p>
+                                        <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">
+                                            {{view.startTime}}-{{view.endTime}}</p>
+                                        <p class="col-6 m-0 fs-2 fw-bold bgposition ">{{view.place.name}}</p>
                                     </div>
                                     <div class="row cols-2">
                                         <div class="col-2">
@@ -73,7 +74,8 @@
                         <div class="viewbox border border-info p-1">
                             <div v-for="view in day">
                                 <div class="row p-0 m-0">
-                                    <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
+                                    <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">
+                                        {{view.startTime}}-{{view.endTime}}</p>
                                     <p class="col-6 m-0 fs-3  fw-bold bgposition">{{view.place.name}}</p>
                                 </div>
                                 <div class="row cols-2">
@@ -413,12 +415,13 @@
         mounted() {
             //let id = window.location.search.substring(1)
             //if (id != "") {
+            this.initMap();
             axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 123 })
                 .then(res => {
                     this.schedule = res.data;
                     this.daySchedule = this.schedule.details[0];
                     this.caltime();
-                    this.initMap();
+
                     this.setMarker();
                     this.calcRoute();
                 })

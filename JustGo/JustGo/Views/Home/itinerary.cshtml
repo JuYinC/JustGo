@@ -235,6 +235,8 @@
                     fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點
                     scaleControl: true,
+                    maxZoom: 20,
+                    minZoom: 8,
                 });
                 state.mapZoom = state.map.getZoom()
                 console.log(state.mapZoom)
@@ -932,8 +934,10 @@
             initMap({ commit }) {
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
-                    .then(res => { commit('updateData', res.data) }).then(() => { commit('setPlaceMarker') })
-                axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) })
+                    .then(res => {
+                        commit('updateData', res.data);
+                        axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) }).then(() => { commit('setPlaceMarker') })
+                    })
             },
         }
     })
@@ -1167,8 +1171,8 @@
                                     @@change="cultime()" class="min">
                                     <transition-group>
                                         <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                          
-                                            
+
+
                                             <div class="weather-info">
                                                 <p>{{view.startTime}}-{{view.endTime}}</p> 
                                                 <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>

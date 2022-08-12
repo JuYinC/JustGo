@@ -120,8 +120,7 @@
                         ],
                     ],
                     UserImage: "Shinnosuke6.png",
-                    CoverImageName:{Name:"",base64:"coverimage.jpg"},
-                    
+                    CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
                     UserId: ["Alley"],
                     Title: '',
                     describe: '',
@@ -129,7 +128,6 @@
                     StartDate:null,
                     EndDate:null,
                     
-
                     myscore: this.score,
                     mytempscore: this.score
 
@@ -155,7 +153,7 @@
                         return '@Url.Action("UserCatelog","Home")';
                     },
                     //編輯頁面圖檔顯示
-                    getImages(getimagesName){ 
+                    getImages(getimagesName){
                         return "@Url.Content("~/blogImages")/"+getimagesName
                     },
                     //使用者照片
@@ -175,9 +173,10 @@
                     getanchor(dayIndex, viewIndex) {
                         return "list-item-" + dayIndex + "-" + viewIndex
                     },
-                    saveBlog() {                        
+                    saveBlog(e) {     
+                        e.preventDefault();
                         let blog = {
-                            CoverImage: { base64 : this.CoverImageName,name:"" },
+                            CoverImage: { base64 : this.CoverImageName.base64,name:"" },
                             Details:this.Details,
                             Title:this.Title,
                             describe:this.describe,
@@ -185,9 +184,8 @@
                             EndDate:this.EndDate
                         }
                         axios.post("@Url.Action("setBlog","Blog")", blog)
-                                 .then(res => { console.log(res.data); context.commit('saveDataBlog', res.data) })
-                                 .catch(err => console.log("err"))
-                        return false;
+                                 .then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
+                                 .catch(err => console.log(""))                        
                     },
                     //封面圖上傳
                     fileChange(e) {
@@ -195,10 +193,10 @@
                         let readFile = new FileReader()
                         readFile.readAsDataURL(file)
                         readFile.addEventListener('load', () => {
-                            let image = document.getElementById('image')
-                            this.CoverImageName = readFile.result                            
-                            this.Details.CoverImageName = this.CoverImageName
-                            console.log(this.CoverImageName);
+                            //let image = document.getElementById('image')
+                            this.CoverImageName.base64 = readFile.result                            
+                            //this.Details.CoverImageName = this.CoverImageName
+                            //console.log(this.CoverImageName);
                         })
 
                     },    
@@ -305,14 +303,18 @@
                                  this.Describe = res.data.describe;
                                  this.StartDate = res.data.startDate;
                                  this.EndDate = res.data.endDate;
-                                
-                                //foreach(res.data.details in image ){
-                                //     image.
-                                // }
+                                 
+                                //foreach(image in res.data.details){
+                                //    imagename = image.name;
+                                //    imagebase64 = image.base64;
+                                //    alert(imagename+imagebase64)
+
+                                //};
 
                              })
                          }
-                     }else if(hash == "edit"){
+                     }
+                     else if(hash == "edit"){
                          if (id != "") {
                              axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
                                  console.log(res.data);
@@ -338,11 +340,11 @@
   
 
     <div id="bloginfo">
-        <img :src="coverImageName.base64" id="coverimg" alt="封面圖片">
+        <img :src="CoverImageName.base64" id="coverimg" alt="封面圖片">
         <div id="covertitle">
             <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">
-                <input style="display:none;" type="file" @@change="fileChange">
+                <input style="display:none;" type="file" @@change="fileChange($event)">
                 <i class="fa fa-photo" style="display:inline-block;">變更封面</i> 
             </label>
         </div>
@@ -394,7 +396,7 @@
                                     @*上傳圖片*@
                                     <div class="mb-3">
                                         <label class="btn btn-primary btn-sm">
-                                            <input type="file" accept="image/gif, image/jpeg, image/png" multiple
+                                            <input type="file" accept="image/jpeg, image/png" multiple
                                                 @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
                                                 style="display:none;">
                                             <i class="fa fa-photo"></i> 上傳圖片
@@ -426,7 +428,7 @@
 	            </button>
 	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 	              <li><a class="dropdown-item listcolor" :href="canceledit()" >取消編輯</a></li>
-	              <li><a class="dropdown-item listcolor" :href="canceledit()" @@click="saveBlog()">發布行程</a></li>
+	              <li><a class="dropdown-item listcolor" :href="canceledit()" @@click="saveBlog($event)">發布行程</a></li>
                    @*<a  class="dropdown-item listcolor" asp-area="" asp-controller="Home" asp-action="Index" @@click="saveBlog">發布行程</a>*@
                   <li >
                 

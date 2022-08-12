@@ -24,6 +24,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult setBlog([FromBody] BlogVM vm)
         {
+            //return Json(true);
             saveImage(vm.CoverImage);
             foreach (var day in vm.Details)
             {

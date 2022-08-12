@@ -156,7 +156,7 @@ namespace JustGo.Repository
                 Title = model.Title,
                 Describe = model.Describe,
                 CoverImage = new blogImage() { name=model.ImageName},
-                Like = model.Like,
+                Like =0,
                 StartDate = model.StartDate.AddHours(8),
                 EndDate = model.EndDate.AddHours(8),
                 Details = new List<IList<BlogDetailsVM>>()
@@ -196,7 +196,7 @@ namespace JustGo.Repository
                 UserId = vm.UserId,
                 Describe = vm.Describe,
                 ImageName = "",
-                Like = _context.UserKeep.Where(e=>e.KeepClass==0&&e.KeepId==vm.BlogId).Count(),
+                Like = _context.UserKeep.Where(e=>e.KeepClass==1&&e.KeepId==vm.BlogId).Count(),
                 Title = vm.Title,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,

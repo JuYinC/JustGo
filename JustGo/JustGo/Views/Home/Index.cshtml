@@ -86,7 +86,7 @@
                     select.Search = searchString.value;
                     axios.post("@Url.Action("searchBlog","Blog")",select).then(res => search.results = res.data)
                 }
-                 function imageSrc(imageName) {
+                function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
                 }
                 function blogUrl(id){

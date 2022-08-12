@@ -797,10 +797,19 @@
     position: absolute; }
     .arrange__contain-video {
       display: none; }
+  body {
+    width: 100%;
+    overflow-x: hidden; }
+    body .arrange__contain::-webkit-scrollbar {
+      display: hide; }
   .datepicker {
     display: none; }
-    .datepicker__content {
-      display: flex; }
+    .datepicker__content input {
+      width: 90%;
+      margin: 2px 4%;
+      font-size: 1.7rem; }
+    .datepicker__content button {
+      width: 48%; }
   .journey__map {
     height: 100vh;
     display: flex;
@@ -867,7 +876,7 @@
       .journey__map .sidebar__grid {
         height: 100%;
         display: grid;
-        grid-template-rows: 15% 75% 1fr; }
+        grid-template-rows: 15% 75%; }
         .journey__map .sidebar__grid .grid-item-t {
           margin: 12px auto;
           position: relative;
@@ -879,8 +888,7 @@
           .journey__map .sidebar__grid .grid-item-t .daysbox {
             display: flex;
             padding: 5px;
-            position: absolute;
-            transition: all .5s; }
+            position: absolute; }
             .journey__map .sidebar__grid .grid-item-t .daysbox .days {
               list-style: none;
               background: skyblue;
@@ -893,13 +901,13 @@
               font-family: 'cwTeXYen', sans-serif;
               font-weight: 600;
               color: currentColor; }
-              .journey__map .sidebar__grid .grid-item-t .daysbox .days:hover {
+              .journey__map .sidebar__grid .grid-item-t .daysbox .days:active {
                 background: #c6eef8; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-l {
             position: absolute;
             top: 26px;
             width: 25px;
-            height: 45px;
+            height: 100%;
             left: -5px;
             background-color: white;
             display: inline-block; }
@@ -914,9 +922,9 @@
               z-index: 1; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-r {
             position: absolute;
-            left: 379px;
+            right: 2%;
             width: 25px;
-            height: 50px;
+            height: 100%;
             display: flex;
             align-items: center; }
             .journey__map .sidebar__grid .grid-item-t .btnbox-r .right {
@@ -938,8 +946,7 @@
             flex: 1;
             width: 100%;
             border: solid 1px #6c757d;
-            margin: 3px;
-            vertical-align: top; }
+            margin: 3px; }
             .journey__map .sidebar__grid .grid-item-m .col * {
               font-size: 1.4rem;
               margin-bottom: 0.3rem; }

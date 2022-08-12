@@ -17,10 +17,39 @@
 </head>
 
 <body>
-
     <header>
+           <nav class="navbarC navbar navbar-expand-sm navbar-toggleable-sm navbar-light  mb-3" style="padding: 20px 8%;" id="navbarC">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                  <img class="navbarC__logo" src="~/file/photo/logo.png" alt="JustGo" />
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+                        <li class="nav-item">
+                            <a  asp-area="" asp-controller="Home" asp-action="itinerary">規劃行程</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="check">檢視行程</a>
+                        </li>
+                         <li >
+                            <a  asp-area="" asp-controller="Home" asp-action="UserCatelog">會員資訊</a>
+                        </li>
+                         <li>
+                            <partial name="_LoginPartial" /> 
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </nav>
         
-        <nav class="navbarC"  id="navbarC">
+        <!-- <nav class="navbarC"  id="navbarC">
             <li> 
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
                     <img class="navbarC__logo" src="~/file/photo/logo.png" alt="JustGo" />
@@ -44,7 +73,7 @@
                 <partial name="_LoginPartial" /> 
                 </li>   
             </ul>
-        </nav>
+        </nav> -->
     </header>
 
     @RenderBody()

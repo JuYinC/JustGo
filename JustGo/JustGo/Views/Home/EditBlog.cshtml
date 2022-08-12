@@ -57,7 +57,7 @@
                                 p_Add: "台北市",
                                 describe : "",
                                 score: 0,
-                                images: {Name:"2208111103103186.jpg",base64:""},
+                                images: {Name:"",base64:"2208111103103186.jpg"},
                                 showError:'張數限制六張',
                             },
                             {
@@ -70,7 +70,7 @@
                                 p_Add: "高雄市",
                                 describe : "",
                                 score: 0,
-                                images: {Name:"2208111103108543.png",base64:""},
+                                images: {Name:"",base64:"2208111103108543.png"},
                                 showError:'張數限制六張',
                             },
                             {
@@ -83,7 +83,7 @@
                                 p_Add: "台中市",
                                 describe : "",
                                 score: 0,
-                                images: {Name:"2208111103108981.png",base64:""},
+                                images: {Name:"",base64:"2208111103108981.png"},
                                 showError:'張數限制六張',
                             }
 
@@ -158,6 +158,7 @@
                     getImages(getimagesName){ 
                         return "@Url.Content("~/blogImages")/"+getimagesName
                     },
+                    //使用者照片
                     userImageSrc(imageName) {
                         return "@Url.Content("~/UserImages")/"+imageName                        
                     },
@@ -305,9 +306,9 @@
                                  this.StartDate = res.data.startDate;
                                  this.EndDate = res.data.endDate;
                                 
-                                foreach(res.data.details in image ){
-                                     image.
-                                 }
+                                //foreach(res.data.details in image ){
+                                //     image.
+                                // }
 
                              })
                          }
@@ -337,7 +338,7 @@
   
 
     <div id="bloginfo">
-        <img :src="getImages(CoverImageName.base64)" id="coverimg" alt="封面圖片">
+        <img :src="coverImageName.base64" id="coverimg" alt="封面圖片">
         <div id="covertitle">
             <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">
@@ -405,8 +406,7 @@
                                         @*上傳圖片預覽*@
                                         <div class="groupimg img-fluid" >
                                            <template v-for="(image,index) in dayDetails.images">
-                                                
-                                                    <img :src="image.name">
+                                                    <img :src="image.base64">
                                            </template>
                                         </div>
                                         <textarea rows="6" class="mb-2" maxlength="400" v-model="dayDetails.describe"

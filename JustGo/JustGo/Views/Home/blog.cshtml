@@ -207,7 +207,7 @@
                                 p_Add: "台北市",
                                 describe : "",
                                 score: 5,
-                                images: {Name:"2208111103103186",base64:""},
+                                images: {Name:"2208111103103186.jpg",base64:""},
                             },
                             {
                                 id: id++,
@@ -219,7 +219,7 @@
                                 p_Add: "高雄市",
                                 describe : "",
                                 score: 3,
-                                images: {Name:"2208111103108543",base64:""},
+                                images: {Name:"2208111103108543.png",base64:""},
                             },
                             {
                                 id: id++,
@@ -231,7 +231,7 @@
                                 p_Add: "台中市",
                                 describe : "",
                                 score: 4,
-                                images: {Name:"2208111103109487",base64:""},
+                                images: {Name:"2208111103108981.png",base64:""},
                             }
 
                         ],
@@ -246,7 +246,7 @@
                                 p_Add: "台南市",
                                 describe : "",
                                 score: 5,
-                                //images: {Name:"2208111103109487",base64:""},
+                                images: {Name:"2208111103109487.jpg",base64:""},
                             },
                             {
                                 id: id++,
@@ -258,7 +258,7 @@
                                 p_Add: "花蓮市",
                                 describe : "",
                                 score: 1,
-                                images: {Name:"2208111103109487",base64:""},
+                                images: {Name:"2208111108357791.jpg",base64:""},
                             },
 
 
@@ -273,6 +273,7 @@
             StartDate:null,
             EndDate:null,
             totallike:0,
+            bool: true,
 
             myscore: this.score,
             mytempscore: this.score
@@ -293,11 +294,11 @@
             }
         },
         methods: {
-            getImages(getimagesName){ 
-                return "@Url.Content("~/blogImages")/"+getimagesName
+            getImages(loadimagesName){ 
+                return "@Url.Content("~/blogImages")/"+loadimagesName
             },
             CoverImageSrc(coverimageName) {
-                return "@Url.Content("~/CoverImageName")/"+coverimageName                        
+                return "@Url.Content("~/blogImages")/"+coverimageName                        
             },
             userImageSrc(imageName) {
                 return "@Url.Content("~/UserImages")/"+imageName                       
@@ -324,12 +325,11 @@
                 document.body.removeChild(myurl);
                
             },      
+            //複製,            
             likeblog: function(){  
                 var heart = document.getElementsByClassName("fa-heart");
                 var totallike = document.getElementsByClassName("totallike");
                 var totallike;
-
-                var bool = true; 
                 i = 0
                 heart[i].onclick = function () {
                     
@@ -433,7 +433,7 @@
     </div>
     <!-- Header End -->
 
-    <!-- Detail Start -->
+    <!-- 右側欄位Detail Start -->
     <div class="container py-3" >
         <div class="row pt-5">
             <div class="col-lg-4 mt-4 mt-lg-2 ">
@@ -524,14 +524,9 @@
                             </div>
                         </div>
                     </div>
-
-                  
-                   
-                    
-
                 </div>
-                
             </div>
+            @*左側欄位*@
             <div class="col-lg-8">
                 <div class="d-flex flex-column text-left mb-3">
                     <h1 class="my-3">{{Title}}</h1>
@@ -575,7 +570,7 @@
 
                                 <div v-viewer class="groupimg img-fluid">
                                     <template v-for="(image,index) in dayDetails.images">
-                                        <img :src="getImages(image.Name)">
+                                        <img :src="getImages(image.name)">
                                         @*<img :src="image.base64">*@
                                     </template>
                                 </div>

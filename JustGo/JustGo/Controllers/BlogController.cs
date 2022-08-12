@@ -70,6 +70,7 @@ namespace JustGo.Controllers
         [HttpPost]
         public IActionResult selectblogDetails([FromBody]BlogVM vm)
         {
+          
             return Json(_blog.selectBlog(vm.BlogId));
         }
 
@@ -133,11 +134,11 @@ namespace JustGo.Controllers
                         i.Save(TargetFilename, ImageFormat.Jpeg);
                     }                    
                     break;
-                case "data:image/gif;base64":
-                    TargetFilename += ".gif";
-                    blogImage.name += ".gif";
-                    image.Save(TargetFilename, ImageFormat.Gif);
-                    break;
+                //case "data:image/gif;base64":
+                //    TargetFilename += ".gif";
+                //    blogImage.name += ".gif";
+                //    image.Save(TargetFilename, ImageFormat.Gif);
+                //    break;
                 default:
                     return;                    
             }                                    

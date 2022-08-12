@@ -29,8 +29,9 @@
             <div id="app">
                 <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDatelocal">
-                <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                <input id="test3" placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDateEndlocal">
+                <input  id="test" type="text" name="daterange" value="" />
 
 
 
@@ -82,6 +83,11 @@
 <script src="https://unpkg.com/vuex@3"></script>
 <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
 <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+@* tiempicker *@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
@@ -111,6 +117,14 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
         }
     })
+
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
 
 </script>
 

@@ -72,7 +72,7 @@
 
 
 @section Scripts{
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
 <script src="https://unpkg.com/@@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -83,7 +83,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 <script>
-let wwwroot = "@Url.Content("~/file/photo")"
+    let wwwroot = "@Url.Content("~/file/photo")"
     hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
@@ -149,7 +149,9 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     labelOrigin: new google.maps.Point(25, 17)
                 },
             ],
-            selectWeather: []
+            selectWeather: [],
+            mapZoom: null,
+            mapCenter: null,
         },
 
         //由action傳入值,更新state狀態
@@ -190,32 +192,32 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         this.state.travel[j][i].endTime = timestamp
 
                         let now = new Date()
-                        now.setDate(now.getDate()+7)
+                        now.setDate(now.getDate() + 7)
                         let travelDate = new Date(this.state.duringDate[j])
 
-                        this.state.travel[j][i].minT= 30
-                        this.state.travel[j][i].maxT= ""
-                        this.state.travel[j][i].pop12h= ""
-                        this.state.travel[j][i].uvi=""
+                        this.state.travel[j][i].minT = 30
+                        this.state.travel[j][i].maxT = ""
+                        this.state.travel[j][i].pop12h = ""
+                        this.state.travel[j][i].uvi = ""
 
 
-                        if(now > travelDate){
+                        if (now > travelDate) {
 
-                            this.state.selectWeather.find(object =>{                               
-                                if(this.state.travel[j][i].town == object.locationsName){
+                            this.state.selectWeather.find(object => {
+                                if (this.state.travel[j][i].town == object.locationsName) {
                                     let weatherStart = new Date(object.startTime)
                                     let year = weatherStart.getFullYear()
-                                    let month =weatherStart.getMonth()
+                                    let month = weatherStart.getMonth()
                                     let date = weatherStart.getDate()
-                                    weatherStart = new Date(year,month,date)
+                                    weatherStart = new Date(year, month, date)
 
-                                    if(travelDate.getTime()==weatherStart.getTime()){
-                                    this.state.travel[j][i].minT= object.minT
-                                    this.state.travel[j][i].maxT= object.maxT
-                                    this.state.travel[j][i].pop12h= object.pop12h
-                                    this.state.travel[j][i].uvi= object.uvi
+                                    if (travelDate.getTime() == weatherStart.getTime()) {
+                                        this.state.travel[j][i].minT = object.minT
+                                        this.state.travel[j][i].maxT = object.maxT
+                                        this.state.travel[j][i].pop12h = object.pop12h
+                                        this.state.travel[j][i].uvi = object.uvi
                                     }
-                                    
+
                                 }
                             })
                         }
@@ -231,15 +233,31 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     mapTypeControl: false,  // 換地圖類型
                     streetViewControl: false,  // 街道檢視
                     fullscreenControl: false, // 全螢幕顯示
-                    clickableIcons: false,   // 可不可以點地圖上的點                    
+                    clickableIcons: false,   // 可不可以點地圖上的點
+                    scaleControl: true,
                 });
+                state.mapZoom = state.map.getZoom()
+                console.log(state.mapZoom)
+                state.mapCenter = state.map.getCenter()
+                console.log(state.mapCenter)
                 state.map.addListener("zoom_changed", () => {
                     if (state.infowindow) { state.infowindow.close() };
+                    state.mapZoom = state.map.getZoom()
+                    state.mapCenter = state.map.getCenter()
+                    console.log(state.mapZoom)
+                    console.log(state.mapCenter)
+                })
+                state.map.addListener("dragend", () => {
+                    state.mapZoom = state.map.getZoom()
+                    state.mapCenter = state.map.getCenter()
+                    console.log(state.mapZoom)
+                    console.log(state.mapCenter)
                 })
             },
 
             // 產生景點標示
             setPlaceMarker(state) {
+                if (state.isTravel == true) { return }
                 if (state.markers && state.markerCluster) {
                     state.markerCluster.clearMarkers();
                     state.markerCluster = null
@@ -258,11 +276,11 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 let date = [];
                 let today = new Date();
                 console.log(today)
-                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
+                for (let i = 0; i < 7; i++) {
+                    date.push(today.getMonth() + 1 + '/' + today.getDate());
+                    today.setDate(today.getDate() + 1)
                 }
-                
+
 
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
@@ -272,7 +290,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     townWeather.length = 0;
                     state.selectWeather.find(object => {
                         if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
+                            townWeather.push(object);
                         };
                     })
                     if (position.class == 15) {
@@ -407,24 +425,24 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         state.directionsRenderer = null
                     }
 
-                                    let date = [];
-                let today = new Date();
-                                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
-                }
+                    let date = [];
+                    let today = new Date();
+                    for (let i = 0; i < 7; i++) {
+                        date.push(today.getMonth() + 1 + '/' + today.getDate());
+                        today.setDate(today.getDate() + 1)
+                    }
                     // 產生地點marker
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
                     let townWeather = [];
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
-                                                townWeather.length = 0;
-                    state.selectWeather.find(object => {
-                        if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
-                        };
-                    })
+                            townWeather.length = 0;
+                            state.selectWeather.find(object => {
+                                if (position.town == object.locationsName) {
+                                    townWeather.push(object);
+                                };
+                            })
                             iofSpots++
                             const marker = new google.maps.Marker({
                                 position: { lat: position.lat, lng: position.lng },
@@ -517,6 +535,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
             //單日行程標示與路線
             setDailyMarker(state, day) {
+                if (state.isTravel == false) { return }
                 if (state.travel[day].length > 0) {
                     if (state.markers && state.markerCluster) {
                         state.markerCluster.clearMarkers();
@@ -529,12 +548,12 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         state.markers = [];
                     }
 
-                                    let date = [];
-                let today = new Date();
-                for (let i = 0; i < 7;i++){
-                    date.push(today.getMonth()+1 + '/' + today.getDate());
-                    today.setDate(today.getDate()+1)
-                }
+                    let date = [];
+                    let today = new Date();
+                    for (let i = 0; i < 7; i++) {
+                        date.push(today.getMonth() + 1 + '/' + today.getDate());
+                        today.setDate(today.getDate() + 1)
+                    }
 
                     if (state.directionsRenderer) {
                         state.directionsRenderer.setMap(null)
@@ -547,11 +566,11 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
                     state.travel[day].map((position, j) => {
                         townWeather.length = 0;
-                    state.selectWeather.find(object => {
-                        if (position.town == object.locationsName) {
-                            townWeather.push(object);                           
-                        };
-                    })
+                        state.selectWeather.find(object => {
+                            if (position.town == object.locationsName) {
+                                townWeather.push(object);
+                            };
+                        })
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.lat, lng: position.lng },
@@ -873,6 +892,13 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 }
                 store.commit('calcRoute')
             },
+            getLocation(state, { view, index }) {
+                if (state.isTravel == true) { return }
+                state.map.setZoom(17)
+                state.map.setCenter({ lat: view.lat, lng: view.lng })
+                google.maps.event.trigger(state.markers[index], 'click')
+                // marker因為包在cluster裡面，一定要先展開才叫的到，只好先拉近再呼叫
+            },
         },
 
         getters: {
@@ -974,7 +1000,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
 
                     } else if (this.travel.length > day) {
 
-                        let daydiff = this.travel.length-day
+                        let daydiff = this.travel.length - day
                         for (let i = 0; i < daydiff; i++) {
                             let lastIndex = this.travel.length - 1
 
@@ -1268,6 +1294,9 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 this.$store.commit('calcRoute')
 
             },
+            focusLocation(view, index) {
+                this.$store.commit('getLocation', { view, index })
+            },
         },
 
         template:
@@ -1300,11 +1329,13 @@ let wwwroot = "@Url.Content("~/file/photo")"
                         <div class="col2">
                             <div v-for="(view,selIndex) in selectPlaces">
                                 <div class="item2">
-                                    <h3>{{view.name}}</h3>
-                                    <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
-                                    <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
-                                    <p>營業時間{{view.opentime}}-{{view.closetime}}</p>
-                                    <p>建議停留{{view.timestay}}分</p>
+                                    <div @@click="focusLocation(view,selIndex)">
+                                        <h3>{{view.name}}</h3>
+                                        <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
+                                        <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
+                                        <p>營業時間{{view.opentime}}-{{view.closetime}}</p>
+                                        <p>建議停留{{view.timestay}}分</p>
+                                    </div>
                                     <div @@click="addview(selIndex)" class="adto">新增行程</div>
                                 </div>
                             </div>
@@ -1449,8 +1480,8 @@ let wwwroot = "@Url.Content("~/file/photo")"
             `   <div >
                                     <h3>預設自訂行程1</h3>
                                     <div>
-                                         
-                                                                                                                        
+
+
                                     </div>
                                         <ul class="daysbox" :style="move">
                                         <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 }
 
-    <div id="app">
+<div id="app">
 
     <div class="container">
         <div class="checkbar">
@@ -35,8 +35,8 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
 
-                <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
-                 aria-labelledby="pills-home-tab">
+            <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
+                aria-labelledby="pills-home-tab">
 
                 <div>
                     <div class="daysBar">
@@ -46,7 +46,7 @@
                     <div>
                         <div class="row cols-md-2  cols-xs-1">
                             <div class="col-md-4 xs">
-                               
+
                                 <div v-for="view in daySchedule">
                                     <div class="row">
                                         <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
@@ -90,220 +90,103 @@
                 </div>
             </div>
 
-            </div>
         </div>
     </div>
+</div>
 
 
 
-    @section Scripts{
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
-    <script src="~/js/site.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+@section Scripts{
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"></script>
+<script src="~/js/site.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-
+<script>
 
 
 
 
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    schedule: [],
-                    daySchedule: [],
-                    map: null,
-                    icon: {
-                        url: "@Url.Content("~/file/photo/placeholder.png")",
-                        scaledSize: new google.maps.Size(45, 45),
-                        labelOrigin: new google.maps.Point(22, 17)
-                    },
-                    markers: [],
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                schedule: [],
+                daySchedule: [],
+                map: null,
+                icon: {
+                    url: "@Url.Content("~/file/photo/placeholder.png")",
+                    scaledSize: new google.maps.Size(45, 45),
+                    labelOrigin: new google.maps.Point(22, 17)
+                },
+                markers: [],
+            }
+        },
+        methods: {
+            initMap() {
+                this.map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 23.573837, lng: 120.97969 },
+                    zoom: 8,  // 0-20
+                    mapId: '1d3a304bcea5789e',
+                    mapTypeControl: false,  // 換地圖類型
+                    streetViewControl: false,  // 街道檢視
+                    fullscreenControl: false, // 全螢幕顯示
+                    clickableIcons: false,   // 可不可以點地圖上的點
+                });
+                this.map.addListener("dragend", () => {
+                    if (this.infowindow) { this.infowindow.close() };
+                })
+            },
+            showDaySchedule(index) {
+
+                this.daySchedule = this.schedule.details[index]
+                console.log(this.daySchedule)
+                this.setDayMarker()
+                this.calcDayRoute()
+            },
+            caltime() {
+                for (let i = 0; i < this.schedule.details.length; i++) {
+                    for (let j = 0; j < this.schedule.details[i].length; j++) {
+
+                        let startTime = new Date(this.schedule.details[i][j].startTime)
+                        let endTime = new Date(this.schedule.details[i][j].endTime)
+                        let hour = startTime.getHours()
+                        let min = startTime.getMinutes()
+
+                        if (Number(hour) < 10) {
+                            hour = "0" + hour
+                        }
+                        if (Number(min) < 10) {
+                            min = "0" + min
+                        }
+                        this.schedule.details[i][j].startTime = hour + ":" + min
+
+                        hour = endTime.getHours()
+                        min = endTime.getMinutes()
+                        if (Number(hour) < 10) {
+                            hour = "0" + hour
+                        }
+                        if (Number(min) < 10) {
+                            min = "0" + min
+                        }
+                        this.schedule.details[i][j].endTime = hour + ":" + min
+                    }
                 }
             },
-            methods: {
-                initMap() {
-                    this.map = new google.maps.Map(document.getElementById("map"), {
-                        center: { lat: 23.573837, lng: 120.97969 },
-                        zoom: 8,  // 0-20
-                        mapId: '1d3a304bcea5789e',
-                        mapTypeControl: false,  // 換地圖類型
-                        streetViewControl: false,  // 街道檢視
-                        fullscreenControl: false, // 全螢幕顯示
-                        clickableIcons: false,   // 可不可以點地圖上的點
+            setMarker() {
+                if (this.markers) {
+                    this.markers.forEach((marker) => {
+                        marker.setMap(null)
                     });
-                    this.map.addListener("dragend", () => {
-                        if (this.infowindow) { this.infowindow.close() };
-                    })
-                },
-                showDaySchedule(index) {
-
-                        this.daySchedule = this.schedule.details[index]
-                        console.log(this.daySchedule)
-                        this.setDayMarker()
-                        this.calcDayRoute()
-                    },
-                    caltime() {
-                        for (let i = 0; i < this.schedule.details.length; i++) {
-                            for (let j = 0; j < this.schedule.details[i].length; j++) {
-
-                                let startTime = new Date(this.schedule.details[i][j].startTime)
-                                let endTime = new Date(this.schedule.details[i][j].endTime)
-                                let hour = startTime.getHours()
-                                let min = startTime.getMinutes()
-
-                                if (Number(hour) < 10) {
-                                    hour = "0" + hour
-                                }
-                                if (Number(min) < 10) {
-                                    min = "0" + min
-                                }
-                                this.schedule.details[i][j].startTime = hour + ":" + min
-
-                                hour = endTime.getHours()
-                                min = endTime.getMinutes()
-                                if (Number(hour) < 10) {
-                                    hour = "0" + hour
-                                }
-                                if (Number(min) < 10) {
-                                    min = "0" + min
-                                }
-                                this.schedule.details[i][j].endTime = hour + ":" + min
-                            }
-                        }
-                    },
-                    setMarker() {
-                        if (this.markers) {
-                            this.markers.forEach((marker) => {
-                                marker.setMap(null)
-                            });
-                            this.markers = []
-                        }
-                        const bounds = new google.maps.LatLngBounds();
-                        let iofSpots = 0
-                        for (i = 0; i < this.schedule.details.length; i++) {
-                            this.schedule.details[i].map((position, j) => {
-                                iofSpots++
-                                const marker = new google.maps.Marker({
-                                    position: { lat: position.place.lat, lng: position.place.lng },
-                                    label: {
-                                        text: `${iofSpots}`,
-                                        fontWeight: "bold",
-                                    },
-                                    title: position.place.name,
-                                    map: this.map,
-                                    icon: this.icon,
-                                });
-                                bounds.extend(marker.position);
-                                // 產生infowindow
-                                let contentString =
-                                    `
-                                            <div class="infowindow">
-                                                <div class="infowindow_bar row row-cols-2" >
-                                                    <div class="infowindow_bar_title col-10">
-                                                        ${position.place.name}
-                                                    </div>
-                                                    <div class="infowindow_bar_divbutton col-2">
-                                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="infowindow_part row">
-                                        <div class="infowindow_img col-4">
-                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                        </div>
-                                        <div class="infowindow_info col-8">
-                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                        </div>
-                                    </div>
-                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                        aria-expanded="false" aria-controls="collapseExample">
-                                        景點介紹
-                                    </button>
-                                    <div class="collapse" id="collapseExample">
-                                        <div class="infowindow_detail" style="text-indent:2em">
-                                            ${position.place.description}
-                                        </div>
-                                    </div>
-                                </div>
-                             `
-                            const infowindow = new google.maps.InfoWindow({
-                                content: contentString,
-                                disableAutoPan: false,
-                            });
-                            // 點擊marker開啟infowindow
-                            marker.addListener("click", () => {
-                                if (this.infowindow) { this.infowindow.close() }
-                                infowindow.open({
-                                    anchor: marker,
-                                    map: this.map,
-                                    shouldFocus: false,
-                                });
-                                this.infowindow = infowindow
-                            });
-                            this.markers.push(marker);
-                        });
-                    }
-                    this.map.fitBounds(bounds);
-                },
-                calcRoute() {
-                    let request = null;
-                    let route = [];
-                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                    
-                    directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                        suppressMarkers: true,
-                    });
-                    //行程變成同一條路徑，上限25個
-                    for (i = 0; i < this.schedule.details.length; i++) {
-                        for (j = 0; j < this.schedule.details[i].length; j++) {
-                            route.push(this.schedule.details[i][j].place)
-                        }
-                    }
-                    // 總行程數 = 1 離開方程式
-                    if (route.length < 2) {
-                        return
-                    } else {
-                        // 總行程數 >= 2 加入停靠站                        
-                        const waypts = [];
-                        for (i = 1; i < route.length - 1; i++) {
-                            waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
-                        }
-                        request = {
-                            origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                            destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                            waypoints: waypts, //中途停靠點
-                            travelMode: 'DRIVING', //開車
-                        };
-                    }
-                    directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
-                    // request放入Google行程服務，得到結果
-                    directionsService.route(request, function (result, status) {
-                        if (status == 'OK') {
-                            directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                        }
-                    });
-                },
-                setDayMarker() {
-                    if (this.markers) {
-                        this.markers.forEach((marker) => {
-                            marker.setMap(null)
-                        });
-                        this.markers = []
-                    }
-                    if (this.daySchedule.length == 0) {
-                        return
-                    }
-                    const bounds = new google.maps.LatLngBounds();
-                    let iofSpots = 0
-                    this.daySchedule.map((position, j) => {
+                    this.markers = []
+                }
+                const bounds = new google.maps.LatLngBounds();
+                let iofSpots = 0
+                for (i = 0; i < this.schedule.details.length; i++) {
+                    this.schedule.details[i].map((position, j) => {
                         iofSpots++
                         const marker = new google.maps.Marker({
                             position: { lat: position.place.lat, lng: position.place.lng },
@@ -319,13 +202,13 @@
                         // 產生infowindow
                         let contentString =
                             `
-                                <div class="infowindow">
-                                    <div class="infowindow_bar row row-cols-2" >
-                                        <div class="infowindow_bar_title col-10">
-                                            ${position.place.name}
-                                        </div>
-                                        <div class="infowindow_bar_divbutton col-2">
-                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                            <div class="infowindow">
+                                                <div class="infowindow_bar row row-cols-2" >
+                                                    <div class="infowindow_bar_title col-10">
+                                                        ${position.place.name}
+                                                    </div>
+                                                    <div class="infowindow_bar_divbutton col-2">
+                                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
 
                                             </div>
                                         </div>
@@ -367,65 +250,181 @@
                         });
                         this.markers.push(marker);
                     });
-                    if (this.daySchedule.length == 1) { this.map.fitBounds(bounds) }
-                },
-                calcDayRoute() {
-                    let request = null;
-                    let route = [];
-                    let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
-                    directionsRenderer.setMap(null)
-                    directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
-                        suppressMarkers: true,
+                }
+                this.map.fitBounds(bounds);
+            },
+            calcRoute() {
+                let request = null;
+                let route = [];
+                let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務                    
+                directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                    suppressMarkers: true,
+                });
+                //行程變成同一條路徑，上限25個
+                for (i = 0; i < this.schedule.details.length; i++) {
+                    for (j = 0; j < this.schedule.details[i].length; j++) {
+                        route.push(this.schedule.details[i][j].place)
+                    }
+                }
+                // 總行程數 = 1 離開方程式
+                if (route.length < 2) {
+                    return
+                } else {
+                    // 總行程數 >= 2 加入停靠站                        
+                    const waypts = [];
+                    for (i = 1; i < route.length - 1; i++) {
+                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                    }
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                        waypoints: waypts, //中途停靠點
+                        travelMode: 'DRIVING', //開車
+                    };
+                }
+                directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
+                // request放入Google行程服務，得到結果
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                    }
+                });
+            },
+            setDayMarker() {
+                if (this.markers) {
+                    this.markers.forEach((marker) => {
+                        marker.setMap(null)
                     });
-                    //行程變成同一條路徑，上限25個
+                    this.markers = []
+                }
+                if (this.daySchedule.length == 0) {
+                    return
+                }
+                const bounds = new google.maps.LatLngBounds();
+                let iofSpots = 0
+                this.daySchedule.map((position, j) => {
+                    iofSpots++
+                    const marker = new google.maps.Marker({
+                        position: { lat: position.place.lat, lng: position.place.lng },
+                        label: {
+                            text: `${iofSpots}`,
+                            fontWeight: "bold",
+                        },
+                        title: position.place.name,
+                        map: this.map,
+                        icon: this.icon,
+                    });
+                    bounds.extend(marker.position);
+                    // 產生infowindow
+                    let contentString =
+                        `
+                                <div class="infowindow">
+                                    <div class="infowindow_bar row row-cols-2" >
+                                        <div class="infowindow_bar_title col-10">
+                                            ${position.place.name}
+                                        </div>
+                                        <div class="infowindow_bar_divbutton col-2">
+                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
 
-                        for (j = 0; j < this.daySchedule.length; j++) {
-                            route.push(this.daySchedule[j].place)
-                        }
-
-                        // 總行程數 = 1 離開方程式
-                        if (route.length < 2) {
-                            return
-                        } else {
-                            // 總行程數 >= 2 加入停靠站
-                            const waypts = [];
-                            for (i = 1; i < route.length - 1; i++) {
-                                waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
-                            }
-                            request = {
-                                origin: { lat: route[0].lat, lng: route[0].lng },  //起點
-                                destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
-                                waypoints: waypts, //中途停靠點
-                                travelMode: 'DRIVING', //開車
-                            };
-                        }
-                        directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
-                        // request放入Google行程服務，得到結果
-                        directionsService.route(request, function(result, status) {
-                            if (status == 'OK') {
-                                directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
-                            }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infowindow_part row">
+                                        <div class="infowindow_img col-4">
+                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        </div>
+                                        <div class="infowindow_info col-8">
+                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                        </div>
+                                    </div>
+                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        景點介紹
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="infowindow_detail" style="text-indent:2em">
+                                            ${position.place.description}
+                                        </div>
+                                    </div>
+                                </div>
+                             `
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        disableAutoPan: false,
+                    });
+                    // 點擊marker開啟infowindow
+                    marker.addListener("click", () => {
+                        if (this.infowindow) { this.infowindow.close() }
+                        infowindow.open({
+                            anchor: marker,
+                            map: this.map,
+                            shouldFocus: false,
                         });
-                    },
-                },
-                computed: {
+                        this.infowindow = infowindow
+                    });
+                    this.markers.push(marker);
+                });
+                if (this.daySchedule.length == 1) { this.map.fitBounds(bounds) }
+            },
+            calcDayRoute() {
+                let request = null;
+                let route = [];
+                let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
+                directionsRenderer.setMap(null)
+                directionsRenderer = new google.maps.DirectionsRenderer({  // 宣告google畫路線服務
+                    suppressMarkers: true,
+                });
+                //行程變成同一條路徑，上限25個
 
+                for (j = 0; j < this.daySchedule.length; j++) {
+                    route.push(this.daySchedule[j].place)
+                }
+
+                // 總行程數 = 1 離開方程式
+                if (route.length < 2) {
+                    return
+                } else {
+                    // 總行程數 >= 2 加入停靠站
+                    const waypts = [];
+                    for (i = 1; i < route.length - 1; i++) {
+                        waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
+                    }
+                    request = {
+                        origin: { lat: route[0].lat, lng: route[0].lng },  //起點
+                        destination: { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng },  //終點
+                        waypoints: waypts, //中途停靠點
+                        travelMode: 'DRIVING', //開車
+                    };
+                }
+                directionsRenderer.setMap(this.map); // 設定畫路線顯示在地圖上
+                // request放入Google行程服務，得到結果
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(result);  // 把路線結果傳給畫路線服務
+                    }
+                });
             },
-            mounted() {
-                //let id = window.location.search.substring(1)
-                //if (id != "") {
-                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 123 })
-                    .then(res => {
-                        this.schedule = res.data;
-                        this.daySchedule = this.schedule.details[0];
-                        this.caltime();
-                        this.initMap();
-                        this.setMarker();
-                        this.calcRoute();
-                    })
-                    .catch(err => console.log(err))
-                //}            
-            },
-        })
-    </script>
-    }
+        },
+        computed: {
+
+        },
+        mounted() {
+            //let id = window.location.search.substring(1)
+            //if (id != "") {
+            axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 123 })
+                .then(res => {
+                    this.schedule = res.data;
+                    this.daySchedule = this.schedule.details[0];
+                    this.caltime();
+                    this.initMap();
+                    this.setMarker();
+                    this.calcRoute();
+                })
+                .catch(err => console.log(err))
+            //}            
+        },
+    })
+</script>
+}

@@ -212,6 +212,7 @@
   .screnbox {
     display: flex;
     margin: 0 1rem;
+    justify-content: center;
 
     & div {
       background: #74abe3;
@@ -224,6 +225,10 @@
       font-size: 1.5rem;
       margin: 0.2rem;
 
+    
+    }
+    & #sh{
+      display: none;
     }
 
 

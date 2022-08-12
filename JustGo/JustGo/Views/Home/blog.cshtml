@@ -556,9 +556,17 @@
                         <label class="btn btn-outline-dark btn-sm">
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
-                        <label class="btn btn-outline-dark btn-sm">
-                            <i class="fa fa-share-alt" aria-hidden="true" @@click="copyblog"> 複製部落格</i>
-                        </label>
+
+                         <div class="dropdown" id="setting" >
+	                        <button class="btn btn-primary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	                          複製部落格
+	                        </button>
+	                        <ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1">
+	                            <li ><input placeholder="開始時間" type="date" placeholder="2021/2/10"></li>
+	                            <li ><input placeholder="結束時間" type="date" placeholder="結束時間"></li>
+                                <li class="d-flex justify-content-center mt-1"><button class="btn btn-primary">確認</button></li>
+	                        </ul>
+                        </div>
               
                     </div>
                 </div>

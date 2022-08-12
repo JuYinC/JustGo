@@ -169,13 +169,37 @@
             //計算行程表時間
             cultime() {
                 console.log("cult")
+                let hr
+                let min
+                let addhr
                 for (let j = 0; j < this.state.travel.length; j++) {
                     let timestamp = this.state.datetime[j]
                     for (let i = 0; i < this.state.travel[j].length; i++) {
+                        if (i > 0) {
+                            console.log(this.state.travel[j][i-1].roam)
+                            hr = timestamp.substring(0, 2)
+                            min = timestamp.substring(3, 5)
+                            addhr = parseInt((Number(min) + Number(this.state.travel[j][i-1].roam)) / 60)
+                            console.log(this.state.travel[j][i-1].roam)
+                        hr = Number(hr) + Number(addhr)
+                        min = (Number(min) + Number(this.state.travel[j][i-1].roam)) % 60
+                        if (hr > 24) {
+                            hr = hr - 24
+                        }
+                        if (hr < 10) {
+                            hr = '0' + hr
+                        }
+                        if (min < 10) {
+                            min = '0' + min
+                        }
+                        timestamp = hr + ':' + min
+                        }
+                        
+
                         this.state.travel[j][i].startTime = timestamp
-                        let hr = timestamp.substring(0, 2)
-                        let min = timestamp.substring(3, 5)
-                        let addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
+                        hr = timestamp.substring(0, 2)
+                        min = timestamp.substring(3, 5)
+                        addhr = parseInt((Number(min) + Number(this.state.travel[j][i].min)) / 60)
 
                         hr = Number(hr) + Number(addhr)
                         min = (Number(min) + Number(this.state.travel[j][i].min)) % 60
@@ -237,21 +261,21 @@
                     scaleControl: true,
                 });
                 state.mapZoom = state.map.getZoom()
-                console.log(state.mapZoom)
+                //console.log(state.mapZoom)
                 state.mapCenter = state.map.getCenter()
-                console.log(state.mapCenter)
+                //console.log(state.mapCenter)
                 state.map.addListener("zoom_changed", () => {
                     if (state.infowindow) { state.infowindow.close() };
                     state.mapZoom = state.map.getZoom()
                     state.mapCenter = state.map.getCenter()
-                    console.log(state.mapZoom)
-                    console.log(state.mapCenter)
+                    //console.log(state.mapZoom)
+                    //console.log(state.mapCenter)
                 })
                 state.map.addListener("dragend", () => {
                     state.mapZoom = state.map.getZoom()
                     state.mapCenter = state.map.getCenter()
-                    console.log(state.mapZoom)
-                    console.log(state.mapCenter)
+                    //console.log(state.mapZoom)
+                    //console.log(state.mapCenter)
                 })
             },
 
@@ -275,7 +299,6 @@
                 }
                 let date = [];
                 let today = new Date();
-                console.log(today)
                 for (let i = 0; i < 7; i++) {
                     date.push(today.getMonth() + 1 + '/' + today.getDate());
                     today.setDate(today.getDate() + 1)
@@ -329,8 +352,8 @@
                             closetime: viewObj.closetime,
                             min: viewObj.timestay,
                         });
-                        store.commit('cultime')
                         store.commit('calcRoute')
+                        
                     };
                     let contentString =
                         `   <div class="infowindow">
@@ -661,12 +684,12 @@
 
                     // 總行程數 = 1 離開方程式
                     if (route.length < 2) {
-                        console.log(`行程數<2 行程數為 ${route.length}`)
+                        //console.log(`行程數<2 行程數為 ${route.length}`)
                         state.map.fitBounds(bounds);
                         return
                     } else {
                         // 總行程數 >=  2 加入停靠站
-                        console.log(`行程數>2 行程數為 ${route.length}`)
+                        //console.log(`行程數>2 行程數為 ${route.length}`)
                         const waypts = [];
                         for (i = 1; i < route.length - 1; i++) {
                             waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
@@ -694,7 +717,7 @@
 
             // 計算行程時間 & 畫路線
             calcRoute(state) {
-
+                console.log("calcRoute")
                 state.travelTime = [];
                 let request = null;
                 let route = [];
@@ -708,11 +731,12 @@
                 }
                 // 總行程數 = 1 離開方程式
                 if (route.length < 2) {
-                    console.log(`行程數<2 行程數為 ${route.length}`)
+
+                    //console.log(`行程數<2 行程數為 ${route.length}`)
                     return
                 } else {
                     // 總行程數 >= 2 加入停靠站
-                    console.log(`行程數>2 行程數為 ${route.length}`)
+                    //console.log(`行程數>2 行程數為 ${route.length}`)
                     const waypts = [];
                     for (i = 1; i < route.length - 1; i++) {
                         waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
@@ -730,65 +754,22 @@
                     if (status == 'OK') {
                         state.directionResult = result;
                         //儲存行程時間陣列
-                        for (i = 0; i < result.routes[0].legs.length; i++) {
-                            console.log(result.routes[0].legs[i].duration.value)
-                            state.travelTime.push(result.routes[0].legs[i].duration.value) //時間(秒)，number
-                            // state.travelTime[i].push(result.routes[0].legs[j].duration.value) //行程時間分不同天，尚未成功
-                            //result回傳的東西有很多，有興趣可以研究
+                        console.log("Service")
+                        let dayList = result.routes[0].legs
+                        let n = 0                        
+                        for (let i = 0; i < state.travel.length; i++) {
+                            for (let j = 0; j < state.travel[i].length; j++) {
+                                if(n<dayList.length){
+                                    state.travel[i][j].roam = parseInt(dayList[n].duration.value /60)
+                                    n++ 
+                                }                                                                                               
+                            }                                                                                                     
                         }
+                        store.commit('cultime')
+
                     }
                 });
-
-
-
-                //不同天的行程分開計算
-                //for (i = 0; i < state.travel.length; i++) {
-                //    state.travelTime.push([])
-                //    console.log(state.travelTime)
-                //    console.log(`第${i}天`)
-                //    多個點，加上中間停靠站
-                //    if (state.travel[i].length > 2) {
-                //        建立行程request
-                //        console.log(`行程 > 2, 行程數量為: ${state.travel[i].length}`)
-                //        const waypts = [];
-                //        for (j = 1; j < state.travel[i].length - 1; j++) {
-                //            waypts.push({ location: { lat: state.travel[i][j].lat, lng: state.travel[i][j].lng } })
-                //        }
-                //        request = {
-                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                //        destination: { lat: state.travel[i][state.travel[i].length - 1].lat, lng: state.travel[i][state.travel[i].length - 1].lng }, 終點
-                //        waypoints: waypts, 中途停靠點
-                //        travelMode: 'DRIVING', 開車
-                //        };
-                //        兩個點，只要給起點和終點就好
-                //    } else if (state.travel[i].length == 2) {
-                //        console.log(`行程 = 2, 行程數量為: ${state.travel[i].length}`)
-                //        request = {
-                //            origin: { lat: state.travel[i][0].lat, lng: state.travel[i][0].lng }, 起點
-                //        destination: { lat: state.travel[i][1].lat, lng: state.travel[i][1].lng }, 終點
-                //        travelMode: 'DRIVING', 開車
-                //        }
-                //        一個點，路線無法計算，跳出
-                //    } else {
-                //        console.log(`行程 < 2, 行程數量為: ${state.travel[i].length}`)
-                //        continue;
-                //    }
-                //    request放入Google行程服務，得到結果
-                //    directionsService.route(request, function (result, status) {
-                //        if (status == 'OK') {
-                //            儲存行程時間陣列
-                //            for (j = 0; j < result.routes[0].legs.length; j++) {
-                //                console.log(state.travelTime)
-                //                console.log(result.routes[0].legs[j].duration.value)
-                //                state.travelTime.push(result.routes[0].legs[j].duration.value) 時間(秒)，number
-                //                state.travelTime[i].push(result.routes[0].legs[j].duration.value) 行程時間分不同天，尚未成功
-                //                result回傳的東西有很多，有興趣可以研究
-                //            }
-                //        }
-                //    });
-                //}
-                console.log(`travelTime:`)
-                console.log(state.travelTime)
+               
 
             },
 
@@ -834,7 +815,6 @@
                         minute = "0" + minute
                     }
                     time = hour + ":" + minute
-                    console.log(time);
                     this.state.datetime.push(time)
 
                     for (let j = 0; j < status.details[i].length; j++) {
@@ -842,7 +822,6 @@
                         let endTime = new Date(status.details[i][j].endTime);
 
                         let timestay = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
-                        console.log(timestay)
                         hour = startTime.getHours()
                         minute = startTime.getMinutes()
                         if (Number(hour) > 24) {
@@ -888,9 +867,10 @@
                             min: timestay,
                         })
                     }
-                    store.commit('cultime')
+                    
                 }
-                store.commit('calcRoute')
+                store.commit('calcRoute');
+                
             },
             getLocation(state, { view, index }) {
                 if (state.isTravel == true) { return }
@@ -974,7 +954,6 @@
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
                 let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
-                //console.log(day)
                 this.duringDate.length = 0
                 this.datetime.length = 0
 
@@ -993,7 +972,6 @@
                         }
                     } else if (this.travel.length <= day) {
                         let daydiff = day - this.travel.length
-                        console.log(daydiff)
                         for (let i = 0; i < daydiff; i++) {
                             this.travel.push([])
                         }
@@ -1103,7 +1081,7 @@
             //刪除景點
             remove: function (day, view) {
                 this.travel[day].splice(view, 1)
-                this.$store.commit("cultime")
+                
                 this.$store.commit('setTravelMarker')
                 this.$store.commit('calcRoute')
             },
@@ -1135,12 +1113,12 @@
             onEnd() {
                 this.drag = false;
                 this.$store.commit('setTravelMarker');
-                this.$store.commit('calcRoute')
+                
             },
 
             //計算時間
             cultime() {
-                this.$store.commit("cultime")
+                this.$store.commit('calcRoute')
             },
 
             //計算小時小數點
@@ -1289,8 +1267,7 @@
                     closetime: this.selectPlaces[index].closetime,
                     min: this.selectPlaces[index].timestay,
                 })
-                this.$store.commit('setTravelMarker')
-                this.$store.commit("cultime")
+                this.$store.commit('setTravelMarker')               
                 this.$store.commit('calcRoute')
 
             },

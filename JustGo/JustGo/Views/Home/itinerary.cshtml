@@ -149,7 +149,9 @@
                     labelOrigin: new google.maps.Point(25, 17)
                 },
             ],
-            selectWeather: []
+            selectWeather: [],
+            mapZoom: null,
+            mapCenter: null,
         },
 
         //由action傳入值,更新state狀態
@@ -233,8 +235,22 @@
                     fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點                    
                 });
+                state.mapZoom = state.map.getZoom()
+                console.log(state.mapZoom)
+                state.mapCenter = state.map.getCenter()
+                console.log(state.mapCenter)
                 state.map.addListener("zoom_changed", () => {
                     if (state.infowindow) { state.infowindow.close() };
+                    state.mapZoom = state.map.getZoom()
+                    state.mapCenter = state.map.getCenter()
+                    console.log(state.mapZoom)
+                    console.log(state.mapCenter)
+                })
+                state.map.addListener("dragend", () => {
+                    state.mapZoom = state.map.getZoom()
+                    state.mapCenter = state.map.getCenter()
+                    console.log(state.mapZoom)
+                    console.log(state.mapCenter)
                 })
             },
 
@@ -878,9 +894,7 @@
             },
             getLocation(state, { view, index }) {
                 if (state.isTravel == true) { return }
-                const bounds = new google.maps.LatLngBounds();
-                bounds.extend({ lat: view.lat, lng: view.lng })
-                state.map.fitBounds(bounds);
+                state.map.setZoom(17)
                 google.maps.event.trigger(state.markers[index], 'click')
                 // marker因為包在cluster裡面，一定要先展開才叫的到，只好先拉近再呼叫
             },

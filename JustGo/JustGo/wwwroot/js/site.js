@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 window.onscroll = function() {
-    if (window.pageYOffset >= navbarC__menu.offsetTop) {
+    if (window.pageYOffset >= navbarC.offsetTop) {
 
         navbarC.classList.add("sticky");
     }

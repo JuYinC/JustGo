@@ -297,11 +297,15 @@
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">     
                 {{item}}
-                <img :src="imageSrc(item.coverImage.name)" alt="">
+                
+                <img src="https://unsplash.it/1800/1600/?random/person" alt="">
                 <div class="info">
-                    <h1>{{item.title}}</h1>
-                    <p>😎帳號</p>
-                    <a href="#" class="btn">read me</a>
+                    <div><h1>{{item.title}}</h1></div>
+                    <div style="display: flex;align-items: center;">
+                        <img  class="usimg" :src="imageSrc(item.coverImage.name)" alt="">
+                        <p style="display: contents">🤷‍♂️我是帳號</p>
+                    </div>
+                    <div><a href="#" class="btn">read me</a></div>
                 </div>
 
         </div>   

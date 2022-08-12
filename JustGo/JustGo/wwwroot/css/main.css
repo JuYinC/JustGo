@@ -130,7 +130,8 @@
       width: 100%; }
   .screnbox {
     display: flex;
-    margin: 0 1rem; }
+    margin: 0 1rem;
+    justify-content: center; }
     .screnbox div {
       background: #74abe3;
       width: 20%;
@@ -141,6 +142,8 @@
       color: white;
       font-size: 1.5rem;
       margin: 0.2rem; }
+    .screnbox #sh {
+      display: none; }
   .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -790,10 +793,23 @@
     filter: blur(0px); } }
 
 @media only screen and (max-width: 576px) {
-  .arrange__contain-video {
-    display: none; }
+  .arrange__contain {
+    position: absolute; }
+    .arrange__contain-video {
+      display: none; }
+  body {
+    width: 100%;
+    overflow-x: hidden; }
+    body .arrange__contain::-webkit-scrollbar {
+      display: hide; }
   .datepicker {
     display: none; }
+    .datepicker__content input {
+      width: 90%;
+      margin: 2px 4%;
+      font-size: 1.7rem; }
+    .datepicker__content button {
+      width: 48%; }
   .journey__map {
     height: 100vh;
     display: flex;
@@ -802,42 +818,45 @@
       height: 90vh; }
       .journey__map .sidebar-hide {
         flex: 0 0 330px;
-        margin: 1.5rem;
+        margin: 1rem;
         overflow-y: scroll; }
         .journey__map .sidebar-hide button {
           width: 100px;
           height: 20px; }
-        .journey__map .sidebar-hide .item2 {
-          display: grid;
-          min-height: 50px;
-          height: auto;
-          min-width: 200px;
-          width: auto;
-          padding: 6px 12px;
-          margin: 10px 10px 0px 10px;
-          border: solid 1px #eee;
-          background-color: #FAF0E6;
-          border-radius: 10px;
-          text-align: left; }
+        .journey__map .sidebar-hide .item2 * {
+          font-size: 1.4rem;
+          margin-bottom: 0.3rem; }
+        .journey__map .sidebar-hide .item2 h3 {
+          background-color: #5fd3ba6c;
+          font-size: 2.1rem;
+          border-bottom: 1px solid #c7c7c7;
+          width: 100%;
+          font-weight: bold; }
         .journey__map .sidebar-hide .lbl button {
           width: 160px; }
-        .journey__map .sidebar-hide .lbl .cy {
-          justify-items: center;
-          width: 100%;
-          display: grid;
-          grid-template-columns: 25% 25% 25% 25%;
-          align-items: center; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] {
-            display: none; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] + label {
-            border: 1px solid black;
-            border-radius: 0.7rem;
-            cursor: pointer;
-            padding: 5px 10px;
-            margin-bottom: 0.2rem;
-            font-size: 1.7rem; }
-          .journey__map .sidebar-hide .lbl .cy input[type="checkbox"]:checked + label {
-            background-color: #f3d42e; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] {
+          display: none; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"] + label {
+          border: 1px solid #6c757d;
+          padding: 3px 10px;
+          margin-bottom: 0.2rem;
+          font-size: 2rem;
+          font-family: 'cwTeXYen', sans-serif; }
+        .journey__map .sidebar-hide .lbl .cy input[type="checkbox"]:checked + label {
+          background-color: #f3d42e;
+          box-shadow: 1px 1px 3px; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"] {
+          display: none; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"] + label {
+          border: 1px solid #6c757d;
+          cursor: pointer;
+          padding: 3px 10px;
+          margin-bottom: 0.2rem;
+          font-size: 2rem;
+          font-family: 'cwTeXYen', sans-serif; }
+        .journey__map .sidebar-hide .lbl .picker input[type="radio"]:checked + label {
+          background-color: #f3d42e;
+          box-shadow: 1px 1px 3px; }
         .journey__map .sidebar-hide .lbl .cat {
           justify-items: center;
           width: 100%;
@@ -845,18 +864,19 @@
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"] {
             display: none; }
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"] + label {
-            border: 1px solid black;
-            border-radius: 0.7rem;
+            border: 1px solid #6c757d;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 3px 10px;
             margin-bottom: 0.2rem;
-            font-size: 1.7rem; }
+            font-size: 2rem;
+            font-family: 'cwTeXYen', sans-serif; }
           .journey__map .sidebar-hide .lbl .cat input[type="checkbox"]:checked + label {
-            background-color: #f3d42e; }
+            background-color: #f3d42e;
+            box-shadow: 1px 1px 3px; }
       .journey__map .sidebar__grid {
         height: 100%;
         display: grid;
-        grid-template-rows: 15% 75% 1fr; }
+        grid-template-rows: 15% 75%; }
         .journey__map .sidebar__grid .grid-item-t {
           margin: 12px auto;
           position: relative;
@@ -868,8 +888,7 @@
           .journey__map .sidebar__grid .grid-item-t .daysbox {
             display: flex;
             padding: 5px;
-            position: absolute;
-            transition: all .5s; }
+            position: absolute; }
             .journey__map .sidebar__grid .grid-item-t .daysbox .days {
               list-style: none;
               background: skyblue;
@@ -882,13 +901,13 @@
               font-family: 'cwTeXYen', sans-serif;
               font-weight: 600;
               color: currentColor; }
-              .journey__map .sidebar__grid .grid-item-t .daysbox .days:hover {
+              .journey__map .sidebar__grid .grid-item-t .daysbox .days:active {
                 background: #c6eef8; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-l {
             position: absolute;
             top: 26px;
             width: 25px;
-            height: 45px;
+            height: 100%;
             left: -5px;
             background-color: white;
             display: inline-block; }
@@ -903,9 +922,9 @@
               z-index: 1; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-r {
             position: absolute;
-            left: 379px;
+            right: 2%;
             width: 25px;
-            height: 50px;
+            height: 100%;
             display: flex;
             align-items: center; }
             .journey__map .sidebar__grid .grid-item-t .btnbox-r .right {
@@ -924,35 +943,60 @@
           overflow-y: scroll;
           margin: 0px auto; }
           .journey__map .sidebar__grid .grid-item-m .col {
+            flex: 1;
             width: 100%;
-            padding: 10px 20px;
-            margin: 10px 0;
-            background: #82089829;
-            text-align: center; }
+            border: solid 1px #6c757d;
+            margin: 3px; }
+            .journey__map .sidebar__grid .grid-item-m .col * {
+              font-size: 1.4rem;
+              margin-bottom: 0.3rem; }
             .journey__map .sidebar__grid .grid-item-m .col .title {
-              font-size: 2rem; }
+              background-color: var(--primary-bule);
+              width: 100%;
+              color: #eee;
+              display: inline-grid; }
+            .journey__map .sidebar__grid .grid-item-m .col p {
+              color: black;
+              margin-left: 6%;
+              display: inline; }
+            .journey__map .sidebar__grid .grid-item-m .col input {
+              font-size: 1.4rem;
+              display: inline;
+              margin-top: 0.3rem; }
           .journey__map .sidebar__grid .grid-item-m .item {
-            min-height: 5rem;
-            height: auto;
-            min-width: 20rem;
-            width: auto;
-            padding: 0.6rem 1.2rem;
-            margin-top: 1rem;
-            border: solid 1px #eee;
-            background-color: #F5F5DC;
-            border-radius: 1rem;
-            text-align: left;
-            font-size: 1.4rem; }
+            display: grid;
+            flex-direction: column;
+            margin-bottom: 0;
+            margin-top: 0.3rem;
+            border: solid 1px #eee; }
+            .journey__map .sidebar__grid .grid-item-m .item .weather-info {
+              display: inline-flex;
+              align-items: baseline;
+              justify-content: space-around; }
+              .journey__map .sidebar__grid .grid-item-m .item .weather-info p {
+                flex: 1; }
+            .journey__map .sidebar__grid .grid-item-m .item h3 {
+              font-size: 2.1rem;
+              margin-left: 5%;
+              border-bottom: 1px solid #333;
+              width: 90%;
+              font-weight: bold; }
             .journey__map .sidebar__grid .grid-item-m .item .adjtime {
               display: flex;
-              align-items: center;
-              justify-content: space-between; }
+              align-items: center; }
             .journey__map .sidebar__grid .grid-item-m .item button {
-              width: 40px;
               border-style: none;
-              background: #ff5568; }
+              height: 5px;
+              font-size: 3;
+              background: #fd9090da;
+              font-size: 10px;
+              height: 20px; }
+              .journey__map .sidebar__grid .grid-item-m .item button i {
+                font-size: 10px; }
+                .journey__map .sidebar__grid .grid-item-m .item button i i {
+                  font-size: 10px; }
         .journey__map .sidebar__grid .grid-item-b {
-          margin: 30px 0 0 100px; }
+          display: none; }
     .journey__map .mapbox {
       flex: 1;
       display: flex;

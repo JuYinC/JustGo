@@ -1,32 +1,24 @@
 @media only screen and (max-width: 576px) {
-  
+ 
     .arrange__contain {
-        // width: 100%;
-        // height: 50vh;
-        // position: relative;
+    
+        position: absolute;
      
         &-video {
             display: none;
-            // width: 100%;
-            // height: 50vh;
-            // z-index: -2;
+        
 
         }
     }
+    body{
+        width: 100%;
+        overflow-x: hidden;
+        .arrange__contain::-webkit-scrollbar {
+            display: hide;
+        }
+    }
 
-    // @media(min-aspect-ratio:16/9) {
-    //     .arrange__contain-video {
-    //         width: 100%;
-    //         height: auto;
-    //     }
-    // }
 
-    // @media(max-aspect-ratio:16/9) {
-    //     .arrange__contain-video {
-    //         object-fit: cover;
-    //     }
-
-    // }
 
     .datepicker {
         display: none;
@@ -40,34 +32,18 @@
         // width: 100%;
 
         &__content {
-            // display: none;
-            // display: flex;
-            // position: absolute;
-            // top: 55%;
-            // left: 50%;
-            // transform: translate(-50%, -50%);
-
-        //     & input {
-        //         font-size: 2rem;
-        //         border-style: none;
-        //         background: transparent;
-        //         font-weight: 700;
-        //         margin-left: 3rem;
-
-        //         &::placeholder {
-        //             color: #eee;
-        //         }
-
-        //     }
-
-        //     & button {
-        //         // background-color: #ce9906;
-        //         font-size: 2rem;
-        //         width: 20rem;
-        //         margin-left: 3rem;
-        //         border-radius: 15px;
-        //     }
-
+            
+            
+            & input{
+                width: 90%;
+                margin: 2px 4%;
+                font-size: 1.7rem;
+            }
+            
+            & button{
+                width: 48%;
+            }
+ 
 
          }
 
@@ -75,23 +51,18 @@
 
     .journey__map {
         height: 100vh;
-        // background-color: brown;
+      
         display: flex;
         flex-direction: column;
 
 
         & .sidebar {
-            // background-color: aqua;
-            // background-color: var(--grey-dark-1);
-            // flex: 0 0 300px;
-            // flex-direction: column;
-            // justify-content: space-between;
-            // overflow-x: hidden;
+       
             height: 90vh;
 
             &-hide {
                 flex: 0 0 330px;
-                margin: 1.5rem;
+                margin: 1rem;
                 overflow-y: scroll;
 
                 & button {
@@ -100,17 +71,22 @@
                 }
 
                 & .item2 {
-                    display: grid;
-                    min-height: 50px;
-                    height: auto;
-                    min-width: 200px;
-                    width: auto;
-                    padding: 6px 12px;
-                    margin: 10px 10px 0px 10px;
-                    border: solid 1px #eee;
-                    background-color: #FAF0E6;
-                    border-radius: 10px;
-                    text-align: left;
+              
+                    & *{
+                   
+                        font-size: 1.4rem;
+                        margin-bottom:0.3rem;
+                    }
+                    & h3{
+                        background-color: #5fd3ba6c;
+                        font-size: 2.1rem;
+                   
+                        border-bottom: 1px solid rgb(199, 199, 199);
+                        width: 100%;
+                        font-weight: bold;
+                        
+                    }
+                    
                 }
 
                 & .lbl {
@@ -120,30 +96,46 @@
                     }
 
                     .cy {
-                        justify-items: center;
-                        width: 100%;
-                        display: grid;
-                        grid-template-columns: 25% 25% 25% 25%;
-                        align-items: center;
-
+                   
                         & input[type="checkbox"] {
                             display: none;
                         }
 
                         & input[type="checkbox"]+label {
-                            border: 1px solid black;
-                            border-radius: 0.7rem;
-                            cursor: pointer;
-                            padding: 5px 10px;
+                            border: 1px solid #6c757d;
+                            padding: 3px 10px;
                             margin-bottom: 0.2rem;
-                            font-size: 1.7rem;
-
+                            font-size: 2rem;
+                            font-family: 'cwTeXYen', sans-serif;
+                        
                         }
 
                         & input[type="checkbox"]:checked+label {
                             background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
                         }
 
+                    }
+                    .picker{
+                        & input[type="radio"] {
+                            display: none;
+                        }
+
+                        & input[type="radio"]+label {
+                            border: 1px solid #6c757d;
+                            
+                            cursor: pointer;
+                            padding: 3px 10px;
+                            margin-bottom: 0.2rem;
+                            font-size: 2rem;
+                            font-family: 'cwTeXYen', sans-serif;
+                        
+                        }
+
+                        & input[type="radio"]:checked+label {
+                            background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
+                        }
                     }
 
                     .cat {
@@ -156,17 +148,18 @@
                         }
 
                         & input[type="checkbox"]+label {
-                            border: 1px solid black;
-                            border-radius: 0.7rem;
+                            border: 1px solid #6c757d;
                             cursor: pointer;
-                            padding: 5px 10px;
+                            padding: 3px 10px;
                             margin-bottom: 0.2rem;
-                            font-size: 1.7rem;
-
+                            font-size: 2rem;
+                            font-family: 'cwTeXYen', sans-serif;
+                           
                         }
 
                         & input[type="checkbox"]:checked+label {
                             background-color: #f3d42e;
+                            box-shadow: 1px 1px 3px;
                         }
 
 
@@ -177,7 +170,7 @@
             &__grid {
                 height: 100%;
                 display: grid;
-                grid-template-rows: 15% 75% 1fr;
+                grid-template-rows: 15% 75% ;
 
                 & .grid-item {
                     &-t {
@@ -194,10 +187,9 @@
                         & .daysbox {
                             display: flex;
                             padding: 5px;
-                            // margin: 0 10px 0 10px;
+                       
                             position: absolute;
-                            transition: all .5s;
-
+                      
 
                             & .days {
                                 list-style: none;
@@ -212,7 +204,7 @@
                                 font-weight: 600;
                                 color: currentColor;
 
-                                &:hover {
+                                &:active {
                                     background: rgb(198, 238, 248);
                                 }
 
@@ -224,7 +216,7 @@
                             position: absolute;
                             top: 26px;
                             width: 25px;
-                            height: 45px;
+                            height: 100%;
                             left: -5px;
                             background-color: white;
                             display: inline-block;
@@ -246,9 +238,9 @@
 
                         & .btnbox-r {
                             position: absolute;
-                            left: 379px;
+                            right: 2%;
                             width: 25px;
-                            height: 50px;
+                            height: 100%;
                             display: flex;
                             align-items: center;
 
@@ -273,7 +265,7 @@
                     }
 
                     &-m {
-                        // background-color: #ce9906;
+                   
                         height: inherit;
                         width: 100%;
                         overflow-y: scroll;
@@ -281,42 +273,90 @@
 
 
                         & .col {
+                      
+                            flex: 1;
                             width: 100%;
-                            padding: 10px 20px;
-                            margin: 10px 0;
-                            background: #82089829;
-                            text-align: center;
+                            border: solid 1px #6c757d;
+                            margin: 3px;
+                            // vertical-align: top;
+
+                            & *{
+                                // font-family: cwTeXYen, sans-serif;
+                                font-size: 1.4rem;
+                                margin-bottom:0.3rem;
+                            }
 
                             & .title {
-                                font-size: 2rem;
+                                background-color: var(--primary-bule);
+                                width: 100%;
+                                color: #eee;
+                                display: inline-grid;
                             }
+                            & p{
+                                color: rgb(0, 0, 0);
+                                margin-left: 6%;
+                                display: inline;
+                                
+                            }
+                            & input{
+                                font-size: 1.4rem;
+                                display: inline;
+                                margin-top: 0.3rem;
+                            }
+
 
                         }
 
                         & .item {
-                            min-height: 5rem;
-                            height: auto;
-                            min-width: 20rem;
-                            width: auto;
-                            padding: 0.6rem 1.2rem;
-                            margin-top: 1rem;
+             
+                            display: grid;
+                            flex-direction: column;
+                            margin-bottom: 0;
+                            margin-top: 0.3rem;
                             border: solid 1px #eee;
-                            background-color: #F5F5DC;
-                            border-radius: 1rem;
-                            text-align: left;
-                            font-size: 1.4rem;
 
+
+                            & .weather-info{
+                                display: inline-flex;
+                                align-items: baseline;
+                                justify-content: space-around;
+
+                                & p{
+                                    flex: 1;
+                                }
+                            }  
+                            
+                            & h3{
+                                font-size: 2.1rem;
+                                margin-left: 5%;
+                                border-bottom: 1px solid #333;
+                                width: 90%;
+                                font-weight: bold;
+                            }
 
                             & .adjtime {
                                 display: flex;
                                 align-items: center;
-                                justify-content: space-between;
+                               
                             }
 
                             & button {
-                                width: 40px;
                                 border-style: none;
-                                background: #ff5568;
+                                height: 5px;
+                                font-size: 3;
+                                background: #fd9090da;
+                                font-size: 10px;
+                                height: 20px;
+                                & i{
+                                    font-size: 10px;
+
+                                    & i{
+                                        
+                                        font-size: 10px;
+                                    }
+                                }
+
+                                
                             }
                         }
 
@@ -324,7 +364,7 @@
                     }
 
                     &-b {
-                        margin: 30px 0 0 100px;
+                    display: none;
                     }
 
                 }

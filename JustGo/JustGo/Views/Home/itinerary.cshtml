@@ -27,10 +27,14 @@
         <div class="datepicker"></div>
         <div class="datepicker__content">
             <div id="app">
-                <input placeholder="開始時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                <input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDatelocal">
                 <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDateEndlocal">
+                @* <input  id="test" type="text" name="daterange" value="" /> *@
+
+
+
                 <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
                 <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
             </div>
@@ -79,6 +83,11 @@
 <script src="https://unpkg.com/vuex@3"></script>
 <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
 <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+@* tiempicker *@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
@@ -108,6 +117,14 @@
 
         }
     })
+
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
 
 </script>
 

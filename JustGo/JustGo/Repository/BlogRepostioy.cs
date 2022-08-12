@@ -196,7 +196,7 @@ namespace JustGo.Repository
                 UserId = vm.UserId,
                 Describe = vm.Describe,
                 ImageName = "",
-                Like = _context.UserKeep.Where(e=>e.KeepClass==0&&e.KeepId==vm.BlogId).Count(),
+                Like = _context.UserKeep.Where(e=>e.KeepClass==1&&e.KeepId==vm.BlogId).Count(),
                 Title = vm.Title,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,

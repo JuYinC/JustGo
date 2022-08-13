@@ -417,6 +417,7 @@
         position: absolute;
         top: 0;
         overflow-y: hidden;
+        min-width: 100%;
 
     }
 
@@ -425,9 +426,8 @@
         width: 100%;
         height: 100vh;
         position: relative;
-        // background-size: cover;
 
-        // overflow: hidden;
+    
 
         &-video {
             width: 100%;
@@ -446,8 +446,7 @@
 
     @media(max-aspect-ratio:16/9) {
         .arrange__contain-video {
-            // width: auto;
-            height: 100%;
+            width:  100%;
             object-fit: cover;
         }
 
@@ -460,7 +459,6 @@
         transform: translateY(-50%);
         background-color: rgba(255, 255, 255, 0.3);
         filter: blur(20px);
-        // display:flex ;
         height: 20%;
         width: 100%;
 
@@ -493,7 +491,6 @@
             }
 
             & button {
-                // background-color: #ce9906;
                 font-size: 2rem;
                 width: 20rem;
                 margin-left: 3rem;
@@ -507,7 +504,6 @@
 
     .journey__map {
         height: 90vh;
-        // background-color: brown;
         display: flex;
         position: inherit;
         top:10vh;
@@ -559,7 +555,6 @@
                     & h3{
                         background-color: #5fd3ba6c;
                         font-size: 2.1rem;
-                        // margin-left: 1%;
                         border-bottom: 1px solid rgb(199, 199, 199);
                         width: 100%;
                         font-weight: bold;
@@ -584,11 +579,7 @@
                             height: 2.2rem;
                             background-color: #f5b733b0;
                             font-size: 1.8rem;
-                            cursor: pointer;
-                            // font-family: 'cwTeXYen', sans-serif;
-                            
-                            
-                            
+                            cursor: pointer;   
                             
                         }
                     }

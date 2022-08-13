@@ -21,15 +21,15 @@
 
 <div class="arrange__body">
     <div class="arrange__contain">
-        <video autoplay muted loop plays-inline class="arrange__contain-video">
+        <video autoplay muted loop plays-inline class="arrange__contain-video" poster="~/file/photo/5.jpg">
             <source src="~/file/video/highway-f.mp4" type="video/mp4">
         </video>
         <div class="datepicker"></div>
         <div class="datepicker__content">
             <div id="app">
-                <input id="test" placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                <input id="st" placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDatelocal">
-                <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                <input id="et" placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDateEndlocal">
                 @* <input  id="test" type="text" name="daterange" value="" /> *@
 
@@ -962,7 +962,9 @@ let wwwroot = "@Url.Content("~/file/photo")"
         methods: {
             //編排日期
             culDate() {
-                $('.arrange__contain-video').css('display','none') 
+
+             if($('#st').val() && $('#et').val()){
+                 $('.arrange__contain-video').css('display','none') 
                 $('.datepicker').css('display','none') 
                 $('#navbarC').addClass("sticky")
                 $('.datepicker__content').css({
@@ -970,6 +972,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     'left':'30%',
                     'z-index':'5',
                     'width':'30%',
+                    'display':'unset',
                 })
                 $('#app input').css({
                     'min-width': '30%',
@@ -985,13 +988,8 @@ let wwwroot = "@Url.Content("~/file/photo")"
                     'border': '2px solid',
 
                 })
-         
-               
-              
-             
-                
-               
-
+                $('#app button')[0].textContent="更新日期"
+             }
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)

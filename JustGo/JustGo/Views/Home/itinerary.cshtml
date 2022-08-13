@@ -171,6 +171,25 @@
             selectWeather: [],
             mapZoom: null,
             mapCenter: null,
+            selectPlace: {},
+            infoPicture: [
+                "@Url.Content("~/classPhoto/class01.jpg")",
+                "@Url.Content("~/classPhoto/class02.jpg")",
+                "@Url.Content("~/classPhoto/class03.jpg")",
+                "@Url.Content("~/classPhoto/class04.jpg")",
+                "@Url.Content("~/classPhoto/class05.jpg")",
+                "@Url.Content("~/classPhoto/class06.jpg")",
+                "@Url.Content("~/classPhoto/class07.jpg")",
+                "@Url.Content("~/classPhoto/class08.jpg")",
+                "@Url.Content("~/classPhoto/class09.jpg")",
+                "@Url.Content("~/classPhoto/class10.jpg")",
+                "@Url.Content("~/classPhoto/class11.jpg")",
+                "@Url.Content("~/classPhoto/class12.jpg")",
+                "@Url.Content("~/classPhoto/class13.jpg")",
+                "@Url.Content("~/classPhoto/class14.jpg")",
+                "@Url.Content("~/classPhoto/class15.jpg")",
+                "@Url.Content("~/classPhoto/class16.jpg")",
+            ],
         },
 
         //由action傳入值,更新state狀態
@@ -296,6 +315,14 @@
                     //console.log(state.mapZoom)
                     //console.log(state.mapCenter)
                 })
+            },
+
+            // zoom或center變動傳回中心點和距離
+            zoomCenterChange(state) {
+                state.selectPlace.lat = state.map.getCenter().lat();
+                state.selectPlace.lat = state.map.getCenter().lng();
+                state.selectPlace.radius = 46080 / (2**state.map.getZoom());;
+                console.log(state.selectPlace);               
             },
 
             // 產生景點標示

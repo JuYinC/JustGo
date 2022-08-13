@@ -58,7 +58,7 @@
                                             <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
                                             <p class="col-6 m-0 fs-2 fw-bold bgposition ">{{view.place.name}}</p>
                                         </div>
-                                        <div class="row cols-2">
+                                        <div class="row cols-2" v-if="index<daySchedule.length-1">
                                             <div class="col-2">
                                             </div>
                                             <div class="col-10 betweenBox">
@@ -77,12 +77,12 @@
                     <div class="row">
                         <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
                             <div class="viewbox border border-info p-1">
-                                <div v-for="view in day">
+                                <div v-for="(view,index) in day">
                                     <div class="row p-0 m-0">
                                         <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
                                         <p class="col-6 m-0 fs-3  fw-bold bgposition">{{view.place.name}}</p>
                                     </div>
-                                    <div class="row cols-2">
+                                    <div class="row cols-2" v-if="index<day.length-1">
                                         <div class="col-2">
                                         </div>
                                         <div class="col-10 betweenBox">
@@ -129,6 +129,7 @@
                         labelOrigin: new google.maps.Point(22, 17)
                     },
                     markers: [],
+                    roam:[],
                 }
             },
             methods: {
@@ -413,10 +414,74 @@
                     });
                 },
                 roam() {
-                    for (let i = 0; i < this.schedule.length; i++) {
-                        for (let j = 0; j < this.schedule[i].length; j++) {
-                            
+                    for (let i = 0; i < this.schedule.details.length; i++) {
+                        let dayRoam = [];
+                        for (let j = 1; j < this.schedule.details[i].length; j++) {
+                            //this.schedule.details[i][j].startTime - this.schedule.details[i][j-1].endTime
+                            let roamTime =""
 
+                            let starthr = timestamp.substring(0, 2)
+                            let startmin = timestamp.substring(3, 5)
+
+                            let endhr
+
+
+
+
+                            let hour = startTime.getHours()
+                            let min = startTime.getMinutes()
+
+                            if (Number(hour) < 10) {
+                                hour = "0" + hour
+                            }
+                            if (Number(min) < 10) {
+                                min = "0" + min
+                            }
+                            this.schedule.details[i][j].startTime = hour + ":" + min
+
+                            hour = endTime.getHours()
+                            min = endTime.getMinutes()
+                            if (Number(hour) < 10) {
+                                hour = "0" + hour
+                            }
+                            if (Number(min) < 10) {
+                                min = "0" + min
+                            }
+                            this.schedule.details[i][j].endTime = hour + ":" + min
+
+
+
+
+                        //let now = new Date()
+                        //now.setDate(now.getDate() + 7)
+                        //let travelDate = new Date(this.state.duringDate[j])
+
+                        //this.state.travel[j][i].minT = 30
+                        //this.state.travel[j][i].maxT = ""
+                        //this.state.travel[j][i].pop12h = ""
+                        //this.state.travel[j][i].uvi = ""
+
+
+                        //if (now > travelDate) {
+
+                        //    this.state.selectWeather.find(object => {
+                        //        if (this.state.travel[j][i].town == object.locationsName) {
+                        //            let weatherStart = new Date(object.startTime)
+                        //            let year = weatherStart.getFullYear()
+                        //            let month = weatherStart.getMonth()
+                        //            let date = weatherStart.getDate()
+                        //            weatherStart = new Date(year, month, date)
+
+                        //            if (travelDate.getTime() == weatherStart.getTime()) {
+                        //                this.state.travel[j][i].minT = object.minT
+                        //                this.state.travel[j][i].maxT = object.maxT
+                        //                this.state.travel[j][i].pop12h = object.pop12h
+                        //                this.state.travel[j][i].uvi = object.uvi
+                        //            }
+
+                        //        }
+                        //    })
+                        //}
                         }
                     }
                     

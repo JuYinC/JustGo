@@ -15,151 +15,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
 <style>
-  /*  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins", serif;
+    /*日期選擇*/
+    .available{
+        animation:none;
     }
-
-
-    .fa-flag {
-        font-size: 22px;
-        color: aliceblue;
-    }
-
-    #TitleId {
-        display: inline-block;
-        border-style: none;
-        outline: none;
-        background-color: transparent;
-        font-size: 22px;
-        color: aliceblue;
-        text-align: center;
-        top: 60%;
-        left: 45%;
-        z-index: 2;
-    }
-
-
-        #TitleId:hover {
-            -webkit-text-stroke: 1px #fff;
-            color: transparent;
-            z-index: 2;
-        }
-
-    textarea {
-        width: 100%;
-        border: none;
-        border-bottom: 1px dashed #909cc2;
-    }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-bottom: 1px dashed #084887;
-        }
-
-    .container-fluid {
-        position: relative;
-    }
-
-    textarea::-webkit-scrollbar {
-        width: 8px;
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    textarea::-webkit-scrollbar-thumb {
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    #userimg {
-        border-radius: 50%;
-        width: 70px;
-        height: 65px;
-    }
-
-
-
-    .Details {
-        list-style-type: none;
-    }
-
-    .list-group-item {
-        font-size: 14px !important;
-        box-shadow: 0 !important;
-        border: none !important;
-        padding: 2px !important;
-    }
-
-        .list-group-item:hover {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-            transition: width 2s, height 2s !important;
-            -webkit-transform: rotate(1deg) !important;
-        }
-
-        .list-group-item.active {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-         
-        }
-
-    .btn-primary, .btn-outline-primary {
-        background-color: #669ed6 !important;
-        color: #fff !important;
-        border: none !important;
-    }
-
-        .btn-primary:hover, .btn-outline-primary:hover {
-            background-color: #084887 !important;
-            color: #fff !important;
-            border: none !important;
-        }
-
-    #day {
-        background-color: #084887;
-        color: #fff;
-        border-radius: 8px;
-        padding: 4px 9px;
-        margin-bottom: 5px;
-    }
-
-
-    .groupimg {
-        width: 600px;
-        margin: 10px -10px;
-        display: row;
-        flex-wrap: wrap;
-    
-    }
-
-        .groupimg > img {
-            width: 180px;
-            height: 150px;
-            margin: 10px 10px;
-            cursor: pointer;
-            justify-content: space-around;
-        }
-
-        .groupimg::after {
-            display: block;
-            width: 180px;
-        }*/
-
+  
 </style>
 
 
@@ -179,6 +44,9 @@
      <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
      <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     
         
     <script>
@@ -190,6 +58,23 @@
 
     Vue.use(VueViewer.default)
     console.log(VueViewer.default)
+
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+        locale: {
+          format: 'YYYY/MM/DD',
+        },
+        opens: 'left'
+      }, function(start, end) {
+        console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+      });
+      $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+      }).on("hide.daterangepicker",function (ev) {
+        this.dispatchEvent(new Event('input'))
+    });
+
+    });
 
     let id = 0;
     let vm = new Vue({
@@ -274,7 +159,7 @@
             EndDate:null,
             //totallike:0,
             bool: 1,
-
+            daterange:null,
             myscore: this.score,
             mytempscore: this.score
 
@@ -567,6 +452,9 @@
                                 <li class="d-flex justify-content-center mt-1"><button class="btn btn-primary">確認</button></li>
 	                        </ul>
                         </div>
+
+                        <div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="选择日期" />
+                        <i class="fa fa-caret-down"></i></div>
               
                     </div>
                 </div>

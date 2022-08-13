@@ -7,25 +7,15 @@
 @media only screen and (max-width: 576px) {
   .navbarC {
     z-index: 3;
-    background-color: #fdc11d;
-    height: 55px; }
+    background-color: #fdc11d; }
     .navbarC li {
       list-style: none; }
-    .navbarC #navbarC__menu {
-      display: none;
-      float: right;
-      text-align: center;
-      width: 100%;
-      height: 0;
-      background: var(--primary-bule);
-      padding: 0;
-      opacity: 0; }
-      .navbarC #navbarC__menu li {
-        margin: 30px; }
-      .navbarC #navbarC__menu li a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 1.5rem; }
+    .navbarC #navbarC__menu li {
+      margin: 30px; }
+    .navbarC #navbarC__menu li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem; }
     .navbarC__logo {
       height: 45px; }
     .navbarC #check {
@@ -140,7 +130,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    padding: 20px 8%;
+    padding: 20px 8% !important;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -165,10 +155,10 @@
     writing-mode: horizontal-tb;
     direction: rtl; }
   .sticky {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
-    padding: 10px 5%;
+    padding: 10px 5% !important;
     background: #fdc11d;
     display: flex;
     align-items: center;
@@ -176,8 +166,13 @@
     z-index: 5;
     transition: padding 0.7s;
     height: 10vh; }
+    .sticky .navbarC__logo {
+      -webkit-filter: drop-shadow(2px 4px 6px black);
+      filter: drop-shadow(2px 4px 6px black); }
     .sticky ul {
       width: auto; }
+      .sticky ul li a {
+        filter: drop-shadow(2px 4px 6px black); }
   .footer__waves {
     position: relative;
     width: 100%;

@@ -223,7 +223,7 @@
 
     <div class="idx__contaim">
         <div class="index">
-            <video autoplay muted loop plays-inline class="index__bg-video">
+            <video autoplay muted loop plays-inline class="index__bg-video" poster="~/file/photo/5.jpg">
                 <source src="~/file/video/beach.mp4" type="video/mp4">
             </video>
         </div>
@@ -311,16 +311,18 @@
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">     
                 @*{{item}}*@
-                <img :src="imageSrc(item.coverImage.name)" alt="">
+                <img src="https://unsplash.it/1800/1600/?random/person" alt="">
+                @*<img :src="imageSrc(item.coverImage.name)" alt="">*@
                 <div class="info">
-                    <img :src="userImageSrc('Shinnosuke6.png')" alt="">@*頭像*@
-                    <h1>{{item.title}}</h1>
-                    <p>😎帳號</p>
-                    <a :href="blogUrl(item.blogId)" class="btn">read me</a>
+                    <div><h1>{{item.title}}</h1></div>
+                    <div style="display: flex;align-items: center;">
+                        <img  class="usimg" :src="imageSrc(item.coverImage.name)" alt="">
+                        <p style="display: contents">🤷‍♂️我是帳號</p>
+                    </div>
+                    <div><a :href="blogUrl(item.blogId) class="btn">read me</a></div>
                 </div>
-            </div>                        
-        </div>  
-    </div> 
+
+        </div>   
 </div>
 
 

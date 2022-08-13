@@ -46,11 +46,6 @@
 
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-    <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=424940169592724&autoLogAppEvents=1" nonce="lruCluOy"></script>
-
-    
         
     <script>
         
@@ -62,21 +57,45 @@
     Vue.use(VueViewer.default)
     console.log(VueViewer.default)
 
-    $(function() {
-      $('input[name="daterange"]').daterangepicker({
-        locale: {
-          format: 'YYYY/MM/DD',
-        },
-        opens: 'right'
-      }, function(start, end) {
-        console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-      });
-      $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-          $(this).val('');
-      }).on("hide.daterangepicker",function (ev) {
-        this.dispatchEvent(new Event('input'))
-    });
+    //$(function() {
+    //  $('input[name="daterange"]').daterangepicker({
+    //    locale: {
+    //      format: 'YYYY/MM/DD',
+    //    },
+    //    opens: 'right'
+    //  }, function(start, end) {
+    //    console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+    //  });
+    //  $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+    //      $(this).val('');
+    //  }).on("hide.daterangepicker",function (ev) {
+    //    this.dispatchEvent(new Event('input'))
+    //});
 
+    //});
+
+    //  $(function() {
+    //  $('input[name="daterange"]').daterangepicker({
+    //    locale: {
+    //      format: 'YYYY/MM/DD',
+    //    },
+    //    opens: 'right'
+    //  }, function(start) {
+    //    console.log("test " + start.format('YYYY/MM/DD'));
+    //  });
+    //  $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+    //      $(this).val('');
+    //  }).on("hide.daterangepicker",function (ev) {
+    //    this.dispatchEvent(new Event('input'))
+    //});
+
+    //});
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
     });
 
     let id = 0;
@@ -333,7 +352,7 @@
    <div id="bloginfo">
     <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
-            style="height: 420px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
         </div>
     </div>
     <!-- Header End -->
@@ -412,9 +431,11 @@
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
                         收藏本文:
-                        <div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
+                        @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
                         <i class="fa fa-caret-down"></i></div>
-              
+                        <div><i class="fa fa-calendar"></i>&nbsp;<input type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
+                        <i class="fa fa-caret-down"></i></div>*@
+                        <input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange">
                     </div>
                 </div>
                 <div class="mb-4">
@@ -425,14 +446,10 @@
                         <div v-for="(day,dayIndex) in Details">
                             <label id="day">第{{dayIndex+1}}天</label>
                             <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-
-                                
-                                
                                     <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
                                     <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                     <div class="mb-1"><i class="fa-solid fa-clock" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
                             
-
                                  <div>
                                     <i class="fa fa-star" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
@@ -440,8 +457,6 @@
                                 </div>
                               
                                 <p>{{dayDetails.describe}}</p>I am Describe<br>
-
-
                                 <div v-viewer class="groupimg img-fluid">
                                     <template v-for="(image,index) in dayDetails.images">
                                         <img :src="getImages(image.name)">
@@ -461,10 +476,10 @@
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
 
-                     <div id="fb-root"></div>
+               @*      <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1" nonce="NqM9iieh"></script>
                     <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350" data-numposts="5"></div>
-
+                *@
 
 
                     

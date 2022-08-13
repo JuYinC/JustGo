@@ -47,6 +47,9 @@
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=424940169592724&autoLogAppEvents=1" nonce="lruCluOy"></script>
+
     
         
     <script>
@@ -429,11 +432,6 @@
                 <div class="d-flex flex-column text-left mb-3">
                     <h1 class="my-3">{{Title}}</h1>
                     <div class="d-flex">
-                        <p class="mr-3"><i class="fa fa-user text-primary"></i> User</p>
-                        <p class="mr-3">
-                            <i class="fa fa-folder text-primary"></i> Blog
-                        </p>
-                        <p class="mr-3"><i class="fa fa-comments text-primary"></i> 15 </p>
                         <p class="mr-3"><i class="fa-brands fa-facebook text-primary"></i> 推文 </p>
                         <p class="mr-3"><i class="fa-brands fa-instagram-square text-primary"></i> 推文 </p>
                         <p class="mr-3"><i class="fa-brands fa-twitter text-primary"></i> 推文 </p>
@@ -441,18 +439,7 @@
                         <label class="btn btn-outline-dark btn-sm">
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
-
-                         <div class="dropdown" id="setting" >
-	                        <button class="btn btn-primary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-	                          複製部落格
-	                        </button>
-	                        <ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1">
-	                            <li ><input placeholder="開始時間" type="date" placeholder="2021/2/10"></li>
-	                            <li ><input placeholder="結束時間" type="date" placeholder="結束時間"></li>
-                                <li class="d-flex justify-content-center mt-1"><button class="btn btn-primary">確認</button></li>
-	                        </ul>
-                        </div>
-
+                        收藏本文:
                         <div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="选择日期" />
                         <i class="fa fa-caret-down"></i></div>
               
@@ -497,64 +484,18 @@
 
 
                 <!-- Comment List 替換為fb 待DOM-->
+
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
-                    <div class="media mb-4">
-                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                        <div class="media-body">
-                            <h6>
-                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                            </h6>
-                            <p>
-                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                sit.
-                            </p>
-                            <button class="btn btn-sm btn-light">Reply</button>
-                        </div>
-                    </div>
-                    <div class="media mb-4">
-                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                        <div class="media-body">
-                            <h6>
-                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                            </h6>
-                            <p>
-                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                sit.
-                            </p>
-                            <button class="btn btn-sm btn-light">Reply</button>
-                            <div class="media mt-4">
-                                <img src="https://unsplash.it/1800/1600/?random/user" alt="Image"
-                                    class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                                <div class="media-body">
-                                    <h6>
-                                        John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                                    </h6>
-                                    <p>
-                                        Diam amet duo labore stet elitr ea clita ipsum, tempor
-                                        labore accusam ipsum et no at. Kasd diam tempor rebum
-                                        magna dolores sed sed eirmod ipsum. Gubergren clita
-                                        aliquyam consetetur, at tempor amet ipsum diam tempor at
-                                        sit.
-                                    </p>
-                                    <button class="btn btn-sm btn-light">Reply</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                     <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1" nonce="NqM9iieh"></script>
+                    <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350" data-numposts="5"></div>
+
+
+
+                    
                 </div>
-
-                <!-- Comment Form -->
-
-            </div>
         </div>
     </div>
     <!-- Detail End -->

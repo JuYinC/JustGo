@@ -67,7 +67,7 @@
         locale: {
           format: 'YYYY/MM/DD',
         },
-        opens: 'left'
+        opens: 'right'
       }, function(start, end) {
         console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
       });
@@ -351,7 +351,6 @@
                         </div>
                         <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
                         <div class="mb-2">美好旅程的回憶從JustGO開始</div>
-                                        
                     </div>
                     
                     <!-- Category List -->
@@ -408,15 +407,12 @@
                 <div class="d-flex flex-column text-left mb-3">
                     <h1 class="my-3">{{Title}}</h1>
                     <div class="d-flex">
-                        <p class="mr-3"><i class="fa-brands fa-facebook text-primary"></i> 推文 </p>
-                        <p class="mr-3"><i class="fa-brands fa-instagram-square text-primary"></i> 推文 </p>
-                        <p class="mr-3"><i class="fa-brands fa-twitter text-primary"></i> 推文 </p>
                         <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
                         <label class="btn btn-outline-dark btn-sm">
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
                         收藏本文:
-                        <div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" />
+                        <div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
                         <i class="fa fa-caret-down"></i></div>
               
                     </div>

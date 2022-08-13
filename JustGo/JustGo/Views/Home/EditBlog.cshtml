@@ -175,6 +175,7 @@
                     },
                     saveBlog(e) {     
                         e.preventDefault();
+                        if(this.CoverImage != null || this.Title != ""){
                         let blog = {
                             CoverImage: { base64 : this.CoverImageName.base64,name:"" },
                             Details:this.Details,
@@ -185,7 +186,10 @@
                         }
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                                  .then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
-                                 .catch(err => console.log(""))                        
+                                 .catch(err => console.log(""))       
+                       }else{
+                           alert("上傳失敗 請上傳封面照及標題")
+                       }
                     },
                     //封面圖上傳
                     fileChange(e) {
@@ -428,7 +432,7 @@
 	            </button>
 	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 	              <li><a class="dropdown-item listcolor" :href="canceledit()" >取消編輯</a></li>
-	              <li><a class="dropdown-item listcolor" :href="canceledit()" @@click="saveBlog($event)">發布行程</a></li>
+	              <li><a class="dropdown-item listcolor" @@click="saveBlog($event)">發布行程</a></li>
                    @*<a  class="dropdown-item listcolor" asp-area="" asp-controller="Home" asp-action="Index" @@click="saveBlog">發布行程</a>*@
                   <li >
                 

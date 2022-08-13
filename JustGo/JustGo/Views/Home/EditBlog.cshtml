@@ -425,12 +425,13 @@
                  </div>
             </div>
             @*側邊功能按鍵*@
-            <i class="fa-solid fa-objects-align-right" id="setting"></i>
+            @*<i class="fa-solid fa-objects-align-right" id="setting">*@
+            <i class="fa-solid fa-house-crack" id="setting">
             <div class="dropdown" id="setting" >
 	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 	              <i class="fa-solid fa-list-check" ></i>
 	            </button>
-	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 	              <li><a class="dropdown-item listcolor" :href="canceledit()" >取消編輯</a></li>
 	              <li><a class="dropdown-item listcolor" @@click="saveBlog($event)">發布行程</a></li>
                    @*<a  class="dropdown-item listcolor" asp-area="" asp-controller="Home" asp-action="Index" @@click="saveBlog">發布行程</a>*@

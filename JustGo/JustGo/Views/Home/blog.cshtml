@@ -25,6 +25,31 @@
         animation:none;
     }
   
+
+     .timepicker{
+                border-style: none;
+                background: transparent;
+                margin-left: 3rem;
+     }
+     .timepicker:focus{
+                border-style: none;
+                background: transparent;
+                margin-left: 3rem;
+     }
+     .timepicker:blur{
+                border-style: none;
+                background: transparent;
+                margin-left: 3rem;
+     }
+
+     /* #setting {
+        position: fixed;
+        top:70vh;
+        right: 8%;
+        font-size: 20px;
+        z-index:5;
+    }*/
+
 </style>
 
 
@@ -46,7 +71,8 @@
 
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-        
+
+
     <script>
         
     $("body").attr('data-bs-spy','scroll')
@@ -57,46 +83,35 @@
     Vue.use(VueViewer.default)
     console.log(VueViewer.default)
 
-    //$(function() {
-    //  $('input[name="daterange"]').daterangepicker({
-    //    locale: {
-    //      format: 'YYYY/MM/DD',
-    //    },
-    //    opens: 'right'
-    //  }, function(start, end) {
-    //    console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-    //  });
-    //  $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-    //      $(this).val('');
-    //  }).on("hide.daterangepicker",function (ev) {
-    //    this.dispatchEvent(new Event('input'))
-    //});
+            
+  /*$(function () {
+                $('input[name="daterange"]').daterangepicker({
+                    locale: {
+                        format: 'YYYY/MM/DD',
+                    },
+                    opens: 'right'
+                }, function (start, end) {
+                    console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                });
+                $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                }).on("hide.daterangepicker", function (ev) {
+                    this.dispatchEvent(new Event('input'))
+                });
 
-    //});
+            });*/
 
-    //  $(function() {
-    //  $('input[name="daterange"]').daterangepicker({
-    //    locale: {
-    //      format: 'YYYY/MM/DD',
-    //    },
-    //    opens: 'right'
-    //  }, function(start) {
-    //    console.log("test " + start.format('YYYY/MM/DD'));
-    //  });
-    //  $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-    //      $(this).val('');
-    //  }).on("hide.daterangepicker",function (ev) {
-    //    this.dispatchEvent(new Event('input'))
-    //});
+    
+    
+     
 
-    //});
-    $(function() {
+        $(function() {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
         }, function(start, end, label) {
             console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
-    });
+        });
 
     let id = 0;
     let vm = new Vue({
@@ -377,7 +392,7 @@
                         <h2 class="mb-2" >Duration</h2>
                         <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                         <ul class="list-group list-group-flush">
-                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
+                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days" style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
                                 <li class="list-group-item  justify-content-between align-items-center px-0">
                                         <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
                                             <a class="list-group-item list-group-item-action"
@@ -430,12 +445,34 @@
                         <label class="btn btn-outline-dark btn-sm">
                             <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
                         </label>
-                        收藏本文:
+
+
+
                         @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
                         <i class="fa fa-caret-down"></i></div>
                         <div><i class="fa fa-calendar"></i>&nbsp;<input type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
                         <i class="fa fa-caret-down"></i></div>*@
-                        <input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange">
+                       
+
+                        <i class="fa-solid fa-objects-align-right" id="setting">收藏文章</i>
+                        <div class="dropdown" id="setting" >
+	                        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+	                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	                           <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+	                        </ul>
+                        </div>
+                     
+	                        @*<ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1" >
+	                           <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+
+	                        </ul>*@
+
+@*
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">複製本文:
+                                  <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+
+	                    </ul>*@
+                    
                     </div>
                 </div>
                 <div class="mb-4">
@@ -446,10 +483,10 @@
                         <div v-for="(day,dayIndex) in Details">
                             <label id="day">第{{dayIndex+1}}天</label>
                             <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                    <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
-                                    <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
-                                    <div class="mb-1"><i class="fa-solid fa-clock" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
-                            
+                                   <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
+                                    <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                                    <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+
                                  <div>
                                     <i class="fa fa-star" :style="{color:color}"
                                         :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"

@@ -3,7 +3,7 @@
 }
 
 
- .active {
+.fa-heart .active {
     color: #E1251B;
     animation: heart 0.5s linear;
 } 
@@ -34,14 +34,13 @@
     list-style-type: none;
 }
 
-
 .list-group-item {
-    size: 12px !important;
     color: #f9ab55 !important;
     font-weight: bold !important;
     box-shadow: 0 !important;
     border: none !important;
     padding: 2px !important;
+    background: transparent !important;
 }
 
     .list-group-item:hover {
@@ -49,7 +48,6 @@
         color: #f58a07 !important;
         border: none !important;
         font-weight: bold !important;
-        size: 12px !important;
         box-shadow: 0 !important;
         transition: width 2s, height 2s !important;
         -webkit-transform: rotate(1deg) !important;
@@ -60,7 +58,6 @@
         color: #f58a07 !important;
         border: none !important;
         font-weight: bold !important;
-        size: 12px !important;
         box-shadow: 0 !important;
     }
 

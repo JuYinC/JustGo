@@ -71,12 +71,13 @@
 
 
     .list-group-item {
-        size: 12px !important;
+       
         color: #f9ab55 !important;
         font-weight: bold !important;
         box-shadow: 0 !important;
         border: none !important;
         padding: 2px !important;
+        background:transparent !important;
     }
 
         .list-group-item:hover {
@@ -84,7 +85,7 @@
             color: #f58a07 !important;
             border: none !important;
             font-weight: bold !important;
-            size: 12px !important;
+           
             box-shadow: 0 !important;
             transition: width 2s, height 2s !important;
             -webkit-transform: rotate(1deg) !important;
@@ -95,7 +96,7 @@
             color: #f58a07 !important;
             border: none !important;
             font-weight: bold !important;
-            size: 12px !important;
+           
             box-shadow: 0 !important;
         }
 
@@ -134,7 +135,7 @@
         width: 600px;
         margin: 10px -10px;
         display: row;
-        flex-wrap: wrap;*/
+        flex-wrap: wrap;
        
     }
 
@@ -154,9 +155,10 @@
 
     #setting {
         position: fixed;
+        top:70vh;
         right: 8%;
-        bottom: 40%;
         font-size: 20px;
+        z-index:5;
     }
 
 

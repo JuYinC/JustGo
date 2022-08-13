@@ -310,18 +310,17 @@
     </div>
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">     
-                @*{{item}}*@
-                <img src="https://unsplash.it/1800/1600/?random/person" alt="">
-                @*<img :src="imageSrc(item.coverImage.name)" alt="">*@
+                {{item}}
+                @*<img src="https://unsplash.it/1800/1600/?random/person" alt="">*@
+                <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
                     <div><h1>{{item.title}}</h1></div>
                     <div style="display: flex;align-items: center;">
-                        <img  class="usimg" :src="imageSrc(item.coverImage.name)" alt="">
-                        <p style="display: contents">🤷‍♂️我是帳號</p>
+                        <img  class="usimg" :src="userImageSrc('2208121714164777.jpg')" alt="">
+                        <p style="display: contents">{{item.userName}}</p>
                     </div>
-                    <div><a :href="blogUrl(item.blogId) class="btn">read me</a></div>
+                    <div><a :href="blogUrl(item.blogId)" class="btn">read me</a></div>
                 </div>
-
         </div>   
 </div>
 

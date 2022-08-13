@@ -962,9 +962,25 @@ let wwwroot = "@Url.Content("~/file/photo")"
         methods: {
             //編排日期
             culDate() {
+              if(window.innerWidth>401){
+                 if($('#st').val() && $('#et').val()){
+                //  $('.arrange__contain-video').css('display','none') 
 
-             if($('#st').val() && $('#et').val()){
-                 $('.arrange__contain-video').css('display','none') 
+                let windowhg = parseInt( $('.arrange__contain-video').css("height").replace('px', '') ,10);
+
+                if(windowhg > 0){
+                        for(i=100;i>=windowhg;i--){
+                            $('.arrange__contain-video').css('height', i ) 
+                        }
+                       
+                
+                } 
+               
+
+                
+
+
+
                 $('.datepicker').css('display','none') 
                 $('#navbarC').addClass("sticky")
                 $('.datepicker__content').css({
@@ -990,6 +1006,9 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 })
                 $('#app button')[0].textContent="更新日期"
              }
+
+              }  
+            
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)

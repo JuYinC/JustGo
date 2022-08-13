@@ -22,10 +22,13 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            var getPlace = _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
-            Console.WriteLine(getPlace.GetType());
-
-            return getPlace;
+            if (vm.Distance < 25)
+            {
+                return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
+            }
+            else{
+                return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
+            }                        
         }
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)

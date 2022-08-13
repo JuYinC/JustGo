@@ -27,7 +27,7 @@
         <div class="datepicker"></div>
         <div class="datepicker__content">
             <div id="app">
-                <input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                <input id="test" placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDatelocal">
                 <input placeholder="結束時間" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
                     v-model="selectDateEndlocal">
@@ -36,7 +36,7 @@
 
 
                 <button @@click="culDate" class="btn btn-primary" href="#map">開始</button>
-                <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
+                <!-- <button @@click="saveSchedule" class="btn btn-primary">儲存行程</button> -->
             </div>
         </div>
         <div class="journey__map">
@@ -53,6 +53,7 @@
                     </div>
                     <div class="grid-item-b">
                         <button class="btn btn-primary" id="open">展開</button>
+                         <button  id="save" @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
                     </div>
                 </div>
             </div>
@@ -961,6 +962,36 @@ let wwwroot = "@Url.Content("~/file/photo")"
         methods: {
             //編排日期
             culDate() {
+                $('.arrange__contain-video').css('display','none') 
+                $('.datepicker').css('display','none') 
+                $('#navbarC').addClass("sticky")
+                $('.datepicker__content').css({
+                    'top':'5%',
+                    'left':'30%',
+                    'z-index':'5',
+                    'width':'30%',
+                })
+                $('#app input').css({
+                    'min-width': '30%',
+                    'font-size':'1.4rem',
+                }).focus().css( 'max-width','30%')
+                $('#app button').css({
+                    'font-size':'1rem',
+                    'width': '35%',
+                    'padding': '0',
+                    'border-radius': '0',
+                    'background': 'transparent',
+                    'color': 'black',
+                    'border': '2px solid',
+
+                })
+         
+               
+              
+             
+                
+               
+
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
@@ -1356,7 +1387,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
             },
             move() {
                 return {
-                    left: this.toleft + '%',
+                    left: this.toleft + 'px',
                 }
             },
             travel() {
@@ -1416,7 +1447,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
                 let y = 270
                 let z = Math.abs(document.getElementsByClassName('daysbox')[0].offsetLeft) + 270
                 if (y < x && z < x) {
-                    this.toleft -= 50
+                    this.toleft -= 120
                 }
                 else {
                     this.toleft = this.toleft
@@ -1425,7 +1456,7 @@ let wwwroot = "@Url.Content("~/file/photo")"
             },
             tor() {
                 if (this.toleft != 0) {
-                    this.toleft += 50
+                    this.toleft += 120
                 }
                 else {
                     this.toleft = 0
@@ -1481,6 +1512,111 @@ let wwwroot = "@Url.Content("~/file/photo")"
                                     </div>
                                 </div>
                             `
+    })
+
+        new Vue({
+        store,
+        el: '#save',
+        data() {
+            return {
+                selectDatelocal: [],
+                selectDateEndlocal: [],
+                saveData: [],
+            }
+        },
+        computed: {
+            travel() {
+                return this.$store.state.travel
+            },
+            datetime() {
+                return this.$store.state.datetime
+            },
+            duringDate() {
+                return this.$store.state.duringDate
+            },
+        },
+        mounted() {
+            let id = window.location.search.substring(1)
+            if (id != "") {
+                this.$store.dispatch('axiosLoad', { ScheduleId: id })
+
+            }
+        },
+        methods: {
+            //編排日期
+            culDate() {
+
+                let startTime = new Date(this.selectDatelocal)
+                let endTime = new Date(this.selectDateEndlocal)
+                let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+                //console.log(day)
+                this.duringDate.length = 0
+                this.datetime.length = 0
+
+                if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
+
+                    for (let i = 0; i < day; i++) {
+                        this.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                        this.datetime.push('09:00')
+                    }
+
+                    if (this.travel.length == 0) {
+                        for (let i = 0; i < day; i++) {
+                            this.travel.push([])
+                        }
+                    } else if (this.travel.length <= day) {
+                        let daydiff = day - this.travel.length
+                        console.log(daydiff)
+                        for (let i = 0; i < daydiff; i++) {
+                            this.travel.push([])
+                        }
+
+                    } else if (this.travel.length > day) {
+
+                        let daydiff = this.travel.length-day
+                        for (let i = 0; i < daydiff; i++) {
+                            let lastIndex = this.travel.length - 1
+
+                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
+                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
+                            }
+                            this.travel.pop()
+                        }
+                        this.$store.commit("cultime")
+                    }
+
+                } else {
+                    alert('重新選擇日期')
+                }
+            },
+
+            //儲存行程
+            saveSchedule() {
+                for (let i = 0; i < this.travel.length; i++) {
+                    this.saveData.push([]);
+                    for (let j = 0; j < this.travel[i].length; j++) {
+                        this.saveData[i].push({
+                            startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                            endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                            weatherWarning: false,
+                            place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
+                        })
+                    }
+                }
+
+                this.$store.dispatch('axiosSave',
+                    {
+                        StartDate: new Date(this.duringDate[0]),
+                        EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
+                        WeatherWarning: false,
+                        title: "123",
+                        details: this.saveData,
+                    })
+                alert("儲存成功")
+            },
+        },
     })
 
 </script>

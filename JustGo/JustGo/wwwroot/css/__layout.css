@@ -166,8 +166,13 @@
     z-index: 5;
     transition: padding 0.7s;
     height: 10vh; }
+    .sticky .navbarC__logo {
+      -webkit-filter: drop-shadow(2px 4px 6px black);
+      filter: drop-shadow(2px 4px 6px black); }
     .sticky ul {
       width: auto; }
+      .sticky ul li a {
+        filter: drop-shadow(2px 4px 6px black); }
   .footer__waves {
     position: relative;
     width: 100%;

@@ -1,9 +1,11 @@
 @media only screen and (max-width: 576px) {
- 
+  
+    
     .arrange__contain {
     
         position: absolute;
-     
+        width: 100%;
+        overflow-x: hidden;
         &-video {
             display: none;
         
@@ -41,7 +43,8 @@
             }
             
             & button{
-                width: 48%;
+                width: 40%;
+                margin: 0 25%;
             }
  
 
@@ -178,7 +181,7 @@
                     &-t {
                         margin: 10px auto;
                         position: relative;
-                        width: 400px;
+                        width: 100%;
                         text-align: center;
                         overflow-x: hidden;
 
@@ -403,10 +406,17 @@
 }
 
 @media only screen and (min-width: 576px) {
+    .noscroll {
+        position: fixed; 
+        overflow-y: hidden;
+        height: 100vh;
+    }
+
     .arrange__body {
-        height: 200vh;
+        height: 100vh;
         position: absolute;
         top: 0;
+        overflow-y: hidden;
 
     }
 
@@ -436,8 +446,9 @@
 
     @media(max-aspect-ratio:16/9) {
         .arrange__contain-video {
-            width: auto;
+            // width: auto;
             height: 100%;
+            object-fit: cover;
         }
 
     }
@@ -445,20 +456,21 @@
     .datepicker {
         background-color: #ce9906;
         position: absolute;
-        top: 60%;
+        top: 50%;
         transform: translateY(-50%);
         background-color: rgba(255, 255, 255, 0.3);
-        filter: blur(30px);
+        filter: blur(20px);
         // display:flex ;
-        height: 30rem;
+        height: 20%;
         width: 100%;
 
         &__content {
             display: flex;
             position: absolute;
-            top: 55%;
+            top: 50%;
             width: 100%;
             margin: 0 auto;
+            transform: translateY(-50%);
             justify-content: center;
 
             & input {
@@ -683,7 +695,7 @@
             &__grid {
                 height: 100%;
                 display: grid;
-                grid-template-rows: 12% 75% 1fr;
+                grid-template-rows: 12% 80% 1fr;
 
                 & .grid-item {
                     &-t {

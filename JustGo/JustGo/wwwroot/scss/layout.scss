@@ -277,10 +277,20 @@
     z-index: 5;
     transition: padding 0.7s;
     height: 10vh;
+    & .navbarC__logo{
+        -webkit-filter:drop-shadow(2px 4px 6px black);
+        filter: drop-shadow(2px 4px 6px black);
+    }
 
     & ul {
         width: auto;
+
+        & li a{
+            // color: black;
+            filter: drop-shadow(2px 4px 6px black);
+        }
     }
+   
     
 }
 

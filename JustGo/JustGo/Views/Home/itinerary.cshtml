@@ -169,9 +169,8 @@
             ],
             
             selectWeather: [],
-            mapZoom: null,
             mapCenter: null,
-            selectPlace: {},
+            mapRadius: null,
             infoPicture: [
                 "@Url.Content("~/classPhoto/class01.jpg")",
                 "@Url.Content("~/classPhoto/class02.jpg")",
@@ -297,6 +296,8 @@
                     fullscreenControl: false, // 全螢幕顯示
                     clickableIcons: false,   // 可不可以點地圖上的點
                     scaleControl: true,
+                    maxZoom: 18,
+                    minZoom: 8,
                 });
                 state.mapZoom = state.map.getZoom()
                 //console.log(state.mapZoom)
@@ -304,17 +305,76 @@
                 //console.log(state.mapCenter)
                 state.map.addListener("zoom_changed", () => {
                     if (state.infowindow) { state.infowindow.close() };
-                    state.mapZoom = state.map.getZoom()
-                    state.mapCenter = state.map.getCenter()
-                    //console.log(state.mapZoom)
-                    //console.log(state.mapCenter)
+                    store.commit('zoomCenterChange')
                 })
                 state.map.addListener("dragend", () => {
-                    state.mapZoom = state.map.getZoom()
-                    state.mapCenter = state.map.getCenter()
-                    //console.log(state.mapZoom)
-                    //console.log(state.mapCenter)
+                    store.commit('zoomCenterChange')
                 })
+            },
+
+            // zoom或center變動傳回中心點和距離
+            zoomCenterChange(state) {
+                state.mapCenter = state.map.getCenter()
+                console.log(state.mapCenter)
+                switch (state.map.getZoom()) {
+                    case 8:
+                        console.log(8);
+                        state.mapRadius = 180;
+                        console.log(state.mapRadius)
+                        break;
+                    case 9:
+                        console.log(9);
+                        state.mapRadius = 90;
+                        console.log(state.mapRadius)
+                        break;
+                    case 10:
+                        console.log(10);
+                        state.mapRadius = 45;
+                        console.log(state.mapRadius)
+                        break;
+                    case 11:
+                        console.log(11);
+                        state.mapRadius = 22.5;
+                        console.log(state.mapRadius)
+                        break;
+                    case 12:
+                        console.log(12);
+                        state.mapRadius = 12;
+                        console.log(state.mapRadius)
+                        break;
+                    case 13:
+                        console.log(13);
+                        state.mapRadius = 6;
+                        console.log(state.mapRadius)
+                        break;
+                    case 14:
+                        console.log(14);
+                        state.mapRadius = 3;
+                        console.log(state.mapRadius)
+                        break;
+                    case 15:
+                        console.log(15);
+                        state.mapRadius = 1.5;
+                        console.log(state.mapRadius)
+                        break;
+                    case 16:
+                        console.log(16);
+                        state.mapRadius = 0.75;
+                        console.log(state.mapRadius)
+                        break;
+                    case 17:
+                        console.log(17);
+                        state.mapRadius = 0.38;
+                        console.log(state.mapRadius)
+                        break;
+                    case 18:
+                        console.log(18);
+                        state.mapRadius = 0.19;
+                        console.log(state.mapRadius)
+                        break;
+                    default:
+                        state.mapRadius = 180;
+                }
             },
 
             // zoom或center變動傳回中心點和距離
@@ -413,7 +473,7 @@
                                 </div>
                                 <div class="infowindow_part row">
                                     <div class="infowindow_img col-4">
-                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        <img src="https://picsum.photos/200?random=${i}" class="infowindow_picture">
                                     </div>
                                     <div class="infowindow_info col-8">
                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>
@@ -540,7 +600,8 @@
                                 </div>
                                 <div class="infowindow_part row">
                                     <div class="infowindow_img col-4">
-                                        <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                        <img src="https://picsum.photos/300" class="infowindow_picture">
+                                        @* <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture"> *@
                                     </div>
                                     <div class="infowindow_info col-8">
                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     
@@ -953,6 +1014,10 @@
             initMap({ commit }) {
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
+                    .then(res => {
+                        commit('updateData', res.data);
+                        axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) }).then(() => { commit('setPlaceMarker') })
+                    })
                     .then(res => { commit('updateData', res.data) }).then(() => { 
                           axios.post("@Url.Action("selectWeather","Schedule")")
                           .then(res => { commit('updateWeather', res.data)
@@ -1237,8 +1302,8 @@
                                     @@change="cultime()" class="min">
                                     <transition-group>
                                         <div class="item" v-for="(view,veiwIndex) in day" :key="view">
-                                          
-                                            
+
+
                                             <div class="weather-info">
                                                 <p>{{view.startTime}}-{{view.endTime}}</p> 
                                                 <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>

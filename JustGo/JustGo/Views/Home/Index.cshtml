@@ -242,6 +242,7 @@
         </div>
     </div>
 
+    <div id="app">
     <div class="slider">
         <div class="items-group">
             <div class="item">
@@ -295,7 +296,7 @@
             <div class="idx__title-2-bt"></div>
         </div>
     </div>
-    <div id="app">
+    
         <div class="screnbox">  
         <div @@click="searchBlog('北部')">北部</div>
         <div @@click="searchBlog('中部')">中部</div>
@@ -309,7 +310,7 @@
     </div>
     <div class="wrapper">
        <div v-for="(item) in search.results" class="card" :key="item.blogId">     
-                {{item}}
+                @*{{item}}*@
                 <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
                     <img :src="userImageSrc('Shinnosuke6.png')" alt="">@*頭像*@

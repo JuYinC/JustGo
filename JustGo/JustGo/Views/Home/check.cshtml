@@ -75,7 +75,7 @@
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="row">
-                        <div v-for="day in schedule.details" class="col scheduleDay" style="display:inline-block">
+                        <div v-for="(day,dayindex) in schedule.details" class="col scheduleDay" style="display:inline-block">
                             <div class="viewbox border border-info p-1">
                                 <div v-for="(view,index) in day">
                                     <div class="row p-0 m-0">
@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="col-10 betweenBox">
                                             <br>
-                                            <i class="fa-solid fa-car-side"></i>
+                                            <i class="fa-solid fa-car-side"></i> {{roam[dayindex][index]}}
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +129,9 @@
                         labelOrigin: new google.maps.Point(22, 17)
                     },
                     markers: [],
-                    roam:[],
+                    roam: [],
+                    duringDate: [],
+                    selectWeather: [],
                 }
             },
             methods: {
@@ -209,38 +211,38 @@
                             // 產生infowindow
                             let contentString =
                                 `
-                                                    <div class="infowindow">
-                                                        <div class="infowindow_bar row row-cols-2" >
-                                                            <div class="infowindow_bar_title col-10">
-                                                                ${position.place.name}
-                                                            </div>
-                                                            <div class="infowindow_bar_divbutton col-2">
-                                                                <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                                                    <div class="infowindow">
+                                                                        <div class="infowindow_bar row row-cols-2" >
+                                                                            <div class="infowindow_bar_title col-10">
+                                                                                ${position.place.name}
+                                                                            </div>
+                                                                            <div class="infowindow_bar_divbutton col-2">
+                                                                                <div class="infowindow_bar_button" type="button" onclick="addView()">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="infowindow_part row">
-                                                <div class="infowindow_img col-4">
-                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                                </div>
-                                                <div class="infowindow_info col-8">
-                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                                </div>
-                                            </div>
-                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                aria-expanded="false" aria-controls="collapseExample">
-                                                景點介紹
-                                            </button>
-                                            <div class="collapse" id="collapseExample">
-                                                <div class="infowindow_detail" style="text-indent:2em">
-                                                    ${position.place.description}
-                                                </div>
-                                            </div>
-                                        </div>
-                                     `
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="infowindow_part row">
+                                                                <div class="infowindow_img col-4">
+                                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                                                </div>
+                                                                <div class="infowindow_info col-8">
+                                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                                                </div>
+                                                            </div>
+                                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                                aria-expanded="false" aria-controls="collapseExample">
+                                                                景點介紹
+                                                            </button>
+                                                            <div class="collapse" id="collapseExample">
+                                                                <div class="infowindow_detail" style="text-indent:2em">
+                                                                    ${position.place.description}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                     `
                             const infowindow = new google.maps.InfoWindow({
                                 content: contentString,
                                 disableAutoPan: false,
@@ -325,38 +327,38 @@
                         // 產生infowindow
                         let contentString =
                             `
-                                        <div class="infowindow">
-                                            <div class="infowindow_bar row row-cols-2" >
-                                                <div class="infowindow_bar_title col-10">
-                                                    ${position.place.name}
-                                                </div>
-                                                <div class="infowindow_bar_divbutton col-2">
-                                                    <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                                        <div class="infowindow">
+                                                            <div class="infowindow_bar row row-cols-2" >
+                                                                <div class="infowindow_bar_title col-10">
+                                                                    ${position.place.name}
+                                                                </div>
+                                                                <div class="infowindow_bar_divbutton col-2">
+                                                                    <div class="infowindow_bar_button" type="button" onclick="addView()">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="infowindow_part row">
-                                                <div class="infowindow_img col-4">
-                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                                </div>
-                                                <div class="infowindow_info col-8">
-                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                                </div>
-                                            </div>
-                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                aria-expanded="false" aria-controls="collapseExample">
-                                                景點介紹
-                                            </button>
-                                            <div class="collapse" id="collapseExample">
-                                                <div class="infowindow_detail" style="text-indent:2em">
-                                                    ${position.place.description}
-                                                </div>
-                                            </div>
-                                        </div>
-                                     `
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="infowindow_part row">
+                                                                <div class="infowindow_img col-4">
+                                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                                                </div>
+                                                                <div class="infowindow_info col-8">
+                                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                                                </div>
+                                                            </div>
+                                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                                aria-expanded="false" aria-controls="collapseExample">
+                                                                景點介紹
+                                                            </button>
+                                                            <div class="collapse" id="collapseExample">
+                                                                <div class="infowindow_detail" style="text-indent:2em">
+                                                                    ${position.place.description}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                     `
                         const infowindow = new google.maps.InfoWindow({
                             content: contentString,
                             disableAutoPan: false,
@@ -413,80 +415,81 @@
                         }
                     });
                 },
-                roam() {
+                calroam() {
+
+
+                    //計算路程
                     for (let i = 0; i < this.schedule.details.length; i++) {
                         let dayRoam = [];
                         for (let j = 1; j < this.schedule.details[i].length; j++) {
-                            //this.schedule.details[i][j].startTime - this.schedule.details[i][j-1].endTime
-                            let roamTime =""
+                            let roamTime = ""
+                            let starthr = this.schedule.details[i][j].startTime.substring(0, 2)
+                            let startmin = this.schedule.details[i][j].startTime.substring(3, 5)
 
-                            let starthr = timestamp.substring(0, 2)
-                            let startmin = timestamp.substring(3, 5)
+                            let endhr = this.schedule.details[i][j - 1].endTime.substring(0, 2)
+                            let endmin = this.schedule.details[i][j - 1].endTime.substring(3, 5)
 
-                            let endhr
-
-
-
-
-                            let hour = startTime.getHours()
-                            let min = startTime.getMinutes()
-
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
+                            if (startmin >= endmin) {
+                                if ((starthr - endhr) == 0) {
+                                    roamTime = (startmin - endmin) + "分"
+                                } else {
+                                    roamTime = (starthr - endhr) + "小時" + (startmin - endmin) + "分"
+                                }
                             }
-                            if (Number(min) < 10) {
-                                min = "0" + min
+                            else {
+                                if ((starthr - endhr - 1) == 0) {
+                                    roamTime = (startmin - endmin + 60) + "分"
+                                } else {
+                                    roamTime = (starthr - endhr - 1) + "小時" + (startmin - endmin + 60) + "分"
+                                }
                             }
-                            this.schedule.details[i][j].startTime = hour + ":" + min
+                            dayRoam.push(roamTime)
+                        }
+                        this.roam.push(dayRoam)
+                    }
+                    console.log(this.roam)
+                },
+                calWeather() {
+                    let startTime = new Date(this.schedule.startDate)
+                    let endTime = new Date(this.schedule.endDate)
+                    let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
 
-                            hour = endTime.getHours()
-                            min = endTime.getMinutes()
-                            if (Number(hour) < 10) {
-                                hour = "0" + hour
+                    for (let i = 0; i < day; i++) {
+                        this.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                    }
+
+                    for (let i = 0; i < this.schedule.details.length; i++) {
+                        for (let j = 0; j < this.schedule.details[i].length; j++) {
+                            let now = new Date()
+                            now.setDate(now.getDate() + 7)
+                            let travelDate = new Date(this.duringDate[j])
+                            console.log(this.schedule.details[i][j].place.town)
+                            if (now > travelDate) {
+                                this.selectWeather.find(object => {
+                                    //console.log(object.locationsName)
+                                    if (this.schedule.details[i][j].place.town == object.locationsName) {
+                                        let weatherStart = new Date(object.startTime)
+                                        let year = weatherStart.getFullYear()
+                                        let month = weatherStart.getMonth()
+                                        let date = weatherStart.getDate()
+                                        weatherStart = new Date(year, month, date)
+                                        if (travelDate.getTime() == weatherStart.getTime()) {
+                                            this.schedule.details[i][j].place.minT = object.minT
+                                            this.schedule.details[i][j].place.maxT = object.maxT
+                                            this.schedule.details[i][j].place.pop12h = object.pop12h
+                                            this.schedule.details[i][j].place.uvi = object.uvi
+                                            this.schedule.details[i][j].place.wx = object.wx
+                                        }
+                                    }
+                                })
                             }
-                            if (Number(min) < 10) {
-                                min = "0" + min
-                            }
-                            this.schedule.details[i][j].endTime = hour + ":" + min
-
-
-
-
-                        //let now = new Date()
-                        //now.setDate(now.getDate() + 7)
-                        //let travelDate = new Date(this.state.duringDate[j])
-
-                        //this.state.travel[j][i].minT = 30
-                        //this.state.travel[j][i].maxT = ""
-                        //this.state.travel[j][i].pop12h = ""
-                        //this.state.travel[j][i].uvi = ""
-
-
-                        //if (now > travelDate) {
-
-                        //    this.state.selectWeather.find(object => {
-                        //        if (this.state.travel[j][i].town == object.locationsName) {
-                        //            let weatherStart = new Date(object.startTime)
-                        //            let year = weatherStart.getFullYear()
-                        //            let month = weatherStart.getMonth()
-                        //            let date = weatherStart.getDate()
-                        //            weatherStart = new Date(year, month, date)
-
-                        //            if (travelDate.getTime() == weatherStart.getTime()) {
-                        //                this.state.travel[j][i].minT = object.minT
-                        //                this.state.travel[j][i].maxT = object.maxT
-                        //                this.state.travel[j][i].pop12h = object.pop12h
-                        //                this.state.travel[j][i].uvi = object.uvi
-                        //            }
-
-                        //        }
-                        //    })
-                        //}
                         }
                     }
-                    
-                }
                 },
+
+            },
             computed: {
 
             },
@@ -494,15 +497,24 @@
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
                 this.initMap();
-                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 162 })
+                axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 168 })
                     .then(res => {
                         this.schedule = res.data;
                         this.daySchedule = this.schedule.details[0];
                         this.caltime();
                         this.setMarker();
                         this.calcRoute();
-                        //this.roam();
+                        this.calroam();
+
                     })
+                    .then(() => axios.post("@Url.Action("selectWeather","Schedule")")
+                        .then(res => {
+                            this.selectWeather = res.data
+                        }))
+                    .then(() => {                     
+                        this.calWeather();
+                    })
+
                     .catch(err => console.log(err))
                 //}
             },

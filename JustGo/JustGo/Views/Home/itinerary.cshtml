@@ -929,7 +929,8 @@
             initMap({ commit }) {
                 commit('initMap')
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
-                    .then(res => { commit('updateData', res.data) }).then(() => { 
+                    .then(res => { commit('updateData', res.data) })
+                    .then(() => { 
                           axios.post("@Url.Action("selectWeather","Schedule")")
                           .then(res => { commit('updateWeather', res.data)
                                          commit('setPlaceMarker')

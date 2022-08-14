@@ -32,9 +32,9 @@ namespace JustGo.Repository
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
         {
             string sqlStr;
-            sqlStr = $"select * from Place ";
+            //sqlStr = $"select * from Place ";
             //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) ";
-            //sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
+            sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
             bool i = true;
             if (vm.selectCounty!=null&&vm.selectCounty.Length > 0)
             {

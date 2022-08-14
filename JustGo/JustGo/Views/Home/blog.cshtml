@@ -169,8 +169,8 @@ ViewData["Title"] = "blog";
             describe: '美好旅程的回憶從JustGO開始',
             StartDate: null,
             EndDate: null,
-            totallike:0,
-            bool: 0,
+            KeepClass:0,
+            KeepNumber: 0,
             daterange: null,
             myscore: this.score,
             mytempscore: this.score
@@ -233,40 +233,18 @@ ViewData["Title"] = "blog";
 
             },
             likeblog: function () {
-                var totallike = document.getElementsByClassName("totallike");
-                var totallike;
-                 if (this.bool == 1) {
-                        this.bool = 0;
+                var KeepClass = document.getElementsByClassName("KeepClass");
+                var KeepClass;
+                 if (this.KeepNumber == 1) {
+                        this.KeepNumber = 0;
 
-                        totallike.innerHTML += this.bool;
+                        KeepClass.innerHTML += this.KeepNumber;
                  } else {
-                        this.bool = 1;
-                        totallike.innerHTML += this.bool;
+                        this.KeepNumber = 1;
+                        KeepClass.innerHTML += this.KeepNumber;
 
                  }
-
-                //i = 0
-                //heart[i].onclick = function () {
-
-                //    if (this.bool == 1) {
-                //        console.log(this.bool)
-                //        this.bool = 0;
-                //        console.log(this.bool)
-                //        this.className = "fa fa-heart active";
-                //        ++totallike[i].innerHTML;
-                //    } else {
-                //        this.bool = 1;
-                //        this.className = "fa fa-heart";
-                //        --totallike[i].innerHTML;
-                //    }
-                //}
             },
-            //add: function (day) {
-            //    this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
-            //},
-            //remove: function (day, P_Name) {
-            //    this.Details[day].splice(P_Name, 1)
-            //},
             onChange(dayIndex) {
 
                 for (let j = 0; j < this.Details.length; j++) {
@@ -333,7 +311,7 @@ ViewData["Title"] = "blog";
                     this.describe = res.data.describe;
                     //axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
                     //console.log(res.data);
-                    //this.bool = res.data.bool;
+                    //this.KeepNumber = res.data.KeepNumber;
                     //})
                 })
             }
@@ -357,7 +335,7 @@ ViewData["Title"] = "blog";
     <div class="container py-3">
         <div class="row pt-5">
             <div class="col-lg-4 mt-4 mt-lg-2 ">
-                <div class="sticky-top" style="top:10vh">
+                <div class="sticky-top" style="top:10vh;z-index:-5;">
                     <!-- Author Bio -->
                     <div class="d-flex flex-column rounded py-4">
                         <div class="py-3">
@@ -438,7 +416,7 @@ ViewData["Title"] = "blog";
                             </div>
 
                             
-                            <div style="line-height:30px"><i :class="bool == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i><span class="totallike px-1">30 {{bool}}</span></div>
+                            <div style="line-height:30px"><i :class="KeepNumber == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i><span class="KeepClass px-1">30 {{KeepNumber}}</span></div>
                         </div>
 
                         @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange"

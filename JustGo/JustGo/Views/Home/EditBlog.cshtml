@@ -10,11 +10,6 @@
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
-        html {
-              
-              font-size: 12px;
-              
-            }
     </style>
     }
 
@@ -366,7 +361,7 @@
         <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top" style="top:10vh">
+                        <div class="sticky-top" style="top:10vh;z-index:-5;">
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserId[0]}}</span>*@

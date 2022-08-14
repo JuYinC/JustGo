@@ -22,39 +22,36 @@ namespace JustGo.Repository
 
         public ICollection<Place> getPlace(SelectPlaceVM vm)
         {
-            if (vm.Distance < 25)
+            if (vm.Distance != null)
             {
-                return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
-            }
-            else{
-                return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,10) where class < 15", vm).ToList();
-            }                        
+                return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) where class < 15", vm).ToList();
+            }            
+            return _con.Query<Place>("select * from fn_selePlaceDistance(@Lat,@Lng,15) where class < 15", vm).ToList();            
         }
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
         {
             string sqlStr;
-            sqlStr = $"select * from Place Where ";
-            //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) Where ";
-            //sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) Where ";
+            sqlStr = $"select * from Place ";
+            //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) ";
+            //sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
             bool i = true;
             if (vm.selectCounty.Length > 0)
             {
                 if (i)
                 {
-                    sqlStr += "Region in @selectCounty ";
+                    sqlStr += "Where Region in @selectCounty";
                     i = false;
                 }
             }
             switch (vm.selectType)
             {
-
                 case "景點":
                     if (vm.selectAcitivity.Length > 0)
                     {
                         if (i)
                         {
-                            sqlStr += " Class in @selectAcitivity ";
+                            sqlStr += "Where  Class in @selectAcitivity ";
                         }
                         else
                         {
@@ -66,7 +63,7 @@ namespace JustGo.Repository
                 case "餐飲":
                     if (i)
                     {
-                        sqlStr += " Class = '15' ";
+                        sqlStr += "Where Class = '15' ";
                     }
                     else
                     {
@@ -76,14 +73,14 @@ namespace JustGo.Repository
                 case "旅宿":
                     if (i)
                     {
-                        sqlStr += " Class = '16' ";
+                        sqlStr += "Where Class = '16' ";
                     }
                     else
                     {
                         sqlStr += " and Class = '16' ";
                     }
                     break;
-            }
+            }            
             return _con.Query<Place>(sqlStr, vm).ToList();
         }
 

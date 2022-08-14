@@ -169,8 +169,8 @@
             ],
             
             selectWeather: [],
-            mapCenter: null,
-            mapRadius: null,
+            searchPlace: {selectType:"",selectCounty:[],selectAcitivity:[],lat:null,lng:null,sistance:0},
+            
             infoPicture: [
                 "@Url.Content("~/classPhoto/class01.jpg")",
                 "@Url.Content("~/classPhoto/class02.jpg")",
@@ -278,7 +278,6 @@
                                         this.state.travel[j][i].pop12h = object.pop12h
                                         this.state.travel[j][i].uvi = object.uvi
                                     }
-
                                 }
                             })
                         }
@@ -298,92 +297,39 @@
                     scaleControl: true,
                     maxZoom: 18,
                     minZoom: 8,
-                });
-                state.mapZoom = state.map.getZoom()
-                //console.log(state.mapZoom)
-                state.mapCenter = state.map.getCenter()
-                //console.log(state.mapCenter)
+                });    
+                
                 state.map.addListener("zoom_changed", () => {
-                    if (state.infowindow) { state.infowindow.close() };
-                    store.commit('zoomCenterChange')
+                    if (state.infowindow) { state.infowindow.close() };                    
+                    if(state.searchPlace.selectCounty.length == 0 && state.searchPlace.selectAcitivity.length>0){   
+                        store.commit('zoomCenterChange')
+                        //store.dispatch('axiosSearch')
+                    }
                 })
                 state.map.addListener("dragend", () => {
-                    store.commit('zoomCenterChange')
+                    if (state.infowindow) { state.infowindow.close() };                    
+                    if(state.searchPlace.selectCounty.length == 0 && state.searchPlace.selectAcitivity.length>0){     
+                        store.commit('zoomCenterChange')
+                        //store.dispatch('axiosSearch')
+                    }
                 })
             },
 
             // zoom或center變動傳回中心點和距離
-            zoomCenterChange(state) {
-                state.mapCenter = state.map.getCenter()
-                console.log(state.mapCenter)
-                switch (state.map.getZoom()) {
-                    case 8:
-                        console.log(8);
-                        state.mapRadius = 180;
-                        console.log(state.mapRadius)
-                        break;
-                    case 9:
-                        console.log(9);
-                        state.mapRadius = 90;
-                        console.log(state.mapRadius)
-                        break;
-                    case 10:
-                        console.log(10);
-                        state.mapRadius = 45;
-                        console.log(state.mapRadius)
-                        break;
-                    case 11:
-                        console.log(11);
-                        state.mapRadius = 22.5;
-                        console.log(state.mapRadius)
-                        break;
-                    case 12:
-                        console.log(12);
-                        state.mapRadius = 12;
-                        console.log(state.mapRadius)
-                        break;
-                    case 13:
-                        console.log(13);
-                        state.mapRadius = 6;
-                        console.log(state.mapRadius)
-                        break;
-                    case 14:
-                        console.log(14);
-                        state.mapRadius = 3;
-                        console.log(state.mapRadius)
-                        break;
-                    case 15:
-                        console.log(15);
-                        state.mapRadius = 1.5;
-                        console.log(state.mapRadius)
-                        break;
-                    case 16:
-                        console.log(16);
-                        state.mapRadius = 0.75;
-                        console.log(state.mapRadius)
-                        break;
-                    case 17:
-                        console.log(17);
-                        state.mapRadius = 0.38;
-                        console.log(state.mapRadius)
-                        break;
-                    case 18:
-                        console.log(18);
-                        state.mapRadius = 0.19;
-                        console.log(state.mapRadius)
-                        break;
-                    default:
-                        state.mapRadius = 180;
-                }
+            zoomCenterChange(state) {                
+                state.searchPlace.lat = state.map.getCenter().lat();
+                state.searchPlace.lng = state.map.getCenter().lng();
+                state.searchPlace.distance = 46080 / (2**state.map.getZoom());                              
             },
 
-            // zoom或center變動傳回中心點和距離
-            zoomCenterChange(state) {
-                state.selectPlace.lat = state.map.getCenter().lat();
-                state.selectPlace.lat = state.map.getCenter().lng();
-                state.selectPlace.radius = 46080 / (2**state.map.getZoom());;
-                console.log(state.selectPlace);               
+            //搜尋條件更新
+            searchFilter(state,payload){                
+                state.searchPlace.selectCounty = payload.selectCounty;                
+                state.searchPlace.selectAcitivity = payload.selectAcitivity;                
+                state.searchPlace.selectType = payload.selectType;
+                store.dispatch('axiosSearch')
             },
+       
 
             // 產生景點標示
             setPlaceMarker(state) {
@@ -1003,9 +949,9 @@
                     .catch(err => console.log("err"))
             },
 
-            //由組件傳入條件呼叫後端搜尋,payload存放搜尋條件
-            axiosSearch(context, payload) {
-                axios.post("@Url.Action("selectPlaceFilter","Schedule")", payload)
+            //由組件傳入條件呼叫後端搜尋
+            axiosSearch(context) {                
+                axios.post("@Url.Action("selectPlaceFilter","Schedule")", context.state.searchPlace)
                     .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
                     .catch(err => console.log(err))
             },
@@ -1016,14 +962,12 @@
                 axios.post("@Url.Action("getPlace","Schedule")", { lat: 22.639500487835534, lng: 120.3030081895357 })
                     .then(res => {
                         commit('updateData', res.data);
-                        axios.post("@Url.Action("selectWeather","Schedule")").then(res => { commit('updateWeather', res.data) }).then(() => { commit('setPlaceMarker') })
-                    })
-                    .then(res => { commit('updateData', res.data) }).then(() => { 
-                          axios.post("@Url.Action("selectWeather","Schedule")")
-                          .then(res => { commit('updateWeather', res.data)
-                                         commit('setPlaceMarker')
-                          })
-                    })                
+                        axios.post("@Url.Action("selectWeather","Schedule")")
+                            .then(res => {
+                                commit('updateWeather', res.data);
+                                commit('setPlaceMarker');
+                            })
+                    })                              
             },
         }
     })
@@ -1400,8 +1344,8 @@
                     this.selectAcitivity.splice(0, 1)
                 }
 
-                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                    this.$store.dispatch('axiosSearch', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
+                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {                    
+                    this.$store.commit('searchFilter', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })                    
                 }
             },
 

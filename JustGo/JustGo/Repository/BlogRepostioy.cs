@@ -122,7 +122,7 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogRank()
         {
-            var blogs = _context.Blog.OrderBy(e => e.Like).Take(20);
+            var blogs = _context.Blog.OrderBy(e => e.Like).Take(4);
             List<BlogVM> vmList = new List<BlogVM>();
             foreach(Blog item in blogs)
             {
@@ -144,6 +144,17 @@ namespace JustGo.Repository
                 vmList.Add(modeltoVM(item));
             }
             
+            return vmList;
+        }
+
+        public ICollection<BlogVM> getKeepBlog(UserKeepVM vm)
+        {                        
+            string strSql = "select * from blog as b where exists(Select KeepNumber from UserKeep where KeepClass = 0 and UserId = @userId and KeepNumber = b.BlogId )";            
+            var vmList = new List<BlogVM>();
+            foreach (Blog item in _con.Query<Blog>(strSql, vm))
+            {
+                vmList.Add(modeltoVM(item));
+            }
             return vmList;
         }
 
@@ -229,5 +240,7 @@ namespace JustGo.Repository
             Console.WriteLine(model);
             return model;            
         }
+
+        
     }
 }

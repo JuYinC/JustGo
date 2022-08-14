@@ -40,13 +40,9 @@
       {
          "Name": "[dbo].[weather]",
          "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[fn_selePlaceDistance]",
-         "ObjectType": 2
       }
    ],
-   "UiHint": "CR1-07.Travel",
+   "UiHint": "justgo.Travel",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

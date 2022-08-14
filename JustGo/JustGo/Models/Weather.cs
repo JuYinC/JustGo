@@ -7,6 +7,7 @@ namespace JustGo.Models
 {
     public partial class Weather
     {
+        public int Id { get; set; }
         public string Location { get; set; }
         public string LocationsName { get; set; }
         public DateTime? StartTime { get; set; }
@@ -15,6 +16,6 @@ namespace JustGo.Models
         public int? MinT { get; set; }
         public int? MaxT { get; set; }
         public int? Uvi { get; set; }
-        public string Wx { get; set; }        
+        public string Wx { get; set; }
     }
 }

@@ -82,6 +82,8 @@ namespace JustGo.Models
 
             modelBuilder.Entity<Place>(entity =>
             {
+                entity.HasIndex(e => new { e.Lat, e.Lng, e.Class, e.Region }, "IX_Place");
+
                 entity.Property(e => e.PlaceId).HasColumnName("PlaceID");
 
                 entity.Property(e => e.Add)
@@ -166,11 +168,10 @@ namespace JustGo.Models
 
             modelBuilder.Entity<UserKeep>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.KeepId)
+                    .HasName("PK_KeepID");
 
-                entity.Property(e => e.KeepId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("KeepID");
+                entity.Property(e => e.KeepId).HasColumnName("KeepID");
 
                 entity.Property(e => e.UserId)
                     .IsRequired()
@@ -180,9 +181,9 @@ namespace JustGo.Models
 
             modelBuilder.Entity<Weather>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("weather");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.EndTime)
                     .HasColumnType("datetime")
@@ -207,14 +208,12 @@ namespace JustGo.Models
                     .HasColumnName("startTime");
 
                 entity.Property(e => e.Uvi).HasColumnName("uvi");
-                
 
                 entity.Property(e => e.Wx)
                     .HasMaxLength(50)
                     .HasColumnName("wx");
             });
 
-            OnModelCreatingGeneratedFunctions(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

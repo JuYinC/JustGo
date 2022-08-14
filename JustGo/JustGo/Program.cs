@@ -20,6 +20,7 @@ builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP)
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 builder.Services.AddTransient<IBlogRepostioy, BlogRepostioy>();
+builder.Services.AddTransient<IUserKeepRepostiory, UserKeepRepostiory>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
 //連線字串替換

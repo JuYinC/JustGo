@@ -19,5 +19,7 @@ namespace JustGo.Repository
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm);
 
         public ICollection<BlogVM> getBlogRank();
+
+        public ICollection<BlogVM> getKeepBlog(UserKeepVM vm);
     }
 }

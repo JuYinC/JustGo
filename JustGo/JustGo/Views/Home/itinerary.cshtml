@@ -476,8 +476,9 @@
                     markers: state.markers,
                 });
                 // marker定位
-                // state.map.fitBounds(bounds);
-
+                if (state.searchPlace.selectCounty.length > 0) {
+                    state.map.fitBounds(bounds);
+                }
             },
 
             // 產生行程標示

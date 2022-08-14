@@ -84,7 +84,7 @@ ViewData["Title"] = "blog";
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
         }, function (start, end, label) {
-            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            console.log(start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
         });
     });
 
@@ -236,10 +236,7 @@ ViewData["Title"] = "blog";
                 var heart = document.getElementsByClassName("fa-heart");
                 var totallike = document.getElementsByClassName("totallike");
                 var totallike;
-                i = 0
-                heart[i].onclick = function () {
-
-                    if (bool == 1) {
+                 if (bool == 1) {
                         bool = false;
                         this.className = "fa fa-heart active";
                         ++totallike[i].innerHTML;
@@ -248,7 +245,20 @@ ViewData["Title"] = "blog";
                         this.className = "fa fa-heart";
                         --totallike[i].innerHTML;
                     }
-                }
+
+                //i = 0
+                //heart[i].onclick = function () {
+
+                //    if (bool == 1) {
+                //        bool = false;
+                //        this.className = "fa fa-heart active";
+                //        ++totallike[i].innerHTML;
+                //    } else {
+                //        bool = true;
+                //        this.className = "fa fa-heart";
+                //        --totallike[i].innerHTML;
+                //    }
+                //}
             },
             //add: function (day) {
             //    this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
@@ -337,11 +347,9 @@ ViewData["Title"] = "blog";
 
 
 <div id="bloginfo">
-    <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
             style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
         </div>
-    </div>
     <!-- Header End -->
 
     <!-- 右側欄位Detail Start -->
@@ -436,7 +444,7 @@ ViewData["Title"] = "blog";
                     <div>
                         <h1 class="my-3">{{Title}}</h1>
                         <div class="d-flex">
-                            <div style="line-height:25px"><i class="fa fa-heart" @@click="likeblog"></i><span class="totallike px-1">30</span></div>
+                            <div style="line-height:25px"><i class="fa fa-heart" @@click="likeblog"></i><span class="totallike px-1">30 {{bool}}</span></div>
                             <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
 
                             <div class="dropdown" id="setting" >
@@ -482,7 +490,7 @@ ViewData["Title"] = "blog";
                     <div v-for="(day,dayIndex) in Details">
                         <label id="day">第{{dayIndex+1}}天</label>
                         <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
+                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h5>{{dayDetails.p_Name}}</h5></div>
                             <div class="mb-1"><i class="fa-solid fa-house-crack"
                                     style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                             <div class="mb-1"><i class="fa-solid fa-phone"
@@ -511,13 +519,13 @@ ViewData["Title"] = "blog";
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
 
-                    @* <div id="fb-root"></div>
+                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous"
                         src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
                         nonce="NqM9iieh"></script>
                     <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
                         data-numposts="5"></div>
-                    *@
+                    
 
 
 

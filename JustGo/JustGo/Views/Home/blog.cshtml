@@ -220,39 +220,38 @@ ViewData["Title"] = "blog";
 
             },
             copyblog: function () {
-                if (id != "") {
-                    axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
-                        this.Details = res.data.details;
-                        this.EndDate = res.data.endDate;
-                        this.StartDate = res.data.startDate;
-                        this.Title = res.data.title;
-                        this.describe = res.data.describe;
-                        //取得的日期
-                        this.daterange = res.data.daterange;
+                    if (id != "") {
+                        axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
+                            this.Details = res.data.details;
+                            this.EndDate = res.data.endDate;
+                            this.StartDate = res.data.startDate;
+                            this.Title = res.data.title;
+                            this.describe = res.data.describe;
+                            //取得的日期
+                            this.daterange = res.data.daterange;
+                        }
+                        )
                     }
-                    )
-                }
-
-            },
-            likeblog: function () {
-                //var KeepClass = document.getElementsByClassName("KeepClass");
-                //var KeepClass;
-                 if (this.KeepNumber == 1) {
-                        this.KeepNumber = 0;
-
-                        KeepClass.innerHTML += this.KeepNumber;
-                 } else {
-                        this.KeepNumber = 1;
-                        KeepClass.innerHTML += this.KeepNumber;
-
-                 }
-            },
-            savelike() {    
-                        axios.post("@Url.Action("userKeepBlog","Blog")", this.KeepNumber)
-                                 //.then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
-                                 //.catch(err => console.log(""))       
-                       }
-            },
+    
+             },
+             likeblog: function () {
+                    //var KeepClass = document.getElementsByClassName("KeepClass");
+                    //var KeepClass;
+                     if (this.KeepNumber == 1) {
+                            this.KeepNumber = 0;
+    
+                            KeepClass.innerHTML += this.KeepNumber;
+                     } else {
+                            this.KeepNumber = 1;
+                            KeepClass.innerHTML += this.KeepNumber;    
+                     }
+             },
+             savelike() {    
+                            axios.post("@Url.Action("userKeepBlog","Blog")", this.KeepNumber)
+                                     //.then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
+                                     //.catch(err => console.log(""))       
+                           //}
+             },
             onChange(dayIndex) {
 
                 for (let j = 0; j < this.Details.length; j++) {
@@ -320,8 +319,8 @@ ViewData["Title"] = "blog";
                     //getIsKeep
                     axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
                     console.log(res.data);
-                    this.KeepNumber = res.data.KeepNumber;
-                    this.KeepClass = res.data.KeepClass;
+                    this.KeepNumber = res.data.keepNumber;
+                    this.KeepClass = res.data.keepClass;
                     })
                 })
             }
@@ -345,12 +344,12 @@ ViewData["Title"] = "blog";
     <div class="container py-3">
         <div class="row pt-5">
             <div class="col-lg-4 mt-4 mt-lg-2 ">
-                <div class="sticky-top" style="top:10vh;z-index:-5;">
+                <div class="sticky-top" style="top:10vh">
                     <!-- Author Bio -->
                     <div class="d-flex flex-column rounded py-4">
                         <div class="py-3">
                             <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                            @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                           
                         </div>
                         <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
                         <div class="mb-2">美好旅程的回憶從JustGO開始</div>
@@ -428,30 +427,6 @@ ViewData["Title"] = "blog";
                             
                             <div style="line-height:30px"><i :class="KeepNumber == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i><span class="KeepClass px-1">30 {{KeepNumber}}</span></div>
                         </div>
-
-                        @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange"
-                                v-model="daterange" placeholder="選擇日期" size="25" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                        <div><i class="fa fa-calendar"></i>&nbsp;<input type="text" name="daterange" v-model="daterange"
-                                placeholder="選擇日期" size="25" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>*@
-
-
-                        @*<i class="fa-solid fa-objects-align-right" id="setting">收藏文章</i>*@
-                        @*<ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1">
-                            <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
-                                    onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"
-                                    class="timepicker"></li>
-                        </ul>*@
-
-                        @*
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">複製本文:
-                            <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
-                                    onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"
-                                    class="timepicker"></li>
-                        </ul>*@
 
                     </div>
                 </div>

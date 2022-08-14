@@ -79,8 +79,7 @@ namespace JustGo.Controllers
         //Blog細項
         [HttpPost]
         public IActionResult selectblogDetails([FromBody]BlogVM vm)
-        {
-          
+        {          
             return Json(_blog.selectBlog(vm.BlogId));
         }
 
@@ -109,8 +108,12 @@ namespace JustGo.Controllers
         }
 
         //加入收藏或移除 回傳bool
-        public IActionResult userKeepBlog(UserKeepVM vm)
-        {            
+        [HttpPost]
+        [Authorize]
+        public IActionResult userKeepBlog(UserKeepVM vm)            
+        {
+            vm.KeepClass = 0;
+            vm.UserId = GetUserId();
             return Json(_userKeep.Keep(vm));
         }
 

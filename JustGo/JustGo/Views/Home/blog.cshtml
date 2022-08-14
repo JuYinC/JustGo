@@ -227,14 +227,16 @@ ViewData["Title"] = "blog";
                         this.StartDate = res.data.startDate;
                         this.Title = res.data.title;
                         this.describe = res.data.describe;
+                        //取得的日期
+                        this.daterange = res.data.daterange;
                     }
                     )
                 }
 
             },
             likeblog: function () {
-                var KeepClass = document.getElementsByClassName("KeepClass");
-                var KeepClass;
+                //var KeepClass = document.getElementsByClassName("KeepClass");
+                //var KeepClass;
                  if (this.KeepNumber == 1) {
                         this.KeepNumber = 0;
 
@@ -244,6 +246,12 @@ ViewData["Title"] = "blog";
                         KeepClass.innerHTML += this.KeepNumber;
 
                  }
+            },
+            savelike() {    
+                        axios.post("@Url.Action("userKeepBlog","Blog")", this.KeepNumber)
+                                 //.then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
+                                 //.catch(err => console.log(""))       
+                       }
             },
             onChange(dayIndex) {
 
@@ -309,10 +317,12 @@ ViewData["Title"] = "blog";
                     this.StartDate = res.data.startDate;
                     this.Title = res.data.title;
                     this.describe = res.data.describe;
-                    //axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
-                    //console.log(res.data);
-                    //this.KeepNumber = res.data.KeepNumber;
-                    //})
+                    //getIsKeep
+                    axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
+                    console.log(res.data);
+                    this.KeepNumber = res.data.KeepNumber;
+                    this.KeepClass = res.data.KeepClass;
+                    })
                 })
             }
 

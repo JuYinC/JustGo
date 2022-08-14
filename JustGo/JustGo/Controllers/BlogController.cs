@@ -117,9 +117,14 @@ namespace JustGo.Controllers
         //圖片儲存
         void saveImage(blogImage blogImage)
         {
-            string[] imageString;            
-            try
+            string[] imageString;
+            byte[] bytes;
+            if (blogImage.base64 == null)
             {
+                return;
+            }
+            try
+            {                
                 imageString = blogImage.base64.Split(",");
             }
             catch
@@ -127,7 +132,6 @@ namespace JustGo.Controllers
                 return;
             }
             blogImage.base64 = "";            
-            byte[] bytes;
             try
             {
                 bytes = Convert.FromBase64String(imageString[1]);
@@ -142,7 +146,7 @@ namespace JustGo.Controllers
             using (MemoryStream ms = new MemoryStream(bytes))
             {
                 image = Image.FromStream(ms);
-                if (blogImage.name == "")
+                if (blogImage.name == "" || blogImage.name == null)
                 {
                     Random random = new Random();
                     blogImage.name = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString();

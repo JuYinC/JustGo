@@ -33,7 +33,7 @@ namespace JustGo.Controllers
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
         {
-            if (vm.selectCounty.Length > 0 || vm.selectAcitivity.Length > 0)
+            if ((vm.selectCounty!=null && vm.selectCounty.Length > 0) || (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0))
             {
                 return Json(_place.getPlaceFilter(vm));
             }

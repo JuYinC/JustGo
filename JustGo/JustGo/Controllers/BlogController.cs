@@ -114,6 +114,11 @@ namespace JustGo.Controllers
             return Json(_userKeep.Keep(vm));
         }
 
+        public IActionResult getBlogTop4()
+        {
+            return Json(_blog.getBlogRank());
+        }
+
         //圖片儲存
         void saveImage(blogImage blogImage)
         {

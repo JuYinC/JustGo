@@ -36,8 +36,8 @@
                   const top4Blog = reactive({ results: [] })
                   let searchString = ref("")
                   const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'];
-                  const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
-                  const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
+                  const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'];
+                  const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣'];
                   const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
                   let searchNumber = 12;
                   const select = reactive({ selectCounty: [], selectAcitivity: [], searchNumber: 0, Search: "" })
@@ -118,12 +118,13 @@
                           axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
                       }
                   }
+                  axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
                   onMounted(() => {
                       window.addEventListener('scroll', scroll);
-                      searchBlog("");
+                      searchBlog("");                     
                   })
                   return {
-                      search, northern, central, south, east, searchNumber,
+                      search, northern, central, south, east, searchNumber,top4Blog,
                       select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
                   }
               },

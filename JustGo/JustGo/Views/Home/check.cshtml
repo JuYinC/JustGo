@@ -41,19 +41,29 @@
 
                 <div class="tab-pane fade show active scheduletab1" id="pills-home" role="tabpanel"
                  aria-labelledby="pills-home-tab">
+                    @*<div class="skeltonbar" v-if="loading"></div>*@
 
                     <div>
-                        <div class="daysBar">
-                            <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                             class="days fs-4 col-1 m-2 text-center btn btn-outline-secondary">
-                                第{{index+1}}天
-                            </div>
-                        </div>
+
+
                         <div>
                             <div class="row cols-md-2  cols-xs-1">
-                                <div class="col-md-4 xs">
 
-                                    <div v-for="(view,index) in daySchedule">
+
+
+                                <div class="col-md-4 xs ">
+                                    <div class="skeltonbox " v-if="loading">
+                                        <div class="skeltonbar"></div>
+                                        <div class="skeltoninfo"></div>
+                                    </div>
+                                    <div class="daysBar fadein">
+                                        <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
+                                         class="days fs-4 col-1 m-2 text-center btn btn-outline-secondary">
+                                            第{{index+1}}天
+                                        </div>
+                                    </div>
+
+                                    <div v-for="(view,index) in daySchedule" class="fadein">
                                         <div class="row">
                                             <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
                                             <p class="col-6 m-0 fs-2 fw-bold bgposition ">{{view.place.name}}</p>
@@ -132,6 +142,7 @@
                     roam: [],
                     duringDate: [],
                     selectWeather: [],
+                    loading: true,
                 }
             },
             methods: {
@@ -211,38 +222,38 @@
                             // 產生infowindow
                             let contentString =
                                 `
-                                                                    <div class="infowindow">
-                                                                        <div class="infowindow_bar row row-cols-2" >
-                                                                            <div class="infowindow_bar_title col-10">
-                                                                                ${position.place.name}
-                                                                            </div>
-                                                                            <div class="infowindow_bar_divbutton col-2">
-                                                                                <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                                                            <div class="infowindow">
+                                                                                <div class="infowindow_bar row row-cols-2" >
+                                                                                    <div class="infowindow_bar_title col-10">
+                                                                                        ${position.place.name}
+                                                                                    </div>
+                                                                                    <div class="infowindow_bar_divbutton col-2">
+                                                                                        <div class="infowindow_bar_button" type="button" onclick="addView()">
 
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="infowindow_part row">
+                                                                        <div class="infowindow_img col-4">
+                                                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                                                        </div>
+                                                                        <div class="infowindow_info col-8">
+                                                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                                        aria-expanded="false" aria-controls="collapseExample">
+                                                                        景點介紹
+                                                                    </button>
+                                                                    <div class="collapse" id="collapseExample">
+                                                                        <div class="infowindow_detail" style="text-indent:2em">
+                                                                            ${position.place.description}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="infowindow_part row">
-                                                                <div class="infowindow_img col-4">
-                                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                                                </div>
-                                                                <div class="infowindow_info col-8">
-                                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                                                </div>
-                                                            </div>
-                                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                                aria-expanded="false" aria-controls="collapseExample">
-                                                                景點介紹
-                                                            </button>
-                                                            <div class="collapse" id="collapseExample">
-                                                                <div class="infowindow_detail" style="text-indent:2em">
-                                                                    ${position.place.description}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                     `
+                                                             `
                             const infowindow = new google.maps.InfoWindow({
                                 content: contentString,
                                 disableAutoPan: false,
@@ -327,38 +338,38 @@
                         // 產生infowindow
                         let contentString =
                             `
-                                                        <div class="infowindow">
-                                                            <div class="infowindow_bar row row-cols-2" >
-                                                                <div class="infowindow_bar_title col-10">
-                                                                    ${position.place.name}
-                                                                </div>
-                                                                <div class="infowindow_bar_divbutton col-2">
-                                                                    <div class="infowindow_bar_button" type="button" onclick="addView()">
+                                                                <div class="infowindow">
+                                                                    <div class="infowindow_bar row row-cols-2" >
+                                                                        <div class="infowindow_bar_title col-10">
+                                                                            ${position.place.name}
+                                                                        </div>
+                                                                        <div class="infowindow_bar_divbutton col-2">
+                                                                            <div class="infowindow_bar_button" type="button" onclick="addView()">
 
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="infowindow_part row">
+                                                                        <div class="infowindow_img col-4">
+                                                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                                                        </div>
+                                                                        <div class="infowindow_info col-8">
+                                                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
+                                                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
+                                                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                                        aria-expanded="false" aria-controls="collapseExample">
+                                                                        景點介紹
+                                                                    </button>
+                                                                    <div class="collapse" id="collapseExample">
+                                                                        <div class="infowindow_detail" style="text-indent:2em">
+                                                                            ${position.place.description}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="infowindow_part row">
-                                                                <div class="infowindow_img col-4">
-                                                                    <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
-                                                                </div>
-                                                                <div class="infowindow_info col-8">
-                                                                    <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                                                    <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                                                    <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                                                </div>
-                                                            </div>
-                                                            <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                                aria-expanded="false" aria-controls="collapseExample">
-                                                                景點介紹
-                                                            </button>
-                                                            <div class="collapse" id="collapseExample">
-                                                                <div class="infowindow_detail" style="text-indent:2em">
-                                                                    ${position.place.description}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                     `
+                                                             `
                         const infowindow = new google.maps.InfoWindow({
                             content: contentString,
                             disableAutoPan: false,
@@ -496,7 +507,8 @@
             mounted() {
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
-                this.initMap();
+                if(this.loading == true){
+                                    this.initMap();
                 axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 168 })
                     .then(res => {
                         this.schedule = res.data;
@@ -511,11 +523,14 @@
                         .then(res => {
                             this.selectWeather = res.data
                         }))
-                    .then(() => {                     
+                    .then(() => {
                         this.calWeather();
+                        this.loading = false
                     })
 
                     .catch(err => console.log(err))
+                }
+
                 //}
             },
         })

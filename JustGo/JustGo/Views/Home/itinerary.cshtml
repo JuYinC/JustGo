@@ -21,7 +21,7 @@
 
 <div class="arrange__body">
     <div class="arrange__contain">
-        <video autoplay muted loop plays-inline class="arrange__contain-video" poster="~/file/photo/5.jpg">
+        <video autoplay muted loop plays-inline class="arrange__contain-video" poster="~/file/photo/highway-f.jpg">
             <source src="~/file/video/highway-f.mp4" type="video/mp4">
         </video>
         <div class="datepicker"></div>
@@ -1230,6 +1230,18 @@
                                                 <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
                                             </div>
                                             <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
+                                            
+                                            <div class="row cols-2">
+                                                <div class="col-2">
+                                                </div>
+                                                <div class="col-10 betweenBox">
+                                                    <br>
+                                                    <i class="fa-solid fa-car-side">{{item.roam}}</i>
+                                                </div>
+                                            </div>
+
+
+
                                         </div>
                                     </transition-group>
                                 </draggable>
@@ -1370,13 +1382,13 @@
                         </div>
                         <div class="col2">
                             <div v-for="(view,selIndex) in selectPlaces">
-                                <div class="item2">
-                                    <div @@click="focusLocation(view,selIndex)">
-                                        <h3>{{view.name}}</h3>
-                                        <p><i class="fa-solid fa-phone">{{view.tel}}</i></p>
-                                        <p><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
-                                        <p>營業時間{{view.opentime}}-{{view.closetime}}</p>
-                                        <p>建議停留{{view.timestay}}分</p>
+                                <div class="container item2">
+                                    <div class="row" @@click="focusLocation(view,selIndex)">
+                                        <h3 class="col-12">{{view.name}}</h3>
+                                        <p class="col-12"><i class="fa-solid fa-phone">{{view.tel}}</i></p>
+                                        <p class="col-12"><i class="fa-solid fa-house-chimney">{{view.add}}</i></p>
+                                        <p class="col-12">營業時間{{view.opentime}}-{{view.closetime}}</p>
+                                        <p class="col-12">建議停留{{view.timestay}}分</p>
                                     </div>
                                     <div @@click="addview(selIndex)" class="adto">新增行程</div>
                                 </div>

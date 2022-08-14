@@ -247,20 +247,20 @@
     <div id="app">
         <div class="slider">
             <div class="items-group">
-                <div class="item">
+                <div class="item" v-for="item in top4Blog.results" :key="blosId">
                     <div class="block">
                         <span class="circleLight"></span>
                         <div class="text">
-                            <h2>First</h2>
-                            <p>This is slide 1</p>
+                            <h2>{{item.title}}</h2>
+                            <p>{{item.userName}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="item">
+                @*<div class="item">
                     <div class="block">
                         <span class="circleLight"></span>
                         <div class="text">
-                            <h2>Second</h2>
+                            <h2>{{top4Blog.results[1].title}}</h2>
                             <p>This is slide 2</p>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
                     <div class="block">
                         <span class="circleLight"></span>
                         <div class="text">
-                            <h2>Three</h2>
+                            <h2>{{top4Blog.results[2].title}}</h2>
                             <p>This is slide 3</p>
                         </div>
                     </div>
@@ -278,11 +278,11 @@
                     <div class="block">
                         <span class="circleLight"></span>
                         <div class="text">
-                            <h2>Four</h2>
+                            <h2>{{top4Blog.results[3].title}}</h2>
                             <p>This is slide 4</p>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
 
             <div class="navigations">

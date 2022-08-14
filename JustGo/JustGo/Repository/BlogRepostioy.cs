@@ -122,7 +122,7 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogRank()
         {
-            var blogs = _context.Blog.OrderBy(e => e.Like).Take(4);
+            var blogs = _context.Blog.OrderByDescending(e => e.Like).Take(4);
             List<BlogVM> vmList = new List<BlogVM>();
             foreach(Blog item in blogs)
             {

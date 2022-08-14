@@ -36,7 +36,7 @@ namespace JustGo.Repository
             //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) ";
             //sqlStr = $"select * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
             bool i = true;
-            if (vm.selectCounty.Length > 0)
+            if (vm.selectCounty!=null&&vm.selectCounty.Length > 0)
             {
                 if (i)
                 {
@@ -47,7 +47,7 @@ namespace JustGo.Repository
             switch (vm.selectType)
             {
                 case "景點":
-                    if (vm.selectAcitivity.Length > 0)
+                    if (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0)
                     {
                         if (i)
                         {

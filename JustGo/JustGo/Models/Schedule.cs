@@ -18,7 +18,6 @@ namespace JustGo.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool? WeatherWarning { get; set; }
-        
 
         public virtual ICollection<ScheduleDetails> ScheduleDetails { get; set; }
     }

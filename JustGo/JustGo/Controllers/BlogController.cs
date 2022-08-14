@@ -13,11 +13,13 @@ namespace JustGo.Controllers
         readonly ILogger _logger;
         readonly IWebHostEnvironment _webHostEnvironment;
         readonly IBlogRepostioy _blog;
-        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment,IBlogRepostioy blog)
+        readonly IUserKeepRepostiory _userKeep;
+        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment,IBlogRepostioy blog, IUserKeepRepostiory userKeepRepostiory)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
-            _blog = blog;            
+            _blog = blog;
+            _userKeep = userKeepRepostiory;           
         }
 
         [HttpPost]
@@ -25,31 +27,38 @@ namespace JustGo.Controllers
         public IActionResult setBlog([FromBody] BlogVM vm)
         {
             //return Json(true);
-            saveImage(vm.CoverImage);
-            foreach (var day in vm.Details)
-            {
-                foreach(var item in day)
-                {
-                    if (item.Images != null)
-                    {
-                        for (int i = 0; i < item.Images.Count; i++)
-                        {                                          
-                            saveImage(item.Images[i]);                            
-                        }
-                    }                    
-                }
-            }
+            
             if(vm != null)
-            {
-                if(vm.BlogId != 0)
+            {                
+                if(vm.Details != null)
                 {
+                    if (vm.CoverImage != null)
+                    {
+                        saveImage(vm.CoverImage);
+                    }                    
+                    foreach (var day in vm.Details)
+                    {
+                        foreach (var item in day)
+                        {
+                            if (item.Images != null)
+                            {
+                                for (int i = 0; i < item.Images.Count; i++)
+                                {
+                                    saveImage(item.Images[i]);
+                                }
+                            }
+                        }
+                    }
+                    if (vm.BlogId != 0)
+                    {
+                        vm.UserId = GetUserId();
+                        return Json(_blog.editBlog(vm));
+                    }
                     vm.UserId = GetUserId();
-                    return Json(_blog.editBlog(vm));
-                }
-                vm.UserId = GetUserId();
-                return Json(_blog.createBlog(vm));
+                    return Json(_blog.createBlog(vm));
+                }                              
             }
-            return Json(vm);
+            return Json(false);
         }
         
         [HttpPost]
@@ -75,17 +84,40 @@ namespace JustGo.Controllers
             return Json(_blog.selectBlog(vm.BlogId));
         }
 
+        //查詢使用者是否有收藏
+        [HttpPost]
+        [Authorize]
+        public IActionResult getIsKeep(UserKeepVM vm)
+        {
+            vm.KeepClass = 0;
+            vm.UserId = GetUserId();
+            return Json(_userKeep.IsKeep(vm));
+        }
+
         //搜尋部落格
         public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
         {
             return Json(_blog.getBlogFilter(vm));
         }
 
+        [Authorize]
+        public IActionResult getUserKeepBlog()
+        {
+            var vm = new UserKeepVM();
+            vm.UserId = GetUserId();
+            return Json(_blog.getKeepBlog(vm));
+        }
 
+        //加入收藏或移除 回傳bool
+        public IActionResult userKeepBlog(UserKeepVM vm)
+        {            
+            return Json(_userKeep.Keep(vm));
+        }
+
+        //圖片儲存
         void saveImage(blogImage blogImage)
         {
-            string[] imageString;
-            Console.WriteLine(blogImage.base64);
+            string[] imageString;            
             try
             {
                 imageString = blogImage.base64.Split(",");
@@ -106,6 +138,7 @@ namespace JustGo.Controllers
             }
             Image image;            
             string WebRootPatch = _webHostEnvironment.WebRootPath;
+#pragma warning disable CA1416 // 驗證平台相容性
             using (MemoryStream ms = new MemoryStream(bytes))
             {
                 image = Image.FromStream(ms);
@@ -140,6 +173,7 @@ namespace JustGo.Controllers
                 //    blogImage.name += ".gif";
                 //    image.Save(TargetFilename, ImageFormat.Gif);
                 //    break;
+#pragma warning restore CA1416 // 驗證平台相容性
                 default:
                     return;                    
             }                                    

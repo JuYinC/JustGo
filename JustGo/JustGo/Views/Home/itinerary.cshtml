@@ -301,16 +301,15 @@
 
                 state.map.addListener("zoom_changed", () => {
                     if (state.infowindow) { state.infowindow.close() };
-                    if (state.searchPlace.selectCounty.length == 0 && state.searchPlace.selectAcitivity.length > 0) {
+                    if (state.searchPlace.selectCounty.length == 0) {
                         store.commit('zoomCenterChange')
-                        store.dispatch('axiosSearch')
+                        
                     }
                 })
                 state.map.addListener("dragend", () => {
                     if (state.infowindow) { state.infowindow.close() };
-                    if (state.searchPlace.selectCounty.length == 0 && state.searchPlace.selectAcitivity.length > 0) {
-                        store.commit('zoomCenterChange')
-                        store.dispatch('axiosSearch')
+                    if (state.searchPlace.selectCounty.length == 0) {
+                        store.commit('zoomCenterChange')                        
                     }
                 })
             },
@@ -320,6 +319,7 @@
                 state.searchPlace.lat = state.map.getCenter().lat();
                 state.searchPlace.lng = state.map.getCenter().lng();
                 state.searchPlace.distance = 46080 / (2 ** state.map.getZoom());
+                store.dispatch('axiosSearch')
             },
 
             //搜尋條件更新
@@ -1328,17 +1328,17 @@
                         break;
                     case '餐飲':
                         this.selectType = '餐飲'
-                        if (this.selectCounty.length <= 0) {
-                            this.selectCounty.push("高雄市")
-                            this.isDefault = 1;
-                        }
+                        //if (this.selectCounty.length <= 0) {
+                        //    this.selectCounty.push("高雄市")
+                        //    this.isDefault = 1;
+                        //}
                         break;
                     case '旅宿':
                         this.selectType = '旅宿'
-                        if (this.selectCounty.length <= 0) {
-                            this.selectCounty.push("高雄市")
-                            this.isDefault = 1;
-                        }
+                        //if (this.selectCounty.length <= 0) {
+                        //    this.selectCounty.push("高雄市")
+                        //    this.isDefault = 1;
+                        //}
                         break;
                 }
 
@@ -1346,9 +1346,9 @@
                     this.selectAcitivity.splice(0, 1)
                 }
 
-                if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                    this.$store.commit('searchFilter', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
-                }
+                //if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
+                this.$store.commit('searchFilter', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
+                //}
             },
 
             // 新增景點

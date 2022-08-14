@@ -154,8 +154,7 @@
 
     #setting {
         position: fixed;
-        top:40vh;
-        margin-bottom:20vh;
+        bottom:20vh;
         right: 8%;
         font-size: 20px;
         z-index:5;

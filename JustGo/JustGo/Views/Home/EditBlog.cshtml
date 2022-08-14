@@ -335,6 +335,16 @@
             },
             )
 
+            
+            $(window).scroll(function(){
+            height=$("body").height()-$(window).height()
+            if($(window).scrollTop()>=height){
+            $("#setting").hide()
+            }
+            else{            
+                $("#setting").show()
+            }
+            })
 
 
 

@@ -454,9 +454,11 @@
                         <i class="fa fa-caret-down"></i></div>*@
                        
 
-                        <i class="fa-solid fa-objects-align-right" id="setting">收藏文章</i>
+                        @*<i class="fa-solid fa-objects-align-right" id="setting">收藏文章</i>*@
+                        
+                         
                         <div class="dropdown" id="setting" >
-	                        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+	                        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
 	                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 	                           <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
 	                        </ul>
@@ -486,12 +488,11 @@
                                    <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
                                     <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                     <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
-
-                                 <div>
-                                    <i class="fa fa-star" :style="{color:color}"
-                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                        @@load="myscore=item"></i>
-                                </div>
+                                     <div>
+                                        <i class="fa fa-star" :style="{color:color}"
+                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                            @@load="myscore=item"></i>
+                                    </div>
                               
                                 <p>{{dayDetails.describe}}</p>I am Describe<br>
                                 <div v-viewer class="groupimg img-fluid">

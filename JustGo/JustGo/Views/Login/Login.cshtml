@@ -6,13 +6,11 @@
 @model UserVM;
 <style>
     .LoginStyle {
-        margin-top: 50PX;
         box-shadow: 0 0 5px;
         opacity: 0.7;
         border-radius: 15px;
         cursor: grab;
-        border: 4px solid #FFFAF0;
-        border-radius: 1rem;
+        border: 5px solid #FFFAF0;
         padding: 30px;
     }
 
@@ -22,25 +20,33 @@
         flex-wrap: wrap;
         align-content: flex-start;
     }
+        .LoginTitle_Style{
+        margin-top: 60PX;
+        opacity: 0.7;
+        }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+<div class="LoginTitle_Style">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">登入</button>
     </li>
-
-
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">註冊</button>
     </li>
-
 </ul>
+</div>
+    </div>
+</div>
+</div>
 
 
 
-
+    
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"><form asp-action="Login">
     <div class="container">
@@ -67,6 +73,7 @@
                                 @Html.DisplayNameFor(m => m.RememberMe)
                             </label>
                         </div>
+                            <hr class="mb-4 mt-4 ms-2 me-2" />
                         <button id="login-submit" type="submit" class="btn btn-primary btn-lg btn-block mt-2 ms-2 me-2">登入</button>
                     </div>
                 </div>
@@ -78,6 +85,10 @@
 
 
 
+
+
+
+
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -85,6 +96,10 @@
                 <h2>註冊</h2>
                 <hr class="mb-4 mt-4 ms-2 me-2" />
                 <form>
+                             <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">輸入名稱</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">信箱</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -98,7 +113,6 @@
                         <label for="exampleInputPassword1" class="form-label">確認密碼</label>
                         <input type="password" class="form-control" id="exampleInputPassword1">
                     </div>
-
                     <button type="submit" class="btn btn-primary">註冊</button>
                 </form>
             </div>

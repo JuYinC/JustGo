@@ -1036,11 +1036,12 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    transition: all .3s; }
+    transition: all .8s; }
     .arrange__contain-video {
       width: 100%;
       height: 100vh;
-      z-index: -2; } }
+      z-index: -2;
+      transition: height .3s; } }
 
 @media only screen and (min-width: 576px) and (min-aspect-ratio: 16 / 9) {
   .arrange__contain-video {

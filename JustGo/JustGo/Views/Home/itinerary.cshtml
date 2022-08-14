@@ -20,7 +20,7 @@
 }
 
 <div class="arrange__body">
-    <div class="arrange__contain">
+    <div class="arrange__contain" id="moveup">
         <video autoplay muted loop plays-inline class="arrange__contain-video" poster="~/file/photo/highway-f.jpg">
             <source src="~/file/video/highway-f.mp4" type="video/mp4">
         </video>
@@ -93,6 +93,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 <script>
+
+    // let x = 'https://localhost:7100/Home/itinerary'
+    // if(window.browserLink.connection.qs.requestUrl != x){
+    //         $('.arrange__contain-video').css('height','0')
+    //             setTimeout(function(){
+    //                   $('.arrange__contain-video').css('display','none')  
+    //             },200);
+    // }
+
+
+
     let wwwroot = "@Url.Content("~/file/photo")"
     hidebtn = document.getElementById("sift").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
@@ -127,6 +138,7 @@
         });
     });
 
+   
 </script>
 
 
@@ -945,6 +957,7 @@
                 selectDatelocal: [],
                 selectDateEndlocal: [],
                 saveData: [],
+                moveup:100
             }
         },
         computed: {
@@ -957,6 +970,7 @@
             duringDate() {
                 return this.$store.state.duringDate
             },
+           
         },
         mounted() {
             let id = window.location.search.substring(1)
@@ -970,22 +984,9 @@
             culDate() {
               if(window.innerWidth>401){
                  if($('#st').val() && $('#et').val()){
-                $('.arrange__contain-video').css('display','none') 
 
-                //let windowhg = parseInt( $('.arrange__contain-video').css("height").replace('px', '') ,10);
-
-                //if(windowhg > 0){
-                //        for(i=100;i>=windowhg;i--){
-                //            $('.arrange__contain-video').css('height', i ) 
-                //        }
-                       
-                
-                //} 
-               
-
-                
-
-
+                $('.arrange__contain-video').css('height','0')
+              
 
                 $('.datepicker').css('display','none') 
                 $('#navbarC').addClass("sticky")
@@ -1011,6 +1012,17 @@
 
                 })
                 $('#app button')[0].textContent="更新日期"
+                
+                
+                setTimeout(function(){
+                      $('.arrange__contain-video').css('display','none')  
+                },200);
+
+
+
+
+
+               
              }
 
               }  
@@ -1236,7 +1248,7 @@
                                                 </div>
                                                 <div class="col-10 betweenBox">
                                                     <br>
-                                                    <i class="fa-solid fa-car-side">{{item.roam}}</i>
+                                                    <i class="fa-solid fa-car-side">時間</i>
                                                 </div>
                                             </div>
 
@@ -1655,6 +1667,21 @@
             },
         },
     })
+
+    // new Vue({
+    //     el:'moveup'
+    //     date:{
+    //         h:100
+    //     },
+    //     computed:{
+    //         x(){
+    //             return{
+    //                 height:this.h +''
+    //             }
+    //         }
+    //     }
+
+    // })
 
 </script>
 

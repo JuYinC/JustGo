@@ -62,20 +62,26 @@
                                             第{{index+1}}天
                                         </div>
                                     </div>
-
+                                    <div class="daysinfo">
+                                    {{duringDate[selectDay]}}
                                     <div v-for="(view,index) in daySchedule" class="fadein">
-                                        <div class="row">
-                                            <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
-                                            <p class="col-6 m-0 fs-2 fw-bold bgposition ">{{view.place.name}}</p>
+
+                                        <div class="row cols-2">
+                                            <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
+                                            <div class="col-6">
+                                                <h3>{{view.place.name}}</h3><br/>
+                                                <h6>{{view.place.add}}</h6>
+                                            </div>
                                         </div>
                                         <div class="row cols-2" v-if="index<daySchedule.length-1">
                                             <div class="col-2">
                                             </div>
                                             <div class="col-10 betweenBox">
                                                 <br>
-                                                <i class="fa-solid fa-car-side"></i>
+                                                <i class="fa-solid fa-car-side"></i> {{roam[selectDay][index]}}
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div id="map" class="col-md-8 cols-xs-1 map-pag3"></div>
@@ -143,6 +149,7 @@
                     duringDate: [],
                     selectWeather: [],
                     loading: true,
+                    selectDay:0,
                 }
             },
             methods: {
@@ -161,7 +168,7 @@
                     })
                 },
                 showDaySchedule(index) {
-
+                    this.selectDay = index
                     this.daySchedule = this.schedule.details[index]
                     console.log(this.daySchedule)
                     this.setDayMarker()
@@ -238,18 +245,7 @@
                                                                             <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
                                                                         </div>
                                                                         <div class="infowindow_info col-8">
-                                                                            <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.place.add}</p>
-                                                                            <p><i class="fa-solid fa-phone" style="color:#260078"></i> ${position.place.tel}</p>
-                                                                            <p><i class="fa-solid fa-clock" style="color:#3500A8"></i> ${position.place.opentime}-${position.place.closetime}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <button class="infowindow_intro" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                                        aria-expanded="false" aria-controls="collapseExample">
-                                                                        景點介紹
-                                                                    </button>
-                                                                    <div class="collapse" id="collapseExample">
-                                                                        <div class="infowindow_detail" style="text-indent:2em">
-                                                                            ${position.place.description}
+                                                                            <p>${position.place.description}</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>

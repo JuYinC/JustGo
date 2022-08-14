@@ -1,6 +1,9 @@
+#bloginfo {
+    font-size: 1.3rem;
+}
 #coverimg {
     width: 100%;
-    height: 420px;
+    height: 350px;
     object-fit: cover;
     margin-bottom:3%
 }
@@ -70,7 +73,6 @@
 
 
     .list-group-item {
-       
         color: #f9ab55 !important;
         font-weight: bold !important;
         box-shadow: 0 !important;
@@ -113,13 +115,15 @@
             background-color: #669ed6 !important;
             color: #fff !important;
             border: none !important;
+            font-size: 1.2rem !important;
         }
 
-        .btn-primary:hover, .btn-outline-primary:hover {
-            background-color: #084887 !important;
-            color: #fff !important;
-            border: none !important;
-        }
+            .btn-primary:hover, .btn-outline-primary:hover {
+                background-color: #084887 !important;
+                color: #fff !important;
+                border: none !important;
+                font-size: 1.2rem !important;
+            }
 
 
     #day {
@@ -154,7 +158,7 @@
 
     #setting {
         position: fixed;
-        bottom:20vh;
+        bottom:15vh;
         right: 8%;
         font-size: 20px;
         z-index:5;

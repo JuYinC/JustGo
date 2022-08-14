@@ -18,23 +18,7 @@ ViewData["Title"] = "blog";
 
 
 <style>
-        .box{
-        width: 80px;
-        height: 80px;
-        background: transparent;
-        overflow: hidden;
-        }
-        img{
-        transition: .5s;
-        }
-        .box:hover img{
-        transform: scale(1.2);
-        }
-        .cover-fit{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        }
+        
 
     /* #setting {
         position: fixed;
@@ -186,7 +170,7 @@ ViewData["Title"] = "blog";
             StartDate: null,
             EndDate: null,
             totallike:0,
-            bool: 1,
+            bool: 0,
             daterange: null,
             myscore: this.score,
             mytempscore: this.score
@@ -249,28 +233,29 @@ ViewData["Title"] = "blog";
 
             },
             likeblog: function () {
-                var heart = document.getElementsByClassName("fa-heart");
                 var totallike = document.getElementsByClassName("totallike");
                 var totallike;
-                 if (bool == 1) {
-                        bool = false;
-                        this.className = "fa fa-heart active";
-                        ++totallike[i].innerHTML;
-                    } else {
-                        bool = true;
-                        this.className = "fa fa-heart";
-                        --totallike[i].innerHTML;
-                    }
+                 if (this.bool == 1) {
+                        this.bool = 0;
+
+                        totallike.innerHTML += this.bool;
+                 } else {
+                        this.bool = 1;
+                        totallike.innerHTML += this.bool;
+
+                 }
 
                 //i = 0
                 //heart[i].onclick = function () {
 
-                //    if (bool == 1) {
-                //        bool = false;
+                //    if (this.bool == 1) {
+                //        console.log(this.bool)
+                //        this.bool = 0;
+                //        console.log(this.bool)
                 //        this.className = "fa fa-heart active";
                 //        ++totallike[i].innerHTML;
                 //    } else {
-                //        bool = true;
+                //        this.bool = 1;
                 //        this.className = "fa fa-heart";
                 //        --totallike[i].innerHTML;
                 //    }
@@ -456,7 +441,13 @@ ViewData["Title"] = "blog";
                     <div>
                         <h1 class="my-3">{{Title}}</h1>
                         <div class="d-flex">
-                            <div style="line-height:25px"><i class="fa fa-heart" @@click="likeblog"></i><span class="totallike px-1">30 {{bool}}</span></div>
+
+@*                            <i class="fa fa-star mb-2" :style="{color:color}"
+                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                            @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
+                                            @@click="myscore=item"></i>*@
+                                           
+
                             <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
 
                             <div class="dropdown" id="setting" >
@@ -467,6 +458,9 @@ ViewData["Title"] = "blog";
                                             onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"  class="timepicker"></li>
                                 </ul>
                             </div>
+
+                            
+                            <div style="line-height:30px"><i :class="bool == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i><span class="totallike px-1">30 {{bool}}</span></div>
                         </div>
 
                         @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange"
@@ -502,7 +496,7 @@ ViewData["Title"] = "blog";
                     <div v-for="(day,dayIndex) in Details">
                         <label id="day">第{{dayIndex+1}}天</label>
                         <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h5>{{dayDetails.p_Name}}</h5></div>
+                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
                             <div class="mb-1"><i class="fa-solid fa-house-crack"
                                     style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                             <div class="mb-1"><i class="fa-solid fa-phone"

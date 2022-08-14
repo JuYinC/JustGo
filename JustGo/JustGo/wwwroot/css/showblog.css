@@ -102,3 +102,30 @@
         display: block;
         width: 180px;
     }
+
+/*¤é´Á¿ï¾Ü*/
+.available {
+    animation: none;
+}
+
+
+.timepicker {
+    border-style: none;
+    background: transparent;
+}
+
+    .timepicker:focus {
+        border-style: none;
+        background: transparent;
+    }
+
+    .timepicker:blur {
+        border-style: none;
+        background: transparent
+    }
+
+@media only screen and (max-width: 576px) {
+    #hidden {
+        display:none;
+    }
+}

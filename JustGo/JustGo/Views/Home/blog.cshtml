@@ -1,55 +1,32 @@
 ﻿@{
-    Layout = "_Layout";
+Layout = "_Layout";
 }
 @{
-    ViewData["Title"] = "blog";
+ViewData["Title"] = "blog";
 }
 @section Style{
- <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
- <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
- <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
- <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"/>
- <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
+<link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 
 <style>
-    /*日期選擇*/
-    .available{
-        animation:none;
-    }
-  
+ 
 
-     .timepicker{
-                border-style: none;
-                background: transparent;
-                margin-left: 3rem;
-     }
-     .timepicker:focus{
-                border-style: none;
-                background: transparent;
-                margin-left: 3rem;
-     }
-     .timepicker:blur{
-                border-style: none;
-                background: transparent;
-                margin-left: 3rem;
-     }
-
-     /* #setting {
+    /* #setting {
         position: fixed;
         top:70vh;
         right: 8%;
         font-size: 20px;
         z-index:5;
     }*/
-
 </style>
 
 
@@ -57,146 +34,144 @@
 
 
 
-    @section Scripts{
-    <script src="~/js/site.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
-    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
-    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+@section Scripts{
+<script src="~/js/site.js"></script>
 
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+<script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 
-    <script>
-        
-    $("body").attr('data-bs-spy','scroll')
-    $("body").attr('data-bs-target','#list-example')
-    $("body").attr('data-bs-offset','0')
-    $("body").attr('tabindex','0')
+<script>
+
+    $("body").attr('data-bs-spy', 'scroll')
+    $("body").attr('data-bs-target', '#list-example')
+    $("body").attr('data-bs-offset', '0')
+    $("body").attr('tabindex', '0')
 
     Vue.use(VueViewer.default)
     console.log(VueViewer.default)
 
-            
-  /*$(function () {
-                $('input[name="daterange"]').daterangepicker({
-                    locale: {
-                        format: 'YYYY/MM/DD',
-                    },
-                    opens: 'right'
-                }, function (start, end) {
-                    console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-                });
-                $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
-                    $(this).val('');
-                }).on("hide.daterangepicker", function (ev) {
-                    this.dispatchEvent(new Event('input'))
-                });
 
-            });*/
+    /*$(function () {
+                  $('input[name="daterange"]').daterangepicker({
+                      locale: {
+                          format: 'YYYY/MM/DD',
+                      },
+                      opens: 'right'
+                  }, function (start, end) {
+                      console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                  });
+                  $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+                      $(this).val('');
+                  }).on("hide.daterangepicker", function (ev) {
+                      this.dispatchEvent(new Event('input'))
+                  });
+  
+              });*/
 
-    
-    
-     
 
-        $(function() {
+
+
+
+    $(function () {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
-        }, function(start, end, label) {
+        }, function (start, end, label) {
             console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
-        });
+    });
 
     let id = 0;
     let vm = new Vue({
-        el: `#bloginfo`,            
+        el: `#bloginfo`,
         data: {
             Details: [
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "北部1",
-                                p_tel: "07-123456",
-                                p_Add: "台北市",
-                                describe : "",
-                                score: 5,
-                                images: {Name:"2208111103103186.jpg",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "高雄2",
-                                p_tel: "02-123456",
-                                p_Add: "高雄市",
-                                describe : "",
-                                score: 3,
-                                images: {Name:"2208111103108543.png",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台中3",
-                                p_tel: "04-123456",
-                                p_Add: "台中市",
-                                describe : "",
-                                score: 4,
-                                images: {Name:"2208111103108981.png",base64:""},
-                            }
+                [
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "北部1",
+                        p_tel: "07-123456",
+                        p_Add: "台北市",
+                        describe: "",
+                        score: 5,
+                        images: { Name: "2208111103103186.jpg", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "高雄2",
+                        p_tel: "02-123456",
+                        p_Add: "高雄市",
+                        describe: "",
+                        score: 3,
+                        images: { Name: "2208111103108543.png", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "台中3",
+                        p_tel: "04-123456",
+                        p_Add: "台中市",
+                        describe: "",
+                        score: 4,
+                        images: { Name: "2208111103108981.png", base64: "" },
+                    }
 
-                        ],
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台南4",
-                                p_tel: "06-123456",
-                                p_Add: "台南市",
-                                describe : "",
-                                score: 5,
-                                images: {Name:"2208111103109487.jpg",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "花蓮5",
-                                p_tel: "123456",
-                                p_Add: "花蓮市",
-                                describe : "",
-                                score: 1,
-                                images: {Name:"2208111108357791.jpg",base64:""},
-                            },
+                ],
+                [
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "台南4",
+                        p_tel: "06-123456",
+                        p_Add: "台南市",
+                        describe: "",
+                        score: 5,
+                        images: { Name: "2208111103109487.jpg", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "花蓮5",
+                        p_tel: "123456",
+                        p_Add: "花蓮市",
+                        describe: "",
+                        score: 1,
+                        images: { Name: "2208111108357791.jpg", base64: "" },
+                    },
 
 
-                        ],
-                    ],
-                   
+                ],
+            ],
+
             UserId: ["Alley"],
             UserImage: "Shinnosuke6.png",
-            CoverImageName:"coverimage.jpg",
+            CoverImageName: "coverimage.jpg",
             Title: '三天兩夜台東之旅',
-            describe:'美好旅程的回憶從JustGO開始',
-            StartDate:null,
-            EndDate:null,
-            //totallike:0,
+            describe: '美好旅程的回憶從JustGO開始',
+            StartDate: null,
+            EndDate: null,
+            totallike:0,
             bool: 1,
-            daterange:null,
+            daterange: null,
             myscore: this.score,
             mytempscore: this.score
 
@@ -216,12 +191,9 @@
             }
         },
         methods: {
-            getImages(loadimagesName){ 
+            getImages(loadimagesName) {
                 return "@Url.Content("~/blogImages")/"+loadimagesName
             },
-            //CoverImageSrc(coverimageName) {
-            //    return "@Url.Content("~/blogImages")/"+coverimageName                        
-            //},
             userImageSrc(imageName) {
                 return "@Url.Content("~/UserImages")/"+imageName                       
             },
@@ -231,47 +203,47 @@
             gettime(time) {
                 return moment(time).format('A HH')
             },
-            gethref(dayIndex,viewIndex){
-                return "#list-item-"+dayIndex+"-"+viewIndex
+            gethref(dayIndex, viewIndex) {
+                return "#list-item-" + dayIndex + "-" + viewIndex
             },
-            getanchor(dayIndex,viewIndex){                    
-                return "list-item-"+dayIndex+"-"+viewIndex
+            getanchor(dayIndex, viewIndex) {
+                return "list-item-" + dayIndex + "-" + viewIndex
             },
-            copyURL:function() {
-                let myurl = document.createElement('input'),
+            copyURL: function () {
+                let myurl = document.createElement('input')
                 geturl = window.location.toString()
                 document.body.appendChild(myurl);
                 myurl.value = geturl;
                 myurl.select();
                 document.execCommand('copy');
                 document.body.removeChild(myurl);
-               
+
             },
-            copyblog: function() { 
+            copyblog: function () {
                 if (id != "") {
-                    axios.post("@Url.Action("selectblogDetails","blog")", { BlogId:id,}).then(res => {  
-                       this.Details = res.data.details;
-                       this.EndDate = res.data.endDate;
-                       this.StartDate = res.data.startDate;
-                       this.Title = res.data.title;
-                       this.describe = res.data.describe;
-                     }
+                    axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
+                        this.Details = res.data.details;
+                        this.EndDate = res.data.endDate;
+                        this.StartDate = res.data.startDate;
+                        this.Title = res.data.title;
+                        this.describe = res.data.describe;
+                    }
                     )
                 }
-            
-            },       
-            likeblog: function(){  
+
+            },
+            likeblog: function () {
                 var heart = document.getElementsByClassName("fa-heart");
                 var totallike = document.getElementsByClassName("totallike");
                 var totallike;
                 i = 0
                 heart[i].onclick = function () {
-                    
+
                     if (bool == 1) {
                         bool = false;
                         this.className = "fa fa-heart active";
-                        ++totallike[i].innerHTML; 
-                    } else { 
+                        ++totallike[i].innerHTML;
+                    } else {
                         bool = true;
                         this.className = "fa fa-heart";
                         --totallike[i].innerHTML;
@@ -335,36 +307,36 @@
                     }
                 }
             },
-            
+
         },
-        mounted() {                
-                let id = window.location.search.substring(1)                                                            
-                if (id != "") {
-                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:id,}).then(res => {  
-                       console.log(res.data);
-                       this.CoverImageName = res.data.coverImage;
-                       this.Details = res.data.details;
-                       this.EndDate = res.data.endDate;
-                       this.StartDate = res.data.startDate;
-                       this.Title = res.data.title;
-                       this.describe = res.data.describe;
-                       //axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
-                       //console.log(res.data);
-                       //this.bool = res.data.bool;
-                       //})
-                    })
-                }               
+        mounted() {
+            let id = window.location.search.substring(1)
+            if (id != "") {
+                axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
+                    console.log(res.data);
+                    this.CoverImageName = res.data.coverImage;
+                    this.Details = res.data.details;
+                    this.EndDate = res.data.endDate;
+                    this.StartDate = res.data.startDate;
+                    this.Title = res.data.title;
+                    this.describe = res.data.describe;
+                    //axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
+                    //console.log(res.data);
+                    //this.bool = res.data.bool;
+                    //})
+                })
+            }
 
 
-            },
+        },
     },
     )
 
-    </script>
-    }
-    
+</script>
+}
 
-   <div id="bloginfo">
+
+<div id="bloginfo">
     <div class="container-fluid">
         <div class="d-flex flex-column align-items-center justify-content-center"
             style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
@@ -373,48 +345,69 @@
     <!-- Header End -->
 
     <!-- 右側欄位Detail Start -->
-    <div class="container py-3" >
+    <div class="container py-3">
         <div class="row pt-5">
             <div class="col-lg-4 mt-4 mt-lg-2 ">
                 <div class="sticky-top" style="top:10vh">
                     <!-- Author Bio -->
-                    <div class="d-flex flex-column rounded mb-4 py-4">
+                    <div class="d-flex flex-column rounded py-4">
                         <div class="py-3">
-                                <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                            <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                            @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
                         </div>
                         <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
                         <div class="mb-2">美好旅程的回憶從JustGO開始</div>
                     </div>
-                    
+
                     <!-- Category List -->
-                    <div class="mb-4" >
-                        <h2 class="mb-2" >Duration</h2>
+                    @*<div class="mb-4">
+                        <h2 class="mb-2">Duration</h2>
                         <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                         <ul class="list-group list-group-flush">
-                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days" style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
                                 <li class="list-group-item  justify-content-between align-items-center px-0">
-                                        <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
-                                            <a class="list-group-item list-group-item-action"
-                                                :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏ {{dayDetails.p_Name}}</a>                                               
-                                        </li>
+                                <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                    <a class="list-group-item list-group-item-action"
+                                        :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                        {{dayDetails.p_Name}}</a>
+                                </li>
                                 </li>
                             </div>
                         </ul>
-                    </div>
-                    
+                    </div>*@
 
-                 
+                     <div class="mb-4">
+                        <h2 class="mb-2">Duration</h2>
+                        <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
+                        <ul class="list-group list-group-flush" id="hidden">
+                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                                
+                                <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                    <a class="list-group-item list-group-item-action"
+                                        :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                        {{dayDetails.p_Name}}</a>
+                                </li>
+                               
+                            </div>
+                        </ul>
+                    </div>
+
+
+
+
+
 
                     <!-- Tag Cloud -->
                     <div class="mb-4">
                         <h2 class="mb-2">#Tag</h2>
-                        <div class="d-flex flex-wrap m-n1">                  
+                        <div class="d-flex flex-wrap m-n1">
                             <a href="" class="btn btn-primary m-1 btn-sm">溫泉</a>
                             <a href="" class="btn btn-primary m-1 btn-sm">生態</a>
                             <a href="" class="btn btn-primary m-1 btn-sm">小吃特產</a>
                             <a href="" class="btn btn-primary m-1 btn-sm">國家公園</a>
-                            <a href="" class="btn btn-primary m-1 btn-sm">休閒農業</a>                         
+                            <a href="" class="btn btn-primary m-1 btn-sm">休閒農業</a>
                         </div>
                     </div>
 
@@ -439,73 +432,77 @@
             @*左側欄位*@
             <div class="col-lg-8">
                 <div class="d-flex flex-column text-left mb-3">
-                    <h1 class="my-3">{{Title}}</h1>
-                    <div class="d-flex">
-                        <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
-                        <label class="btn btn-outline-dark btn-sm">
-                            <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
-                        </label>
+                    
+                    <div>
+                        <h1 class="my-3">{{Title}}</h1>
+                        <div class="d-flex">
+                            <div style="line-height:25px"><i class="fa fa-heart" @@click="likeblog"></i><span class="totallike px-1">30</span></div>
+                            <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
 
+                            <div class="dropdown" id="setting" >
+                                <button class="btn btn-primary dropdown-toggle m-1"  type="button"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
+                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"  class="timepicker"></li>
+                                </ul>
+                            </div>
+                        </div>
 
+                        @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange"
+                                v-model="daterange" placeholder="選擇日期" size="25" />
+                            <i class="fa fa-caret-down"></i>
+                        </div>
+                        <div><i class="fa fa-calendar"></i>&nbsp;<input type="text" name="daterange" v-model="daterange"
+                                placeholder="選擇日期" size="25" />
+                            <i class="fa fa-caret-down"></i>
+                        </div>*@
 
-                        @*<div><i class="fa fa-calendar"></i>&nbsp;<input id="daterange" type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
-                        <i class="fa fa-caret-down"></i></div>
-                        <div><i class="fa fa-calendar"></i>&nbsp;<input type="text" name="daterange" v-model="daterange" placeholder="選擇日期" size="25"/>
-                        <i class="fa fa-caret-down"></i></div>*@
-                       
 
                         @*<i class="fa-solid fa-objects-align-right" id="setting">收藏文章</i>*@
-                        
-                         
-                        <div class="dropdown" id="setting" >
-	                        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
-	                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	                           <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
-	                        </ul>
-                        </div>
-                     
-	                        @*<ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1" >
-	                           <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+                        @*<ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1">
+                            <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
+                                    onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"
+                                    class="timepicker"></li>
+                        </ul>*@
 
-	                        </ul>*@
-
-@*
+                        @*
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">複製本文:
-                                  <li><input placeholder="開始時間"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+                            <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
+                                    onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"
+                                    class="timepicker"></li>
+                        </ul>*@
 
-	                    </ul>*@
-                    
                     </div>
                 </div>
                 <div class="mb-4">
-                    <img class="img-fluid rounded w-100 mb-4" :src="getImages(CoverImageName.name)"
-                        alt="Image" />
+                    <img class="img-fluid rounded w-100 mb-4"  v-viewer  :src="getImages(CoverImageName.name)" style="height:500px" alt="Image" />
                     <p class="mb-2">{{describe}}</p>
-                
-                        <div v-for="(day,dayIndex) in Details">
-                            <label id="day">第{{dayIndex+1}}天</label>
-                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                   <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
-                                    <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
-                                    <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
-                                     <div>
-                                        <i class="fa fa-star" :style="{color:color}"
-                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                            @@load="myscore=item"></i>
-                                    </div>
-                              
-                                <p>{{dayDetails.describe}}</p>I am Describe<br>
-                                <div v-viewer class="groupimg img-fluid">
-                                    <template v-for="(image,index) in dayDetails.images">
-                                        <img :src="getImages(image.name)">
-                                    </template>
-                                </div>
 
+                    <div v-for="(day,dayIndex) in Details">
+                        <label id="day">第{{dayIndex+1}}天</label>
+                        <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)></div>{{dayDetails.p_Name}}
+                            <div class="mb-1"><i class="fa-solid fa-house-crack"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                            <div class="mb-1"><i class="fa-solid fa-phone"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                            <div>評分&nbsp;
+                                <i class="fa fa-star" :style="{color:color}"
+                                    :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                    @@load="myscore=item"></i>
                             </div>
+
+                            <p>{{dayDetails.describe}}</p>I am Describe<br>
+                            <div v-viewer class="groupimg img-fluid">
+                                <template v-for="(image,index) in dayDetails.images">
+                                    <img :src="getImages(image.name)">
+                                </template>
+                            </div>
+
                         </div>
-               
-                    
-                    
+                    </div>
+
                 </div>
 
 
@@ -514,15 +511,17 @@
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
 
-               @*      <div id="fb-root"></div>
-                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1" nonce="NqM9iieh"></script>
-                    <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350" data-numposts="5"></div>
-                *@
+                    @* <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous"
+                        src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
+                        nonce="NqM9iieh"></script>
+                    <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
+                        data-numposts="5"></div>
+                    *@
 
 
-                    
+
                 </div>
         </div>
     </div>
-    <!-- Detail End -->
 </div>

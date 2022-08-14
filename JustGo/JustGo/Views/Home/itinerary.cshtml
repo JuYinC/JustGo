@@ -272,7 +272,8 @@
             // zoom或center變動傳回中心點和距離
             zoomCenterChange(state) {
                 state.mapCenter = state.map.getCenter()
-                console.log(state.mapCenter)
+                console.log(state.mapCenter.lat())
+                console.log(state.mapCenter.lng())
                 switch (state.map.getZoom()) {
                     case 8:
                         console.log(8);
@@ -364,6 +365,7 @@
                 const bounds = new google.maps.LatLngBounds();
                 let viewObj = {};
                 let townWeather = [];
+                let infopic = null;
                 // 產生地點marker
                 state.selectPlaces.map((position, i) => {
                     townWeather.length = 0;
@@ -372,16 +374,76 @@
                             townWeather.push(object);
                         };
                     })
-                    if (position.class == 15) {
-                        //餐廳
-                        iconPlace = state.icon[1]
-                    } else if (position.class == 16) {
-                        //旅館
-                        iconPlace = state.icon[2]
-                    } else {
-                        // 一般景點
-                        iconPlace = state.icon[0]
+                    switch (position.class) {
+                        case 1:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[0]
+                            break;
+                        case 2:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[1]
+                            break;
+                        case 3:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[2]
+                            break;
+                        case 4:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[3]
+                            break;
+                        case 5:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[4]
+                            break;
+                        case 6:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[5]
+                            break;
+                        case 7:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[6]
+                            break;
+                        case 8:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[7]
+                            break;
+                        case 9:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[8]
+                            break;
+                        case 10:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[9]
+                            break;
+                        case 11:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[10]
+                            break;
+                        case 12:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[11]
+                            break;
+                        case 13:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[12]
+                            break;
+                        case 14:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[13]
+                            break;
+                        case 15:
+                            iconPlace = state.icon[1]
+                            infopic = state.infoPicture[14]
+                            break;
+                        case 16:
+                            iconPlace = state.icon[2]
+                            infopic = state.infoPicture[15]
+                            break;
+                        default:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[7]
                     }
+
                     const marker = new google.maps.Marker({
                         position: { lat: position.lat, lng: position.lng },
                         title: position.name,
@@ -423,7 +485,7 @@
                                 </div>
                                 <div class="infowindow_part row">
                                     <div class="infowindow_img col-4">
-                                        <img src="https://picsum.photos/200?random=${i}" class="infowindow_picture">
+                                        <img src=${infopic} class="infowindow_picture">
                                     </div>
                                     <div class="infowindow_info col-8">
                                         <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>

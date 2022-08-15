@@ -40,7 +40,7 @@ namespace JustGo.Repository
             {
                 if (i)
                 {
-                    sqlStr += "Where Region in @selectCounty";
+                    sqlStr = "select * from Place Where Region in @selectCounty";
                     i = false;
                 }
             }
@@ -88,7 +88,6 @@ namespace JustGo.Repository
         {
             string sqlStr = $"select * from Place Where PlaceId = @id";
             return _con.Query<Place>(sqlStr, new { id }).FirstOrDefault() ?? new Place();
-
         }
 
         public ICollection<Weather> getWeatherByLocation(string location)

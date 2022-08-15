@@ -1247,7 +1247,6 @@
               justify-content: center;
               width: 25px;
               height: 100%;
-              background: white;
               z-index: 1; }
           .journey__map .sidebar__grid .grid-item-t .btnbox-r {
             position: absolute;
@@ -1265,7 +1264,6 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              background: white;
               z-index: 1; }
         .journey__map .sidebar__grid .grid-item-m {
           height: inherit;

@@ -359,6 +359,14 @@
     -ms-flex-pack: center;
     justify-content: center;
     box-sizing: border-box;
+
+
+    & .photolink{
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      display: contents;
+    }
   }
 
   .slider .items-group .item:hover .bg {
@@ -471,8 +479,7 @@
     font-size: 30px;
     margin-bottom: 0px;
     width: 100%;
-    background-color: #333;
-    opacity: 0.8;
+   
   }
 
   .slider .items-group .item .block p {
@@ -541,6 +548,10 @@
 
 @media only screen and (min-width: 576px) {
   html {
+
+    & body{
+      min-width: 960px;
+    }
 
     // height: 600vh;
     & p {
@@ -795,18 +806,18 @@
       margin: 0.2rem;
       cursor: pointer;
       transition: width .3s cubic-bezier(0.4, 0, 1, 1) 0s;;
-
+      min-width: 100px;
     }
 
 
     & .sh {
-      width: 70%;
+      width: 30%;
       font-size: 0;
       padding: 1.4rem 2rem 1.6rem;
       display: flex;
       flex-direction: row;
       width: 100%;
-      max-width: 400px;
+      // max-width: 200px;
       border-radius: 2px;
       padding: 1.4rem 2rem 1.6rem;
       z-index: 50;
@@ -884,6 +895,7 @@
     box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
     transition: 0.5s ease-in-out;
     margin: .5rem;
+    min-width: 270px;
 
     &:last-child {
       margin-right: auto;
@@ -1018,6 +1030,15 @@
     -ms-flex-pack: center;
     justify-content: center;
     box-sizing: border-box;
+
+
+
+    & .photolink{
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      display: contents;
+    }
   }
 
   .slider .items-group .item:hover .bg {
@@ -1129,6 +1150,7 @@
     font-family: 'Oswald', sans-serif;
     font-size: 130px;
     margin-bottom: 0px;
+
   }
 
   .slider .items-group .item .block p {

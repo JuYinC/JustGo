@@ -109,22 +109,23 @@
                     'width': '30%',
                     'display': 'unset',
                 })
-                $('#app input').css({
-                    'min-width': '30%',
-                    'font-size': '1.4rem',
-                }).focus().css('max-width', '30%')
-                $('#app button').css({
-                    'font-size': '1rem',
-                    'width': '35%',
-                    'padding': '0',
-                    'border-radius': '0',
-                    'background': 'transparent',
-                    'color': 'black',
-                    'border': '2px solid',
+                //$('#app input').css({
+                //    'min-width': '30%',
+                //    'font-size': '1.4rem',
+                //}).focus().css('max-width', '30%')
+                //$('#app button').css({
+                //    'font-size': '1rem',
+                //    'width': '35%',
+                //    'padding': '0',
+                //    'border-radius': '0',
+                //    'background': 'transparent',
+                //    'color': 'black',
+                //    'border': '2px solid',
 
-                })
-                $('#app button')[0].textContent = "更新日期"
-
+                //})
+                //$('#app button')[0].textContent = "更新日期"
+                $('#app input').css('display','none')
+                 $('#app button').css('display','none')
             }
 
 
@@ -1405,7 +1406,23 @@
                 },
                 daysindex() {
                     return this.$store.state.daysindex
-                }
+                },
+                checkrd(show){
+                    if(show==0){
+                        console.log('000show0000')
+                        return{
+                           display:''
+                        }
+                    }else{
+                        console.log('000show00111111100')
+                        return{
+                           display:'none'
+                        }
+
+                    }
+                     
+                    
+                } ,
             },
             methods: {
                 //搜尋景點
@@ -1481,7 +1498,7 @@
                                         </span>
                                     </div>
                                     <hr>
-                                    <div class="cat">
+                                    <div class="cat" :style="checkrd" >
                                         <span v-for="(acitivity,index) in acitivitys">
 
                                     <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
@@ -1543,7 +1560,8 @@
                 },
                 datetime() {
                     return this.$store.state.datetime
-                },                
+                },
+                               
             },
             methods: {
                 culDate() {
@@ -1648,7 +1666,7 @@
                                             
                                             
                                         <div>
-                                            <input type="text" @@input="setTitle()" v-model="title"/>
+                                            <h3><input type="text" @@input="setTitle()" v-model="title" placeholder="請輸入標題" /><h3>
                                             </div>
                                                 <ul class="daysbox" :style="move">
                                                 <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

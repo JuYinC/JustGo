@@ -68,7 +68,7 @@
 
                                         <div class="row cols-2 viewinfo">
                                             <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
-                                            <div class="col-8">
+                                            <div class="col-7">
                                                 <div class="viewname">{{view.place.name}}</div>
                                                 <div><h6>{{view.place.add}}</h6></div>
                                             </div>
@@ -89,24 +89,24 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="row">
+                    <div class="row ">
                         <div v-for="(day,dayindex) in schedule.details" class="col scheduleDay" style="display:inline-block">
                             <div class="viewbox  p-1">
                                 <div class="date">{{duringDate[dayindex]}}</div>
                                 <div v-for="(view,index) in day">
                                         <div class="row cols-2 viewinfo">
                                             <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
-                                            <div class="col-8">
+                                            <div class="col-7">
                                                 <div class="viewname">{{view.place.name}}</div>
-                                                <div><h6>{{view.place.minT}}-{{view.place.maxT}} {{view.place.wx}}</h6></div>
+                                                
                                                 <div><h6>{{view.place.add}}</h6></div>
+                                                <div class="tagbar"><h6> <span class="tag">{{view.place.minT}}-{{view.place.maxT}}°C</span> <span class="tag">{{view.place.wx}}</span></h6></div>
                                             </div>
                                         </div>
                                     <div class="row cols-2" v-if="index<day.length-1">
                                         <div class="col-2">
                                         </div>
                                         <div class="col-10 betweenBox">
-                                            <br>
                                             <i class="fa-solid fa-car-side"></i> {{roam[dayindex][index]}}
                                         </div>
                                     </div>
@@ -508,7 +508,7 @@
                 //let id = window.location.search.substring(1)
                 //if (id != "") {
                 if(this.loading == true){
-                                    this.initMap();
+                this.initMap();
                 axios.post("@Url.Action("selectDetail","Schedule")", { ScheduleId: 168 })
                     .then(res => {
                         this.schedule = res.data;

@@ -110,9 +110,23 @@
 }
 .viewinfo {
     background-color: #FFFAFA;
-    border-radius:5px;
-    width:100%;
-    margin-left:10px;
+    border-radius: 5px;
+    width: 100%;
+    margin-left: 0px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.tag {
+    border-radius: 5px;
+    background-color: #B0C4DE;
+    color:snow;
+    padding: 5px;
+    font-size: 14px;
+}
+.row {
+    margin-left: 0px !important;
+}
+.tagbar{
+    margin-top:10px;
 }
 
 @keyframes shine {

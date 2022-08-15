@@ -20,13 +20,6 @@ ViewData["Title"] = "blog";
 <style>
         
 
-    /* #setting {
-        position: fixed;
-        top:70vh;
-        right: 8%;
-        font-size: 20px;
-        z-index:5;
-    }*/
 </style>
 
 
@@ -75,9 +68,6 @@ ViewData["Title"] = "blog";
     //              });
   
     //          });
-
-
-
 
 
     $(function () {
@@ -377,7 +367,7 @@ ViewData["Title"] = "blog";
                     <!-- Tag Cloud -->
                     <div class="mb-4">
                         <h2 class="mb-2">#Tag</h2>
-                        <div class="d-flex flex-wrap m-n1">
+                        <div class="d-flex flex-wrap m-n1">                         
                             <button class="btn btn-primary m-1">溫泉</button>
                             <button class="btn btn-primary m-1">生態</button>
                             <button class="btn btn-primary m-1">小吃特產</button>
@@ -415,7 +405,7 @@ ViewData["Title"] = "blog";
                                     id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')" 
-                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker" @@onchange="copyblog"></li>
+                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
                                 </ul>
                             </div>
 
@@ -427,11 +417,11 @@ ViewData["Title"] = "blog";
                     </div>
                 </div>
                 <div class="mb-4">
-                    <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px" alt="Image" />
+                    <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
                     <p class="mb-2">{{describe}}</p>
 
                     <div v-for="(day,dayIndex) in Details">
-                        <label id="day">第{{dayIndex+1}}天</label>
+                        <label id="day" class="my-3">第{{dayIndex+1}}天</label>
                         <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
                             <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
                             <div class="mb-1"><i class="fa-solid fa-house-crack"
@@ -444,12 +434,14 @@ ViewData["Title"] = "blog";
                                     @@load="myscore=item"></i>
                             </div>
 
-                            <p>{{dayDetails.describe}}</p>I am Describe<br>
+                            
                             <div v-viewer class="groupimg img-fluid">
                                 <template v-for="(image,index) in dayDetails.images">
                                     <img :src="getImages(image.name)">
                                 </template>
                             </div>
+
+                            <p>{{dayDetails.describe}}</p>I am Describe<br>
 
                         </div>
                     </div>

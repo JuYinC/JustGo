@@ -1,6 +1,7 @@
 
 .navbarC{
     background-color: #8a8a8a;
+    z-index:6;
 }
 
 #bloginfo {
@@ -159,3 +160,4 @@ img {
     height: 100%;
     object-fit: cover;
 }
+

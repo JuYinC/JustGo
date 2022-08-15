@@ -2,21 +2,40 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav flex-grow-1 d-flex justify-content-end align-items-center ">
 @if (SignInManager.IsSignedIn(User))
 {
     var user = await UserManager.GetUserAsync(User);
     ViewBag.name = "user.jpg";
 
     <li class="nav-item">
-       @* <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">您好, @User.Identity?.Name!</a>*@
-       <img class="u-img" src="~/file/photo/@ViewBag.name"></img>
+        <a  asp-area="" asp-controller="Home" asp-action="itinerary">規劃行程</a>
     </li>
     <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <a asp-area="" asp-controller="Home" asp-action="check">檢視行程</a>
+    </li>
+    <li class="nav-item">
+        <a  asp-area="" asp-controller="Home" asp-action="UserCatelog">會員資訊</a>
+    </li>
+     <li class="nav-item">
+        <img class="u-img" src="~/file/photo/@ViewBag.name"></img>
+    </li>
+    <li class="nav-item">
+         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark">登出</button>
         </form>
     </li>
+
+    <!-- <li class="nav-item">
+            <li class="nav-item">
+            @* <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">您好, @User.Identity?.Name!</a>*@
+            <img class="u-img" src="~/file/photo/@ViewBag.name"></img>
+            </li>
+        
+            <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button  type="submit" class="nav-link btn btn-link text-dark">登出</button>
+            </form>
+    </li> -->
 }
 else
 {

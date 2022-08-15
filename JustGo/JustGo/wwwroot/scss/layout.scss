@@ -7,13 +7,13 @@
 }
 
 @media only screen and (max-width: 576px) {
-  
- 
+    
 
 
     .navbarC {
         z-index: 3;
         background-color: #fdc11d;
+       
       
        
 
@@ -32,6 +32,7 @@
                 color: #fff;
                 text-decoration: none;
                 font-size: 1.5rem;
+                filter: drop-shadow(2px 4px 6px black);
             }
         }
     
@@ -39,6 +40,7 @@
     
         &__logo {
           height: 45px;
+          filter: drop-shadow(2px 4px 6px black);
         }
         #check{display:none}
 
@@ -223,6 +225,7 @@
     justify-content: space-between;
 
     z-index: 3;
+    min-width: 960px;
 
 
     // background-color: rgb(25, 99, 99);

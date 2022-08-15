@@ -15,9 +15,11 @@
     .navbarC #navbarC__menu li a {
       color: #fff;
       text-decoration: none;
-      font-size: 1.5rem; }
+      font-size: 1.5rem;
+      filter: drop-shadow(2px 4px 6px black); }
     .navbarC__logo {
-      height: 45px; }
+      height: 45px;
+      filter: drop-shadow(2px 4px 6px black); }
     .navbarC #check {
       display: none; }
     .navbarC .checkbtn {
@@ -134,7 +136,8 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    z-index: 3; }
+    z-index: 3;
+    min-width: 960px; }
     .navbarC li {
       list-style: none; }
     .navbarC__logo {

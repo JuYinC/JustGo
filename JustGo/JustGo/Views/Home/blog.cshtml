@@ -154,11 +154,11 @@
                 //    ],
                 //],
                 blogId : 0,
-                UserName: ["Alley"],
-                UserImage: "Shinnosuke6.png",
+                UserName:"Alley",
+                UserImage: "2208121714164777.jpg",
                 CoverImageName: "coverimage.jpg",
                 Title: '三天兩夜台東之旅',
-                describe: '美好旅程的回憶從JustGO開始',
+                describe: '旅遊從just go開始',
                 StartDate: null,
                 EndDate: null,
                 bool:false,
@@ -339,8 +339,8 @@
                             <div class="py-3">
                                 <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                             </div>
-                            <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
-                            <div class="mb-2">美好旅程的回憶從JustGO開始</div>
+                            <h4 class="mb-2 py-1">{{UserName}}</h4>
+                            <div class="mb-2">美好旅程的回憶從just go開始</div>
                         </div>
     
                          <div class="mb-4">
@@ -369,12 +369,12 @@
                                 <button class="btn btn-primary m-1">生態</button>
                                 <button class="btn btn-primary m-1">小吃特產</button>
                                 <button class="btn btn-primary m-1">國家公園</button>
-                                <button class="btn btn-primary m-1">休閒農業</button>
+                                @*<button class="btn btn-primary m-1">休閒農業</button>*@
                             </div>
                         </div>
     
                         <!-- Recent Post -->
-                        <div class="mb-4">
+                        @*<div class="mb-4">
                             <div class="d-flex align-items-center shadow-sm rounded overflow-hidden" id="card">
                                 <div class="box">
                                     <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/female" alt="">
@@ -384,7 +384,7 @@
                                     <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
                 @*左側欄位*@
@@ -407,7 +407,7 @@
                                 </div>
                                 
                                 <div style="line-height:30px;font-size:18px;"><i :class="bool?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
-                                    <span class="px-1"> &nbsp; {{Like}}</span></div>
+                                    <span class="px-1">{{Like}}</span></div>
                                 </div>
     
                         </div>
@@ -437,7 +437,7 @@
                                     </template>
                                 </div>
     
-                                <p>{{dayDetails.describe}}</p>I am Describe<br>
+                                <p class="py-2">{{dayDetails.describe}}test</p>
     
                             </div>
                         </div>
@@ -447,7 +447,7 @@
     
                     <!-- Comment List 替換為fb 待DOM-->
     
-                    <div class="mb-5">
+                    @*<div class="mb-5">
                         <h2 class="mb-4">3 Comments</h2>
                          <div id="fb-root"></div>
                         <script async defer crossorigin="anonymous"
@@ -456,7 +456,7 @@
                         <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
                             data-numposts="5"></div>
     
-                    </div>
+                    </div>*@
             </div>
         </div>
     </div>

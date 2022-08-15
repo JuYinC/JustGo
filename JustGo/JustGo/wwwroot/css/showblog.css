@@ -1,7 +1,7 @@
 
-.navbarC{
+.navbarC {
     background-color: #8a8a8a;
-    z-index:6;
+    z-index: 6;
 }
 
 #bloginfo {
@@ -78,7 +78,6 @@
         background-color: #084887 !important;
         color: #fff !important;
         border: none !important;
-
     }
 
 
@@ -95,7 +94,6 @@
     margin: 10px -10px;
     display: row;
     flex-wrap: wrap;
-    
 }
 
     .groupimg > img {
@@ -134,7 +132,7 @@
 
 @media only screen and (max-width: 576px) {
     #hidden {
-        display:none;
+        display: none;
     }
 }
 
@@ -152,7 +150,7 @@ img {
 }
 
 .box:hover img {
-    transform: scale(1.2);
+    transform: scale(1.4);
 }
 
 .cover-fit {
@@ -160,4 +158,3 @@ img {
     height: 100%;
     object-fit: cover;
 }
-

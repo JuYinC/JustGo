@@ -96,11 +96,35 @@
 
      let id = window.location.search.substring(1)
             if (id != "") {
-                $('.arrange__contain-video').css('height','0')
+              $('.arrange__contain-video').css('height','0')
                  setTimeout(function(){
                        $('.arrange__contain-video').css('display','none')  
                  },200);
                  $('#navbarC').addClass("sticky")
+                $('.datepicker').css('display', 'none')
+                $('.datepicker__content').css({
+                    'top': '5%',
+                    'left': '30%',
+                    'z-index': '5',
+                    'width': '30%',
+                    'display': 'unset',
+                })
+                $('#app input').css({
+                    'min-width': '30%',
+                    'font-size': '1.4rem',
+                }).focus().css('max-width', '30%')
+                $('#app button').css({
+                    'font-size': '1rem',
+                    'width': '35%',
+                    'padding': '0',
+                    'border-radius': '0',
+                    'background': 'transparent',
+                    'color': 'black',
+                    'border': '2px solid',
+
+                })
+                $('#app button')[0].textContent = "更新日期"
+
             }
 
 
@@ -157,6 +181,8 @@
             directionsRenderer: null,
             daysindex: 0,
             isTravel: false,
+            title : "行程",
+            scheduleId : 0,
             icon: [ // Marker icon
                 { // 一般景點
                     url: "@Url.Content("~/file/photo/mountain.png")",
@@ -438,63 +464,7 @@
                             townWeather.push(object);
                         };
                     })
-                    switch (position.class) {
-                        case 1:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[0]
-                            break;
-                        case 2:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[1]
-                            break;
-                        case 3:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[2]
-                            break;
-                        case 4:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[3]
-                            break;
-                        case 5:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[4]
-                            break;
-                        case 6:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[5]
-                            break;
-                        case 7:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[6]
-                            break;
-                        case 8:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[7]
-                            break;
-                        case 9:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[8]
-                            break;
-                        case 10:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[9]
-                            break;
-                        case 11:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[10]
-                            break;
-                        case 12:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[11]
-                            break;
-                        case 13:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[12]
-                            break;
-                        case 14:
-                            iconPlace = state.icon[0]
-                            infopic = state.infoPicture[13]
-                            break;
+                    switch (position.class) {                                                                           
                         case 15:
                             iconPlace = state.icon[1]
                             infopic = state.infoPicture[14]
@@ -505,7 +475,8 @@
                             break;
                         default:
                             iconPlace = state.icon[0]
-                            infopic = state.infoPicture[7]
+                            infopic = state.infoPicture[position.class-1]
+                            break; 
                     }
 
                     const marker = new google.maps.Marker({
@@ -665,75 +636,20 @@
                                 icon: state.icon[3],
                             });
                             bounds.extend(marker.position);
-                            switch (position.class) {
-                                case 1:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[0]
-                                    break;
-                                case 2:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[1]
-                                    break;
-                                case 3:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[2]
-                                    break;
-                                case 4:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[3]
-                                    break;
-                                case 5:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[4]
-                                    break;
-                                case 6:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[5]
-                                    break;
-                                case 7:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[6]
-                                    break;
-                                case 8:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[7]
-                                    break;
-                                case 9:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[8]
-                                    break;
-                                case 10:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[9]
-                                    break;
-                                case 11:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[10]
-                                    break;
-                                case 12:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[11]
-                                    break;
-                                case 13:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[12]
-                                    break;
-                                case 14:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[13]
-                                    break;
-                                case 15:
-                                    iconPlace = state.icon[1]
-                                    infopic = state.infoPicture[14]
-                                    break;
-                                case 16:
-                                    iconPlace = state.icon[2]
-                                    infopic = state.infoPicture[15]
-                                    break;
-                                default:
-                                    iconPlace = state.icon[0]
-                                    infopic = state.infoPicture[7]
-                            }
+                            switch (position.class) {                                                                           
+                        case 15:
+                            iconPlace = state.icon[1]
+                            infopic = state.infoPicture[14]
+                            break;
+                        case 16:
+                            iconPlace = state.icon[2]
+                            infopic = state.infoPicture[15]
+                            break;
+                        default:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[position.class-1]
+                            break; 
+                    }
                             // 產生infowindow
                             let contentString =
                                 `
@@ -863,75 +779,20 @@
                             icon: state.icon[3],
                         });
                         bounds.extend(marker.position);
-                        switch (position.class) {
-                            case 1:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[0]
-                                break;
-                            case 2:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[1]
-                                break;
-                            case 3:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[2]
-                                break;
-                            case 4:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[3]
-                                break;
-                            case 5:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[4]
-                                break;
-                            case 6:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[5]
-                                break;
-                            case 7:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[6]
-                                break;
-                            case 8:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[7]
-                                break;
-                            case 9:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[8]
-                                break;
-                            case 10:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[9]
-                                break;
-                            case 11:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[10]
-                                break;
-                            case 12:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[11]
-                                break;
-                            case 13:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[12]
-                                break;
-                            case 14:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[13]
-                                break;
-                            case 15:
-                                iconPlace = state.icon[1]
-                                infopic = state.infoPicture[14]
-                                break;
-                            case 16:
-                                iconPlace = state.icon[2]
-                                infopic = state.infoPicture[15]
-                                break;
-                            default:
-                                iconPlace = state.icon[0]
-                                infopic = state.infoPicture[7]
-                        }
+                        switch (position.class) {                                                                           
+                        case 15:
+                            iconPlace = state.icon[1]
+                            infopic = state.infoPicture[14]
+                            break;
+                        case 16:
+                            iconPlace = state.icon[2]
+                            infopic = state.infoPicture[15]
+                            break;
+                        default:
+                            iconPlace = state.icon[0]
+                            infopic = state.infoPicture[position.class-1]
+                            break; 
+                    }
                         // 產生infowindow
                         let contentString =
                             `
@@ -1116,7 +977,7 @@
                     let startTime = new Date(status.startDate)
                     let endTime = new Date(status.endDate)
                     let endTime2 = new Date(status.details[0][0].startTime)
-
+                    state.scheduleId = status.scheduleId
                     for (let i = 0; i < status.details.length; i++) {
                         this.state.travel.push([])
                         this.state.duringDate.push(startTime.toLocaleDateString())
@@ -1255,7 +1116,7 @@
                 selectDatelocal: [],
                 selectDateEndlocal: [],
                 saveData: [],
-                moveup:100
+               
             }
         },
         computed: {
@@ -1268,14 +1129,33 @@
             duringDate() {
                 return this.$store.state.duringDate
             },
+
            
         },
-        mounted() {            
+        mounted() {
+            console.log("mounted")
+            let id = window.location.search.substring(1)
+            if (id != "") {
+                this.$store.dispatch('axiosLoad', { ScheduleId: id })
+            }
+            console.log(this.duringDates)
+            //let arr = this.duringDate[0].split('/');
+
+            //this.selectDatelocal=new Date(arr[0],arr[1],arr[2])
+
+
+                this.selectDateEndlocal=this.duringDate[this.duringDate.length-1]
+                console.log(this.selectDatelocal)
+            if(this.duringDate.length>0){
+                
+                
+            }
+            
         },
         methods: {
             moveTime(){
                 if (window.innerWidth > 401) {
-                    if ($('#st').val() && $('#et').val()) {
+                    if ($('#st').val() && $('#et').val() ) {
 
                         $('.arrange__contain-video').css('height', '0')
                         $('.datepicker').css('display', 'none')
@@ -1434,7 +1314,7 @@
                 },
                 duringDate() {
                     return this.$store.state.duringDate
-                }
+                },                
             },
 
             mounted() {
@@ -1710,6 +1590,7 @@
                     selectDatelocal: [],
                     selectDateEndlocal: [],
                     saveData: [],
+                    title:"",
                 }
             },
 
@@ -1733,8 +1614,7 @@
                 },
                 datetime() {
                     return this.$store.state.datetime
-                },
-
+                },                
             },
             methods: {
                 culDate() {
@@ -1829,24 +1709,27 @@
 
 
                 },
+                setTitle(){                    
+                    this.$store.state.title = this.title;                    
+                }
             },
-
+            
             template:
                 `   <div >
-                                            <h3>預設自訂行程1</h3>
-                                            <div>
-
-
+                                            
+                                            
+                                        <div>
+                                            <input type="text" @@input="setTitle()" v-model="title"/>
                                             </div>
                                                 <ul class="daysbox" :style="move">
                                                 <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>
                                                 </ul>
 
                                             <div class="btnbox-l" @@click="tor">
-                                                    <i class="fa-solid fa-angle-left left"></i>
+                                                    <i class="fas fa-caret-square-left left"></i>
                                             </div>
                                             <div class="btnbox-r" @@click="tol">
-                                                    <i class="fa-solid fa-angle-right right"></i>
+                                                  <i class="fas fa-caret-square-right right"></i>
                                             </div>
                                         </div>
                                     `
@@ -1874,61 +1757,57 @@
             },
         },
         mounted() {
-            let id = window.location.search.substring(1)
-            if (id != "") {
-                this.$store.dispatch('axiosLoad', { ScheduleId: id })
 
-            }
         },
         methods: {
             //編排日期
-            culDate() {
+            //culDate() {
 
-                let startTime = new Date(this.selectDatelocal)
-                let endTime = new Date(this.selectDateEndlocal)
-                let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
-                //console.log(day)
-                this.duringDate.length = 0
-                this.datetime.length = 0
+            //    let startTime = new Date(this.selectDatelocal)
+            //    let endTime = new Date(this.selectDateEndlocal)
+            //    let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
+            //    //console.log(day)
+            //    this.duringDate.length = 0
+            //    this.datetime.length = 0
 
-                if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
+            //    if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
 
-                    for (let i = 0; i < day; i++) {
-                        this.duringDate.push(startTime.toLocaleDateString())
-                        startTime = startTime.setDate(startTime.getDate() + 1)
-                        startTime = new Date(startTime)
-                        this.datetime.push('09:00')
-                    }
+            //        for (let i = 0; i < day; i++) {
+            //            this.duringDate.push(startTime.toLocaleDateString())
+            //            startTime = startTime.setDate(startTime.getDate() + 1)
+            //            startTime = new Date(startTime)
+            //            this.datetime.push('09:00')
+            //        }
 
-                    if (this.travel.length == 0) {
-                        for (let i = 0; i < day; i++) {
-                            this.travel.push([])
-                        }
-                    } else if (this.travel.length <= day) {
-                        let daydiff = day - this.travel.length
-                        console.log(daydiff)
-                        for (let i = 0; i < daydiff; i++) {
-                            this.travel.push([])
-                        }
+            //        if (this.travel.length == 0) {
+            //            for (let i = 0; i < day; i++) {
+            //                this.travel.push([])
+            //            }
+            //        } else if (this.travel.length <= day) {
+            //            let daydiff = day - this.travel.length
+            //            console.log(daydiff)
+            //            for (let i = 0; i < daydiff; i++) {
+            //                this.travel.push([])
+            //            }
 
-                    } else if (this.travel.length > day) {
+            //        } else if (this.travel.length > day) {
 
-                        let daydiff = this.travel.length - day
-                        for (let i = 0; i < daydiff; i++) {
-                            let lastIndex = this.travel.length - 1
+            //            let daydiff = this.travel.length - day
+            //            for (let i = 0; i < daydiff; i++) {
+            //                let lastIndex = this.travel.length - 1
 
-                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
-                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
-                            }
-                            this.travel.pop()
-                        }
-                        this.$store.commit("cultime")
-                    }
+            //                for (let j = 0; j < this.travel[lastIndex].length; j++) {
+            //                    this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
+            //                }
+            //                this.travel.pop()
+            //            }
+            //            this.$store.commit("cultime")
+            //        }
 
-                } else {
-                    alert('重新選擇日期')
-                }
-            },
+            //    } else {
+            //        alert('重新選擇日期')
+            //    }
+            //},
 
             //儲存行程
             saveSchedule() {
@@ -1946,10 +1825,11 @@
 
                 this.$store.dispatch('axiosSave',
                     {
+                        ScheduleId : this.$store.state.scheduleId,
                         StartDate: new Date(this.duringDate[0]),
                         EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
                         WeatherWarning: false,
-                        title: "123",
+                        title: this.$store.state.title,
                         details: this.saveData,
                     })
                 alert("儲存成功")
@@ -1957,20 +1837,7 @@
         },
     })
 
-    // new Vue({
-    //     el:'moveup'
-    //     date:{
-    //         h:100
-    //     },
-    //     computed:{
-    //         x(){
-    //             return{
-    //                 height:this.h +''
-    //             }
-    //         }
-    //     }
 
-    // })
 
 </script>
 

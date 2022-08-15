@@ -16,12 +16,7 @@ namespace JustGo.Controllers
         {
             _place = place;
             _schedule = schedule;
-            _logger = logger;
-            //BlogVM vm = new BlogVM();
-            //vm.StartDate = DateTime.Now;
-            //vm.UserId = "862c02ac-67e1-461f-ac15-74b166c0a1e4";
-            //vm.BlogId = 84;
-            //_schedule.copyScheduleByBlog(vm);
+            _logger = logger;            
         }
 
         [HttpPost]

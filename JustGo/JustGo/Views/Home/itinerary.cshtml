@@ -1354,7 +1354,7 @@
                                             </div>
                                             <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
                                             
-                                            <div class="row cols-2">
+                                            <div class="row cols-2" v-if="veiwIndex<day.length-1">
                                                 <div class="col-2">
                                                 </div>
                                                 <div class="col-10 betweenBox">

@@ -4,7 +4,7 @@
 html {
   /* width: 1800px;  */
   font-size: 10px;
-  font-family: 'Noto Sans TC', sans-serif;;
+  font-family: 'Noto Sans TC', sans-serif;
   position: relative;
   
  /* min-height: 100%;*/
@@ -183,7 +183,7 @@ body {
     padding: 5px;
     margin: 5px;
     text-align: justify;
-    text-justify: inter-ideograph;
+    /*text-justify: inter-ideograph;*/
     font-size: 13px;
     background-color: #FBF8D6;
     border-radius: 5px;

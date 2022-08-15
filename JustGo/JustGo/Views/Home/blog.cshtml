@@ -453,8 +453,948 @@
                             </div>
                         </div>
     
+                    </div>@{
+    Layout = "_Layout";
+    }
+    @{
+    ViewData["Title"] = "blog";
+    }
+    @section Style{
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    
+    
+    
+    <style>
+            
+    
+    </style>
+    
+    
+    }
+    
+    
+    
+    @section Scripts{
+    <script src="~/js/site.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    
+    <script>
+    
+        $("body").attr('data-bs-spy', 'scroll')
+        $("body").attr('data-bs-target', '#list-example')
+        $("body").attr('data-bs-offset', '0')
+        $("body").attr('tabindex', '0')
+    
+        Vue.use(VueViewer.default)
+        console.log(VueViewer.default)
+    
+    
+        //$(function () {
+        //              $('input[name="daterange"]').daterangepicker({
+        //                  locale: {
+        //                      format: 'YYYY/MM/DD',
+        //                  },
+        //                  opens: 'right'
+        //              }, function (start, end) {
+        //                  console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+        //              });
+        //              $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+        //                  $(this).val('');
+        //              }).on("hide.daterangepicker", function (ev) {
+        //                  this.dispatchEvent(new Event('input'))
+        //              });
+      
+        //          });
+    
+    
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log(start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+            }).on("hide.daterangepicker", function (ev) {
+                          this.dispatchEvent(new Event('input'))
+            });
+        });
+    
+        let id = 0;
+        let vm = new Vue({
+            el: `#bloginfo`,
+            data: {
+                Details: [
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "北部1",
+                            p_tel: "07-123456",
+                            p_Add: "台北市",
+                            describe: "",
+                            score: 5,
+                            images: { Name: "2208111103103186.jpg", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "高雄2",
+                            p_tel: "02-123456",
+                            p_Add: "高雄市",
+                            describe: "",
+                            score: 3,
+                            images: { Name: "2208111103108543.png", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台中3",
+                            p_tel: "04-123456",
+                            p_Add: "台中市",
+                            describe: "",
+                            score: 4,
+                            images: { Name: "2208111103108981.png", base64: "" },
+                        }
+    
+                    ],
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台南4",
+                            p_tel: "06-123456",
+                            p_Add: "台南市",
+                            describe: "",
+                            score: 5,
+                            images: { Name: "2208111103109487.jpg", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "花蓮5",
+                            p_tel: "123456",
+                            p_Add: "花蓮市",
+                            describe: "",
+                            score: 1,
+                            images: { Name: "2208111108357791.jpg", base64: "" },
+                        },
+    
+    
+                    ],
+                ],
+                blogId : 0,
+                UserName: ["Alley"],
+                UserImage: "Shinnosuke6.png",
+                CoverImageName: "coverimage.jpg",
+                Title: '三天兩夜台東之旅',
+                describe: '美好旅程的回憶從JustGO開始',
+                StartDate: null,
+                EndDate: null,
+                KeepClass:0,
+                Like:0,
+                daterange: null,
+                myscore: this.score,
+                mytempscore: this.score
+    
+            },
+            props: {
+                count: {
+                    type: Number,
+                    default: 5
+                },
+                score: {
+                    type: Number,
+                    default: 1
+                },
+                color: {
+                    type: String,
+                    default: '#FFC100'
+                }
+            },
+            methods: {
+                getImages(loadimagesName) {
+                    return "@Url.Content("~/blogImages")/"+loadimagesName
+                },
+                userImageSrc(imageName) {
+                    return "@Url.Content("~/UserImages")/"+imageName                       
+                },
+                getdate(date) {
+                    return moment(date).format('YYYY/MM/DD')
+                },
+                gettime(time) {
+                    return moment(time).format('A HH')
+                },
+                gethref(dayIndex, viewIndex) {
+                    return "#list-item-" + dayIndex + "-" + viewIndex
+                },
+                getanchor(dayIndex, viewIndex) {
+                    return "list-item-" + dayIndex + "-" + viewIndex
+                },
+                copyURL: function () {
+                    let myurl = document.createElement('input')
+                    geturl = window.location.toString()
+                    document.body.appendChild(myurl);
+                    myurl.value = geturl;
+                    myurl.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(myurl);
+                },
+                copyblog: function () {
+                        if (id != "") {
+                            axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
+                                this.Details = res.data.details;
+                                this.EndDate = res.data.endDate;
+                                this.StartDate = res.data.startDate;
+                                this.Title = res.data.title;
+                                this.describe = res.data.describe;
+                                //取得的日期
+                                this.daterange = res.data.daterange;
+                                alert("已收藏[" + this.Title + "]到會員列表!")
+                            }
+                            )
+                        }
+        
+                 },
+                 likeblog: function () {
+                        //var KeepClass = document.getElementsByClassName("KeepClass");
+                        //var KeepClass;
+                     axios.post("@Url.Action("userKeepBlog","Blog")", {id:this.blogId}).then(() => {
+                         if (this.KeepClass == 1) {
+                             console.log(0)
+                             this.KeepClass = 0;
+                         } else {
+                             console.log(1)
+                             this.KeepClass = 1;
+                         }
+                     })                     
+                 },
+                 savelike() {    
+                                
+                                axios.post("@Url.Action("userKeepBlog","Blog")", { BlogId: id, }).then(res => {
+                                this.KeepNumber = res.data.keepNumber;
+                              
+                            })
+                 },
+                onChange(dayIndex) {
+    
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+    
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+    
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+    
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+                caltime(dayIndex) {
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+    
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+    
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+    
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+    
+            },
+            mounted() {
+                let id = window.location.search.substring(1)
+                if (id != "") {
+                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
+                        console.log(res.data);
+                        this.blogId = res.data.blogId;
+                        this.CoverImageName = res.data.coverImage;
+                        this.Details = res.data.details;
+                        this.EndDate = res.data.endDate;
+                        this.StartDate = res.data.startDate;
+                        this.Title = res.data.title;
+                        this.describe = res.data.describe;
+                        //getIsKeep
+                        this.Like = res.data.like;
+                        axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
+                            console.log(res.data);                    
+                        //this.KeepNumber = res.data.keepNumber;
+                        this.KeepClass = res.data;
+                        })
+                    })
+                }
+    
+    
+            },
+        },
+        )
+    
+    </script>
+    }
+    
+    
+    <div id="bloginfo">
+            <div class="d-flex flex-column align-items-center justify-content-center"
+                style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            </div>
+        <!-- Header End -->
+    
+        <!-- 右側欄位Detail Start -->
+        <div class="container py-3">
+            <div class="row pt-5">
+                <div class="col-lg-4 mt-4 mt-lg-2 ">
+                    <div class="sticky-top" style="top:10vh">
+                        <!-- Author Bio -->
+                        <div class="d-flex flex-column rounded py-4">
+                            <div class="py-3">
+                                <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                               
+                            </div>
+                            <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
+                            <div class="mb-2">美好旅程的回憶從JustGO開始</div>
+                        </div>
+    
+                         <div class="mb-4">
+                            <h2 class="mb-2">Duration</h2>
+                            <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
+                            <ul class="list-group list-group-flush" id="hidden">
+                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                                    
+                                    <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                        <a class="list-group-item list-group-item-action"
+                                            :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                            {{dayDetails.p_Name}}</a>
+                                    </li>
+                                   
+                                </div>
+                            </ul>
+                        </div>
+    
+    
+                        <!-- Tag Cloud -->
+                        <div class="mb-4">
+                            <h2 class="mb-2">#Tag</h2>
+                            <div class="d-flex flex-wrap m-n1">                         
+                                <button class="btn btn-primary m-1">溫泉</button>
+                                <button class="btn btn-primary m-1">生態</button>
+                                <button class="btn btn-primary m-1">小吃特產</button>
+                                <button class="btn btn-primary m-1">國家公園</button>
+                                <button class="btn btn-primary m-1">休閒農業</button>
+                            </div>
+                        </div>
+    
+                        <!-- Recent Post -->
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center shadow-sm rounded overflow-hidden" id="card">
+                                <div class="box">
+                                    <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/female" alt="">
+                                </div>
+                                <div >
+                                    <h5 class="">{{Title}}</h5>
+                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*左側欄位*@
+                <div class="col-lg-8">
+                    <div class="d-flex flex-column text-left mb-3">
+                        
+                        <div>
+                            <h1 class="my-3">{{Title}}</h1>
+                            <div class="d-flex">
+    
+                                <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
+    
+                                <div class="dropdown me-2" id="setting" >
+                                    <button class="btn btn-primary dropdown-toggle m-1"  type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')" 
+                                                onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+                                    </ul>
+                                </div>
+    
+                                
+                                <div style="line-height:30px"><i :class="KeepClass == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
+                                    <span class="px-1"> &nbsp; @*{{KeepNumber}}*@ {{KeepClass}}</span></div>
+                                </div>
+    
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
+                        <p class="mb-2">{{describe}}</p>
+    
+                        <div v-for="(day,dayIndex) in Details">
+                            <label id="day" class="my-3">第{{dayIndex+1}}天</label>
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                                <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
+                                <div class="mb-1"><i class="fa-solid fa-house-crack"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                                <div class="mb-1"><i class="fa-solid fa-phone"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                                <div>評分&nbsp;
+                                    <i class="fa fa-star" :style="{color:color}"
+                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                        @@load="myscore=item"></i>
+                                </div>
+    
+                                
+                                <div v-viewer class="groupimg img-fluid">
+                                    <template v-for="(image,index) in dayDetails.images">
+                                        <img :src="getImages(image.name)">
+                                    </template>
+                                </div>
+    
+                                <p>{{dayDetails.describe}}</p>I am Describe<br>
+    
+                            </div>
+                        </div>
+    
                     </div>
     
+    
+                    <!-- Comment List 替換為fb 待DOM-->
+    
+                    <div class="mb-5">
+                        <h2 class="mb-4">3 Comments</h2>
+                         <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous"
+                            src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
+                            nonce="NqM9iieh"></script>
+                        <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
+                            data-numposts="5"></div>
+    
+                    </div>
+            </div>
+        </div>
+    </div>
+    @{
+    Layout = "_Layout";
+    }
+    @{
+    ViewData["Title"] = "blog";
+    }
+    @section Style{
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    
+    
+    
+    <style>
+            
+    
+    </style>
+    
+    
+    }
+    
+    
+    
+    @section Scripts{
+    <script src="~/js/site.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    
+    <script>
+    
+        $("body").attr('data-bs-spy', 'scroll')
+        $("body").attr('data-bs-target', '#list-example')
+        $("body").attr('data-bs-offset', '0')
+        $("body").attr('tabindex', '0')
+    
+        Vue.use(VueViewer.default)
+        console.log(VueViewer.default)
+    
+    
+        //$(function () {
+        //              $('input[name="daterange"]').daterangepicker({
+        //                  locale: {
+        //                      format: 'YYYY/MM/DD',
+        //                  },
+        //                  opens: 'right'
+        //              }, function (start, end) {
+        //                  console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+        //              });
+        //              $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+        //                  $(this).val('');
+        //              }).on("hide.daterangepicker", function (ev) {
+        //                  this.dispatchEvent(new Event('input'))
+        //              });
+      
+        //          });
+    
+    
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log(start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+            }).on("hide.daterangepicker", function (ev) {
+                          this.dispatchEvent(new Event('input'))
+            });
+        });
+    
+        let id = 0;
+        let vm = new Vue({
+            el: `#bloginfo`,
+            data: {
+                Details: [
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "北部1",
+                            p_tel: "07-123456",
+                            p_Add: "台北市",
+                            describe: "",
+                            score: 5,
+                            images: { Name: "2208111103103186.jpg", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "高雄2",
+                            p_tel: "02-123456",
+                            p_Add: "高雄市",
+                            describe: "",
+                            score: 3,
+                            images: { Name: "2208111103108543.png", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台中3",
+                            p_tel: "04-123456",
+                            p_Add: "台中市",
+                            describe: "",
+                            score: 4,
+                            images: { Name: "2208111103108981.png", base64: "" },
+                        }
+    
+                    ],
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台南4",
+                            p_tel: "06-123456",
+                            p_Add: "台南市",
+                            describe: "",
+                            score: 5,
+                            images: { Name: "2208111103109487.jpg", base64: "" },
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "花蓮5",
+                            p_tel: "123456",
+                            p_Add: "花蓮市",
+                            describe: "",
+                            score: 1,
+                            images: { Name: "2208111108357791.jpg", base64: "" },
+                        },
+    
+    
+                    ],
+                ],
+                blogId : 0,
+                UserName: ["Alley"],
+                UserImage: "Shinnosuke6.png",
+                CoverImageName: "coverimage.jpg",
+                Title: '三天兩夜台東之旅',
+                describe: '美好旅程的回憶從JustGO開始',
+                StartDate: null,
+                EndDate: null,
+                KeepClass:0,
+                Like:0,
+                daterange: null,
+                myscore: this.score,
+                mytempscore: this.score
+    
+            },
+            props: {
+                count: {
+                    type: Number,
+                    default: 5
+                },
+                score: {
+                    type: Number,
+                    default: 1
+                },
+                color: {
+                    type: String,
+                    default: '#FFC100'
+                }
+            },
+            methods: {
+                getImages(loadimagesName) {
+                    return "@Url.Content("~/blogImages")/"+loadimagesName
+                },
+                userImageSrc(imageName) {
+                    return "@Url.Content("~/UserImages")/"+imageName                       
+                },
+                getdate(date) {
+                    return moment(date).format('YYYY/MM/DD')
+                },
+                gettime(time) {
+                    return moment(time).format('A HH')
+                },
+                gethref(dayIndex, viewIndex) {
+                    return "#list-item-" + dayIndex + "-" + viewIndex
+                },
+                getanchor(dayIndex, viewIndex) {
+                    return "list-item-" + dayIndex + "-" + viewIndex
+                },
+                copyURL: function () {
+                    let myurl = document.createElement('input')
+                    geturl = window.location.toString()
+                    document.body.appendChild(myurl);
+                    myurl.value = geturl;
+                    myurl.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(myurl);
+                },
+                copyblog: function () {
+                        if (id != "") {
+                            axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
+                                this.Details = res.data.details;
+                                this.EndDate = res.data.endDate;
+                                this.StartDate = res.data.startDate;
+                                this.Title = res.data.title;
+                                this.describe = res.data.describe;
+                                //取得的日期
+                                this.daterange = res.data.daterange;
+                                alert("已收藏[" + this.Title + "]到會員列表!")
+                            }
+                            )
+                        }
+        
+                 },
+                 likeblog: function () {
+                        //var KeepClass = document.getElementsByClassName("KeepClass");
+                        //var KeepClass;
+                     axios.post("@Url.Action("userKeepBlog","Blog")", {id:this.blogId}).then(() => {
+                         if (this.KeepClass == 1) {
+                             console.log(0)
+                             this.KeepClass = 0;
+                         } else {
+                             console.log(1)
+                             this.KeepClass = 1;
+                         }
+                     })                     
+                 },
+                 savelike() {    
+                                
+                                axios.post("@Url.Action("userKeepBlog","Blog")", { BlogId: id, }).then(res => {
+                                this.KeepNumber = res.data.keepNumber;
+                              
+                            })
+                 },
+                onChange(dayIndex) {
+    
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+    
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+    
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+    
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+                caltime(dayIndex) {
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+    
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+    
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+    
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+    
+            },
+            mounted() {
+                let id = window.location.search.substring(1)
+                if (id != "") {
+                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
+                        console.log(res.data);
+                        this.blogId = res.data.blogId;
+                        this.CoverImageName = res.data.coverImage;
+                        this.Details = res.data.details;
+                        this.EndDate = res.data.endDate;
+                        this.StartDate = res.data.startDate;
+                        this.Title = res.data.title;
+                        this.describe = res.data.describe;
+                        //getIsKeep
+                        this.Like = res.data.like;
+                        axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
+                            console.log(res.data);                    
+                        //this.KeepNumber = res.data.keepNumber;
+                        this.KeepClass = res.data;
+                        })
+                    })
+                }
+    
+    
+            },
+        },
+        )
+    
+    </script>
+    }
+    
+    
+    <div id="bloginfo">
+            <div class="d-flex flex-column align-items-center justify-content-center"
+                style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            </div>
+        <!-- Header End -->
+    
+        <!-- 右側欄位Detail Start -->
+        <div class="container py-3">
+            <div class="row pt-5">
+                <div class="col-lg-4 mt-4 mt-lg-2 ">
+                    <div class="sticky-top" style="top:10vh">
+                        <!-- Author Bio -->
+                        <div class="d-flex flex-column rounded py-4">
+                            <div class="py-3">
+                                <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                               
+                            </div>
+                            <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
+                            <div class="mb-2">美好旅程的回憶從JustGO開始</div>
+                        </div>
+    
+                         <div class="mb-4">
+                            <h2 class="mb-2">Duration</h2>
+                            <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
+                            <ul class="list-group list-group-flush" id="hidden">
+                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                                    
+                                    <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                        <a class="list-group-item list-group-item-action"
+                                            :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                            {{dayDetails.p_Name}}</a>
+                                    </li>
+                                   
+                                </div>
+                            </ul>
+                        </div>
+    
+    
+                        <!-- Tag Cloud -->
+                        <div class="mb-4">
+                            <h2 class="mb-2">#Tag</h2>
+                            <div class="d-flex flex-wrap m-n1">                         
+                                <button class="btn btn-primary m-1">溫泉</button>
+                                <button class="btn btn-primary m-1">生態</button>
+                                <button class="btn btn-primary m-1">小吃特產</button>
+                                <button class="btn btn-primary m-1">國家公園</button>
+                                <button class="btn btn-primary m-1">休閒農業</button>
+                            </div>
+                        </div>
+    
+                        <!-- Recent Post -->
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center shadow-sm rounded overflow-hidden" id="card">
+                                <div class="box">
+                                    <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/female" alt="">
+                                </div>
+                                <div >
+                                    <h5 class="">{{Title}}</h5>
+                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*左側欄位*@
+                <div class="col-lg-8">
+                    <div class="d-flex flex-column text-left mb-3">
+                        
+                        <div>
+                            <h1 class="my-3">{{Title}}</h1>
+                            <div class="d-flex">
+    
+                                <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
+    
+                                <div class="dropdown me-2" id="setting" >
+                                    <button class="btn btn-primary dropdown-toggle m-1"  type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')" 
+                                                onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+                                    </ul>
+                                </div>
+    
+                                
+                                <div style="line-height:30px"><i :class="KeepClass == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
+                                    <span class="px-1"> &nbsp; @*{{KeepNumber}}*@ {{KeepClass}}</span></div>
+                                </div>
+    
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
+                        <p class="mb-2">{{describe}}</p>
+    
+                        <div v-for="(day,dayIndex) in Details">
+                            <label id="day" class="my-3">第{{dayIndex+1}}天</label>
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                                <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
+                                <div class="mb-1"><i class="fa-solid fa-house-crack"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                                <div class="mb-1"><i class="fa-solid fa-phone"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                                <div>評分&nbsp;
+                                    <i class="fa fa-star" :style="{color:color}"
+                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                        @@load="myscore=item"></i>
+                                </div>
+    
+                                
+                                <div v-viewer class="groupimg img-fluid">
+                                    <template v-for="(image,index) in dayDetails.images">
+                                        <img :src="getImages(image.name)">
+                                    </template>
+                                </div>
+    
+                                <p>{{dayDetails.describe}}</p>I am Describe<br>
+    
+                            </div>
+                        </div>
+    
+                    </div>
+    
+    
+                    <!-- Comment List 替換為fb 待DOM-->
+    
+                    <div class="mb-5">
+                        <h2 class="mb-4">3 Comments</h2>
+                         <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous"
+                            src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
+                            nonce="NqM9iieh"></script>
+                        <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
+                            data-numposts="5"></div>
+    
+                    </div>
+            </div>
+        </div>
+    </div>
     
                     <!-- Comment List 替換為fb 待DOM-->
     

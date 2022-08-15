@@ -523,6 +523,7 @@
                             min: viewObj.timestay,
                         });
                         store.commit('calcRoute')
+                        store.commit('cultime')
 
                     };
                     let contentString =
@@ -1178,6 +1179,7 @@
                     }
                 }
                 store.commit('calcRoute');
+                store.commit('cultime')
             },
             getLocation(state, { view, index }) {
                 if (state.isTravel == true) { return }
@@ -1480,6 +1482,7 @@
                 //計算時間
                 cultime() {
                     this.$store.commit('calcRoute')
+                    this.$store.commit('cultime')
                 },
 
                 //計算小時小數點
@@ -1630,6 +1633,7 @@
                 })
                 this.$store.commit('setTravelMarker')
                 this.$store.commit('calcRoute')
+                this.$store.commit('cultime')
 
                 },
                 focusLocation(view, index) {

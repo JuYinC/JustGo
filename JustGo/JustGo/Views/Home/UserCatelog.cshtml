@@ -18,7 +18,7 @@
         .travel {
             margin-top:15px;
             font-weight: bold;
-            margin: 30px 18px 30px 18px;
+            margin: 0px 18px 30px 18px;
             color: BLACK;
             font-size: 28px;
             border-bottom: 5px solid transparent;
@@ -244,6 +244,25 @@
             text-align: center;
             border-bottom: 1px solid;
         }
+.nav-pills {
+    --bs-nav-pills-border-radius: 0.375rem !important;
+    --bs-nav-pills-link-active-color: #fff !important;
+    --bs-nav-pills-link-active-bg: gray !important;
+    font-size: 20px;
+}
+.nav {
+    --bs-nav-link-padding-x: 1rem !important;
+    --bs-nav-link-padding-y: 0.5rem !important;
+    --bs-nav-link-color: gray !important;
+    --bs-nav-link-hover-color: gray !important;
+    --bs-nav-link-disabled-color: #6c757d !important;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+       
 
 
 
@@ -278,19 +297,19 @@
         
             <ul class="nav nav-pills me-3 " id="v-pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                <button class="nav-link active titlemargin" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" aria-controls="v-pills-home" aria-selected="true">行程</button>
+                <button class="nav-link active " id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" aria-controls="v-pills-home" aria-selected="true">行程</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                <button class="nav-link titlemargin" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">過往行程</button>
+                <button class="nav-link " id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">過往行程</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                <button class="nav-link titlemargin" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">遊記</button>
+                <button class="nav-link " id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">遊記</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                <button class="nav-link titlemargin" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">收藏</button>
+                <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">收藏</button>
                </li>
                 <li class="nav-item" role="presentation">
-                <button class="nav-link titlemargin" id="v-pills-member-tab" data-bs-toggle="pill" data-bs-target="#v-pills-member" role="tab" aria-controls="v-pills-member" aria-selected="false">會員</button>
+                <button class="nav-link " id="v-pills-member-tab" data-bs-toggle="pill" data-bs-target="#v-pills-member" role="tab" aria-controls="v-pills-member" aria-selected="false">會員</button>
                 </li>
             </ul>
             <div class="content" id="app">
@@ -345,13 +364,12 @@
                             <div class="block">
                                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                                     <div class="schedule" v-for="(item,index) in blog" :key="blogId">
-                                        <div class="scheduleInfo scheduleInfo_Margin">
-                                            <span class="item_title">{{item.title}}</span><br>
-                                            <hr class="hr_Style" />
-                                            <span class="item_startDate">{{item.startDate}}</span><br>
-                                            <span class="item_startDate">{{item.endDate}}</span><br>
+                                        <div class="imgbox">
+                                            <img src="~/file/photo/journal.jpg" class="picture"/>
+                                            @*<img :src="getImages(item.coverImage.name)" class="picture"/>*@
                                         </div>
-                                        <hr class="hr_Style" />
+                                        <div class="title">{{item.title}}</div>
+                                        <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>
                                         <div class="buttonBar ">
                                             <span class="CreateBlog_Style" @@click="editBlog(item.blogId)"><i class="fa-solid fa-file-pen"></i> 編輯</span>
                                             <span class="CreateBlog_Style" @@click="checkBlog(item.blogId)"><i class="fa-solid fa-calendar-week"></i> 查看</span>
@@ -367,13 +385,12 @@
                             <div class="block">
                                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                                     <div class="schedule" v-for="(item,index) in keepBlog" :key="blogId">
-                                        <div class="scheduleInfo scheduleInfo_Margin">
-                                            <span class="item_title">{{item.title}}</span><br>
-                                            <hr class="hr_Style" />
-                                            <span class="item_startDate">{{item.startDate}}</span><br>
-                                            <span class="item_startDate">{{item.endDate}}</span><br>
+                                        <div class="imgbox">
+                                            <img src="~/file/photo/journal.jpg" class="picture"/>
+                                            @*<img :src="getImages(item.coverImage.name)" class="picture"/>*@
                                         </div>
-                                        <hr class="hr_Style" />
+                                        <div class="title">{{item.title}}</div>
+                                        <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>
                                         <div class="buttonBar ">
                                             <span class="CreateBlog_Style" @@click="checkBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i> 查看</span>
                                             <span class="DeleteSchedule_Style" @@click="deleteKeep(item.blodId)"><i class="fa-solid fa-trash-can"></i> 移除收藏</span>
@@ -520,17 +537,52 @@
                         this.showSchedule[i].endDate = year+"/"+month+"/"+date
                         console.log("for")
                     }
-                }
+                },
+                formateTime2(){
+                    for (let i = 0; i < this.showBlog.length; i++) {
+                        let day = new Date(this.showBlog[i].startDate)
+                        let year = day.getFullYear();
+                        let month = day.getMonth()+1;
+                        let date = day.getDate();
+                        this.showBlog[i].startDate = year+"/"+month+"/"+date
+
+                        day= new Date(this.showBlog[i].endDate)
+                        year = day.getFullYear();
+                        month = day.getMonth()+1;
+                        date = day.getDate();
+                        this.showBlog[i].endDate = year+"/"+month+"/"+date
+                        console.log("for")
+                    }
+                },
+                formateTime3(){
+                    for (let i = 0; i < this.userKeepBlog.length; i++) {
+                        let day = new Date(this.userKeepBlog[i].startDate)
+                        let year = day.getFullYear();
+                        let month = day.getMonth()+1;
+                        let date = day.getDate();
+                        this.userKeepBlog[i].startDate = year+"/"+month+"/"+date
+
+                        day= new Date(this.userKeepBlog[i].endDate)
+                        year = day.getFullYear();
+                        month = day.getMonth()+1;
+                        date = day.getDate();
+                        this.userKeepBlog[i].endDate = year+"/"+month+"/"+date
+                        console.log("for")
+                    }
+                },
+                getImages(loadimagesName) {
+                    return "@Url.Content("~/blogImages")/" + loadimagesName
+                },
             },
             mounted() {
                 axios.get("@Url.Action("selectUserSchedule","Schedule")")
                     .then(res => { this.showSchedule = res.data; this.formateTime(); })
                     .catch(err => console.log(err));
                 axios.get("@Url.Action("selectUserBlog","Blog")")
-                    .then(res => this.showBlog = res.data)
+                    .then(res => {this.showBlog = res.data; this.formateTime2(); })
                     .catch(err => console.log(err));
                 axios.get("@Url.Action("getUserKeepBlog","Blog")")
-                    .then(res => this.userKeepBlog = res.data)
+                    .then(res => {this.userKeepBlog = res.data; this.formateTime3(); })
                     .catch(err => console.log(err));
             },
         })

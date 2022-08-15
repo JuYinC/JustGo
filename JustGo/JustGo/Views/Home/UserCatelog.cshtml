@@ -15,10 +15,6 @@
         .navbarC {
             background: #333
         }
-
-
-
-
         .travel {
             font-weight: bold;
             margin: 30px 18px 30px 18px;
@@ -252,18 +248,28 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
-    <div class="Background-color_Style">
+    <div class="container">
 
-        <div class="d-flex align-items-start col">
-            <div class="nav flex-column nav-pills me-3 " id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <span class="nav-link active titlemargin" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" aria-controls="v-pills-home" aria-selected="true">行程</span>
-                <span class="nav-link titlemargin" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">過往行程</span>
-                <span class="nav-link titlemargin" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">遊記</span>
-                <span class="nav-link titlemargin" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">收藏</span>
-                <span class="nav-link titlemargin" id="v-pills-member-tab" data-bs-toggle="pill" data-bs-target="#v-pills-member" role="tab" aria-controls="v-pills-member" aria-selected="false">會員</span>
-            </div>
-            <div class="container" id="app">
-                <div class="row">
+        
+            <ul class="nav nav-pills me-3 " id="v-pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                <button class="nav-link active titlemargin" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" aria-controls="v-pills-home" aria-selected="true">行程</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link titlemargin" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">過往行程</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link titlemargin" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">遊記</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link titlemargin" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">收藏</button>
+               </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link titlemargin" id="v-pills-member-tab" data-bs-toggle="pill" data-bs-target="#v-pills-member" role="tab" aria-controls="v-pills-member" aria-selected="false">會員</button>
+                </li>
+            </ul>
+            <div  id="app">
+                
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                             <div class="travel">行程</div>
@@ -279,6 +285,7 @@
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
                                             <span class="item_scheduleId" @@click="editSchedule(item.scheduleId)"><i class="fa-solid fa-file-pen"></i></span>
+                                            <span class="item_scheduleId" @@click="checkSchedule(item.scheduleId)"><i class="fa-solid fa-list-check"></i></span>
                                             <span class=" DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
@@ -319,6 +326,8 @@
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
                                             <span class="CreateBlog_Style" @@click="editBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
+                                            <span class="CreateBlog_Style" @@click="checkBlog(item.blogId)"><<i class="fa-solid fa-calendar-week"></i></span>
+                                            
                                             <span class="DeleteSchedule_Style" @@click="deleteBlog(item.blogId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
@@ -396,9 +405,9 @@
                         </div>
 
                     </div>
-                </div>
+                
             </div>
-        </div>
+        
     </div>
 
                            

@@ -10,11 +10,6 @@
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
-        html {
-              
-              font-size: 12px;
-              
-            }
     </style>
     }
 
@@ -121,7 +116,7 @@
                     ],
                     UserImage: "Shinnosuke6.png",
                     CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
-                    UserId: ["Alley"],
+                    UserName: ["Alley"],
                     Title: '',
                     describe: '',
                     Like: 5,
@@ -175,6 +170,7 @@
                     },
                     saveBlog(e) {     
                         e.preventDefault();
+                        if(this.CoverImage != null || this.Title != ""){
                         let blog = {
                             CoverImage: { base64 : this.CoverImageName.base64,name:"" },
                             Details:this.Details,
@@ -185,7 +181,10 @@
                         }
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                                  .then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
-                                 .catch(err => console.log(""))                        
+                                 .catch(err => console.log(""))       
+                       }else{
+                           alert("上傳失敗 請上傳封面照及標題")
+                       }
                     },
                     //封面圖上傳
                     fileChange(e) {
@@ -331,6 +330,16 @@
             },
             )
 
+            
+            $(window).scroll(function(){
+            height=$("body").height()-$(window).height()
+            if($(window).scrollTop()>=height){
+            $("#setting").hide()
+            }
+            else{            
+                $("#setting").show()
+            }
+            })
 
 
 
@@ -352,23 +361,25 @@
         <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top" style="top:10vh">
+                        <div class="sticky-top" style="top:10vh;z-index:-5;">
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                                @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
                             </div>
-                            <div class="pt-2">{{UserId[0]}}旅途隨手記</div>                           
+                            <div class="pt-2">{{UserName[0]}}旅途隨手記</div>                           
                             <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
-                            <ul class="list-group">
-                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
-                                    <li class="list-group-item  justify-content-between align-items-center px-0">
-                                            <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
-                                                <a class="list-group-item list-group-item-action"
-                                                    :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏{{dayDetails.p_Name}}</a>                                               
-                                            </li>
+                            <ul class="list-group list-group-flush" id="hidden">
+                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                        style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                                
+                                    <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                        <a class="list-group-item list-group-item-action"
+                                            :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                            {{dayDetails.p_Name}}</a>
                                     </li>
+                               
                                 </div>
-                            </ul>                            
+                            </ul>                         
                         </div>
 
                     </div>
@@ -382,27 +393,26 @@
                             <div v-for="(day,dayIndex) in Details">
                                 <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
                                 <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                    <span><i class="fa-solid fa-map-location-dot px-1 mb-1" style="color:#084887"
-                                            :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
-                                    <div class="mb-1">地址&nbsp;{{dayDetails.p_Add}}</div>
-                                    <div class="mb-1">電話&nbsp;{{dayDetails.p_tel}}</div>
-                                    <div class="mb-1 d-inline"><div class="d-inline">評分</div>
-                                    <i class="fa fa-star mb-2" :style="{color:color}"
-                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                        @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
-                                        @@click="myscore=item"></i>
+                                     <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
+                                        <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                                        <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                                        <div class="mb-1 d-inline"><div class="d-inline">評分</div>
+                                        <i class="fa fa-star mb-2" :style="{color:color}"
+                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                            @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
+                                            @@click="myscore=item"></i>
                                     </div>
 
                                     @*上傳圖片*@
                                     <div class="mb-3">
-                                        <label class="btn btn-primary btn-sm">
+                                        <label class="btn btn-primary">
                                             <input type="file" accept="image/jpeg, image/png" multiple
                                                 @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
                                                 style="display:none;">
                                             <i class="fa fa-photo"></i> 上傳圖片
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
-                                            class="btn btn-outline-secondary btn-sm">取消上傳</button>
+                                            class="btn btn-outline-secondary">取消上傳</button>
                                          <span style="vertical-align: bottom;font-size:12px" id="showErr">{{dayDetails.showError}}</span>
 
                                         @*上傳圖片預覽*@
@@ -421,18 +431,15 @@
                  </div>
             </div>
             @*側邊功能按鍵*@
-            <i class="fa-solid fa-objects-align-right" id="setting"></i>
+            @*<i class="fa-solid fa-objects-align-right" id="setting">*@
             <div class="dropdown" id="setting" >
 	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 	              <i class="fa-solid fa-list-check" ></i>
 	            </button>
-	            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 	              <li><a class="dropdown-item listcolor" :href="canceledit()" >取消編輯</a></li>
-	              <li><a class="dropdown-item listcolor" :href="canceledit()" @@click="saveBlog($event)">發布行程</a></li>
-                   @*<a  class="dropdown-item listcolor" asp-area="" asp-controller="Home" asp-action="Index" @@click="saveBlog">發布行程</a>*@
-                  <li >
-                
-                </li>
+	              <li><a class="dropdown-item listcolor" @@click="saveBlog($event)">發布行程</a></li>
+                  <li><a class="dropdown-item listcolor" href="#" >返回頂部</a></li>   
 	            </ul>
             </div>
 

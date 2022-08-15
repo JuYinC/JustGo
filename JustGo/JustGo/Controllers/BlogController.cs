@@ -65,7 +65,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult creatBlog([FromBody] ScheduleVM vm)
         {
-            return Json(_blog.createScheduleToBlog(vm.ScheduleId));
+            return Json(_blog.createScheduleToBlog(vm.ScheduleId,GetUserId()));
         }
 
         public IActionResult deleteBlog([FromBody]BlogVM vm)

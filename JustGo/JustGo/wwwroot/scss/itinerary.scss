@@ -426,7 +426,7 @@
         width: 100%;
         height: 100vh;
         position: relative;
-        transition: all .3s;
+        transition: all .8s;
 
     
 
@@ -434,6 +434,7 @@
             width: 100%;
             height: 100vh;
             z-index: -2;
+            transition: height .3s;
 
         }
     }

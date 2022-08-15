@@ -29,107 +29,107 @@
         var menu = document.getElementById("navbarC__menu");
     </script>
     <script>
-        const { reactive, ref, onMounted } = Vue;
-        const App = {
-            setup() {
-                const search = reactive({ results: [] })
-                const top4Blog = reactive({ results: [] })
-                let searchString = ref("")
-                const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'];
-                const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'];
-                const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣'];
-                const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
-                let searchNumber = 12;
-                const select = reactive({ selectCounty: [], selectAcitivity: [], searchNumber: 0, Search: "" })
-                function searchBlog(area) {
-                    select.searchNumber = 0;
-                    switch (area) {
-                        case "北部":
-                            if (select.selectCounty[0] != northern[0]) {
-                                select.selectCounty = northern;
-                                select.Search = "";
-                            }
-                            else {
-                                select.selectCounty = []
-                                select.Search = "";
-                            }
-                            break;
-                        case "中部":
-                            if (select.selectCounty[0] != central[0]) {
-                                select.selectCounty = central;
-                                select.Search = "";
-                            } else {
-                                select.selectCounty = []
-                                select.Search = "";
-                            }
-                            break;
-                        case "南部":
-                            if (select.selectCounty[0] != south[0]) {
-                                select.selectCounty = south;
-                                select.Search = "";
-                            } else {
-                                select.selectCounty = []
-                                select.Search = "";
-                            }
-                            break;
-                        case "東部":
-                            if (select.selectCounty[0] != east[0]) {
-                                select.selectCounty = east;
-                                select.Search = "";
-                            } else {
-                                select.selectCounty = []
-                                select.Search = "";
-                            }
-                            break;
-                        case "搜尋":
-                            select.Search = searchString.value;
-                            searchString.value = "";
-                            break;
-                        default:
-                            select.selectCounty = [];
-                            select.Search = "";
-                            break;
-                    }
-                    axios.post("@Url.Action("searchBlog","Blog")", select).then(res => search.results = res.data)
-                }
-                function imageSrc(imageName) {
-                    return "@Url.Content("~/blogImages")/" + imageName
-                }
-                function userImageSrc(userImage) {
-                    return "@Url.Content("~/userImages")/" + userImage
-                }
-                function open(e) {
-                    $("#sh").toggleClass("sh")
-                    if ($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth * 1.1) {
-                        $('#shbox').addClass('tgshow')
-                        $('#shbtn').addClass('tgshow')
-                    } else {
-                        $('#shbox').removeClass('tgshow')
-                        $('#shbtn').removeClass('tgshow')
-                        $('#shbox')[0].focus()
-                    }
-                }
-                function blogUrl(id) {
-                    return "@Url.Action("Blog","Home")?" + id
-                }
-                function scroll() {
-                    if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
-                        select.searchNumber += searchNumber;
-                        axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
-                    }
-                }
-                axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
-                onMounted(() => {
-                    window.addEventListener('scroll', scroll);
-                    searchBlog("");
-                })
-                return {
-                    search, northern, central, south, east, searchNumber, top4Blog,
-                    select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
-                }
-            },
+        const {reactive, ref ,onMounted} = Vue;      
+          const App = {
+              setup() {
+                  const search = reactive({ results: [] })
+                  let searchString = ref("")
+                  const top4Blog = reactive({ results: [] })
+                  const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'];
+                  const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
+                  const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
+                  const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
+                  let searchNumber = 12;
+                  const select = reactive({ selectCounty: [], selectAcitivity: [], searchNumber: 0, Search: "" })
+                  function searchBlog(area) {
+                      select.searchNumber = 0;
+                      switch (area) {
+                          case "北部":
+                              if (select.selectCounty[0] != northern[0]) {
+                                  select.selectCounty = northern;
+                                  select.Search = "";
+                              }
+                              else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "中部":
+                              if (select.selectCounty[0] != central[0]) {
+                                  select.selectCounty = central;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "南部":
+                              if (select.selectCounty[0] != south[0]) {
+                                  select.selectCounty = south;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "東部":
+                              if (select.selectCounty[0] != east[0]) {
+                                  select.selectCounty = east;
+                                  select.Search = "";
+                              } else {
+                                  select.selectCounty = []
+                                  select.Search = "";
+                              }
+                              break;
+                          case "搜尋":
+                              select.Search = searchString.value;
+                              searchString.value = "";
+                              break;
+                          default:
+                              select.selectCounty = [];
+                              select.Search = "";
+                              break;
+                      }                      
+                      axios.post("@Url.Action("searchBlog","Blog")", select).then(res => search.results = res.data)
+                  }
+                  function imageSrc(imageName) {
+                      return "@Url.Content("~/blogImages")/" + imageName
+                  }
+                  function userImageSrc(userImage) {
+                      return "@Url.Content("~/userImages")/" + userImage
+                  }
+                  function open(e) {
+                      $("#sh").toggleClass("sh")
+                      if ($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth * 1.1) {
+                          $('#shbox').addClass('tgshow')
+                          $('#shbtn').addClass('tgshow')
+                      } else {
+                          $('#shbox').removeClass('tgshow')
+                          $('#shbtn').removeClass('tgshow')
+                          $('#shbox')[0].focus()
+                      }
+                  }
+                  function blogUrl(id) {
+                      return "@Url.Action("Blog","Home")?" + id
+                  }
+                  function scroll() {
+                      if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
+                          select.searchNumber += searchNumber;
+                          axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
+                      }
+                  }
+                  axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
+                  onMounted(() => {
+                      window.addEventListener('scroll', scroll);
+                      searchBlog("");
+                  })
+                  return {
+                      search, northern, central, south, east, searchNumber,
+                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
+                  }
+              },
         }
-        Vue.createApp(App).mount("#app")
+        Vue.createApp(App).mount("#app")    
         var mouse = {
             X: 0,
             Y: 0,
@@ -149,60 +149,74 @@
                 'https://unsplash.it/1800/1500/?random'
             ];
 
-        $('.block').on('mousemove', function(e) {
-            mouse.X = (e.pageX - $(this).offset().left) - $('.block').width() / 2;
-            mouse.Y = (e.pageY - $(this).offset().top) - $('.block').height() / 2;
-        })
+                      $('.block').on('mousemove', function(e) {
+                          mouse.X = (e.pageX - $(this).offset().left) - $('.block').width() / 2;
+                          mouse.Y = (e.pageY - $(this).offset().top) - $('.block').height() / 2;
+                      })
 
-        $('.block').on('mouseleave', function(e) {
-            mouse.X = mouse.CX;
-            mouse.Y = mouse.CY;
-        })
+                      $('.block').on('mouseleave', function(e) {
+                          mouse.X = mouse.CX;
+                          mouse.Y = mouse.CY;
+                      })
 
-        setInterval(function() {
+                      setInterval(function() {
 
-            block.CY += (mouse.Y - block.CY) / 12;
-            block.CX += (mouse.X - block.CX) / 12;
+                          block.CY += (mouse.Y - block.CY) / 12;
+                          block.CX += (mouse.X - block.CX) / 12;
 
-            $('.block .circleLight').css('background', 'radial-gradient(circle at ' + mouse.X + 'px ' + mouse.Y + 'px, #fff, transparent)')
-            $('.block').css({
-                transform: 'scale(1.03) translate(' + (block.CX * 0.05) + 'px, ' + (block.CY * 0.05) + 'px) rotateX(' + (block.CY * 0.05) + 'deg) rotateY(' + (block.CX * 0.05) + 'deg)'
-            })
+                          $('.block .circleLight').css('background', 'radial-gradient(circle at ' + mouse.X + 'px ' + mouse.Y + 'px, #fff, transparent)')
+                          $('.block').css({
+                              transform: 'scale(1.03) translate(' + (block.CX * 0.05) + 'px, ' + (block.CY * 0.05) + 'px) rotateX(' + (block.CY * 0.05) + 'deg) rotateY(' + (block.CX * 0.05) + 'deg)'
+                          })
 
-        }, 20);
+                      }, 20);
 
-        $('.slider .item').each(function(i) {
+                      $('.slider .item').each(function(i) {
 
-            if (i == 0) {
+                          if (i == 0) {
 
-                $(this).addClass('active');
-                $(this).next().addClass('next');
-                $(this).prev().addClass('prev');
-            }
+                              $(this).addClass('active');
+                              $(this).next().addClass('next');
+                              $(this).prev().addClass('prev');
+                          }
 
-            $(this).attr('id', 'slide-' + i);
+                          $(this).attr('id', 'slide-' + i);
 
-            $(this).prepend(
-                $('<div>', { class: 'blur', style: 'background-image: url(' + imags[i] + ');' }),
-                $('<div>', { class: 'bg', style: 'background-image: url(' + imags[i] + ');' })
-            )
+                          $(this).prepend(
+                              $('<div>', { class: 'blur', style: 'background-image: url(' + imags[i] + ');' }),
+                              $('<div>', { class: 'bg', style: 'background-image: url(' + imags[i] + ');' })
+                          )
 
-            $(this).find('.block').css('background-image', 'url(' + imags[i] + ')')
+                          $(this).find('.block').css('background-image', 'url(' + imags[i] + ')')
 
-            $('.navigations .dots').append(
-                $('<li>', { class: i == 0 ? 'active' : '', id: i }).on('click', function() {
-                    var cSlide = $('.slider #slide-' + $(this).attr('id'));
+                          $('.navigations .dots').append(
+                              $('<li>', { class: i == 0 ? 'active' : '', id: i }).on('click', function() {
+                                  var cSlide = $('.slider #slide-' + $(this).attr('id'));
 
-                    $('.navigations .dots li').removeClass('active');
-                    $(this).addClass('active');
+                                  $('.navigations .dots li').removeClass('active');
+                                  $(this).addClass('active');
 
-                    $('.slider .item').removeClass('active prev next');
-                    cSlide.addClass('active');
-                    cSlide.next().addClass('next');
-                    cSlide.prev().addClass('prev');
-                })
-            )
-        })
+                                  $('.slider .item').removeClass('active prev next');
+                                  cSlide.addClass('active');
+                                  cSlide.next().addClass('next');
+                                  cSlide.prev().addClass('prev');
+                              })
+                          )
+                      })
+                  }
+                  onMounted(() => {
+                      window.addEventListener('scroll', scroll);
+                      searchBlog("");
+                      po();
+                  })
+                  return {
+                      search, northern, central, south, east, searchNumber,
+                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
+                  }
+              },
+        }
+        Vue.createApp(App).mount("#app")    
+        
     </script>
     <script type="text/javascript">
 
@@ -225,7 +239,7 @@
 
     <div class="idx__contaim">
         <div class="index">
-            <video autoplay muted loop plays-inline class="index__bg-video" poster="~/file/photo/5.jpg">
+            <video autoplay muted loop plays-inline class="index__bg-video" poster="~/file/photo/beach.jpg">
                 <source src="~/file/video/beach.mp4" type="video/mp4">
             </video>
         </div>
@@ -245,45 +259,45 @@
     </div>
 
     <div id="app">
-        <div class="slider">
-            <div class="items-group">
-                <div class="item" v-for="item in top4Blog.results" :key="blosId">
-                    <div class="block">
-                        <span class="circleLight"></span>
-                        <div class="text">
-                            <h2>{{item.title}}</h2>
-                            <p>{{item.userName}}</p>
-                        </div>
+    <div class="slider">
+        <div class="items-group">
+            <div class="item">
+                <div class="block">
+                    <span class="circleLight"></span>
+                    <div class="text">
+                        <h2>First</h2>
+                        <p>This is slide 1</p>
                     </div>
                 </div>
-                @*<div class="item">
-                    <div class="block">
-                        <span class="circleLight"></span>
-                        <div class="text">
-                            <h2>{{top4Blog.results[1].title}}</h2>
-                            <p>This is slide 2</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="block">
-                        <span class="circleLight"></span>
-                        <div class="text">
-                            <h2>{{top4Blog.results[2].title}}</h2>
-                            <p>This is slide 3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="block">
-                        <span class="circleLight"></span>
-                        <div class="text">
-                            <h2>{{top4Blog.results[3].title}}</h2>
-                            <p>This is slide 4</p>
-                        </div>
-                    </div>
-                </div>*@
             </div>
+            <div class="item">
+                <div class="block">
+                    <span class="circleLight"></span>
+                    <div class="text">
+                        <h2>Second</h2>
+                        <p>This is slide 2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="block">
+                    <span class="circleLight"></span>
+                    <div class="text">
+                        <h2>Three</h2>
+                        <p>This is slide 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="block">
+                    <span class="circleLight"></span>
+                    <div class="text">
+                        <h2>Four</h2>
+                        <p>This is slide 4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
             <div class="navigations">
                 <ul class="dots"></ul>

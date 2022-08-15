@@ -59,22 +59,22 @@ ViewData["Title"] = "blog";
     console.log(VueViewer.default)
 
 
-    /*$(function () {
-                  $('input[name="daterange"]').daterangepicker({
-                      locale: {
-                          format: 'YYYY/MM/DD',
-                      },
-                      opens: 'right'
-                  }, function (start, end) {
-                      console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-                  });
-                  $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
-                      $(this).val('');
-                  }).on("hide.daterangepicker", function (ev) {
-                      this.dispatchEvent(new Event('input'))
-                  });
+    //$(function () {
+    //              $('input[name="daterange"]').daterangepicker({
+    //                  locale: {
+    //                      format: 'YYYY/MM/DD',
+    //                  },
+    //                  opens: 'right'
+    //              }, function (start, end) {
+    //                  console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+    //              });
+    //              $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+    //                  $(this).val('');
+    //              }).on("hide.daterangepicker", function (ev) {
+    //                  this.dispatchEvent(new Event('input'))
+    //              });
   
-              });*/
+    //          });
 
 
 
@@ -85,6 +85,8 @@ ViewData["Title"] = "blog";
             opens: 'left'
         }, function (start, end, label) {
             console.log(start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+        }).on("hide.daterangepicker", function (ev) {
+                      this.dispatchEvent(new Event('input'))
         });
     });
 
@@ -217,7 +219,6 @@ ViewData["Title"] = "blog";
                 myurl.select();
                 document.execCommand('copy');
                 document.body.removeChild(myurl);
-
             },
             copyblog: function () {
                     if (id != "") {
@@ -229,6 +230,7 @@ ViewData["Title"] = "blog";
                             this.describe = res.data.describe;
                             //取得的日期
                             this.daterange = res.data.daterange;
+                            alert("已收藏[" + this.Title + "]到會員列表!")
                         }
                         )
                     }
@@ -240,10 +242,8 @@ ViewData["Title"] = "blog";
                      if (this.KeepNumber == 1) {
                             this.KeepNumber = 0;
     
-                            KeepClass.innerHTML += this.KeepNumber;
                      } else {
-                            this.KeepNumber = 1;
-                            KeepClass.innerHTML += this.KeepNumber;    
+                            this.KeepNumber = 1;                          
                      }
              },
              savelike() {    
@@ -408,31 +408,26 @@ ViewData["Title"] = "blog";
                         <h1 class="my-3">{{Title}}</h1>
                         <div class="d-flex">
 
-@*                            <i class="fa fa-star mb-2" :style="{color:color}"
-                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                            @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
-                                            @@click="myscore=item"></i>*@
-                                           
-
                             <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
 
-                            <div class="dropdown" id="setting" >
+                            <div class="dropdown me-2" id="setting" >
                                 <button class="btn btn-primary dropdown-toggle m-1"  type="button"
                                     id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')"
-                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期"  class="timepicker"></li>
+                                    <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')" 
+                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker" @@onchange="copyblog"></li>
                                 </ul>
                             </div>
 
                             
-                            <div style="line-height:30px"><i :class="KeepNumber == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i><span class="KeepClass px-1">30 {{KeepNumber}}</span></div>
-                        </div>
+                            <div style="line-height:30px"><i :class="KeepNumber == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
+                                <span class="px-1"> &nbsp; {{KeepNumber}} {{KeepClass}}</span></div>
+                            </div>
 
                     </div>
                 </div>
                 <div class="mb-4">
-                    <img class="img-fluid rounded w-100 mb-4"  v-viewer  :src="getImages(CoverImageName.name)" style="height:500px" alt="Image" />
+                    <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px" alt="Image" />
                     <p class="mb-2">{{describe}}</p>
 
                     <div v-for="(day,dayIndex) in Details">

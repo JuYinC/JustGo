@@ -368,7 +368,7 @@
         <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top" style="top:10vh;z-index:-5;">
+                        <div class="sticky-top" style="top:10vh;z-index:0;">
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
@@ -400,7 +400,7 @@
                             <div v-for="(day,dayIndex) in Details">
                                 <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
                                 <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                     <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
+                                     <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
                                         <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                         <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
                                         <div class="mb-1 d-inline"><div class="d-inline">評分</div>

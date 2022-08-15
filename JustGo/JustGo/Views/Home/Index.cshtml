@@ -172,11 +172,14 @@
                           $(this).attr('id', 'slide-' + i);
 
                           $(this).prepend(
+                              
                               $('<div>', { class: 'blur', style: 'background-image: url(' + imags[i] + ');' }),
+                             
                               $('<div>', { class: 'bg', style: 'background-image: url(' + imags[i] + ');' })
                           )
 
                           $(this).find('.block').css('background-image', 'url(' + imags[i] + ')')
+
 
                           $('.navigations .dots').append(
                               $('<li>', { class: i == 0 ? 'active' : '', id: i }).on('click', function() {
@@ -250,15 +253,15 @@
             <div class="idx__title-bt1"></div>
         </div>
     </div>
-
+    @*<a :href="blogUrl(top4Blog.results[0].blogId)">*@
     <div id="app">
     <div class="slider">
         <div class="items-group">
             <div class="item">
-                <div class="block">
+                <div class="block">                   
                     <span class="circleLight"></span>
                     <div class="text">
-                        <h2>{{top4Blog.results[0].title}}</h2>
+                        <h2>{{top4Blog.results[0].title}}</h2>                     
                         <p>{{top4Blog.results[0].userame}}</p>
                     </div>
                 </div>

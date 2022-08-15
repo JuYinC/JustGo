@@ -923,8 +923,7 @@
             top: 0;
             width: 25px;
             height: 100%;
-            left: -5px;
-            background-color: white; }
+            left: -5px; }
             .journey__map .sidebar__grid .grid-item-t .btnbox-l .left {
               position: absolute;
               display: flex;

@@ -978,6 +978,7 @@
                     let endTime = new Date(status.endDate)
                     let endTime2 = new Date(status.details[0][0].startTime)
                     state.scheduleId = status.scheduleId
+                    state.title = status.title
                     for (let i = 0; i < status.details.length; i++) {
                         this.state.travel.push([])
                         this.state.duringDate.push(startTime.toLocaleDateString())

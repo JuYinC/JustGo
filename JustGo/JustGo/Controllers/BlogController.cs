@@ -68,8 +68,7 @@ namespace JustGo.Controllers
             return Json(_blog.createScheduleToBlog(vm.ScheduleId));
         }
 
-        //查詢使用者部落格(無細項)
-        [HttpPost]
+        //查詢使用者部落格(無細項)        
         [Authorize]
         public IActionResult selectUserBlog()
         {           

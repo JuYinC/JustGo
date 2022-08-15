@@ -29,6 +29,10 @@
         .Login_Background_Color{
             background-color:#ECF5FF;
         }
+        
+        @@media{
+            
+        }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <div class="Login_Background_Color">
@@ -95,7 +99,51 @@
         <div class="col-md-4">
             <div class="LoginStyle">
                 <h2>註冊</h2>
-                <hr class="mb-3 mt-3 ms-2 me-2" />
+
+
+                <p>
+
+
+
+
+
+
+
+                
+                 <h4>上傳大頭貼</h4>
+            <input type="file" id="theFile">
+              <span>
+        <img id="image">
+    </span>
+        <span id="fileInfo"></span>
+  
+<script>
+    
+   function doFirst() {
+    
+    document.getElementById('theFile').onchange = fileChange
+}
+function fileChange(){
+    let file = document.getElementById('theFile').files[0]
+
+    let message = ''
+    document.getElementById('fileInfo').value = message
+
+   
+    let readFile = new FileReader()
+    readFile.readAsDataURL(file)
+    readFile.addEventListener('load',function(){
+        let image = document.getElementById('image')
+        image.src = readFile.result
+        image.style.maxWidth = '100px'
+        image.style.maxHeight = '100px'
+    })
+}
+window.addEventListener('load', doFirst)
+    
+</script>
+     <hr class="mb-2 mt-2 ms-1 me-1" />
+               
                 <form>
                              <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">輸入名稱</label>
@@ -114,7 +162,7 @@
                         <label for="exampleInputPassword1" class="form-label">確認密碼</label>
                         <input type="password" class="form-control" id="exampleInputPassword1">
                     </div>
-                     <hr class="mb-3 mt-3 ms-2 me-2" />
+                     <hr class="mb-4 mt-3 ms-2 me-2" />
                     <button type="submit" class="btn btn-primary">註冊</button>
                 </form>
             </div>

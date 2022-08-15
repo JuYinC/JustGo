@@ -25,7 +25,7 @@
             font-weight: bold;
             font-size: 17px;
         }
-
+        /* 底下部分部落格框放大   待完成 */
         .schedule:hover {
             transition: all 1s ease;
             transform: scale(1.05);
@@ -33,7 +33,7 @@
             opacity: 0.9;
             border-radius: 10px;
             cursor: grab;
-            border: 4px solid #Ffff;
+            border: 3px solid #Ffff;
         }
 
         .schedule {
@@ -59,7 +59,7 @@
             width: 270px;
             min-width: 245px;
         }
-            /* 底下部分部落格框放大 */
+            /* 底下部分部落格框放大   待完成 */
             .blog:hover {
                 transition: all 1s ease;
                 transform: scale(1.05);
@@ -67,7 +67,7 @@
                 opacity: 0.9;
                 border-radius: 15px;
                 cursor: grab;
-                border: 4px solid #FFff;
+                border: 3px solid #FFff;
             }
         /* 3行字跟編輯的上下間距 */
         .schedule_word_margin {
@@ -206,6 +206,12 @@
             background-image: linear-gradient(to top left,#F0F0F0,#FFFF,#F0F0F0 );
         }
 
+
+
+
+
+
+
         @@media screen and (max-width:600px) {
             .col {
                 font-size: 15px;
@@ -306,92 +312,67 @@
                             <div class="travel">會員</div>
                             <div class="container">
                                 <div class="row">
-                                    <div class=" member_box col-md-10">
-                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active mt-5 mb-4 ms-5 me-5" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">更改會員密碼</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link mt-5 mb-4 ms-5 me-5" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">更改個人資料</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link mt-5 mb-4 ms-5 me-5" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">更換大頭貼</button>
-                                            </li>
-                                        </ul>
+                                    <div class="col-md-6">
+                              
+
+
+
+
 
                                     </div>
-                                    <div class=" member_box2 col-md-10">
-
-                                        <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                                <div class="container">
-                                                    <div class="mb-1 row ">
-                                                        <label for="inputPassword" class="col-sm-4 col-form-label mt-4 mb-4 ms-2">請輸入舊密碼</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="password" class="form-control mt-4 mb-4 " id="inputPassword">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-1 row">
-                                                        <label for="inputPassword" class="col-sm-4 col-form-label mt-4 mb-4 ms-2 ">請輸入新密碼</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="password" class="form-control mt-4 mb-4" id="inputPassword">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-1 row">
-                                                        <label for="inputPassword" class="col-sm-4 col-form-label mt-4 mb-4 ms-2">再次確認密碼</label>
-                                                        <div class="col-sm-4 ">
-                                                            <input type="password" class="form-control mt-4 mb-4" id="inputPassword">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><form class="row g-3">
-  <div class="col-md-6">
-    <label for="inputNamel4" class="form-label">名稱</label>
-    <input type="email" class="form-control" id="inputNamel4">
-  </div>
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">旅遊愛好</label>
-    <input type="text" class="form-control" id="inputPassword4">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">自我介紹</label>
-<div class="form-floating">
-  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-  <label for="floatingTextarea2">Comments</label>
-</div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">確定</button>
-  </div>
-</form></div>
-                                           
+                                            <div class="col-md-6">
+                                        <label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改使用者名稱</label>
+                                        <input type="email" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="inputAddress" class="form-label mb-2 mt-2 ms-1 me-1">更新自我介紹</label>
+                                        <div class="form-floating">
+                                            <textarea class="form-control mb-2 mt-2 ms-1 me-1" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                                         </div>
-                                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">321</div>
-
-
-
                                     </div>
+                                    <div class="col-md-6">
+                                         <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">修改電話號碼</label>
+                                        <input type="text" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入舊密碼</label>
+                                        <input type="password" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入新密碼</label>
+                                        <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputPassword1" class="form-label mb-2 mt-2 ms-1 me-1">確認新密碼</label>
+                                        <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
+                                    </div>
+                                    <hr class="mb-4 mt-4 ms-2 me-2" />
+                                    <div style="float:right;">
+                                    <button type="submit" class="btn btn-primary col-md-4 mb-2 mt-2 ms-1 me-1">確定</button>
+                                       </div>
                                 </div>
                             </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-        </div>
-    </div>
     @section Scripts{
     <script src="https://kit.fontawesome.com/2f8972a878.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>

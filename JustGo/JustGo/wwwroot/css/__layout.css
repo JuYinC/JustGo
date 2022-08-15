@@ -127,6 +127,14 @@
     display: none; }
   .checkbtn {
     display: none; }
+  .op {
+    width: 50px;
+    height: 0px;
+    position: fixed;
+    background: #333;
+    border-radius: 8px;
+    margin-top: 5px;
+    transition: all .3s; }
   .navbarC {
     width: 100%;
     position: absolute;

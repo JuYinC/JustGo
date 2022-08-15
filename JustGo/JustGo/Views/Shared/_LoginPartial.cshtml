@@ -18,13 +18,18 @@
         <a  asp-area="" asp-controller="Home" asp-action="UserCatelog">會員資訊</a>
     </li>
      <li class="nav-item">
-        <img class="u-img" src="~/file/photo/@ViewBag.name"></img>
+        <img class="u-img" id="forop" src="~/file/photo/@ViewBag.name"></img>
+            <div class="op" id="op" style="">
+                    <form  style=" display: none;" id="outbtn" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button  type="submit" class="nav-link btn btn-link text-light">登出</button>
+                </form>
+            </div>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
          <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark">登出</button>
         </form>
-    </li>
+    </li> -->
 
     <!-- <li class="nav-item">
             <li class="nav-item">

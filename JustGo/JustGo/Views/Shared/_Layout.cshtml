@@ -108,6 +108,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+            document.getElementById("forop").addEventListener("click", function(){
+
+                if (document.getElementById("op").style.height=='0px'){
+                         document.getElementById("op").style.height = "50px"
+                           
+                         setTimeout(() => {
+                             document.getElementById('outbtn').style.display=''
+                         }, 100)
+ 
+                }else{
+                        document.getElementById("op").style.height="0px"
+
+                          setTimeout(() => {
+                             document.getElementById('outbtn').style.display='none'
+                         }, 100)
+                
+                }
+                       
+
+             
+
+
+              
+            });
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>

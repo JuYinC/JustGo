@@ -1463,7 +1463,23 @@
                 },
                 daysindex() {
                     return this.$store.state.daysindex
-                }
+                },
+                checkrd(show){
+                    if(show==0){
+                        console.log('000show0000')
+                        return{
+                           display:''
+                        }
+                    }else{
+                        console.log('000show00111111100')
+                        return{
+                           display:'none'
+                        }
+
+                    }
+                     
+                    
+                } ,
             },
             methods: {
                 //搜尋景點
@@ -1480,9 +1496,12 @@
                 switch (this.selectType) {
                     case '景點':
                         this.selectType = '景點'
+                        checkrd(0)
+
                         break;
                     case '餐飲':
                         this.selectType = '餐飲'
+                        checkrd(1)
                         //if (this.selectCounty.length <= 0) {
                         //    this.selectCounty.push("高雄市")
                         //    this.isDefault = 1;
@@ -1490,6 +1509,7 @@
                         break;
                     case '旅宿':
                         this.selectType = '旅宿'
+                        checkrd(1)
                         //if (this.selectCounty.length <= 0) {
                         //    this.selectCounty.push("高雄市")
                         //    this.isDefault = 1;
@@ -1553,7 +1573,7 @@
                                         </span>
                                     </div>
                                     <hr>
-                                    <div class="cat">
+                                    <div class="cat" :style="checkrd" >
                                         <span v-for="(acitivity,index) in acitivitys">
 
                                     <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
@@ -1615,7 +1635,8 @@
                 },
                 datetime() {
                     return this.$store.state.datetime
-                },                
+                },
+                               
             },
             methods: {
                 culDate() {

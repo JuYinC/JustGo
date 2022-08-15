@@ -162,7 +162,7 @@ ViewData["Title"] = "blog";
                 ],
             ],
 
-            UserId: ["Alley"],
+            UserName: ["Alley"],
             UserImage: "Shinnosuke6.png",
             CoverImageName: "coverimage.jpg",
             Title: '三天兩夜台東之旅',
@@ -247,10 +247,11 @@ ViewData["Title"] = "blog";
                      }
              },
              savelike() {    
-                            axios.post("@Url.Action("userKeepBlog","Blog")", this.KeepNumber)
-                                     //.then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
-                                     //.catch(err => console.log(""))       
-                           //}
+                            
+                            axios.post("@Url.Action("userKeepBlog","Blog")", { BlogId: id, }).then(res => {
+                            this.KeepNumber = res.data.keepNumber;
+                          
+                        })
              },
             onChange(dayIndex) {
 
@@ -351,7 +352,7 @@ ViewData["Title"] = "blog";
                             <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                            
                         </div>
-                        <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
+                        <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
                         <div class="mb-2">美好旅程的回憶從JustGO開始</div>
                     </div>
 
@@ -393,7 +394,7 @@ ViewData["Title"] = "blog";
                             </div>
                             <div >
                                 <h5 class="">{{Title}}</h5>
-                                <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserId}}</small>                 
+                                <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
                             </div>
                         </div>
                     </div>
@@ -465,16 +466,12 @@ ViewData["Title"] = "blog";
 
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
-
                      <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous"
                         src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
                         nonce="NqM9iieh"></script>
                     <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
                         data-numposts="5"></div>
-                    
-
-
 
                 </div>
         </div>

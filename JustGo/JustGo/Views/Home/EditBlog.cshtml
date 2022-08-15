@@ -116,7 +116,7 @@
                     ],
                     UserImage: "Shinnosuke6.png",
                     CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
-                    UserId: ["Alley"],
+                    UserName: ["Alley"],
                     Title: '',
                     describe: '',
                     Like: 5,
@@ -364,9 +364,9 @@
                         <div class="sticky-top" style="top:10vh;z-index:-5;">
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                                @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
                             </div>
-                            <div class="pt-2">{{UserId[0]}}旅途隨手記</div>                           
+                            <div class="pt-2">{{UserName[0]}}旅途隨手記</div>                           
                             <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                             <ul class="list-group list-group-flush" id="hidden">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
@@ -405,7 +405,7 @@
 
                                     @*上傳圖片*@
                                     <div class="mb-3">
-                                        <label class="btn btn-primary btn-sm">
+                                        <label class="btn btn-primary">
                                             <input type="file" accept="image/jpeg, image/png" multiple
                                                 @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
                                                 style="display:none;">

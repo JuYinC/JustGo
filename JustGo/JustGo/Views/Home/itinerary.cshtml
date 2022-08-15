@@ -576,6 +576,7 @@
                     const bounds = new google.maps.LatLngBounds();
                     let iofSpots = 0
                     let townWeather = [];
+                    let infopic = null;
                     for (i = 0; i < state.travel.length; i++) {
                         state.travel[i].map((position, j) => {
                             townWeather.length = 0;
@@ -596,6 +597,75 @@
                                 icon: state.icon[3],
                             });
                             bounds.extend(marker.position);
+                            switch (position.class) {
+                                case 1:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[0]
+                                    break;
+                                case 2:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[1]
+                                    break;
+                                case 3:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[2]
+                                    break;
+                                case 4:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[3]
+                                    break;
+                                case 5:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[4]
+                                    break;
+                                case 6:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[5]
+                                    break;
+                                case 7:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[6]
+                                    break;
+                                case 8:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[7]
+                                    break;
+                                case 9:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[8]
+                                    break;
+                                case 10:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[9]
+                                    break;
+                                case 11:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[10]
+                                    break;
+                                case 12:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[11]
+                                    break;
+                                case 13:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[12]
+                                    break;
+                                case 14:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[13]
+                                    break;
+                                case 15:
+                                    iconPlace = state.icon[1]
+                                    infopic = state.infoPicture[14]
+                                    break;
+                                case 16:
+                                    iconPlace = state.icon[2]
+                                    infopic = state.infoPicture[15]
+                                    break;
+                                default:
+                                    iconPlace = state.icon[0]
+                                    infopic = state.infoPicture[7]
+                            }
                             // 產生infowindow
                             let contentString =
                                 `
@@ -612,7 +682,7 @@
                                 </div>
                                 <div class="infowindow_part row">
                                     <div class="infowindow_img col-4">
-                                        <img src="https://picsum.photos/300" class="infowindow_picture">
+                                        <img src=${infopic} class="infowindow_picture">
                                         @* <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture"> *@
                                     </div>
                                     <div class="infowindow_info col-8">
@@ -705,7 +775,7 @@
                     let iofSpots = 0
                     const bounds = new google.maps.LatLngBounds();
                     let townWeather = [];
-
+                    let infopic = null;
                     state.travel[day].map((position, j) => {
                         townWeather.length = 0;
                         state.selectWeather.find(object => {
@@ -725,6 +795,75 @@
                             icon: state.icon[3],
                         });
                         bounds.extend(marker.position);
+                        switch (position.class) {
+                            case 1:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[0]
+                                break;
+                            case 2:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[1]
+                                break;
+                            case 3:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[2]
+                                break;
+                            case 4:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[3]
+                                break;
+                            case 5:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[4]
+                                break;
+                            case 6:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[5]
+                                break;
+                            case 7:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[6]
+                                break;
+                            case 8:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[7]
+                                break;
+                            case 9:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[8]
+                                break;
+                            case 10:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[9]
+                                break;
+                            case 11:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[10]
+                                break;
+                            case 12:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[11]
+                                break;
+                            case 13:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[12]
+                                break;
+                            case 14:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[13]
+                                break;
+                            case 15:
+                                iconPlace = state.icon[1]
+                                infopic = state.infoPicture[14]
+                                break;
+                            case 16:
+                                iconPlace = state.icon[2]
+                                infopic = state.infoPicture[15]
+                                break;
+                            default:
+                                iconPlace = state.icon[0]
+                                infopic = state.infoPicture[7]
+                        }
                         // 產生infowindow
                         let contentString =
                             `
@@ -741,7 +880,7 @@
                                     </div>
                                     <div class="infowindow_part row">
                                         <div class="infowindow_img col-4">
-                                            <img src="https://www.taiwan.net.tw/pic.ashx?qp=1/big_scenic_spots/pic_11548_18.jpg&sizetype=3" class="infowindow_picture">
+                                            <img src=${infopic} class="infowindow_picture">
                                         </div>
                                         <div class="infowindow_info col-8">
                                             <p><i class="fa-solid fa-house-crack" style="color:#1C0059"></i> ${position.add}</p>                                     

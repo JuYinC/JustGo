@@ -94,13 +94,14 @@
 <script src="~/js/site.js"></script>
 <script>
 
-    // let x = 'https://localhost:7100/Home/itinerary'
-    // if(window.browserLink.connection.qs.requestUrl != x){
-    //         $('.arrange__contain-video').css('height','0')
-    //             setTimeout(function(){
-    //                   $('.arrange__contain-video').css('display','none')  
-    //             },200);
-    // }
+     let id = window.location.search.substring(1)
+            if (id != "") {
+                $('.arrange__contain-video').css('height','0')
+                 setTimeout(function(){
+                       $('.arrange__contain-video').css('display','none')  
+                 },200);
+                 $('#navbarC').addClass("sticky")
+            }
 
 
 
@@ -972,61 +973,49 @@
             },
            
         },
-        mounted() {
-            let id = window.location.search.substring(1)
-            if (id != "") {
-                this.$store.dispatch('axiosLoad', { ScheduleId: id })
-
-            }
+        mounted() {            
         },
         methods: {
+            moveTime(){
+                if (window.innerWidth > 401) {
+                    if ($('#st').val() && $('#et').val()) {
+
+                        $('.arrange__contain-video').css('height', '0')
+                        $('.datepicker').css('display', 'none')
+                        $('#navbarC').addClass("sticky")
+                        $('.datepicker__content').css({
+                            'top': '5%',
+                            'left': '30%',
+                            'z-index': '5',
+                            'width': '30%',
+                            'display': 'unset',
+                        })
+                        $('#app input').css({
+                            'min-width': '30%',
+                            'font-size': '1.4rem',
+                        }).focus().css('max-width', '30%')
+                        $('#app button').css({
+                            'font-size': '1rem',
+                            'width': '35%',
+                            'padding': '0',
+                            'border-radius': '0',
+                            'background': 'transparent',
+                            'color': 'black',
+                            'border': '2px solid',
+
+                        })
+                        $('#app button')[0].textContent = "更新日期"
+
+
+                        setTimeout(function() {
+                            $('.arrange__contain-video').css('display', 'none')
+                        }, 200);
+
+                    }
+                }
+            },
             //編排日期
             culDate() {
-              if(window.innerWidth>401){
-                 if($('#st').val() && $('#et').val()){
-
-                $('.arrange__contain-video').css('height','0')
-              
-
-                $('.datepicker').css('display','none') 
-                $('#navbarC').addClass("sticky")
-                $('.datepicker__content').css({
-                    'top':'5%',
-                    'left':'30%',
-                    'z-index':'5',
-                    'width':'30%',
-                    'display':'unset',
-                })
-                $('#app input').css({
-                    'min-width': '30%',
-                    'font-size':'1.4rem',
-                }).focus().css( 'max-width','30%')
-                $('#app button').css({
-                    'font-size':'1rem',
-                    'width': '35%',
-                    'padding': '0',
-                    'border-radius': '0',
-                    'background': 'transparent',
-                    'color': 'black',
-                    'border': '2px solid',
-
-                })
-                $('#app button')[0].textContent="更新日期"
-                
-                
-                setTimeout(function(){
-                      $('.arrange__contain-video').css('display','none')  
-                },200);
-
-
-
-
-
-               
-             }
-
-              }  
-            
 
                 let startTime = new Date(this.selectDatelocal)
                 let endTime = new Date(this.selectDateEndlocal)
@@ -1035,7 +1024,7 @@
                 this.datetime.length = 0
 
                 if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
-
+                    this.moveTime();
                     for (let i = 0; i < day; i++) {
                         this.duringDate.push(startTime.toLocaleDateString())
                         startTime = startTime.setDate(startTime.getDate() + 1)
@@ -1066,6 +1055,9 @@
                         }
                         this.$store.commit("cultime")
                     }
+
+
+
 
                 } else {
                     alert('重新選擇日期')

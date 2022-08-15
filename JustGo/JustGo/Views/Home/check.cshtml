@@ -63,21 +63,20 @@
                                         </div>
                                     </div>
                                     <div class="daysinfo">
-                                    {{duringDate[selectDay]}}
+                                    <div class="date">{{duringDate[selectDay]}}</div>
                                     <div v-for="(view,index) in daySchedule" class="fadein">
 
-                                        <div class="row cols-2">
+                                        <div class="row cols-2 viewinfo">
                                             <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
-                                            <div class="col-6">
-                                                <h3>{{view.place.name}}</h3><br/>
-                                                <h6>{{view.place.add}}</h6>
+                                            <div class="col-8">
+                                                <div class="viewname">{{view.place.name}}</div>
+                                                <div><h6>{{view.place.add}}</h6></div>
                                             </div>
                                         </div>
                                         <div class="row cols-2" v-if="index<daySchedule.length-1">
                                             <div class="col-2">
                                             </div>
                                             <div class="col-10 betweenBox">
-                                                <br>
                                                 <i class="fa-solid fa-car-side"></i> {{roam[selectDay][index]}}
                                             </div>
                                         </div>
@@ -92,12 +91,17 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="row">
                         <div v-for="(day,dayindex) in schedule.details" class="col scheduleDay" style="display:inline-block">
-                            <div class="viewbox border border-info p-1">
+                            <div class="viewbox  p-1">
+                                <div class="date">{{duringDate[dayindex]}}</div>
                                 <div v-for="(view,index) in day">
-                                    <div class="row p-0 m-0">
-                                        <p class="col-4 m-0 fs-4 d-flex align-items-center justify-content-center">{{view.startTime}}-{{view.endTime}}</p>
-                                        <p class="col-6 m-0 fs-3  fw-bold bgposition">{{view.place.name}}</p>
-                                    </div>
+                                        <div class="row cols-2 viewinfo">
+                                            <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
+                                            <div class="col-8">
+                                                <div class="viewname">{{view.place.name}}</div>
+                                                <div><h6>{{view.place.minT}}-{{view.place.maxT}} {{view.place.wx}}</h6></div>
+                                                <div><h6>{{view.place.add}}</h6></div>
+                                            </div>
+                                        </div>
                                     <div class="row cols-2" v-if="index<day.length-1">
                                         <div class="col-2">
                                         </div>

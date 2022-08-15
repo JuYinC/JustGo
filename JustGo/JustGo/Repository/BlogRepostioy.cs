@@ -77,7 +77,7 @@ namespace JustGo.Repository
         public bool deleteBlog(BlogVM vm)
         {
             _context.Remove(_context.Blog.Include(b=>b.BlogDetails).SingleOrDefault(e=>e.BlogId==vm.BlogId)??new Blog());
-
+            _context.SaveChanges();
             return true;
         }
 

@@ -269,7 +269,7 @@
                             <div class="travel">行程</div>
                             <div class="block">
                                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">                                    
-                                    <div class="schedule" v-for="(item,index) in nextSchedule" :key="scheduleId">
+                                    <div class="schedule" v-for="(item) in nextSchedule" :key="scheduleId">
                                         <div class="scheduleInfo scheduleInfo_Margin">
                                             <span class="item_title">{{item.title}}</span><br />
                                             <hr class="hr_Style" />
@@ -279,7 +279,7 @@
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
                                             <span class="item_scheduleId" @@click="editSchedule(item.scheduleId)"><i class="fa-solid fa-file-pen"></i></span>
-                                            <span class=" DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
+                                            <span class=" DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +289,7 @@
                             <div class="travel">過往行程</div>
                             <div class="block">
                                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                                    <div class="schedule" v-for="(item,index) in exSchedule" :key="scheduleId">
+                                    <div class="schedule" v-for="(item) in exSchedule" :key="scheduleId">
                                         <div class="scheduleInfo scheduleInfo_Margin">
                                             <span class="item_title">{{item.title}}</span><br>
                                             <hr class="hr_Style" />
@@ -299,7 +299,7 @@
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
                                             <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)"><i class="fa-solid fa-share-from-square"></i></span>
-                                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
+                                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -318,8 +318,8 @@
                                         </div>
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
-                                            <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)"><i class="fa-solid fa-share-from-square"></i></span>
-                                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
+                                            <span class="CreateBlog_Style" @@click="editBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
+                                            <span class="DeleteSchedule_Style" @@click="deleteBlog(item.blogId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -329,7 +329,7 @@
                             <div class="travel">收藏</div>
                             <div class="block">
                                 <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                                    <div class="schedule" v-for="(item,index) in keeyBlog" :key="blogId">
+                                    <div class="schedule" v-for="(item,index) in keepBlog" :key="blogId">
                                         <div class="scheduleInfo scheduleInfo_Margin">
                                             <span class="item_title">{{item.title}}</span><br>
                                             <hr class="hr_Style" />
@@ -338,8 +338,8 @@
                                         </div>
                                         <hr class="hr_Style" />
                                         <div class="buttonBar schedule_word_margin">
-                                            <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)"><i class="fa-solid fa-share-from-square"></i></span>
-                                            <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId,index)"><i class="fa-solid fa-trash-can"></i></span>
+                                            <span class="CreateBlog_Style" @@click="checkBlog(item.blogId)"><i class="fa-solid fa-share-from-square"></i></span>
+                                            <span class="DeleteSchedule_Style" @@click="deleteKeep(item.blodId)"><i class="fa-solid fa-trash-can"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -427,7 +427,7 @@
                 blog() {
                     return this.showBlog;
                 },
-                keeyBlog(){
+                keepBlog(){
                     return this.userKeepBlog;
                 },
                 nextSchedule() {
@@ -439,17 +439,34 @@
             },
             methods: {                
                 editSchedule(scheduleId) {
-                    window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId
-                    //window.location.href = `@Url.Action("itinerary","Home",new {schedule = "123"})"
-                },
-                deleteSchedule(scheduleId, index) {
-                    this.showSchedule.splice(index, 1);
+                    window.location.href = '@Url.Action("itinerary","Home")?' + scheduleId            
+                },                  
+                deleteSchedule(scheduleId) {
                     axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
-                        .then(res=>{})
+                        .then(res => { this.showSchedule.splice(this.showSchedule.findIndex(e => e.scheduleId == res.data), 1) })
+                        .catch(err => console.log("err"))
+                },                
+                createBlog(scheduleId) {
+                    window.location.href = '@Url.Action("EditBlog","Home")#create?' + scheduleId
+                },
+                editBlog(blogId) {
+                    window.location.href = '@Url.Action("EditBlog","Home")#edit?' + blogId
+                },
+                deleteBlog(blogId) {
+                    axios.post("@Url.Action("deleteBlog","blog")", { blogId: blogId })
+                        .then(res => { this.showBlog.splice(this.showBlog.findIndex(e => e.blogId == blogId), 1) })
                         .catch(err => console.log("err"))
                 },
-                createBlog(scheduleId) {
-                    window.location.href = '@Url.Action("EditBlog","Home")?' + scheduleId
+                deleteKeep(blogId) {
+                    axios.post("@Url.Action("userKeepBlog","blog")", { id: blogId })
+                        .then(res => { this.userKeepBlog.splice(this.userKeepBlog.findIndex(e => e.blogId == blogId), 1) })
+                        .catch(err => console.log("err"))
+                },
+                checkBlog(blogId){
+                    window.location.href = '@Url.Action("Blog","Home")?' + blogId
+                },
+                checkSchedule(scheduleId){
+                    window.location.href = '@Url.Action("check","Home")?' + scheduleId
                 }
             },
             mounted() {

@@ -1392,6 +1392,7 @@
                     selectCounty: [],
                     selectAcitivity: [],
                     isDefault: 0,
+                    display:"",
                 }
             },
             mounted() {
@@ -1407,22 +1408,9 @@
                 daysindex() {
                     return this.$store.state.daysindex
                 },
-                checkrd(show){
-                    if(show==0){
-                        console.log('000show0000')
-                        return{
-                           display:''
-                        }
-                    }else{
-                        console.log('000show00111111100')
-                        return{
-                           display:'none'
-                        }
-
-                    }
-                     
-                    
-                } ,
+                checkrd(){                    
+                      return this.display                                                           
+                },
             },
             methods: {
                 //搜尋景點
@@ -1433,12 +1421,15 @@
                     switch (this.selectType) {
                         case '景點':
                             this.selectType = '景點'
+                            this.display = ''
                             break;
                         case '餐飲':
                             this.selectType = '餐飲'
+                            this.display = 'display:none'
                             break;
                         case '旅宿':
                             this.selectType = '旅宿'
+                            this.display = 'display:none'
                             break;
                     }
 
@@ -1498,7 +1489,7 @@
                                         </span>
                                     </div>
                                     <hr>
-                                    <div class="cat" :style="checkrd" >
+                                    <div class="cat" :style="checkrd">
                                         <span v-for="(acitivity,index) in acitivitys">
 
                                     <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">

@@ -40,15 +40,15 @@ namespace JustGo.Repository
 
         public BlogVM createScheduleToBlog(int scheduleId ,string userId)
         {
-            var schedule = _context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == scheduleId)??new Schedule();  
-            var user = _UserComtext.Users.Single(e => e.Id == userId);
-            if(user == null)
+            var schedule = _context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == scheduleId)??new Schedule();
+            var user = _UserComtext.ApplicationUsers.Single(e => e.Id == userId);
+            if (user == null)
             {
                 return new BlogVM();
             }
             BlogVM blogVm = new BlogVM()
             {
-                UserName = user.UserName,
+                UserName = user.Name,
                 UserImage = "2208121714164777.jpg",
                 Like = 0,
                 StartDate = schedule.StartDate,
@@ -169,13 +169,13 @@ namespace JustGo.Repository
         BlogVM modeltoVM(Blog model)
         {
             
-            var user = _UserComtext.Users.Single(e => e.Id == model.UserId);
+            var user = _UserComtext.ApplicationUsers.Single(e => e.Id == model.UserId);
             string UserImage = "2208121714164777.jpg";
             BlogVM vm = new BlogVM()
             {
                 BlogId = model.BlogId,
                 UserId = model.UserId,
-                UserName = user.UserName,
+                UserName = user.Name,
                 UserImage = UserImage,
                 Title = model.Title,
                 Describe = model.Describe,

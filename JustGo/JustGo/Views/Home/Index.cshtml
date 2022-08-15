@@ -331,8 +331,8 @@
             </div>
         </div>
         <div class="wrapper">
-            <div v-for="(item) in search.results" class="card" :key="item.blogId">
-                {{item}}
+            <div v-for="(item) in search.results" class="card">
+                @*{{item}}*@
                 @*<img src="https://unsplash.it/1800/1600/?random/person" alt="">*@
                 <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">

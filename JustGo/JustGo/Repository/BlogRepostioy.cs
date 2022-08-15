@@ -200,7 +200,7 @@ namespace JustGo.Repository
                             PlaceId = item.PlaceId,
                             P_Name = p.Name,
                             P_Add = p.Add,
-                            P_tel = p.Name,
+                            P_tel = p.Tel,
                             Describe = item.Describe,
                             Images = JsonConvert.DeserializeObject<List<blogImage>>(item.Images),
                             Score = item.Score

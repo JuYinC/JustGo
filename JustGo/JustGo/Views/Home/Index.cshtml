@@ -118,36 +118,25 @@
                           axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
                       }
                   }
-                  axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
-                  onMounted(() => {
-                      window.addEventListener('scroll', scroll);
-                      searchBlog("");
-                  })
-                  return {
-                      search, northern, central, south, east, searchNumber,
-                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
-                  }
-              },
-        }
-        Vue.createApp(App).mount("#app")    
-        var mouse = {
-            X: 0,
-            Y: 0,
-            CX: 0,
-            CY: 0
-        },
-            block = {
-                X: mouse.X,
-                Y: mouse.Y,
-                CX: mouse.CX,
-                CY: mouse.CY
-            },
-            imags = [
-                'https://unsplash.it/1800/1600/?random',
-                'https://unsplash.it/1900/1600/?random',
-                'https://unsplash.it/1800/1400/?random',
-                'https://unsplash.it/1800/1500/?random'
-            ];
+                  function po() {
+                      var mouse = {
+                          X: 0,
+                          Y: 0,
+                          CX: 0,
+                          CY: 0
+                      },
+                          block = {
+                              X: mouse.X,
+                              Y: mouse.Y,
+                              CX: mouse.CX,
+                              CY: mouse.CY
+                          },
+                          imags = [
+                              imageSrc(top4Blog.results[0].coverImage.name),
+                              imageSrc(top4Blog.results[1].coverImage.name),
+                              imageSrc(top4Blog.results[2].coverImage.name),
+                              imageSrc(top4Blog.results[3].coverImage.name)
+                          ];
 
                       $('.block').on('mousemove', function(e) {
                           mouse.X = (e.pageX - $(this).offset().left) - $('.block').width() / 2;
@@ -204,18 +193,22 @@
                           )
                       })
                   }
+                  axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
                   onMounted(() => {
                       window.addEventListener('scroll', scroll);
                       searchBlog("");
                       po();
                   })
                   return {
-                      search, northern, central, south, east, searchNumber,
+                      search, northern, central, south, east, searchNumber,top4Blog,
                       select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
                   }
               },
         }
         Vue.createApp(App).mount("#app")    
+            
+                  
+                  
         
     </script>
     <script type="text/javascript">
@@ -265,8 +258,8 @@
                 <div class="block">
                     <span class="circleLight"></span>
                     <div class="text">
-                        <h2>First</h2>
-                        <p>This is slide 1</p>
+                        <h2>{{top4Blog.results[0].title}}</h2>
+                        <p>{{top4Blog.results[0].userame}}</p>
                     </div>
                 </div>
             </div>
@@ -274,8 +267,17 @@
                 <div class="block">
                     <span class="circleLight"></span>
                     <div class="text">
-                        <h2>Second</h2>
-                        <p>This is slide 2</p>
+                        <h2>{{top4Blog.results[1].title}}</h2>
+                        <p>{{top4Blog.results[1].userame}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="block">
+                    <span class="circleLight"></span>
+                    <<div class="text">
+                        <h2>{{top4Blog.results[2].title}}</h2>
+                        <p>{{top4Blog.results[2].userame}}</p>
                     </div>
                 </div>
             </div>
@@ -283,17 +285,8 @@
                 <div class="block">
                     <span class="circleLight"></span>
                     <div class="text">
-                        <h2>Three</h2>
-                        <p>This is slide 3</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="block">
-                    <span class="circleLight"></span>
-                    <div class="text">
-                        <h2>Four</h2>
-                        <p>This is slide 4</p>
+                        <h2>{{top4Blog.results[3].title}}</h2>
+                        <p>{{top4Blog.results[3].userame}}</p>
                     </div>
                 </div>
             </div>

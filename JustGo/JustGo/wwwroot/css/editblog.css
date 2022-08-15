@@ -1,8 +1,17 @@
+
+.navbarC {
+    background-color: #8a8a8a;
+    z-index: 6;
+}
+
+#bloginfo {
+    font-size: 1.4rem;
+}
 #coverimg {
     width: 100%;
-    height: 420px;
+    height: 350px;
     object-fit: cover;
-    margin-bottom:3%
+    margin-bottom: 3%;
 }
 
     #covertitle {
@@ -20,7 +29,6 @@
         background-color: transparent;
         font-size: 22px;
         color: aliceblue;
-        font-weight: auto;
         text-align: center;
         top: 60%;
         left: 45%;
@@ -71,12 +79,12 @@
 
 
     .list-group-item {
-        size: 12px !important;
         color: #f9ab55 !important;
         font-weight: bold !important;
         box-shadow: 0 !important;
         border: none !important;
         padding: 2px !important;
+        background:transparent !important;
     }
 
         .list-group-item:hover {
@@ -84,7 +92,7 @@
             color: #f58a07 !important;
             border: none !important;
             font-weight: bold !important;
-            size: 12px !important;
+           
             box-shadow: 0 !important;
             transition: width 2s, height 2s !important;
             -webkit-transform: rotate(1deg) !important;
@@ -95,7 +103,7 @@
             color: #f58a07 !important;
             border: none !important;
             font-weight: bold !important;
-            size: 12px !important;
+           
             box-shadow: 0 !important;
         }
 
@@ -113,28 +121,31 @@
             background-color: #669ed6 !important;
             color: #fff !important;
             border: none !important;
+            font-size: 1.2rem !important;
         }
 
-        .btn-primary:hover, .btn-outline-primary:hover {
-            background-color: #084887 !important;
-            color: #fff !important;
-            border: none !important;
-        }
+            .btn-primary:hover, .btn-outline-primary:hover {
+                background-color: #084887 !important;
+                color: #fff !important;
+                border: none !important;
+                font-size: 1.2rem !important;
+            }
 
+    
 
-    #day {
-        background-color: #084887;
-        color: #fff;
-        border-radius: 8px;
-        padding: 4px 9px;
-        margin-bottom: 5px;
-    }
+#day {
+    background-color: #084887;
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 9px;
+    margin-bottom: 5px;
+}
 
     .groupimg {
         width: 600px;
         margin: 10px -10px;
         display: row;
-        flex-wrap: wrap;*/
+        flex-wrap: wrap;
        
     }
 
@@ -154,11 +165,22 @@
 
     #setting {
         position: fixed;
+        bottom:15vh;
         right: 8%;
-        bottom: 40%;
         font-size: 20px;
+        z-index:3;
+
     }
 
+   .footer__waves{
+       z-index:4;
+   }
+
+@media only screen and (max-width: 576px) {
+    #hidden {
+        display: none;
+    }
+}
 
 
     /*background-color: var(--primary-bule-light);

@@ -1,164 +1,24 @@
 ﻿@{
-    Layout = "_Layout";
+Layout = "_Layout";
 }
 @{
-    ViewData["Title"] = "blog";
+ViewData["Title"] = "blog";
 }
 @section Style{
- <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
- <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
- <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
- <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"/>
- <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
+<link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
 
 <style>
-  /*  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins", serif;
-    }
-
-
-    .fa-flag {
-        font-size: 22px;
-        color: aliceblue;
-    }
-
-    #TitleId {
-        display: inline-block;
-        border-style: none;
-        outline: none;
-        background-color: transparent;
-        font-size: 22px;
-        color: aliceblue;
-        text-align: center;
-        top: 60%;
-        left: 45%;
-        z-index: 2;
-    }
-
-
-        #TitleId:hover {
-            -webkit-text-stroke: 1px #fff;
-            color: transparent;
-            z-index: 2;
-        }
-
-    textarea {
-        width: 100%;
-        border: none;
-        border-bottom: 1px dashed #909cc2;
-    }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-bottom: 1px dashed #084887;
-        }
-
-    .container-fluid {
-        position: relative;
-    }
-
-    textarea::-webkit-scrollbar {
-        width: 8px;
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    textarea::-webkit-scrollbar-thumb {
-        width: 8px;
-        border-radius: 40px;
-        background-color: #c3c3c3;
-    }
-
-    #userimg {
-        border-radius: 50%;
-        width: 70px;
-        height: 65px;
-    }
-
-
-
-    .Details {
-        list-style-type: none;
-    }
-
-    .list-group-item {
-        font-size: 14px !important;
-        box-shadow: 0 !important;
-        border: none !important;
-        padding: 2px !important;
-    }
-
-        .list-group-item:hover {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-            transition: width 2s, height 2s !important;
-            -webkit-transform: rotate(1deg) !important;
-        }
-
-        .list-group-item.active {
-            background-color: transparent !important;
-            color: #f58a07 !important;
-            border: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            box-shadow: 0 !important;
-         
-        }
-
-    .btn-primary, .btn-outline-primary {
-        background-color: #669ed6 !important;
-        color: #fff !important;
-        border: none !important;
-    }
-
-        .btn-primary:hover, .btn-outline-primary:hover {
-            background-color: #084887 !important;
-            color: #fff !important;
-            border: none !important;
-        }
-
-    #day {
-        background-color: #084887;
-        color: #fff;
-        border-radius: 8px;
-        padding: 4px 9px;
-        margin-bottom: 5px;
-    }
-
-
-    .groupimg {
-        width: 600px;
-        margin: 10px -10px;
-        display: row;
-        flex-wrap: wrap;
-    
-    }
-
-        .groupimg > img {
-            width: 180px;
-            height: 150px;
-            margin: 10px 10px;
-            cursor: pointer;
-            justify-content: space-around;
-        }
-
-        .groupimg::after {
-            display: block;
-            width: 180px;
-        }*/
+        
 
 </style>
 
@@ -167,114 +27,143 @@
 
 
 
-    @section Scripts{
-    <script src="~/js/site.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
-    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
-    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+@section Scripts{
+<script src="~/js/site.js"></script>
 
-    
-        
-    <script>
-        
-    $("body").attr('data-bs-spy','scroll')
-    $("body").attr('data-bs-target','#list-example')
-    $("body").attr('data-bs-offset','0')
-    $("body").attr('tabindex','0')
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
+<script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
+<script>
+
+    $("body").attr('data-bs-spy', 'scroll')
+    $("body").attr('data-bs-target', '#list-example')
+    $("body").attr('data-bs-offset', '0')
+    $("body").attr('tabindex', '0')
 
     Vue.use(VueViewer.default)
     console.log(VueViewer.default)
 
+
+    //$(function () {
+    //              $('input[name="daterange"]').daterangepicker({
+    //                  locale: {
+    //                      format: 'YYYY/MM/DD',
+    //                  },
+    //                  opens: 'right'
+    //              }, function (start, end) {
+    //                  console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+    //              });
+    //              $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+    //                  $(this).val('');
+    //              }).on("hide.daterangepicker", function (ev) {
+    //                  this.dispatchEvent(new Event('input'))
+    //              });
+  
+    //          });
+
+
+    $(function () {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function (start, end, label) {
+            console.log(start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+        }).on("hide.daterangepicker", function (ev) {
+                      this.dispatchEvent(new Event('input'))
+        });
+    });
+
     let id = 0;
     let vm = new Vue({
-        el: `#bloginfo`,            
+        el: `#bloginfo`,
         data: {
             Details: [
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "北部1",
-                                p_tel: "07-123456",
-                                p_Add: "台北市",
-                                describe : "",
-                                score: 5,
-                                images: {Name:"2208111103103186.jpg",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "高雄2",
-                                p_tel: "02-123456",
-                                p_Add: "高雄市",
-                                describe : "",
-                                score: 3,
-                                images: {Name:"2208111103108543.png",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台中3",
-                                p_tel: "04-123456",
-                                p_Add: "台中市",
-                                describe : "",
-                                score: 4,
-                                images: {Name:"2208111103108981.png",base64:""},
-                            }
+                [
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "北部1",
+                        p_tel: "07-123456",
+                        p_Add: "台北市",
+                        describe: "",
+                        score: 5,
+                        images: { Name: "2208111103103186.jpg", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "高雄2",
+                        p_tel: "02-123456",
+                        p_Add: "高雄市",
+                        describe: "",
+                        score: 3,
+                        images: { Name: "2208111103108543.png", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "台中3",
+                        p_tel: "04-123456",
+                        p_Add: "台中市",
+                        describe: "",
+                        score: 4,
+                        images: { Name: "2208111103108981.png", base64: "" },
+                    }
 
-                        ],
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台南4",
-                                p_tel: "06-123456",
-                                p_Add: "台南市",
-                                describe : "",
-                                score: 5,
-                                images: {Name:"2208111103109487.jpg",base64:""},
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "花蓮5",
-                                p_tel: "123456",
-                                p_Add: "花蓮市",
-                                describe : "",
-                                score: 1,
-                                images: {Name:"2208111108357791.jpg",base64:""},
-                            },
+                ],
+                [
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "台南4",
+                        p_tel: "06-123456",
+                        p_Add: "台南市",
+                        describe: "",
+                        score: 5,
+                        images: { Name: "2208111103109487.jpg", base64: "" },
+                    },
+                    {
+                        id: id++,
+                        startTime: null,
+                        endTime: null,
+                        placeId: 1,
+                        p_Name: "花蓮5",
+                        p_tel: "123456",
+                        p_Add: "花蓮市",
+                        describe: "",
+                        score: 1,
+                        images: { Name: "2208111108357791.jpg", base64: "" },
+                    },
 
 
-                        ],
-                    ],
-                   
-            UserId: ["Alley"],
+                ],
+            ],
+
+            UserName: ["Alley"],
             UserImage: "Shinnosuke6.png",
-            CoverImageName:"coverimage.jpg",
+            CoverImageName: "coverimage.jpg",
             Title: '三天兩夜台東之旅',
-            describe:'美好旅程的回憶從JustGO開始',
-            StartDate:null,
-            EndDate:null,
-            //totallike:0,
-            bool: 1,
-
+            describe: '美好旅程的回憶從JustGO開始',
+            StartDate: null,
+            EndDate: null,
+            KeepClass:0,
+            KeepNumber: 0,
+            daterange: null,
             myscore: this.score,
             mytempscore: this.score
 
@@ -294,12 +183,9 @@
             }
         },
         methods: {
-            getImages(loadimagesName){ 
+            getImages(loadimagesName) {
                 return "@Url.Content("~/blogImages")/"+loadimagesName
             },
-            //CoverImageSrc(coverimageName) {
-            //    return "@Url.Content("~/blogImages")/"+coverimageName                        
-            //},
             userImageSrc(imageName) {
                 return "@Url.Content("~/UserImages")/"+imageName                       
             },
@@ -309,59 +195,54 @@
             gettime(time) {
                 return moment(time).format('A HH')
             },
-            gethref(dayIndex,viewIndex){
-                return "#list-item-"+dayIndex+"-"+viewIndex
+            gethref(dayIndex, viewIndex) {
+                return "#list-item-" + dayIndex + "-" + viewIndex
             },
-            getanchor(dayIndex,viewIndex){                    
-                return "list-item-"+dayIndex+"-"+viewIndex
+            getanchor(dayIndex, viewIndex) {
+                return "list-item-" + dayIndex + "-" + viewIndex
             },
-            copyURL:function() {
-                let myurl = document.createElement('input'),
+            copyURL: function () {
+                let myurl = document.createElement('input')
                 geturl = window.location.toString()
                 document.body.appendChild(myurl);
                 myurl.value = geturl;
                 myurl.select();
                 document.execCommand('copy');
                 document.body.removeChild(myurl);
-               
             },
-            copyblog: function() { 
-                if (id != "") {
-                    axios.post("@Url.Action("selectblogDetails","blog")", { BlogId:id,}).then(res => {  
-                       this.Details = res.data.details;
-                       this.EndDate = res.data.endDate;
-                       this.StartDate = res.data.startDate;
-                       this.Title = res.data.title;
-                       this.describe = res.data.describe;
-                     }
-                    )
-                }
-            
-            },       
-            likeblog: function(){  
-                var heart = document.getElementsByClassName("fa-heart");
-                var totallike = document.getElementsByClassName("totallike");
-                var totallike;
-                i = 0
-                heart[i].onclick = function () {
-                    
-                    if (bool == 1) {
-                        bool = false;
-                        this.className = "fa fa-heart active";
-                        ++totallike[i].innerHTML; 
-                    } else { 
-                        bool = true;
-                        this.className = "fa fa-heart";
-                        --totallike[i].innerHTML;
+            copyblog: function () {
+                    if (id != "") {
+                        axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
+                            this.Details = res.data.details;
+                            this.EndDate = res.data.endDate;
+                            this.StartDate = res.data.startDate;
+                            this.Title = res.data.title;
+                            this.describe = res.data.describe;
+                            //取得的日期
+                            this.daterange = res.data.daterange;
+                            alert("已收藏[" + this.Title + "]到會員列表!")
+                        }
+                        )
                     }
-                }
-            },
-            //add: function (day) {
-            //    this.Details[day].push({ id: id++, UserId: this.UserId, PlaceId: this.PlaceId, P_Name: this.selected, imageURLs: this.imageURLs, min: 60 });
-            //},
-            //remove: function (day, P_Name) {
-            //    this.Details[day].splice(P_Name, 1)
-            //},
+    
+             },
+             likeblog: function () {
+                    //var KeepClass = document.getElementsByClassName("KeepClass");
+                    //var KeepClass;
+                     if (this.KeepNumber == 1) {
+                            this.KeepNumber = 0;
+    
+                     } else {
+                            this.KeepNumber = 1;                          
+                     }
+             },
+             savelike() {    
+                            
+                            axios.post("@Url.Action("userKeepBlog","Blog")", { BlogId: id, }).then(res => {
+                            this.KeepNumber = res.data.keepNumber;
+                          
+                        })
+             },
             onChange(dayIndex) {
 
                 for (let j = 0; j < this.Details.length; j++) {
@@ -413,127 +294,97 @@
                     }
                 }
             },
-            
+
         },
-        mounted() {                
-                let id = window.location.search.substring(1)                                                            
-                if (id != "") {
-                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId:id,}).then(res => {  
-                       console.log(res.data);
-                       this.CoverImageName = res.data.coverImage;
-                       this.Details = res.data.details;
-                       this.EndDate = res.data.endDate;
-                       this.StartDate = res.data.startDate;
-                       this.Title = res.data.title;
-                       this.describe = res.data.describe;
-                       //axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
-                       //console.log(res.data);
-                       //this.bool = res.data.bool;
-                       //})
+        mounted() {
+            let id = window.location.search.substring(1)
+            if (id != "") {
+                axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
+                    console.log(res.data);
+                    this.CoverImageName = res.data.coverImage;
+                    this.Details = res.data.details;
+                    this.EndDate = res.data.endDate;
+                    this.StartDate = res.data.startDate;
+                    this.Title = res.data.title;
+                    this.describe = res.data.describe;
+                    //getIsKeep
+                    axios.get("@Url.Action("selectblogdetails","blog")", {id}).then(res => {  
+                    console.log(res.data);
+                    this.KeepNumber = res.data.keepNumber;
+                    this.KeepClass = res.data.keepClass;
                     })
-                }               
+                })
+            }
 
 
-            },
+        },
     },
     )
 
-    </script>
-    }
-    
+</script>
+}
 
-   <div id="bloginfo">
-    <div class="container-fluid">
+
+<div id="bloginfo">
         <div class="d-flex flex-column align-items-center justify-content-center"
-            style="height: 420px; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
         </div>
-    </div>
     <!-- Header End -->
 
     <!-- 右側欄位Detail Start -->
-    <div class="container py-3" >
+    <div class="container py-3">
         <div class="row pt-5">
             <div class="col-lg-4 mt-4 mt-lg-2 ">
                 <div class="sticky-top" style="top:10vh">
                     <!-- Author Bio -->
-                    <div class="d-flex flex-column rounded mb-4 py-4">
+                    <div class="d-flex flex-column rounded py-4">
                         <div class="py-3">
-                                <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                                @*<span class="px-3 py-1">{{UserId[0]}}</span>*@
+                            <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                           
                         </div>
-                        <h4 class="mb-2 py-1">{{UserId[0]}}</h4>
-                        <div class="mb-4">美好旅程的回憶從JustGO開始</div>
-                                        
+                        <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
+                        <div class="mb-2">美好旅程的回憶從JustGO開始</div>
                     </div>
-                    
-                    <!-- Category List -->
-                    <div class="mb-4" >
-                        <h2 class="mb-2" >Duration</h2>
+
+                     <div class="mb-4">
+                        <h2 class="mb-2">Duration</h2>
                         <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
-                        <ul class="list-group list-group-flush">
-                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa fa-calendar" style="color:#084887"></i>&nbsp; 第{{dayIndex+1}}天
-                                <li class="list-group-item  justify-content-between align-items-center px-0">
-                                        <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
-                                            <a class="list-group-item list-group-item-action"
-                                                :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏ {{dayDetails.p_Name}}</a>                                               
-                                        </li>
+                        <ul class="list-group list-group-flush" id="hidden">
+                            <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+                                
+                                <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                    <a class="list-group-item list-group-item-action"
+                                        :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                        {{dayDetails.p_Name}}</a>
                                 </li>
+                               
                             </div>
                         </ul>
                     </div>
-                    
 
-                 
 
                     <!-- Tag Cloud -->
                     <div class="mb-4">
-                        <h2 class="mb-4">#Tag</h2>
-                        <div class="d-flex flex-wrap m-n1">                  
-                            <a href="" class="btn btn-primary m-1 btn-sm">溫泉</a>
-                            <a href="" class="btn btn-primary m-1 btn-sm">生態</a>
-                            <a href="" class="btn btn-primary m-1 btn-sm">小吃特產</a>
-                            <a href="" class="btn btn-primary m-1 btn-sm">國家公園</a>
-                            <a href="" class="btn btn-primary m-1 btn-sm">休閒農業</a>                         
+                        <h2 class="mb-2">#Tag</h2>
+                        <div class="d-flex flex-wrap m-n1">                         
+                            <button class="btn btn-primary m-1">溫泉</button>
+                            <button class="btn btn-primary m-1">生態</button>
+                            <button class="btn btn-primary m-1">小吃特產</button>
+                            <button class="btn btn-primary m-1">國家公園</button>
+                            <button class="btn btn-primary m-1">休閒農業</button>
                         </div>
                     </div>
 
                     <!-- Recent Post -->
                     <div class="mb-4">
-                        <h2 class="mb-4">Recent Post</h2>
-                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
-                                style="width: 80px; height: 80px" />
-                            <div class="pl-3">
-                                <h5 class="">Diam amet eos at no eos</h5>
-                                <div class="d-flex">
-                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                </div>
+                        <div class="d-flex align-items-center shadow-sm rounded overflow-hidden" id="card">
+                            <div class="box">
+                                <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/female" alt="">
                             </div>
-                        </div>
-                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/male"
-                                style="width: 80px; height: 80px" />
-                            <div class="pl-3">
-                                <h5 class="">Diam amet eos at no eos</h5>
-                                <div class="d-flex">
-                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3">
-                            <img class="img-fluid" src="https://unsplash.it/1800/1600/?random/female"
-                                style="width: 80px; height: 80px" />
-                            <div class="pl-3">
-                                <h5 class="">Diam amet eos at no eos</h5>
-                                <div class="d-flex">
-                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
-                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
-                                </div>
+                            <div >
+                                <h5 class="">{{Title}}</h5>
+                                <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
                             </div>
                         </div>
                     </div>
@@ -542,132 +393,74 @@
             @*左側欄位*@
             <div class="col-lg-8">
                 <div class="d-flex flex-column text-left mb-3">
-                    <h1 class="my-3">{{Title}}</h1>
-                    <div class="d-flex">
-                        <p class="mr-3"><i class="fa fa-user text-primary"></i> User</p>
-                        <p class="mr-3">
-                            <i class="fa fa-folder text-primary"></i> Blog
-                        </p>
-                        <p class="mr-3"><i class="fa fa-comments text-primary"></i> 15 </p>
-                        <p class="mr-3"><i class="fa-brands fa-facebook text-primary"></i> 推文 </p>
-                        <p class="mr-3"><i class="fa-brands fa-instagram-square text-primary"></i> 推文 </p>
-                        <p class="mr-3"><i class="fa-brands fa-twitter text-primary"></i> 推文 </p>
-                        <i class="fa fa-heart" @@click="likeblog"></i><span class="totallike">30</span>
-                        <label class="btn btn-outline-dark btn-sm">
-                            <i class="fa fa-share-alt" aria-hidden="true" @@click="copyURL"> SHARE</i>
-                        </label>
+                    
+                    <div>
+                        <h1 class="my-3">{{Title}}</h1>
+                        <div class="d-flex">
 
-                         <div class="dropdown" id="setting" >
-	                        <button class="btn btn-primary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-	                          複製部落格
-	                        </button>
-	                        <ul class="dropdown-menu pt-0 rounded-3" aria-labelledby="dropdownMenuButton1">
-	                            <li ><input placeholder="開始時間" type="date" placeholder="2021/2/10"></li>
-	                            <li ><input placeholder="結束時間" type="date" placeholder="結束時間"></li>
-                                <li class="d-flex justify-content-center mt-1"><button class="btn btn-primary">確認</button></li>
-	                        </ul>
-                        </div>
-              
+                            <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
+
+                            <div class="dropdown me-2" id="setting" >
+                                <button class="btn btn-primary dropdown-toggle m-1"  type="button"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏文章</button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><input placeholder="開始時間" type="text" onfocus="(this.type='date')" 
+                                            onblur="(this.type='text')" v-model="daterange" placeholder="選擇日期" class="timepicker"></li>
+                                </ul>
+                            </div>
+
+                            
+                            <div style="line-height:30px"><i :class="KeepNumber == 1?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
+                                <span class="px-1"> &nbsp; {{KeepNumber}} {{KeepClass}}</span></div>
+                            </div>
+
                     </div>
                 </div>
                 <div class="mb-4">
-                    <img class="img-fluid rounded w-100 mb-4" :src="getImages(CoverImageName.name)"
-                        alt="Image" />
+                    <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
                     <p class="mb-2">{{describe}}</p>
-                
-                        <div v-for="(day,dayIndex) in Details">
-                            <label id="day">第{{dayIndex+1}}天</label>
-                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
 
-                                <span><i class="fa-solid fa-map-location-dot px-1 mb-1"
-                                            :id=getanchor(dayIndex,viewIndex)></i>{{dayDetails.p_Name}}</span>
-                                    <div class="mb-1">地址:{{dayDetails.p_Add}}</div>
-                                    <div class="mb-1">電話:{{dayDetails.p_tel}}</div>
-                            
-
-                                 <div>
-                                    <i class="fa fa-star" :style="{color:color}"
-                                        :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                        @@load="myscore=item"></i>
-                                </div>
-                              
-                                <p>{{dayDetails.describe}}</p>I am Describe<br>
-
-
-                                <div v-viewer class="groupimg img-fluid">
-                                    <template v-for="(image,index) in dayDetails.images">
-                                        <img :src="getImages(image.name)">
-                                    </template>
-                                </div>
-
+                    <div v-for="(day,dayIndex) in Details">
+                        <label id="day" class="my-3">第{{dayIndex+1}}天</label>
+                        <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                            <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h4>{{dayDetails.p_Name}}</h4></div>
+                            <div class="mb-1"><i class="fa-solid fa-house-crack"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                            <div class="mb-1"><i class="fa-solid fa-phone"
+                                    style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                            <div>評分&nbsp;
+                                <i class="fa fa-star" :style="{color:color}"
+                                    :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                    @@load="myscore=item"></i>
                             </div>
+
+                            
+                            <div v-viewer class="groupimg img-fluid">
+                                <template v-for="(image,index) in dayDetails.images">
+                                    <img :src="getImages(image.name)">
+                                </template>
+                            </div>
+
+                            <p>{{dayDetails.describe}}</p>I am Describe<br>
+
                         </div>
-               
-                    
-                    
+                    </div>
+
                 </div>
 
 
                 <!-- Comment List 替換為fb 待DOM-->
+
                 <div class="mb-5">
                     <h2 class="mb-4">3 Comments</h2>
-                    <div class="media mb-4">
-                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                        <div class="media-body">
-                            <h6>
-                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                            </h6>
-                            <p>
-                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                sit.
-                            </p>
-                            <button class="btn btn-sm btn-light">Reply</button>
-                        </div>
-                    </div>
-                    <div class="media mb-4">
-                        <img src="https://unsplash.it/1800/1600/?random/person" alt="Image"
-                            class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                        <div class="media-body">
-                            <h6>
-                                John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                            </h6>
-                            <p>
-                                Diam amet duo labore stet elitr ea clita ipsum, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores
-                                sed sed eirmod ipsum. Gubergren clita aliquyam consetetur
-                                sadipscing, at tempor amet ipsum diam tempor consetetur at
-                                sit.
-                            </p>
-                            <button class="btn btn-sm btn-light">Reply</button>
-                            <div class="media mt-4">
-                                <img src="https://unsplash.it/1800/1600/?random/user" alt="Image"
-                                    class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px" />
-                                <div class="media-body">
-                                    <h6>
-                                        John Doe <small><i>01 Jan 2045 at 12:00pm</i></small>
-                                    </h6>
-                                    <p>
-                                        Diam amet duo labore stet elitr ea clita ipsum, tempor
-                                        labore accusam ipsum et no at. Kasd diam tempor rebum
-                                        magna dolores sed sed eirmod ipsum. Gubergren clita
-                                        aliquyam consetetur, at tempor amet ipsum diam tempor at
-                                        sit.
-                                    </p>
-                                    <button class="btn btn-sm btn-light">Reply</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous"
+                        src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0&appId=817307452604361&autoLogAppEvents=1"
+                        nonce="NqM9iieh"></script>
+                    <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
+                        data-numposts="5"></div>
+
                 </div>
-
-                <!-- Comment Form -->
-
-            </div>
         </div>
     </div>
-    <!-- Detail End -->
 </div>

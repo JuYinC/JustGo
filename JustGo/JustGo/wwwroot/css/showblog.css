@@ -1,13 +1,19 @@
+
 .navbarC{
     background-color: #8a8a8a;
+    z-index:6;
 }
 
+#bloginfo {
+    font-size: 1.4rem;
+}
 
- .active {
-    color: #E1251B;
-    animation: heart 0.5s linear;
-} 
-
+.red {
+    color: red;
+    transition: 0.5s ease-in-out;
+    transform: scale(1.3);
+}
+/*
 
  @keyframes heart {
     from {
@@ -15,13 +21,13 @@
     }
 
     75% {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     to {
         font-size: 15px;
     }
-}
+}*/
 
 #userimg {
     border-radius: 50%;
@@ -34,14 +40,13 @@
     list-style-type: none;
 }
 
-
 .list-group-item {
-    size: 12px !important;
     color: #f9ab55 !important;
     font-weight: bold !important;
     box-shadow: 0 !important;
     border: none !important;
     padding: 2px !important;
+    background: transparent !important;
 }
 
     .list-group-item:hover {
@@ -49,7 +54,6 @@
         color: #f58a07 !important;
         border: none !important;
         font-weight: bold !important;
-        size: 12px !important;
         box-shadow: 0 !important;
         transition: width 2s, height 2s !important;
         -webkit-transform: rotate(1deg) !important;
@@ -60,7 +64,6 @@
         color: #f58a07 !important;
         border: none !important;
         font-weight: bold !important;
-        size: 12px !important;
         box-shadow: 0 !important;
     }
 
@@ -68,12 +71,14 @@
     background-color: #669ed6 !important;
     color: #fff !important;
     border: none !important;
+    font-size: 1.2rem !important;
 }
 
     .btn-primary:hover, .btn-outline-primary:hover {
         background-color: #084887 !important;
         color: #fff !important;
         border: none !important;
+
     }
 
 
@@ -105,3 +110,54 @@
         display: block;
         width: 180px;
     }
+
+/*日期選擇*/
+.available {
+    animation: none;
+}
+
+
+.timepicker {
+    border-style: none;
+    background: transparent;
+}
+
+    .timepicker:focus {
+        border-style: none;
+        background: transparent;
+    }
+
+    .timepicker:blur {
+        border-style: none;
+        background: transparent
+    }
+
+@media only screen and (max-width: 576px) {
+    #hidden {
+        display:none;
+    }
+}
+
+
+/*檢視相關部落格*/
+.box {
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    overflow: hidden;
+}
+
+img {
+    transition: .5s;
+}
+
+.box:hover img {
+    transform: scale(1.2);
+}
+
+.cover-fit {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+

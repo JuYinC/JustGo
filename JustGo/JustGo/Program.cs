@@ -1,7 +1,9 @@
 using JustGo.Data;
 using JustGo.Models;
 using JustGo.Repository;
+using JustGo.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,18 +22,27 @@ builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP)
 builder.Services.AddTransient<IPlaceWeatherRepostiory, PlaceWeatherRepostiory>();
 builder.Services.AddTransient<IScheduleRepostioy, ScheduleRepostioy>();
 builder.Services.AddTransient<IBlogRepostioy, BlogRepostioy>();
+builder.Services.AddTransient<IUserKeepRepostiory, UserKeepRepostiory>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
 //連線字串替換
 //地端連線字串TravelWindows,雲端連線字串TravelPssP
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Home/Index";
+});
 
 var app = builder.Build();
 

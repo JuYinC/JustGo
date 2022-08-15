@@ -37,7 +37,7 @@ namespace JustGo.Repository
 
         public BlogVM createScheduleToBlog(int scheduleId)
         {
-            var schedule = _context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == scheduleId);
+            var schedule = _context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == scheduleId)??new Schedule();
 
             BlogVM blogVm = new BlogVM()
             {
@@ -55,7 +55,7 @@ namespace JustGo.Repository
                     blogVm.Details.Add(new List<BlogDetailsVM>());
                     foreach (ScheduleDetails item in schedule.ScheduleDetails.Where(e => e.StartTime.Day == schedule.StartDate.Day + i))
                     {
-                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
+                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId)??new Place();
                         var vm = new BlogDetailsVM()
                         {
                             StartTime = item.StartTime.AddHours(8),
@@ -93,17 +93,17 @@ namespace JustGo.Repository
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm)
         {
             string strSerarch = "";            
-            if (vm.Search.Length > 0)
+            if (vm.Search!=null && vm.Search.Length > 0)
             {
                 strSerarch = "(Title like '%'+@Search+'%' or Describe like '%'+@Search+'%') and";                
             }
             string filterCounty = "";            
-            if (vm.selectCounty.Length > 0)
+            if (vm.selectCounty!=null && vm.selectCounty.Length > 0)
             {
                 filterCounty = "and Region in @selectCounty";
             }
             string filterAcitivity = "";
-            if (vm.selectAcitivity.Length > 0)
+            if (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0)
             {
                 filterAcitivity = "and Class in @selectAcitivity";
             }            
@@ -122,7 +122,7 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogRank()
         {
-            var blogs = _context.Blog.OrderBy(e => e.Like).Take(20);
+            var blogs = _context.Blog.OrderByDescending(e => e.Like).Take(4);
             List<BlogVM> vmList = new List<BlogVM>();
             foreach(Blog item in blogs)
             {
@@ -144,6 +144,17 @@ namespace JustGo.Repository
                 vmList.Add(modeltoVM(item));
             }
             
+            return vmList;
+        }
+
+        public ICollection<BlogVM> getKeepBlog(UserKeepVM vm)
+        {                        
+            string strSql = "select * from blog as b where exists(Select KeepNumber from UserKeep where KeepClass = 0 and UserId = @userId and KeepNumber = b.BlogId )";            
+            var vmList = new List<BlogVM>();
+            foreach (Blog item in _con.Query<Blog>(strSql, vm))
+            {
+                vmList.Add(modeltoVM(item));
+            }
             return vmList;
         }
 
@@ -170,7 +181,7 @@ namespace JustGo.Repository
                     vm.Details.Add(new List<BlogDetailsVM>());
                     foreach (BlogDetails item in model.BlogDetails.Where(e => e.StartTime.Day == model.StartDate.Day + i))
                     {                        
-                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId);
+                        var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId)??new Place();
                         vm.Details[i].Add(new BlogDetailsVM()
                         {
                             StartTime = item.StartTime,
@@ -229,5 +240,7 @@ namespace JustGo.Repository
             Console.WriteLine(model);
             return model;            
         }
+
+        
     }
 }

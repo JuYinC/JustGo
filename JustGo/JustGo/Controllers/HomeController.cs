@@ -1,6 +1,7 @@
 ﻿using JustGo.Models;
 using JustGo.Repository;
 using JustGo.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -20,7 +21,7 @@ namespace JustGo.Controllers
             _logger = logger;
             _pwr = pwr;
             _schedule = schedule;
-            _blog = blog;                        
+            _blog = blog;            
         }
 
         public IActionResult Index()
@@ -38,6 +39,7 @@ namespace JustGo.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult itinerary()
         {
             return View();

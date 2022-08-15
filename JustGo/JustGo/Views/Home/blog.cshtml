@@ -84,75 +84,75 @@
         let vm = new Vue({
             el: `#bloginfo`,
             data: {
-                Details: [
-                    [
-                        {
-                            id: id++,
-                            startTime: null,
-                            endTime: null,
-                            placeId: 1,
-                            p_Name: "北部1",
-                            p_tel: "07-123456",
-                            p_Add: "台北市",
-                            describe: "",
-                            score: 5,
-                            images: { Name: "2208111103103186.jpg", base64: "" },
-                        },
-                        {
-                            id: id++,
-                            startTime: null,
-                            endTime: null,
-                            placeId: 1,
-                            p_Name: "高雄2",
-                            p_tel: "02-123456",
-                            p_Add: "高雄市",
-                            describe: "",
-                            score: 3,
-                            images: { Name: "2208111103108543.png", base64: "" },
-                        },
-                        {
-                            id: id++,
-                            startTime: null,
-                            endTime: null,
-                            placeId: 1,
-                            p_Name: "台中3",
-                            p_tel: "04-123456",
-                            p_Add: "台中市",
-                            describe: "",
-                            score: 4,
-                            images: { Name: "2208111103108981.png", base64: "" },
-                        }
+                //Details: [
+                //    [
+                //        {
+                //            id: id++,
+                //            startTime: null,
+                //            endTime: null,
+                //            placeId: 1,
+                //            p_Name: "北部1",
+                //            p_tel: "07-123456",
+                //            p_Add: "台北市",
+                //            describe: "",
+                //            score: 5,
+                //            images: { Name: "2208111103103186.jpg", base64: "" },
+                //        },
+                //        {
+                //            id: id++,
+                //            startTime: null,
+                //            endTime: null,
+                //            placeId: 1,
+                //            p_Name: "高雄2",
+                //            p_tel: "02-123456",
+                //            p_Add: "高雄市",
+                //            describe: "",
+                //            score: 3,
+                //            images: { Name: "2208111103108543.png", base64: "" },
+                //        },
+                //        {
+                //            id: id++,
+                //            startTime: null,
+                //            endTime: null,
+                //            placeId: 1,
+                //            p_Name: "台中3",
+                //            p_tel: "04-123456",
+                //            p_Add: "台中市",
+                //            describe: "",
+                //            score: 4,
+                //            images: { Name: "2208111103108981.png", base64: "" },
+                //        }
     
-                    ],
-                    [
-                        {
-                            id: id++,
-                            startTime: null,
-                            endTime: null,
-                            placeId: 1,
-                            p_Name: "台南4",
-                            p_tel: "06-123456",
-                            p_Add: "台南市",
-                            describe: "",
-                            score: 5,
-                            images: { Name: "2208111103109487.jpg", base64: "" },
-                        },
-                        {
-                            id: id++,
-                            startTime: null,
-                            endTime: null,
-                            placeId: 1,
-                            p_Name: "花蓮5",
-                            p_tel: "123456",
-                            p_Add: "花蓮市",
-                            describe: "",
-                            score: 1,
-                            images: { Name: "2208111108357791.jpg", base64: "" },
-                        },
+                //    ],
+                //    [
+                //        {
+                //            id: id++,
+                //            startTime: null,
+                //            endTime: null,
+                //            placeId: 1,
+                //            p_Name: "台南4",
+                //            p_tel: "06-123456",
+                //            p_Add: "台南市",
+                //            describe: "",
+                //            score: 5,
+                //            images: { Name: "2208111103109487.jpg", base64: "" },
+                //        },
+                //        {
+                //            id: id++,
+                //            startTime: null,
+                //            endTime: null,
+                //            placeId: 1,
+                //            p_Name: "花蓮5",
+                //            p_tel: "123456",
+                //            p_Add: "花蓮市",
+                //            describe: "",
+                //            score: 1,
+                //            images: { Name: "2208111108357791.jpg", base64: "" },
+                //        },
     
     
-                    ],
-                ],
+                //    ],
+                //],
                 blogId : 0,
                 UserName: ["Alley"],
                 UserImage: "Shinnosuke6.png",
@@ -181,13 +181,19 @@
                     type: String,
                     default: '#FFC100'
                 }
-            },
+            },   
+            computed:{
+                copyDate(){
+                    return this.daterange
+                }
+            }
+            ,
             methods: {
                 getImages(loadimagesName) {
-                    return "@Url.Content("~/blogImages")/"+loadimagesName
+                    return "@Url.Content("~/blogImages")/" + loadimagesName
                 },
                 userImageSrc(imageName) {
-                    return "@Url.Content("~/UserImages")/"+imageName                       
+                    return "@Url.Content("~/UserImages")/" + imageName
                 },
                 getdate(date) {
                     return moment(date).format('YYYY/MM/DD')
@@ -201,7 +207,7 @@
                 getanchor(dayIndex, viewIndex) {
                     return "list-item-" + dayIndex + "-" + viewIndex
                 },
-                copyURL: function () {
+                copyURL: function() {
                     let myurl = document.createElement('input')
                     geturl = window.location.toString()
                     document.body.appendChild(myurl);
@@ -210,54 +216,36 @@
                     document.execCommand('copy');
                     document.body.removeChild(myurl);
                 },
-                copyblog: function () {
-                        if (id != "") {
-                            axios.post("@Url.Action("selectblogDetails","blog")", { BlogId: id, }).then(res => {
-                                this.Details = res.data.details;
-                                this.EndDate = res.data.endDate;
-                                this.StartDate = res.data.startDate;
-                                this.Title = res.data.title;
-                                this.describe = res.data.describe;
-                                //取得的日期
-                                this.daterange = res.data.daterange;
-                                alert("成功,[" + this.Title + "]到會員列表!")
-                            }
-                            )
+                copyblog() {
+                    let startDate = new Date(this.copyDate);                                        
+                    if(startDate < new Date())
+                    {
+                        alert("日期輸入錯誤")
+                        return;
+                    }
+                    axios.post("@Url.Action("copySchedule","Schedule")", { BlogId: this.blogId, startDate})
+                        .then(() => {alert("複製行程成功")})
+                },
+                likeblog: function() {
+                        if (!this.bool) {                            
+                            this.bool = true;
+                            this.Like++;
+                        } else {                            
+                            this.bool = false;
+                            this.Like--;                                                      
                         }
-        
-                 },
-                 likeblog: function () {
-                        //var bool = document.getElementsByClassName("bool");
-                        //var bool;
-                     axios.post("@Url.Action("userKeepBlog","Blog")", {id:this.blogId}).then(() => {
-                         if (this.bool == false) {
-                             console.log(this.blogId)
-                             this.bool = true;
-                             this.Like++;
-                         } else {
-                             console.log(this.blogId)
-                             this.bool =false;
-                             this.Like--;
-                             console.log(this.Like)
-                             
-                             //if (this.Like >= 0) {
-                             //    this.Like--;
-                             //} else {
-                             //    this.Like == 0;
-                             //}
-                             
-                         }
-                     })                     
-                 },
-                 //savelike() {    
-                                
-                 //               axios.post("@Url.Action("userKeepBlog","Blog")", { BlogId: id, }).then(res => {
-                 //               this.bool = res.data.keepNumber;
-                              
-                 //           })
-                 //},
+                    axios.post("@Url.Action("userKeepBlog","Blog")", { id: this.blogId }).then(() => {                        
+                    }).catch(() => {
+                        if (!this.bool) {                            
+                            this.bool = true;
+                            this.Like++;
+                        } else {                            
+                            this.bool = false;
+                            this.Like--;                                                        
+                        }
+                    })
+                },                
                 onChange(dayIndex) {
-    
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
                         console.log(timestamp)
@@ -266,17 +254,17 @@
                             let hr = timestamp.substring(0, 2)
                             let min = timestamp.substring(3, 5)
                             let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
-    
+
                             hr = Number(hr) + Number(addhr)
                             min = (Number(min) + Number(this.Details[j][i].min)) % 60
-    
+
                             if (hr < 10) {
                                 hr = '0' + hr
                             }
                             if (min < 10) {
                                 min = '0' + min
                             }
-    
+
                             timestamp = hr + ':' + min
                             this.Details[j][i].endtime = timestamp
                         }
@@ -291,24 +279,23 @@
                             let hr = timestamp.substring(0, 2)
                             let min = timestamp.substring(3, 5)
                             let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
-    
+
                             hr = Number(hr) + Number(addhr)
                             min = (Number(min) + Number(this.Details[j][i].min)) % 60
-    
+
                             if (hr < 10) {
                                 hr = '0' + hr
                             }
                             if (min < 10) {
                                 min = '0' + min
                             }
-    
+
                             timestamp = hr + ':' + min
                             this.Details[j][i].endtime = timestamp
                         }
                     }
-                },
-    
-            },
+                },                
+            },            
             mounted() {
                 let id = window.location.search.substring(1)
                 if (id != "") {
@@ -322,19 +309,15 @@
                         this.Title = res.data.title;
                         this.describe = res.data.describe;
                         //getIsKeep
-                        this.Like = res.data.like;
-                        this.bool = res.data.bool;
-                        axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
-                            console.log(res.data);
-                        this.bool = res.data.bool;
+                        this.Like = res.data.like;                        
+                        axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {                            
+                        this.bool = res.data;                        
                         })
                     })
-                }
-    
-    
+                }        
             },
         },
-        )
+     )
     
     </script>
     }
@@ -355,7 +338,6 @@
                         <div class="d-flex flex-column rounded py-4">
                             <div class="py-3">
                                 <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                               
                             </div>
                             <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
                             <div class="mb-2">美好旅程的回憶從JustGO開始</div>
@@ -420,10 +402,9 @@
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏行程</button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><input placeholder="選擇開始日期" type="text" onfocus="(this.type='date')" 
-                                                onblur="(this.type='text')" v-model="daterange" class="timepicker"></li>
+                                                onblur="(this.type='text')" @@input="copyblog()" v-model="daterange" class="timepicker"></li>
                                     </ul>
                                 </div>
-    
                                 
                                 <div style="line-height:30px;font-size:18px;"><i :class="bool?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
                                     <span class="px-1"> &nbsp; {{Like}}</span></div>

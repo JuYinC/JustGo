@@ -19,47 +19,81 @@ namespace JustGo.Repository
             {
                 return false;
             }
-            if (_context.UserKeep.SingleOrDefault(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id) != null)
+            UserKeep? keep;
+            try
+            {
+                keep = _context.UserKeep.SingleOrDefault(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
+            }
+            catch
+            {
+                keep = _context.UserKeep.Where(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id).FirstOrDefault();
+            }
+            if (keep != null)
             {
                 return true;
             }
-            return false;
+            return false;            
         }
 
         public bool Keep(UserKeepVM vm)
         {
-            var keep = _context.UserKeep.SingleOrDefault(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
-            if(keep != null)
+            UserKeep? keep;
+            try
             {
-                _context.Remove(keep);
-                _context.SaveChanges();
-                var blog = _context.Blog.SingleOrDefault(e => e.BlogId == keep.KeepNumber);
-                if (blog != null)
+                keep = _context.UserKeep.SingleOrDefault(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
+                if (keep != null)
                 {
-                    blog.Like -= 1;
-                    _context.Update(blog);
+                    _context.Remove(keep);
                     _context.SaveChanges();
-                    return true;
-                }                
-            }
-            else
-            {
-                UserKeep userKeep = new UserKeep()
-                { 
-                  KeepClass = vm.KeepClass??0,
-                  UserId = vm.UserId??"",
-                  KeepNumber = vm.Id??0
-                };
-                _context.Add(userKeep);
-                var blog = _context.Blog.SingleOrDefault(e => e.BlogId == userKeep.KeepNumber);
-                if (blog != null)
+                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == keep.KeepNumber);
+                    if (blog != null)
+                    {
+                        blog.Like -= 1;
+                        _context.Update(blog);
+                        _context.SaveChanges();
+                        return true;
+                    }
+                }
+                else
                 {
-                    blog.Like += 1;
-                    _context.Update(blog);
-                    _context.SaveChanges();
-                    return true;
+                    UserKeep userKeep = new UserKeep()
+                    {
+                        KeepClass = vm.KeepClass ?? 0,
+                        UserId = vm.UserId ?? "",
+                        KeepNumber = vm.Id ?? 0
+                    };
+                    _context.Add(userKeep);
+                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == userKeep.KeepNumber);
+                    if (blog != null)
+                    {
+                        blog.Like += 1;
+                        _context.Update(blog);
+                        _context.SaveChanges();
+                        return true;
+                    }
                 }
             }
+            catch
+            {
+                var catchKeep = _context.UserKeep.Where(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
+                _context.RemoveRange(catchKeep);
+                _context.SaveChanges();
+                try
+                {
+                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == catchKeep.First().KeepNumber);
+                    if (blog != null)
+                    {
+                        blog.Like -= 1;
+                        _context.Update(blog);
+                        _context.SaveChanges();
+                        return true;
+                    }                   
+                }               
+                catch
+                {
+                    return false;
+                }                
+            }            
             return false;
         }
     }

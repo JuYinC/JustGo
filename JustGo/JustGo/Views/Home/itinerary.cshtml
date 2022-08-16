@@ -1178,7 +1178,7 @@
                         }
 
                     } else {
-                        alert('重新選擇日期')
+                        Swal.fire('重新選擇日期')
                     }
                 },
 
@@ -1204,7 +1204,7 @@
                             title: "123",
                             details: this.saveData,
                         })
-                    alert("儲存成功")
+                    Swal.fire("儲存成功")
                 },
             },
         })
@@ -1599,7 +1599,7 @@
                         }
                         this.$store.commit("cultime")
                     } else {
-                        alert('重新選擇日期')
+                        Swal.fire('重新選擇日期')
                     }
                 },
 
@@ -1749,7 +1749,7 @@
             //        }
 
             //    } else {
-            //        alert('重新選擇日期')
+            //        Swal.fire('重新選擇日期')
             //    }
             //},
 
@@ -1776,7 +1776,7 @@
                         title: this.$store.state.title,
                         details: this.saveData,
                     })
-                alert("儲存成功")
+                Swal.fire("儲存成功")
             },
         },
     })

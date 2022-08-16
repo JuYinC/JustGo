@@ -449,7 +449,7 @@
   .idx__title {
     display: flex;
     position: relative;
-    margin: 6rem 10rem; }
+    margin: 3rem 10rem; }
     .idx__title-content h3 {
       font-family: 'cwTeXYen', sans-serif;
       font-weight: 100;
@@ -528,13 +528,14 @@
       cursor: pointer;
       transition: width 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
       min-width: 100px; }
+    .screnbox .light {
+      background: #0e0e0f; }
     .screnbox .sh {
-      width: 30%;
+      width: 40%;
       font-size: 0;
       padding: 1.4rem 2rem 1.6rem;
       display: flex;
       flex-direction: row;
-      width: 100%;
       border-radius: 2px;
       padding: 1.4rem 2rem 1.6rem;
       z-index: 50; }
@@ -626,7 +627,7 @@
     .card:hover .info {
       opacity: 1;
       transform: translateY(0px); }
-    .card .info h1 {
+    .card .info h2 {
       margin-left: 2rem;
       margin-top: 1rem; }
     .card .info .usimg {
@@ -773,8 +774,9 @@
     justify-content: flex-end; }
   .slider .items-group .item .block h2 {
     font-family: 'Oswald', sans-serif;
-    font-size: 130px;
-    margin-bottom: 0px; }
+    font-size: 35px;
+    margin-bottom: 0px;
+    background: #333; }
   .slider .items-group .item .block p {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px; }

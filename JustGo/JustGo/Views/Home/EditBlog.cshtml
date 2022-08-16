@@ -368,7 +368,7 @@
         <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top" style="top:10vh;z-index:0;">
+                        <div class="sticky-top" style="top:10vh;z-index:0;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" >
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
@@ -393,18 +393,17 @@
                     <!--右邊欄位-->
                     <div class="col-sm-8">
                         <div class="user">                            
-                            <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe"
-                                style="resize:none"></textarea>
+                            <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;"></textarea>
                         </div>
                         <div>
                             <div v-for="(day,dayIndex) in Details">
-                                <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
-                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
-                                     <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
+                                <label id="day" class="mb-4">第{{dayIndex+1}}天</label>
+                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                     <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
                                         <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                         <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
                                         <div class="mb-1 d-inline"><div class="d-inline">評分</div>
-                                        <i class="fa fa-star mb-2" :style="{color:color}"
+                                        <i class="fa fa-star mb-0" :style="{color:color}"
                                             :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                             @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
                                             @@click="myscore=item"></i>
@@ -428,8 +427,8 @@
                                                     <img :src="image.base64">
                                            </template>
                                         </div>
-                                        <textarea rows="6" class="mb-2" maxlength="400" v-model="dayDetails.describe"
-                                        placeholder="景點敘述 字數限制400字" style="resize:none"></textarea>
+                                        <textarea rows="6" maxlength="400" v-model="dayDetails.describe"
+                                        placeholder="景點敘述 字數限制400字" class="mb-2" style="resize:none"></textarea>
                                     </div>                        
                                 </div>
                             </div>

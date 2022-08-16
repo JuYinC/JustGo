@@ -31,8 +31,8 @@
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarC__menu">
-                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-end align-items-center ">
-                        <li class="nav-item">
+                    <!-- <ul class="navbar-nav flex-grow-1 d-flex justify-content-end align-items-center "> -->
+                        <!-- <li class="nav-item">
                             <a  asp-area="" asp-controller="Home" asp-action="itinerary">規劃行程</a>
                         </li>
                         <li class="nav-item">
@@ -40,11 +40,11 @@
                         </li>
                          <li >
                             <a  asp-area="" asp-controller="Home" asp-action="UserCatelog">會員資訊</a>
-                        </li>
-                         <li>
-                            <partial name="_LoginPartial" /> 
-                        </li> 
-                    </ul>
+                        </li> -->
+                        
+                            <partial name="_LoginPartial"/> 
+                        
+                    <!-- </ul> -->
                 </div>
             </div>
         </nav>
@@ -88,7 +88,7 @@
         </div>
         <ul class="social_icon">
             <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
             <li><a href="#"><ion-icon name="logo-discord"></ion-icon></a></li>
             <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
         </ul>
@@ -107,7 +107,33 @@
         <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>    
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+            document.getElementById("forop").addEventListener("click", function(){
+
+                if (document.getElementById("op").style.height=='0px'){
+                         document.getElementById("op").style.height = "50px"
+                           
+                         setTimeout(() => {
+                             document.getElementById('outbtn').style.display=''
+                         }, 100)
+ 
+                }else{
+                        document.getElementById("op").style.height="0px"
+
+                          setTimeout(() => {
+                             document.getElementById('outbtn').style.display='none'
+                         }, 100)
+                
+                }
+                       
+
+             
+
+
+              
+            });
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>

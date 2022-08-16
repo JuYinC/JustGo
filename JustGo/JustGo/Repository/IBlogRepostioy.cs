@@ -4,7 +4,7 @@ namespace JustGo.Repository
 {
     public interface IBlogRepostioy
     {
-        public BlogVM createScheduleToBlog(int scheduleId);
+        public BlogVM createScheduleToBlog(int scheduleId ,string userId);
 
         public bool editBlog(BlogVM vm);
 

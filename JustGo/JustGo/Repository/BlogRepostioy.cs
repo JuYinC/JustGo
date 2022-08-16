@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using JustGo.ViewModels;
 using System.Data;
 using System.Diagnostics;
+using JustGo.Data;
 
 namespace JustGo.Repository
 {
@@ -16,10 +17,12 @@ namespace JustGo.Repository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
-        public BlogRepostioy(IDbConnection con, TravelContext context)
+        readonly ApplicationDbContext _UserComtext;
+        public BlogRepostioy(IDbConnection con, TravelContext context ,ApplicationDbContext applicationDbContext)
         {
             _con = con;
             _context = context;
+            _UserComtext = applicationDbContext;
         }
 
         public bool createBlog(BlogVM vm)
@@ -35,12 +38,18 @@ namespace JustGo.Repository
             return true;
         }
 
-        public BlogVM createScheduleToBlog(int scheduleId)
+        public BlogVM createScheduleToBlog(int scheduleId ,string userId)
         {
             var schedule = _context.Schedule.Include(b => b.ScheduleDetails).SingleOrDefault(e => e.ScheduleId == scheduleId)??new Schedule();
-
+            var user = _UserComtext.ApplicationUsers.Single(e => e.Id == userId);
+            if (user == null)
+            {
+                return new BlogVM();
+            }
             BlogVM blogVm = new BlogVM()
             {
+                UserName = user.Name,
+                UserImage = "2208121714164777.jpg",
                 Like = 0,
                 StartDate = schedule.StartDate,
                 EndDate = schedule.EndDate
@@ -143,7 +152,6 @@ namespace JustGo.Repository
             {
                 vmList.Add(modeltoVM(item));
             }
-            
             return vmList;
         }
 
@@ -160,10 +168,15 @@ namespace JustGo.Repository
 
         BlogVM modeltoVM(Blog model)
         {
+            
+            var user = _UserComtext.ApplicationUsers.Single(e => e.Id == model.UserId);
+            string UserImage = "2208121714164777.jpg";
             BlogVM vm = new BlogVM()
             {
                 BlogId = model.BlogId,
                 UserId = model.UserId,
+                UserName = user.Name,
+                UserImage = UserImage,
                 Title = model.Title,
                 Describe = model.Describe,
                 CoverImage = new blogImage() { name=model.ImageName},
@@ -173,9 +186,7 @@ namespace JustGo.Repository
                 Details = new List<IList<BlogDetailsVM>>()
             };
             if(model.BlogDetails.Count>0)
-            {
-                Console.WriteLine((model.EndDate - model.StartDate).Days);
-                Console.WriteLine();
+            {                
                 for (int i = 0; i <= (model.EndDate - model.StartDate).Days; i++)
                 {
                     vm.Details.Add(new List<BlogDetailsVM>());
@@ -200,7 +211,7 @@ namespace JustGo.Repository
             return vm;
         }
         Blog VMtoModel(BlogVM vm)
-        {
+        {            
             Blog model = new Blog()
             {
                 BlogId = vm.BlogId,
@@ -236,8 +247,7 @@ namespace JustGo.Repository
                         );
                     }
                 }                
-            }
-            Console.WriteLine(model);
+            }            
             return model;            
         }
 

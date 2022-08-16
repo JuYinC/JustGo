@@ -53,7 +53,7 @@
                     </div>
                     <div class="grid-item-b">
                         <button class="btn btn-primary" id="open">展開</button>
-                        <button id="save" @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
+                        <button id="save" @@click="saveSchedule" class="btn btn-danger">儲存行程</button>
                     </div>
                 </div>
             </div>
@@ -109,22 +109,23 @@
                     'width': '30%',
                     'display': 'unset',
                 })
-                $('#app input').css({
-                    'min-width': '30%',
-                    'font-size': '1.4rem',
-                }).focus().css('max-width', '30%')
-                $('#app button').css({
-                    'font-size': '1rem',
-                    'width': '35%',
-                    'padding': '0',
-                    'border-radius': '0',
-                    'background': 'transparent',
-                    'color': 'black',
-                    'border': '2px solid',
+                //$('#app input').css({
+                //    'min-width': '30%',
+                //    'font-size': '1.4rem',
+                //}).focus().css('max-width', '30%')
+                //$('#app button').css({
+                //    'font-size': '1rem',
+                //    'width': '35%',
+                //    'padding': '0',
+                //    'border-radius': '0',
+                //    'background': 'transparent',
+                //    'color': 'black',
+                //    'border': '2px solid',
 
-                })
-                $('#app button')[0].textContent = "更新日期"
-
+                //})
+                //$('#app button')[0].textContent = "更新日期"
+                $('#app input').css('display','none')
+                 $('#app button').css('display','none')
             }
 
 
@@ -353,68 +354,10 @@
 
             // zoom或center變動傳回中心點和距離
             zoomCenterChange(state) {
-                state.mapCenter = state.map.getCenter()
-                console.log(state.mapCenter.lat())
-                console.log(state.mapCenter.lng())
-                switch (state.map.getZoom()) {
-                    case 8:
-                        console.log(8);
-                        state.mapRadius = 180;
-                        console.log(state.mapRadius)
-                        break;
-                    case 9:
-                        console.log(9);
-                        state.mapRadius = 90;
-                        console.log(state.mapRadius)
-                        break;
-                    case 10:
-                        console.log(10);
-                        state.mapRadius = 45;
-                        console.log(state.mapRadius)
-                        break;
-                    case 11:
-                        console.log(11);
-                        state.mapRadius = 22.5;
-                        console.log(state.mapRadius)
-                        break;
-                    case 12:
-                        console.log(12);
-                        state.mapRadius = 12;
-                        console.log(state.mapRadius)
-                        break;
-                    case 13:
-                        console.log(13);
-                        state.mapRadius = 6;
-                        console.log(state.mapRadius)
-                        break;
-                    case 14:
-                        console.log(14);
-                        state.mapRadius = 3;
-                        console.log(state.mapRadius)
-                        break;
-                    case 15:
-                        console.log(15);
-                        state.mapRadius = 1.5;
-                        console.log(state.mapRadius)
-                        break;
-                    case 16:
-                        console.log(16);
-                        state.mapRadius = 0.75;
-                        console.log(state.mapRadius)
-                        break;
-                    case 17:
-                        console.log(17);
-                        state.mapRadius = 0.38;
-                        console.log(state.mapRadius)
-                        break;
-                    case 18:
-                        console.log(18);
-                        state.mapRadius = 0.19;
-                        console.log(state.mapRadius)
-                        break;
-                    default:
-                        state.mapRadius = 180;
-                }
+                state.searchPlace.lat = state.map.getCenter().lat();
+                state.searchPlace.lng = state.map.getCenter().lng();
+                state.searchPlace.distance = 46080 / (2 ** state.map.getZoom());
+                store.dispatch('axiosSearch')
             },
 
             //搜尋條件更新
@@ -1390,34 +1333,40 @@
                                             ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
                                             @@change="cultime()" class="min">
                                             <transition-group>
-                                                <div class="item" v-for="(view,veiwIndex) in day" :key="view">
 
-
-                                                    <div class="weather-info">
-                                                        <p>{{view.startTime}}-{{view.endTime}}</p>
-                                                        <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
-                                                        <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
-                                                        <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
-                                                        <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
-                                                    </div>
-
-
-                                            <h3>{{view.name}}</h3>
-                                            <p>{{view.add}}</p>
-                                            <div class="adjtime">
-                                                <p>停留時間:</p>
-                                                <p><i class="fas fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i></p>
-                                                <p class="mw-25 min-w-25">{{view.min/60}}小時</p>
-                                                <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
-                                            </div>
-                                            <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
                                             
-                                            <div class="row cols-2">
-                                                <div class="col-2">
+                                                          <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+
+
+                                                            <div class="weather-info">
+                                                                <p>{{view.startTime}}-{{view.endTime}}</p>
+                                                                <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
+                                                                <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
+                                                                <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
+                                                                <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+                                                            </div>
+
+
+                                                    <h3>{{view.name}}</h3>
+                                                    <p>{{view.add}}</p>
+                                                    <div class="adjtime">
+                                                        <p>停留時間:</p>
+                                                        <p><i class="fas fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i></p>
+                                                        <p class="mw-25 min-w-25">{{view.min/60}}小時</p>
+                                                        <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
+                                                    </div>
+                                                    <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
+                                           
+
+
+
+                                            <div class="row cols-2" v-if="veiwIndex<day.length-1">
+                                                <div class="col-2 bg-white bg-line" >
                                                 </div>
-                                                <div class="col-10 betweenBox">
+
+                                                <div class="col-10 bg-white betweenBox bg-line" >
                                                     <br>
-                                                    <i class="fa-solid fa-car-side">時間</i>{{view.roam}}
+                                                    <i class="fa-solid fa-car-side">行車時間 : </i>{{view.roam}}分鐘
                                                 </div>
                                             </div>
 
@@ -1449,6 +1398,7 @@
                     selectCounty: [],
                     selectAcitivity: [],
                     isDefault: 0,
+                    display:"",
                 }
             },
             mounted() {
@@ -1463,48 +1413,40 @@
                 },
                 daysindex() {
                     return this.$store.state.daysindex
-                }
+                },
+                checkrd(){                    
+                      return this.display                                                           
+                },
             },
             methods: {
                 //搜尋景點
                 search() {
-                    if (this.isDefault) {
-                        this.selectCounty.splice(0, 1);
-                        this.isDefault = 0;
-                    }
-
                     if (this.selectCounty.length > 3) {
                         this.selectCounty.splice(0, 1)
                     }
-
-                switch (this.selectType) {
-                    case '景點':
-                        this.selectType = '景點'
-                        break;
-                    case '餐飲':
-                        this.selectType = '餐飲'
-                        //if (this.selectCounty.length <= 0) {
-                        //    this.selectCounty.push("高雄市")
-                        //    this.isDefault = 1;
-                        //}
-                        break;
-                    case '旅宿':
-                        this.selectType = '旅宿'
-                        //if (this.selectCounty.length <= 0) {
-                        //    this.selectCounty.push("高雄市")
-                        //    this.isDefault = 1;
-                        //}
-                        break;
-                }
+                    switch (this.selectType) {
+                        case '景點':
+                            this.selectType = '景點'
+                            this.display = ''
+                            break;
+                        case '餐飲':
+                            this.selectType = '餐飲'
+                            this.display = 'display:none'
+                            break;
+                        case '旅宿':
+                            this.selectType = '旅宿'
+                            this.display = 'display:none'
+                            break;
+                    }
 
                     if (this.selectAcitivity.length > 5) {
                         this.selectAcitivity.splice(0, 1)
                     }
 
-                //if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
-                this.$store.commit('searchFilter', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
-                //}
-            },
+                    //if (this.selectCounty.length > 0 || this.selectAcitivity.length > 0) {
+                    this.$store.commit('searchFilter', { selectCounty: this.selectCounty, selectAcitivity: this.selectAcitivity, selectType: this.selectType })
+                    //}
+                },
 
             // 新增景點
             addview: function (index) {
@@ -1553,7 +1495,7 @@
                                         </span>
                                     </div>
                                     <hr>
-                                    <div class="cat">
+                                    <div class="cat" :style="checkrd">
                                         <span v-for="(acitivity,index) in acitivitys">
 
                                     <input @@change="search" type="checkbox" :value="index+1" v-model="selectAcitivity" :id="index+1">
@@ -1615,7 +1557,8 @@
                 },
                 datetime() {
                     return this.$store.state.datetime
-                },                
+                },
+                               
             },
             methods: {
                 culDate() {
@@ -1720,7 +1663,7 @@
                                             
                                             
                                         <div>
-                                            <input type="text" @@input="setTitle()" v-model="title"/>
+                                            <h3><input type="text" @@input="setTitle()" v-model="title" placeholder="請輸入標題" /><h3>
                                             </div>
                                                 <ul class="daysbox" :style="move">
                                                 <li class="days" v-for="(day,dayIndex) in travel" @@click="calposition(dayIndex)">第{{dayIndex+1}}天 </li>

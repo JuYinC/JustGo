@@ -28,6 +28,7 @@ namespace JustGo.Controllers
         [HttpPost]
         public IActionResult selectPlaceFilter([FromBody]SelectPlaceVM vm)
         {
+            vm.selectType = (vm.selectType=="") ? "景點" : vm.selectType;
             if ((vm.selectCounty!=null && vm.selectCounty.Length > 0) || (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0) || vm.selectType != "景點")
             {
                 return Json(_place.getPlaceFilter(vm));

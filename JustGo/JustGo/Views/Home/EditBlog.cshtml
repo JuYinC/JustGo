@@ -60,6 +60,7 @@
                                 score: 0,
                                 images: {Name:"",base64:"2208111103103186.jpg"},
                                 showError:'張數限制六張',
+                                errColor:"black",
                             },
                             {
                                 id: id++,
@@ -73,6 +74,7 @@
                                 score: 0,
                                 images: {Name:"",base64:"2208111103108543.png"},
                                 showError:'張數限制六張',
+                                errColor:"black",
                             },
                             {
                                 id: id++,
@@ -86,6 +88,7 @@
                                 score: 0,
                                 images: {Name:"",base64:"2208111103108981.png"},
                                 showError:'張數限制六張',
+                                errColor:"black",
                             }
 
                         ],
@@ -102,6 +105,7 @@
                                 score: 0,
                                 images: {Name:"",base64:""},
                                 showError:'張數限制六張',
+                                errColor:"black",
                             },
                             {
                                 id: id++,
@@ -115,6 +119,7 @@
                                 score: 0,
                                 images: {Name:"",base64:""},
                                 showError:'張數限制六張',
+                                errColor:"black",
                             },
 
 
@@ -122,7 +127,7 @@
                     ],
                     CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
                     UserImage: "2208121714164777.jpg",
-                    UserName: ["Alley"],
+                    UserName: "Alley",
                     Title: '',
                     describe: '',
                     Like: 5,
@@ -132,8 +137,7 @@
                     myscore: this.score,
                     mytempscore: this.score,
                     //圖片上傳狀態
-                    //errcolor: ["red","black"],
-                    //dcolor: "black";
+                    
                    
 
                 },
@@ -226,14 +230,14 @@
                                 }
                               
                                  this.Details[dayIndex][viewIndex].showError = "上傳成功!"
-                                 //this.Details[dayIndex][viewIndex].showError.style.color = "black"
-                                 //this.Details.errcolor = this.Details.errcolor[1];
+                                 //this.Details[dayIndex][viewIndex].errColor= "black"
+                                 this.Details[dayIndex][viewIndex].errColor = 'black'
+                                
 
                             } else {
-                                
                                  //$("#showErr").css("color", "red");
                                 this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
-                                //this.Details.errcolor = this.Details.errcolor[0];
+                                this.Details[dayIndex][viewIndex].errColor = 'red'
 
                                 
                                 
@@ -245,7 +249,7 @@
                         this.Details[dayIndex][viewIndex].images.length = 0;
                         this.Details[dayIndex][viewIndex].images=[];
                         this.Details[dayIndex][viewIndex].showError = "張數限制6張"
-                        //this.Details.errcolor = this.Details.errcolor[1];
+                        this.Details[dayIndex][viewIndex].errColor = 'black'
                     },
                     onChange(dayIndex) {
                         for (let j = 0; j < this.Details.length; j++) {
@@ -371,7 +375,7 @@
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
                             </div>
-                            <div class="pt-2">{{UserName[0]}}遊記</div>                           
+                            <div class="pt-2">{{UserName}}遊記</div>                           
                             <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                             <ul class="list-group list-group-flush" id="hidden">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
@@ -417,7 +421,7 @@
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary">取消上傳</button>
-                                         <span style="vertical-align: bottom;font-size:12px" :class="dayDetails.images.length>=6?'red':'black'" id="showErr">{{dayDetails.showError}}</span>
+                                         <span style="vertical-align: bottom;font-size:12px" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
 
                                         @*上傳圖片預覽*@
                                         <div class="groupimg img-fluid" >

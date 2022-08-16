@@ -53,7 +53,7 @@
                     </div>
                     <div class="grid-item-b">
                         <button class="btn btn-primary" id="open">展開</button>
-                        <button id="save" @@click="saveSchedule" class="btn btn-primary">儲存行程</button>
+                        <button id="save" @@click="saveSchedule" class="btn btn-danger">儲存行程</button>
                     </div>
                 </div>
             </div>
@@ -1333,34 +1333,40 @@
                                             ghostClass="ghostClass" chosenClass="chosenClass" @@start="onStart" @@end="onEnd"
                                             @@change="cultime()" class="min">
                                             <transition-group>
-                                                <div class="item" v-for="(view,veiwIndex) in day" :key="view">
 
-
-                                                    <div class="weather-info">
-                                                        <p>{{view.startTime}}-{{view.endTime}}</p>
-                                                        <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
-                                                        <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
-                                                        <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
-                                                        <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
-                                                    </div>
-
-
-                                            <h3>{{view.name}}</h3>
-                                            <p>{{view.add}}</p>
-                                            <div class="adjtime">
-                                                <p>停留時間:</p>
-                                                <p><i class="fas fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i></p>
-                                                <p class="mw-25 min-w-25">{{view.min/60}}小時</p>
-                                                <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
-                                            </div>
-                                            <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
                                             
+                                                          <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+
+
+                                                            <div class="weather-info">
+                                                                <p>{{view.startTime}}-{{view.endTime}}</p>
+                                                                <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
+                                                                <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
+                                                                <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
+                                                                <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+                                                            </div>
+
+
+                                                    <h3>{{view.name}}</h3>
+                                                    <p>{{view.add}}</p>
+                                                    <div class="adjtime">
+                                                        <p>停留時間:</p>
+                                                        <p><i class="fas fa-plus" @@click="addStay(dayIndex,veiwIndex)"></i></p>
+                                                        <p class="mw-25 min-w-25">{{view.min/60}}小時</p>
+                                                        <p><i class="fas fa-minus" @@click="reduceStay(dayIndex,veiwIndex)"></i></p>
+                                                    </div>
+                                                    <button @@click="remove(dayIndex,veiwIndex)"><i class="fa-solid fa-trash-can"></i></button>
+                                           
+
+
+
                                             <div class="row cols-2" v-if="veiwIndex<day.length-1">
-                                                <div class="col-2">
+                                                <div class="col-2 bg-white bg-line" >
                                                 </div>
-                                                <div class="col-10 betweenBox">
+
+                                                <div class="col-10 bg-white betweenBox bg-line" >
                                                     <br>
-                                                    <i class="fa-solid fa-car-side">時間</i>{{view.roam}}
+                                                    <i class="fa-solid fa-car-side">行車時間 : </i>{{view.roam}}分鐘
                                                 </div>
                                             </div>
 

@@ -58,14 +58,16 @@ html {
         width: 0;
     }
     }
+.bg-line{
+    border-left: 1px groove;
+}
 
 
 
 
 
-
-.item:hover {
-    background-color: #FFFDD0;
+.forhover:hover {
+    background-color: #2cd8ff90;
     /* height: 150px; */
     /* transition: 0.5s; */
     /* cursor: move; */

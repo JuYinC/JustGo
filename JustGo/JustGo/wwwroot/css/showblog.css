@@ -5,7 +5,7 @@
 }
 
 #bloginfo {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 .red {
@@ -46,15 +46,8 @@
     box-shadow: 0 !important;
     border: none !important;
     padding: 2px !important;
-    font-size: 1.8rem;
     background: transparent !important;
-    font-family: 'cwTeXYen' !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    src: url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.eot) !important;
-    src: url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.eot?#iefix) format('embedded-opentype'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.woff2) format('woff2'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.woff) format('woff'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.ttf) format('truetype') !important;
 }
-
 
     .list-group-item:hover {
         background-color: transparent !important;
@@ -78,7 +71,7 @@
     background-color: #669ed6 !important;
     color: #fff !important;
     border: none !important;
-    font-size: 1.6rem !important;
+    font-size: 1.4rem !important;
 }
 
     .btn-primary:hover, .btn-outline-primary:hover {
@@ -124,19 +117,16 @@
 
 .timepicker {
     border-style: none;
-    font-size: 1.3rem;
     background: transparent;
 }
 
     .timepicker:focus {
         border-style: none;
-        font-size: 1.3rem;
         background: transparent;
     }
 
     .timepicker:blur {
         border-style: none;
-        font-size: 1.3rem;
         background: transparent
     }
 

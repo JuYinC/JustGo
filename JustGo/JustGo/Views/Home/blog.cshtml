@@ -154,8 +154,8 @@
                 //    ],
                 //],
                 blogId : 0,
-                UserName: ["Alley"],
-                UserImage: "Shinnosuke6.png",
+                UserName: "Alley",
+                UserImage: "2208121714164777.jpg",
                 CoverImageName: "coverimage.jpg",
                 Title: '三天兩夜台東之旅',
                 describe: '美好旅程的回憶從JustGO開始',
@@ -324,8 +324,26 @@
     
     
     <div id="bloginfo">
-            <div class="d-flex flex-column align-items-center justify-content-center"
-                style="height: 40vh; background-image: url('https://unsplash.it/1800/1600/?random/view0');">
+            <div class="d-flex@* flex-column align-items-center justify-content-center*@">
+              <div id="robotcarousel" class="carousel slide" data-bs-ride="carousel" >
+  
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#robotcarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#robotcarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#robotcarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+  
+              <div class="carousel-inner">
+                <div class="carousel-item" data-bs-interval="3000">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view" alt="img">
+                </div>
+                <div class="carousel-item active" data-bs-interval="3000">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view1" alt="img">
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view2" alt="img">
+                </div>
+              </div>
             </div>
         <!-- Header End -->
     
@@ -337,10 +355,10 @@
                         <!-- Author Bio -->
                         <div class="d-flex flex-column rounded py-4">
                             <div class="py-3">
-                                <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                                <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt="Image"></span>
                             </div>
-                            <h4 class="mb-2 py-1">{{UserName[0]}}</h4>
-                            <div class="mb-2">美好旅程的回憶從JustGO開始</div>
+                            <h4 class="mb-2 py-1">{{UserName}}</h4>
+                            <div class="mb-2">旅程從Just Go開始</div>
                         </div>
     
                          <div class="mb-4">
@@ -375,9 +393,9 @@
     
                         <!-- Recent Post -->
                         <div class="mb-4">
-                            <div class="d-flex align-items-center shadow-sm rounded overflow-hidden" id="card">
+                            <div class="d-flex align-items-center shadow rounded overflow-hidden" id="card">
                                 <div class="box">
-                                    <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/female" alt="">
+                                    <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/view" alt="Image">
                                 </div>
                                 <div >
                                     <h5 class="">{{Title}}</h5>
@@ -407,18 +425,18 @@
                                 </div>
                                 
                                 <div style="line-height:30px;font-size:18px;"><i :class="bool?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
-                                    <span class="px-1"> &nbsp; {{Like}}</span></div>
+                                    <span class="px-1"> {{Like}}</span></div>
                                 </div>
     
                         </div>
                     </div>
                     <div class="mb-4">
                         <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
-                        <p class="mb-2">{{describe}}</p>
+                        <div class="mb-4 shadow">{{describe}}心得簡述</div>
     
                         <div v-for="(day,dayIndex) in Details">
-                            <label id="day" class="my-3">第{{dayIndex+1}}天</label>
-                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id">
+                            <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="shadow mb-5">
                                 <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
                                 <div class="mb-1"><i class="fa-solid fa-house-crack"
                                         style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
@@ -437,17 +455,17 @@
                                     </template>
                                 </div>
     
-                                <p>{{dayDetails.describe}}</p>I am Describe<br>
+                                <div>{{dayDetails.describe}}</div>
     
                             </div>
                         </div>
     
-                    </div>
+                    </div>                   
     
     
                     <!-- Comment List 替換為fb 待DOM-->
     
-                    <div class="mb-5">
+                    @*<div class="mb-5">
                         <h2 class="mb-4">3 Comments</h2>
                          <div id="fb-root"></div>
                         <script async defer crossorigin="anonymous"
@@ -456,7 +474,7 @@
                         <div class="fb-comments" data-href="https://localhost:7100/Home/Blog?103" data-width="350"
                             data-numposts="5"></div>
     
-                    </div>
+                    </div>*@
             </div>
         </div>
     </div>

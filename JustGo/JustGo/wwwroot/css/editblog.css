@@ -1,7 +1,13 @@
 
 .navbarC {
-    background-color: #8a8a8a;
+    background: #333;
     z-index: 6;
+}
+
+.shadow {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius:10px;
+    padding:10px;
 }
 
 #bloginfo {
@@ -59,7 +65,7 @@ textarea {
 
 textarea::-webkit-scrollbar {
     width: 8px;
-    border-radius: 40px;
+    border-radius: 20px;
     background-color: #c3c3c3;
 }
 
@@ -86,7 +92,13 @@ textarea::-webkit-scrollbar-thumb {
     box-shadow: 0 !important;
     border: none !important;
     padding: 2px !important;
+    font-size: 1.6rem !important;
     background: transparent !important;
+    font-family: 'cwTeXYen' !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    src: url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.eot) !important;
+    src: url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.eot?#iefix) format('embedded-opentype'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.woff2) format('woff2'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.woff) format('woff'), url(//fonts.gstatic.com/ea/cwtexyen/v3/cwTeXYen-zhonly.ttf) format('truetype') !important;
 }
 
     .list-group-item:hover {
@@ -121,15 +133,24 @@ textarea::-webkit-scrollbar-thumb {
     background-color: #669ed6 !important;
     color: #fff !important;
     border: none !important;
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
 }
 
     .btn-primary:hover, .btn-outline-primary:hover {
         background-color: #084887 !important;
         color: #fff !important;
         border: none !important;
-        font-size: 1.4rem !important;
+        font-size: 1.5rem !important;
     }
+
+
+.btn-outline-secondary {
+    font-size: 1.5rem !important;
+}
+
+.btn-outline-secondary:hover {
+    font-size: 1.5rem !important;
+}
 
 
 
@@ -138,7 +159,6 @@ textarea::-webkit-scrollbar-thumb {
     color: #fff;
     border-radius: 8px;
     padding: 4px 9px;
-    margin-bottom: 5px;
 }
 
 .groupimg {
@@ -166,7 +186,7 @@ textarea::-webkit-scrollbar-thumb {
     position: fixed;
     bottom: 25vh;
     right: 8%;
-    font-size: 20px;
+    font-size: 30px;
     z-index: 3;
 }
 
@@ -180,7 +200,13 @@ textarea::-webkit-scrollbar-thumb {
     }
 }
 
+.red{
+    color:red;
+}
 
+.black{
+    color:black;
+}
 /*background-color: var(--primary-bule-light);
     --primary: #F58A07;
     --primary-light: #F9AB55;

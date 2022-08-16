@@ -16,8 +16,7 @@
               font-size: 20px;
               
             }*/
-        .navbarC{
-        background:#333}
+        
     </style>
     }
 
@@ -121,8 +120,8 @@
 
                         ],
                     ],
-                    UserImage: "Shinnosuke6.png",
                     CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
+                    UserImage: "2208121714164777.jpg",
                     UserName: ["Alley"],
                     Title: '',
                     describe: '',
@@ -131,7 +130,11 @@
                     EndDate:null,
                     
                     myscore: this.score,
-                    mytempscore: this.score
+                    mytempscore: this.score,
+                    //圖片上傳狀態
+                    //errcolor: ["red","black"],
+                    //dcolor: "black";
+                   
 
                 },
                 props: {
@@ -222,15 +225,16 @@
                                     }
                                 }
                               
-                                 $("#showErr").css("color", "black");
                                  this.Details[dayIndex][viewIndex].showError = "上傳成功!"
                                  //this.Details[dayIndex][viewIndex].showError.style.color = "black"
+                                 //this.Details.errcolor = this.Details.errcolor[1];
 
                             } else {
                                 
                                  //$("#showErr").css("color", "red");
                                 this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
-                                this.Details[dayIndex][viewIndex].showError.style.color = "red"
+                                //this.Details.errcolor = this.Details.errcolor[0];
+
                                 
                                 
                             }
@@ -241,7 +245,7 @@
                         this.Details[dayIndex][viewIndex].images.length = 0;
                         this.Details[dayIndex][viewIndex].images=[];
                         this.Details[dayIndex][viewIndex].showError = "張數限制6張"
-                        $("#showErr").css("color", "black");
+                        //this.Details.errcolor = this.Details.errcolor[1];
                     },
                     onChange(dayIndex) {
                         for (let j = 0; j < this.Details.length; j++) {
@@ -309,13 +313,7 @@
                                  this.Describe = res.data.describe;
                                  this.StartDate = res.data.startDate;
                                  this.EndDate = res.data.endDate;
-                                 
-                                //foreach(image in res.data.details){
-                                //    imagename = image.name;
-                                //    imagebase64 = image.base64;
-                                //    alert(imagename+imagebase64)
-
-                                //};
+                                
 
                              })
                          }
@@ -368,12 +366,12 @@
         <div class="container pb-3">
             <div class="row">
                     <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top" style="top:10vh;z-index:0;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" >
+                        <div class="sticky-top shadow" style="top:10vh;z-index:0;" >
                             <div class="py-3">
                                 <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
                                 @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
                             </div>
-                            <div class="pt-2">{{UserName[0]}}旅途隨手記</div>                           
+                            <div class="pt-2">{{UserName[0]}}遊記</div>                           
                             <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                             <ul class="list-group list-group-flush" id="hidden">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
@@ -391,14 +389,14 @@
 
                     </div>
                     <!--右邊欄位-->
-                    <div class="col-sm-8">
-                        <div class="user">                            
-                            <textarea rows="4" class="mb-2" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;"></textarea>
+                    <div class="col-sm-8">                            
+                        <div class="shadow mb-5">                    
+                            <textarea class="mb-2" rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;"></textarea>                                                    
                         </div>
                         <div>
                             <div v-for="(day,dayIndex) in Details">
-                                <label id="day" class="mb-4">第{{dayIndex+1}}天</label>
-                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
+                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="shadow mb-5">
                                      <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
                                         <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                         <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
@@ -419,7 +417,7 @@
                                         </label>
                                         <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
                                             class="btn btn-outline-secondary">取消上傳</button>
-                                         <span style="vertical-align: bottom;font-size:12px" id="showErr">{{dayDetails.showError}}</span>
+                                         <span style="vertical-align: bottom;font-size:12px" :class="dayDetails.images.length>=6?'red':'black'" id="showErr">{{dayDetails.showError}}</span>
 
                                         @*上傳圖片預覽*@
                                         <div class="groupimg img-fluid" >
@@ -439,13 +437,13 @@
             @*側邊功能按鍵*@
             @*<i class="fa-solid fa-objects-align-right" id="setting">*@
             <div class="dropdown" id="setting" >
-	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;font-size:1.5rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 	              <i class="fa-solid fa-list-check" ></i>
 	            </button>
 	              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	              <li><a class="dropdown-item listcolor" :href="canceledit()" >取消編輯</a></li>
-	              <li><a class="dropdown-item listcolor" @@click="saveBlog($event)">發布行程</a></li>
-                  <li><a class="dropdown-item listcolor" href="#" >返回頂部</a></li>   
+	              <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" :href="canceledit()" >取消編輯</a></li>
+	              <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" @@click="saveBlog($event)">發布行程</a></li>
+                  <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" href="#" >返回頂部</a></li>   
 	            </ul>
             </div>
 

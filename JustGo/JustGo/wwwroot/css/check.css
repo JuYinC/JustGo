@@ -4,8 +4,8 @@
   font-size: 1.7rem; }
 
 .navbarC {
-  content: "";
-  background-color: #0000005e;
+ 
+  background-color: #32be9b;
   position: inherit; }
 
 .map-pag3 {
@@ -93,7 +93,7 @@
     animation:fadein 1.5s;
 }
 .date {
-    background-color: #808080;
+    background-color: #32be9b;
     color: #FFFAFA;
     border-radius: 5px;
     margin-bottom: 10px;

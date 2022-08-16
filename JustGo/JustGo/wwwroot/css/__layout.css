@@ -18,7 +18,7 @@
       font-size: 1.5rem;
       filter: drop-shadow(2px 4px 6px black); }
     .navbarC__logo {
-      height: 45px;
+      height: 16px;
       filter: drop-shadow(2px 4px 6px black); }
     .navbarC #check {
       display: none; }
@@ -149,7 +149,7 @@
     .navbarC li {
       list-style: none; }
     .navbarC__logo {
-      height: 80px; }
+      height: 36px; }
     .navbarC ul li {
       list-style: none;
       display: inline-block;

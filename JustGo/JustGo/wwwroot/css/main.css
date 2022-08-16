@@ -1300,8 +1300,7 @@
               display: inline;
               margin-top: 0.3rem; }
             .journey__map .sidebar__grid .grid-item-m .col .bg-line {
-              border-left: 1px dashed;
-              height: 200px; }
+              border-left: 1px dashed; }
           .journey__map .sidebar__grid .grid-item-m .item {
             display: grid;
             flex-direction: column;

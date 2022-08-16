@@ -138,8 +138,6 @@
         if ($('#sidebar')[0].clientWidth < 301) {
             console.log("1234")
             $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
-            $('#grid-item-t').css('width', '100%')
-            $('#grid-item-m').css('width', '100%')
             $('.btnbox-r').css('display', 'none')
             $('.btnbox-l').css('display', 'none')
             $('.col').css('display', 'inline-block')
@@ -147,8 +145,6 @@
 
             } else {
                 $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
-                $('#grid-item-t').css('width', '270px')
-                $('#grid-item-m').css('width', '300px')
                 $('.btnbox-r').css('display', '')
                 $('.btnbox-l').css('display', '')
                 $('.col').css('display', '')
@@ -1360,12 +1356,11 @@
 
 
 
-                                            <div class="row cols-2" v-if="veiwIndex<day.length-1">
-                                                <div class="col-2 bg-white bg-line" >
+                                            <div class="row cols-2 d-flex justify-content-center" v-if="veiwIndex<day.length-1">
+                                                <div class="col-1 bg-white " >
                                                 </div>
 
-                                                <div class="col-10 bg-white betweenBox bg-line" >
-                                                    <br>
+                                                <div class="col-9 bg-white betweenBox bg-line " >
                                                     <i class="fa-solid fa-car-side">行車時間 : </i>{{view.roam}}分鐘
                                                 </div>
                                             </div>
@@ -1641,11 +1636,11 @@
 
 
                     for (i = 0; i < d; i++) {
-                        document.getElementsByClassName('col')[i].style.backgroundColor = ""
+                       
                         document.getElementsByClassName('title')[i].style.backgroundColor = ""
                         document.getElementsByClassName('title')[i].style.color = "#fff"
                     }
-                    document.getElementsByClassName('col')[k].style.backgroundColor = "#FFF7B0"
+                    
 
                     document.getElementsByClassName('title')[k].style.backgroundColor = "#FBCB0A"
 
@@ -1704,54 +1699,7 @@
 
         },
         methods: {
-            //編排日期
-            //culDate() {
-
-            //    let startTime = new Date(this.selectDatelocal)
-            //    let endTime = new Date(this.selectDateEndlocal)
-            //    let day = (endTime - startTime) / (1000 * 3600 * 24) + 1
-            //    //console.log(day)
-            //    this.duringDate.length = 0
-            //    this.datetime.length = 0
-
-            //    if (this.selectDateEndlocal > this.selectDatelocal || this.selectDateEndlocal == this.selectDatelocal) {
-
-            //        for (let i = 0; i < day; i++) {
-            //            this.duringDate.push(startTime.toLocaleDateString())
-            //            startTime = startTime.setDate(startTime.getDate() + 1)
-            //            startTime = new Date(startTime)
-            //            this.datetime.push('09:00')
-            //        }
-
-            //        if (this.travel.length == 0) {
-            //            for (let i = 0; i < day; i++) {
-            //                this.travel.push([])
-            //            }
-            //        } else if (this.travel.length <= day) {
-            //            let daydiff = day - this.travel.length
-            //            console.log(daydiff)
-            //            for (let i = 0; i < daydiff; i++) {
-            //                this.travel.push([])
-            //            }
-
-            //        } else if (this.travel.length > day) {
-
-            //            let daydiff = this.travel.length - day
-            //            for (let i = 0; i < daydiff; i++) {
-            //                let lastIndex = this.travel.length - 1
-
-            //                for (let j = 0; j < this.travel[lastIndex].length; j++) {
-            //                    this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
-            //                }
-            //                this.travel.pop()
-            //            }
-            //            this.$store.commit("cultime")
-            //        }
-
-            //    } else {
-            //        Swal.fire('重新選擇日期')
-            //    }
-            //},
+        
 
             //儲存行程
             saveSchedule() {

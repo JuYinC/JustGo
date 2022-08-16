@@ -480,6 +480,7 @@
                 font-weight: 700;
                 margin-left: 3rem;
                 min-width: 250px;
+                outline: none;
 
                 &:focus{
                     width:250px;
@@ -696,6 +697,11 @@
                         position: relative;
                         width: 96%;
                         overflow: hidden;
+                        & input{
+                            border: none;
+                            border-bottom: 1px solid;
+                            outline: none;
+                        }
 
                         & .daysbox {
                             display: flex;
@@ -730,7 +736,7 @@
                             position: absolute;
                             top: 40%;
                             width: 25px;
-                            height: 60%;
+                            height: 50%;
                             display: flex;
                             align-items: center;
                             left: -3px;
@@ -754,7 +760,7 @@
                             position: absolute;
                             right: -5px;
                             width: 25px;
-                            height: 60%;
+                            height: 50%;
                             display: flex;
                             align-items: center;
                             top: 40%;
@@ -782,7 +788,6 @@
                     &-m {
                         // background-color: #ce9906;
                         height: inherit;
-                        width: 300px;
                         overflow-y: scroll;
 
 
@@ -790,8 +795,8 @@
                             flex: 1;
                             min-width: 280px;
                             max-width: 280px;
-                            border: solid 1px #6c757d;
-                            margin: 3px;
+                            border: solid 1px #6c757d91;
+                            margin: 6px;
                             vertical-align: top;
 
                             & *{
@@ -806,6 +811,7 @@
                                 width: 100%;
                                 color: #eee;
                                 display: inline-grid;
+                                text-align-last: center;
                                
     
                             }
@@ -819,6 +825,10 @@
                                 font-size: 1.4rem;
                                 display: inline;
                                 margin-top: 0.3rem;
+                            }
+                            & .bg-line{
+                                border-left: 1px dashed;
+                                height: 200px;
                             }
 
                         }
@@ -935,6 +945,9 @@
 .sift{
     background: #6c757d;
     width: 1rem;
+
+
+ 
 
     &:hover{
         background: #333;

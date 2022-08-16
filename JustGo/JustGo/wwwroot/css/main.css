@@ -1086,7 +1086,8 @@
         background: transparent;
         font-weight: 700;
         margin-left: 3rem;
-        min-width: 250px; }
+        min-width: 250px;
+        outline: none; }
         .datepicker__content input:focus {
           width: 250px; }
         .datepicker__content input::placeholder {
@@ -1214,6 +1215,10 @@
           position: relative;
           width: 96%;
           overflow: hidden; }
+          .journey__map .sidebar__grid .grid-item-t input {
+            border: none;
+            border-bottom: 1px solid;
+            outline: none; }
           .journey__map .sidebar__grid .grid-item-t .daysbox {
             display: flex;
             padding: 5px;
@@ -1238,7 +1243,7 @@
             position: absolute;
             top: 40%;
             width: 25px;
-            height: 60%;
+            height: 50%;
             display: flex;
             align-items: center;
             left: -3px; }
@@ -1254,7 +1259,7 @@
             position: absolute;
             right: -5px;
             width: 25px;
-            height: 60%;
+            height: 50%;
             display: flex;
             align-items: center;
             top: 40%; }
@@ -1269,14 +1274,13 @@
               z-index: 1; }
         .journey__map .sidebar__grid .grid-item-m {
           height: inherit;
-          width: 300px;
           overflow-y: scroll; }
           .journey__map .sidebar__grid .grid-item-m .col {
             flex: 1;
             min-width: 280px;
             max-width: 280px;
-            border: solid 1px #6c757d;
-            margin: 3px;
+            border: solid 1px #6c757d91;
+            margin: 6px;
             vertical-align: top; }
             .journey__map .sidebar__grid .grid-item-m .col * {
               font-size: 1.4rem;
@@ -1285,7 +1289,8 @@
               background-color: var(--primary-bule);
               width: 100%;
               color: #eee;
-              display: inline-grid; }
+              display: inline-grid;
+              text-align-last: center; }
             .journey__map .sidebar__grid .grid-item-m .col p {
               color: black;
               margin-left: 6%;
@@ -1294,6 +1299,9 @@
               font-size: 1.4rem;
               display: inline;
               margin-top: 0.3rem; }
+            .journey__map .sidebar__grid .grid-item-m .col .bg-line {
+              border-left: 1px dashed;
+              height: 200px; }
           .journey__map .sidebar__grid .grid-item-m .item {
             display: grid;
             flex-direction: column;

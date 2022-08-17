@@ -532,15 +532,7 @@
                 overflow-y: scroll;
 
                 
-            &::before{
-                content: "";
-                background: #f3d42e;
-                z-index: 30;
-                width: 30px;
-                height: 30px;
-                position:fixed;
-                transform: translateX(-46px);
-            }
+      
 
                
                 &-tg{
@@ -703,6 +695,7 @@
                 height: 100%;
                 display: grid;
                 grid-template-rows: 12% 80% 1fr;
+                overflow: hidden;
 
                 & .grid-item {
                     &-t {
@@ -714,6 +707,7 @@
                             border: none;
                             border-bottom: 1px solid;
                             outline: none;
+                            margin-left: 16px;
                         }
 
                         & .daysbox {
@@ -958,7 +952,48 @@
 
 .sift{
     background: #6c757d;
-    width: 1rem;
+    width: 0;
+
+    & .rbtn{
+        position: absolute;
+        font-size: 26px;
+        top: 15%;
+        background: #636464;
+        color: #f8f9fa;
+        border-radius: 0 7px 7px 0;
+        width: 19px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        padding: 1px;
+
+        &:hover{
+            background: rgb(126, 126, 126);
+        }
+   
+    }
+    & .lbtn{
+        position: absolute;
+        font-size: 26px;
+        top: 15%;
+        background: #636464;
+        transform: translateX(-19px);
+        color: #f8f9fa;
+        border-radius: 7px 0 0 7px;
+        width: 19px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        padding: 3px;
+       
+        
+        &:hover{
+            background: rgb(126, 126, 126);
+        }
+
+    }
 
 
  

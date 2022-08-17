@@ -57,13 +57,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="sift">
+                       <i class="fas fa-caret-left lbtn" id="sift-l" style="display:none"></i>                       
+            </div>
+
             <div class="sidebar-hide" id="sidebar-hide">
 
                     <div id="app2"></div>
                 </div>
               
-                <div class="sift" id="sift"></div>
-                <a class="rbtn">右</a>
+                <div class="sift" >
+                       <i class="fas fa-caret-right rbtn" id="sift-r"></i>                       
+                </div>
+                
                 <div class="mapbox" id="app3">
                     <div id="floating-panel">
                         <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
@@ -111,21 +118,7 @@
                     'width': '30%',
                     'display': 'unset',
                 })
-                //$('#app input').css({
-                //    'min-width': '30%',
-                //    'font-size': '1.4rem',
-                //}).focus().css('max-width', '30%')
-                //$('#app button').css({
-                //    'font-size': '1rem',
-                //    'width': '35%',
-                //    'padding': '0',
-                //    'border-radius': '0',
-                //    'background': 'transparent',
-                //    'color': 'black',
-                //    'border': '2px solid',
-
-                //})
-                //$('#app button')[0].textContent = "更新日期"
+     
                 $('#app input').css('display','none')
                  $('#app button').css('display','none')
             }
@@ -133,9 +126,16 @@
 
 
     let wwwroot = "@Url.Content("~/file/photo")"
-    hidebtn = document.getElementById("sift").addEventListener('click', function () {
+    document.getElementById("sift-l").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
+
+    document.getElementById("sift-r").addEventListener('click', function () {
+        document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
+    })
+
+   
+   
     $('#open').click(function () {
         if ($('#sidebar')[0].clientWidth < 301) {
             console.log("1234")
@@ -144,12 +144,14 @@
             $('.btnbox-l').css('display', 'none')
             $('.col').css('display', 'inline-block')
             $('.daysbox').css('left', '0px')
+            $('#sift-l').css('display', '')
 
             } else {
                 $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
                 $('.btnbox-r').css('display', '')
                 $('.btnbox-l').css('display', '')
                 $('.col').css('display', '')
+                $('#sift-l').css('display', 'none')
 
             }
         })

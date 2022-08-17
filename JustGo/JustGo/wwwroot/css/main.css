@@ -1117,14 +1117,6 @@
         flex: 0 0 0;
         margin: 0;
         overflow-y: scroll; }
-        .journey__map .sidebar-hide::before {
-          content: "";
-          background: #f3d42e;
-          z-index: 30;
-          width: 30px;
-          height: 30px;
-          position: fixed;
-          transform: translateX(-46px); }
         .journey__map .sidebar-hide-tg {
           flex: 0 0 330px;
           margin: 1.5rem 0 0 1.5rem; }
@@ -1217,7 +1209,8 @@
       .journey__map .sidebar__grid {
         height: 100%;
         display: grid;
-        grid-template-rows: 12% 80% 1fr; }
+        grid-template-rows: 12% 80% 1fr;
+        overflow: hidden; }
         .journey__map .sidebar__grid .grid-item-t {
           margin: 5px;
           position: relative;
@@ -1226,7 +1219,8 @@
           .journey__map .sidebar__grid .grid-item-t input {
             border: none;
             border-bottom: 1px solid;
-            outline: none; }
+            outline: none;
+            margin-left: 16px; }
           .journey__map .sidebar__grid .grid-item-t .daysbox {
             display: flex;
             padding: 5px;
@@ -1364,6 +1358,37 @@
 
 .sift {
   background: #6c757d;
-  width: 1rem; }
+  width: 0; }
+  .sift .rbtn {
+    position: absolute;
+    font-size: 26px;
+    top: 15%;
+    background: #636464;
+    color: #f8f9fa;
+    border-radius: 0 7px 7px 0;
+    width: 19px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    padding: 1px; }
+    .sift .rbtn:hover {
+      background: #7e7e7e; }
+  .sift .lbtn {
+    position: absolute;
+    font-size: 26px;
+    top: 15%;
+    background: #636464;
+    transform: translateX(-19px);
+    color: #f8f9fa;
+    border-radius: 7px 0 0 7px;
+    width: 19px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    padding: 3px; }
+    .sift .lbtn:hover {
+      background: #7e7e7e; }
   .sift:hover {
     background: #333; }

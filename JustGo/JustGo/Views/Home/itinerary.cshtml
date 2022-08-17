@@ -913,34 +913,40 @@
                 }
             },
 
-            updateSchedule(state, status) {
-                let startTime = new Date(status.startDate)
-                let endTime = new Date(status.endDate)
-                let endTime2 = new Date(status.details[0][0].startTime)
-                state.scheduleId = status.scheduleId
-                state.title = status.title
-                for (let i = 0; i < status.details.length; i++) {
-                    this.state.travel.push([])
-                    this.state.duringDate.push(startTime.toLocaleDateString())
-                    startTime = startTime.setDate(startTime.getDate() + 1)
-                    startTime = new Date(startTime)
-                    //
-                    datetime = new Date(status.details[i][0].startTime)
-                    let time = ""
-                    let hour = datetime.getHours()
-                    let minute = datetime.getMinutes()
-                    //處理時分
-                    if (Number(hour) > 24) {
-                        hour = hour - 24
-                    }
-                    if (Number(hour) < 10) {
-                        hour = "0" + hour
-                    }
-                    if (Number(minute) < 10) {
-                        minute = "0" + minute
-                    }
-                    time = hour + ":" + minute
-                    this.state.datetime.push(time)
+                updateSchedule(state, status) {
+                    let startTime = new Date(status.startDate)
+                    let endTime = new Date(status.endDate)
+                    let endTime2 = new Date(status.details[0][0].startTime)
+                    state.scheduleId = status.scheduleId
+                    state.title = status.title
+                    for (let i = 0; i < status.details.length; i++) {
+                        this.state.travel.push([])
+                        this.state.duringDate.push(startTime.toLocaleDateString())
+                        startTime = startTime.setDate(startTime.getDate() + 1)
+                        startTime = new Date(startTime)
+                        //
+                        if (status.details[i].length > 0) {
+
+                        
+                        datetime = new Date(status.details[i][0].startTime)
+                        let time = ""
+                        let hour = datetime.getHours()
+                        let minute = datetime.getMinutes()
+                        //處理時分
+                        if (Number(hour) > 24) {
+                            hour = hour - 24
+                        }
+                        if (Number(hour) < 10) {
+                            hour = "0" + hour
+                        }
+                        if (Number(minute) < 10) {
+                            minute = "0" + minute
+                        }
+                        time = hour + ":" + minute                       
+                        this.state.datetime.push(time)   
+                        }else{
+                            this.state.datetime.push("09:00")   
+                        }
 
                     for (let j = 0; j < status.details[i].length; j++) {
                         let startTime = new Date(status.details[i][j].startTime);

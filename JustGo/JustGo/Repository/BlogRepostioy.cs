@@ -166,10 +166,13 @@ namespace JustGo.Repository
             return vmList;
         }
 
+        string tagSQl = "select Class from Place as p where Class< 15 and exists(select DetailsID from BlogDetails as bd where PlaceID = p.PlaceID and exists(select BlogID where BlogID = @id and bd.BlogID = BlogID)) group by Class";
+
         BlogVM modeltoVM(Blog model)
         {
             
             var user = _UserComtext.ApplicationUsers.Single(e => e.Id == model.UserId);
+            var tagList = _con.Query<int>(tagSQl, new { id = model.BlogId }).ToList();
             string UserImage = "2208121714164777.jpg";
             BlogVM vm = new BlogVM()
             {
@@ -180,6 +183,7 @@ namespace JustGo.Repository
                 Title = model.Title,
                 Describe = model.Describe,
                 CoverImage = new blogImage() { name=model.ImageName},
+                TagList = tagList,
                 Like = model.Like,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,

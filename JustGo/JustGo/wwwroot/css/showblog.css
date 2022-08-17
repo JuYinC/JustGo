@@ -126,11 +126,14 @@
 .timepicker {
     border-style: none;
     background: transparent;
+    width: 110px;
+    font-size:1.6rem;
 }
 
     .timepicker:focus {
         border-style: none;
         background: transparent;
+        width: 110px;
     }
 
     .timepicker:blur {

@@ -77,6 +77,8 @@
                 daterange: null,
                 myscore: this.score,
                 mytempscore: this.score
+                 //TAG
+                //TagList:[],
 
             },
             props: {
@@ -100,23 +102,51 @@
             }
             ,
             methods: {
-                if (this.tagList.length > 3) {
-                    this.selectCounty.splice(0, 1)
-                }
-                switch (this.tagList) {
-                    case '1':
-                        this.selectType = '景點'
-                        this.display = ''
-                        break;
-                    case '餐飲':
-                        this.selectType = '餐飲'
-                        this.display = 'display:none'
-                        break;
-                    case '旅宿':
-                        this.selectType = '旅宿'
-                        this.display = 'display:none'
-                        break;
-                },
+                //TAG
+                //switch (this.tagList) {
+                //    case '1':
+                //        this.tagList = '文化'
+                //        break;
+                //    case '2':
+                //        this.tagList = '生態'                      
+                //        break;
+                //    case '3':
+                //        this.tagList = '古蹟'
+                //        break;                       
+                //    case '4':
+                //        this.tagList = '廟宇'
+                //        break;
+                //    case '5':
+                //        this.this.tagList = '藝術'                      
+                //        break;
+                //    case '6':
+                //        this.tagList = '小吃特產'
+                //        break;                     
+                //    case '7':
+                //        this.tagList = '國家公園'
+                //        break;
+                //    case '8':
+                //        this.tagList = '國家風景區'                      
+                //        break;
+                //    case '9':
+                //        this.tagList = '休閒農業'
+                //        break;
+                //    case '10':
+                //        this.tagList = '溫泉'
+                //        break;
+                //    case '11':
+                //        this.tagList = '自然風景'                      
+                //        break;
+                //    case '12':
+                //        this.tagList = '遊憩'
+                //        break;
+                //    case '13':
+                //        this.tagList = '體育健身'
+                //        break;
+                //    case '14':
+                //        this.tagList = '其他'                      
+                //        break;                   
+                //},
                 getImages(loadimagesName) {
                     return "@Url.Content("~/blogImages")/" + loadimagesName
                 },
@@ -309,19 +339,21 @@
                         </div>
 
 
-                        <!-- Tag Cloud -->
-                        <div class="mb-4">
-                            <h2 class="mb-2">#Tag</h2>
-                            <div class="d-flex flex-wrap m-n1">
-                                <button class="btn btn-primary m-1">溫泉</button>
-                                <button class="btn btn-primary m-1">生態</button>
-                                <button class="btn btn-primary m-1">小吃特產</button>
-                                <button class="btn btn-primary m-1">國家公園</button>
-                                <button class="btn btn-primary m-1">休閒農業</button>
+                        <!-- Tag -->
+                         @*<div v-for="(tag,tagIndex) in TagList" class="mt-2">
+                            <div class="mb-4">
+                                <h2 class="mb-2">#Tag</h2>
+                                <div class="d-flex flex-wrap m-n1">
+                                    <button class="btn btn-primary m-1">溫泉</button>
+                                    <button class="btn btn-primary m-1">生態</button>
+                                    <button class="btn btn-primary m-1">小吃特產</button>
+                                    <button class="btn btn-primary m-1">國家公園</button>
+                                    <button class="btn btn-primary m-1">休閒農業</button>
+                                </div>
                             </div>
-                        </div>
+                        </div>*@
 
-                        <!-- Recent Post -->
+                        <!-- Tag Result -->
                         <div class="mb-4">
                             <div class="d-flex align-items-center myshadow overflow-hidden" id="card">
                                 <div class="box">
@@ -386,6 +418,7 @@
                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                            @@load="myscore=item"></i>
                                         </div>
+
 
                                         <div v-viewer class="groupimg img-fluid">
                                             <template v-for="(image,index) in dayDetails.images">

@@ -337,13 +337,13 @@
   
               <div class="carousel-inner">
                 <div class="carousel-item" data-bs-interval="3000">
-                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view" alt="img">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://i.picsum.photos/id/735/1800/1600.jpg?hmac=ORAvtQwonINqImN96j8kVd50jBUt6S0tTRjRKrLprNs" alt="img">
                 </div>
                 <div class="carousel-item active" data-bs-interval="3000">
-                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view1" alt="img">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://i.picsum.photos/id/212/1800/1600.jpg?hmac=yEt4Ncu_6soIUZ3CXYKbuxjk-PWC83V8Tw0I0odciFE" alt="img">
                 </div>
                 <div class="carousel-item" data-bs-interval="3000">
-                  <img class="d-block w-100"  style="height: 50vh;" src="https://unsplash.it/1800/1600/?random/view2" alt="img">
+                  <img class="d-block w-100"  style="height: 50vh;" src="https://i.picsum.photos/id/1067/1800/1600.jpg?hmac=9cyKyWn6g0_A3pa8x2EjrAz9KKkkEjsMUGE-gSagYFM" alt="img">
                 </div>
               </div>
             </div>
@@ -355,16 +355,15 @@
                 <div class="col-lg-4 mt-4 mt-lg-2 ">
                     <div class="sticky-top" style="top:10vh;z-index:0">
                         <!-- Author Bio -->
-                        <div class="d-flex flex-column rounded py-4">
+                        <div class="d-flex flex-column rounded py-4">                           
                             <div class="py-3">
-                                <span><img v-viewer :src="userImageSrc(UserImage)" id="userimg" alt="Image"></span>
-                            </div>
-                            <div class="mb-2 py-1">{{UserName}}</div>
-                            <div class="mb-2">旅程從Just Go開始</div>
+                            <span><img :src="userImageSrc(UserImage)" id="userimg" alt="Image"></span>
+                            <span class="px-3 py-1">{{UserName}}</span>
+                            </div>                           
                         </div>
     
                          <div class="mb-4">
-                            <h2 class="mb-2">Duration</h2>
+                            <div class="mb-2">Duration</div>
                             <div class="mb-2">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                             <ul class="list-group list-group-flush" id="hidden">
                                 <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
@@ -400,8 +399,8 @@
                                     <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/view" alt="Image">
                                 </div>
                                 <div >
-                                    <h5 class="">{{Title}}</h5>
-                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
+                                    <div class="mx-1">{{Title}}</div>
+                                    <small class="mx-1"><i class="fa fa-user text-primary"></i> {{UserName}}</small>                 
                                 </div>
                             </div>
                         </div>
@@ -410,13 +409,10 @@
                 @*左側欄位*@
                 <div class="col-lg-8">
                     <div class="d-flex flex-column text-left mb-3">
-                        
                         <div>
-                            <h1 class="my-3">{{Title}}</h1>
+                            <div class="my-3" style="font-size:2.8rem;">{{Title}}</div>
                             <div class="d-flex">
-    
                                 <button class="btn btn-primary m-1" @@click="copyURL" >SHARE </button>
-    
                                 <div class="dropdown me-2" id="setting" >
                                     <button class="btn btn-primary dropdown-toggle m-1"  type="button"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">收藏行程</button>
@@ -424,25 +420,23 @@
                                         <li><input placeholder="選擇開始日期" type="text" onfocus="(this.type='date')" 
                                                 onblur="(this.type='text')" @@input="copyblog()" v-model="daterange" class="timepicker"></li>
                                     </ul>
-                                </div>
-                                
+                                </div>                                
                                 <div style="line-height:30px;font-size:18px;"><i :class="bool?'fa fa-heart red':'fa fa-heart'" @@click="likeblog"></i>
                                     <span class="px-1"> {{Like}}</span></div>
                                 </div>
-    
                         </div>
                     </div>
                     <div class="mb-4">
-                        <img class="img-fluid rounded w-100 mb-4"  :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
-                        <div class="myshadow mb-2">
-                        <div  style="background-color:#ebebf5;border-radius:10px;">{{describe}}心得簡述</div>
-                        </div>
-    
+                        <img class="img-fluid rounded w-100 mb-4" :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
+                        <div class="myshadow mb-4">
+                        <div style="background-color:#ebebf5;border-radius:10px;text-indent: 3.6rem;padding:10px">{{describe}}心得簡述</div>
+                         </div>
+                    <div class="myshadow">
                         <div v-for="(day,dayIndex) in Details">
                             <label id="day" class="my-3">第{{dayIndex+1}}天</label>
-                            <div class="myshadow">
+                            <div class="viewcolor">
                                 <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-5">
-                                    <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><div style="font-size:2.2rem">{{dayDetails.p_Name}}</div></div>
+                                    <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><div style="font-weight: bold;font-size:2.5rem;">{{dayDetails.p_Name}}</div></div>
                                     <div class="mb-1"><i class="fa-solid fa-house-crack"
                                             style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                     <div class="mb-1"><i class="fa-solid fa-phone"
@@ -460,12 +454,12 @@
                                         </template>
                                     </div>
     
-                                    <div>{{dayDetails.describe}}</div>
+                                    <div style="text-indent: 3.6rem;">{{dayDetails.describe}}</div>
     
                                 </div>
                             </div>
                         </div>
-    
+                        </div>
                     </div>                   
     
     

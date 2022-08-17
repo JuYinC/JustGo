@@ -214,6 +214,7 @@
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                             .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
                             .catch(err => console.log(""))
+                            alert("發布成功")
                     } else {
                         alert("上傳失敗 請上傳封面照及標題")
                     }
@@ -224,10 +225,7 @@
                     let readFile = new FileReader()
                     readFile.readAsDataURL(file)
                     readFile.addEventListener('load', () => {
-                        //let image = document.getElementById('image')
                         this.CoverImageName.base64 = readFile.result
-                        //this.Details.CoverImageName = this.CoverImageName
-                        //console.log(this.CoverImageName);
                     })
 
                 },
@@ -248,12 +246,10 @@
                             }
 
                             this.Details[dayIndex][viewIndex].showError = "上傳成功!"
-                            //this.Details[dayIndex][viewIndex].errColor= "black"
                             this.Details[dayIndex][viewIndex].errColor = 'black'
 
 
                         } else {
-                            //$("#showErr").css("color", "red");
                             this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
                             this.Details[dayIndex][viewIndex].errColor = 'red'
 
@@ -331,7 +327,7 @@
                             this.Details = res.data.details;
                             this.EndDate = res.data.endDate;
                             this.StartDate = res.data.startDate;
-                            //this.Title = res.data.Title;
+                            this.Title = res.data.Title;
                             this.Describe = res.data.describe;
                             this.StartDate = res.data.startDate;
                             this.EndDate = res.data.endDate;
@@ -347,7 +343,7 @@
                             this.Details = res.data.details;
                             this.EndDate = res.data.endDate;
                             this.StartDate = res.data.startDate;
-                            //this.Title = res.data.Title;
+                            this.Title = res.data.Title;
                             this.Describe = res.data.describe;
 
                         })
@@ -391,9 +387,9 @@
                     <div class="sticky-top" style="top:10vh;z-index:0;">
                         <div class="py-3">
                             <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                            @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
+                            <span class="px-3 py-1">{{UserName}}</span>
                         </div>
-                        <div class="pt-2">{{UserName}}遊記</div>
+                        <div class="mb-2">Duration</div>
                         <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
                         <ul class="list-group list-group-flush" id="hidden">
                             <div v-for="(day,dayIndex) in Details" class="mt-2">
@@ -417,15 +413,15 @@
             <div class="col-sm-8">
                 <div class="myshadow mb-4">
                     <div style="background-color:#ebebf5;border-radius:10px;">
-                        <textarea rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;border-radius:10px"></textarea>
+                        <textarea rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;border-radius:10px;padding:10px"></textarea>
                     </div>
                 </div>
-                <div>
-                    <div v-for="(day,dayIndex) in Details" class="myshadow">
+                <div class="myshadow">
+                    <div v-for="(day,dayIndex) in Details">
                         <label id="day" class="my-3">第{{dayIndex+1}}天</label>
-                        <div class="viewcolor">
-                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-5">
-                                <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><div style="font-size:2.2rem">{{dayDetails.p_Name}}</div></div>
+                        
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-3 viewcolor">
+                                <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><div style="font-weight: bold;font-size:2.5rem;">{{dayDetails.p_Name}}</div></div>
                                 <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
                                 <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
                                 <div class="mb-1 d-inline">
@@ -451,7 +447,7 @@
                                     <span style="vertical-align: bottom;font-size:1.5rem;" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
 
                                         @*上傳圖片預覽*@
-                                    <div style="margin-left:-10px" class="mb-2">
+                                    <div style="margin-left:-20px" class="mb-2">
                                         <template v-for="(image,index) in dayDetails.images">
                                             <input :id="getmyimg(dayIndex,viewIndex,index)" type="file" accept="image/jpeg, image/png" @@change="(e)=>editmyimg(image,e)" style="display:none;">
                                             <label :for="getmyimg(dayIndex,viewIndex,index)" class="groupimg imglabel">
@@ -463,7 +459,7 @@
                                           placeholder="景點敘述 字數限制400字" style="resize:none;"></textarea>
                                 </div>
                             </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -472,7 +468,7 @@
         @*側邊功能按鍵*@
         @*<i class="fa-solid fa-objects-align-right" id="setting">*@
     <div class="dropdown" id="setting">
-        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;font-size:1.5rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" style="background-color:#ffffff;color: #084887;font-size:1.5rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-list-check"></i>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

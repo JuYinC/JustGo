@@ -196,6 +196,7 @@ textarea::-webkit-scrollbar-thumb {
     right: 5%;
     font-size: 30px;
     z-index: 3;
+    
 }
 
 .footer__waves {

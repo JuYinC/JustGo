@@ -212,10 +212,11 @@
         .member_box3 {
             margin: 30px 18px 30px 18px;
             border: 3px;
-            height: 80vh;
+            min-height: 80vh;
             border-radius: 3px;
             box-shadow: 0 0 3px;
             background-image: linear-gradient(to top left,#F0F0F0,#FFFF,#F0F0F0 );
+            padding: 40px
         }
 
         .content {
@@ -270,9 +271,14 @@
             margin-bottom: 0;
             list-style: none;
         }
+        .p_style{
+        font-size:20px;
+        }
 
-
-
+        .Lable_size{
+            font-size:18px;
+             font-weight: bold;
+        }
 
 
 
@@ -359,7 +365,7 @@
                                 </div>
                                 <div class="title">{{item.title}}</div>
                                 <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>
-                                <div class="buttonBar ">
+                                <div class="buttonBar">
                                     <span class="CreateBlog_Style" @@click="createBlog(item.scheduleId)"><i class="fa-solid fa-share-from-square"></i> 新增遊記</span>
                                     <span class="DeleteSchedule_Style" @@click="deleteSchedule(item.scheduleId)"><i class="fa-solid fa-trash-can"></i> 刪除</span>
                                 </div>
@@ -381,7 +387,6 @@
                                 <div class="buttonBar ">
                                     <span class="CreateBlog_Style" @@click="editBlog(item.blogId)"><i class="fa-solid fa-file-pen"></i> 編輯</span>
                                     <span class="CreateBlog_Style" @@click="checkBlog(item.blogId)"><i class="fa-solid fa-calendar-week"></i> 查看</span>
-
                                     <span class="DeleteSchedule_Style" @@click="deleteBlog(item.blogId)"><i class="fa-solid fa-trash-can"></i> 刪除</span>
                                 </div>
                             </div>
@@ -409,84 +414,91 @@
                 </div>
                 <div class="tab-pane fade" id="v-pills-member" role="tabpanel" aria-labelledby="v-pills-member-tab">
                     <div class="travel">會員</div>
-
-
-
                     <div class="member_box3">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-5">
+                                        <hr  class="mb-2 mt-5 ms-1 me-1"/>
+                                <div class="col-md-5 Lable_size">
                                     <label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改使用者名稱</label>
                                     <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改居住地</label>
-                                    <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">
-                                </div>
-
-                                <div class="col-md-10">
-                                    <label for="inputAddress" class="form-label mb-2 mt-2 ms-1 me-1">更新自我介紹</label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control mb-2 mt-2 ms-1 me-1" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
+                                    @*<label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改居住地</label>
+                                    <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">*@
                                     <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">修改電話號碼</label>
                                     <input type="text" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="col-md-5">
                                     <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入舊密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="col-md-5">
                                     <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入新密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="col-md-5">
                                     <label for="exampleInputPassword1" class="form-label mb-2 mt-2 ms-1 me-1">確認新密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
                                 </div>
-                                <hr class="mb-4 mt-4 ms-2 me-2" />
-                                <div class="col-md-9">
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary col-md-4 mb-2 mt-2  ">確定</button>
-                                </div>
-                                <div class="dragbox">
-                                    喜好
-                                    <draggable v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
-                                        <transition-group>
-                                            <span v-for="(item,index) in selectcountry" :key="item" class="item"
-                                              @@dblclick="removecountry(index)">
-                                                {{item}}
-                                            </span>
-                                        </transition-group>
-                                    </draggable>
-                                </div>
-                                <div class="dragbox">
-                                    選擇
-                                    <span v-for="(item,index) in country" :key="item" class="item" @@click="addcountry(index)">
-                                        {{item}}
-                                    </span>
-                                </div>
+                                <div class="col-md-7">
+                                    <div style="min-height:28vh"class="Lable_size">
+                                     <p style="margin-top:8px;" >
+                                        喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                            +
+                                        </button>
+                                    </p>
+                                    <hr />
+                                    <div>
+                                        <draggable style="display:flex ; align-content: flex-start;" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
+                                            <transition-group>
+                                                <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4 me-1"
+                                                 @@dblclick="removecountry(index)">
+                                                    {{item}}
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
+                                    </div>
+                                    <div style="min-height: 5vh;">
+                                        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                                            <div class="card card-body" style="width: 44.5vw;">
+                                                <div class="dragbox">
+                                                    <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
+                                                        {{item}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="Lable_size" style="min-height:28vh ">
+                                    <p style="margin-top:15px;">
+                                        喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
+                                            +
+                                        </button>
+                                        </button>
+                                    </p>
+                                    <hr />
+                                    <div>
+                                        <draggable style="display:flex ; align-content: flex-start;" v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
+                                            <transition-group>
+                                                <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
+                                                 @@dblclick="removeviewclass(index)">
+                                                    {{item}}
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
 
-                                <div class="dragbox">
-                                    喜好
-                                    <draggable v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
-                                        <transition-group>
-                                            <span v-for="(item,index) in selectviewclass" :key="item" class="item"
-                                              @@dblclick="removeviewclass(index)">
-                                                {{item}}
-                                            </span>
-                                        </transition-group>
-                                    </draggable>
+                                    </div>
+                                    <div style="min-height: 5vh;">
+                                        <div class="collapse collapse-horizontal" id="interest">
+                                            <div class="card card-body" style="width: 44.5vw;">
+                                                <div class="dragbox">
+
+                                                    <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
+                                                        {{item}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="dragbox">
-                                    選擇
-                                    <span v-for="(item,index) in viewclass" :key="item" class="item" @@click="addviewclass(index)">
-                                        {{item}}
-                                    </span>
                                 </div>
+                                <hr  class="mb-5 mt-5 ms-1 me-1"/>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -505,25 +517,25 @@
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-     <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
+    <script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
     <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
-   
+
     <script>
         new Vue({
             el: "#app",
             data: {
-                    showSchedule: [],
-                    showBlog: [],
-                    userKeepBlog: [],
-                    drag: true,
-                    selectcountry: [],
-                    country: ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
-                        '南投縣', '雲林縣', '嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
-                        '臺東縣', '澎湖縣', '連江縣', '金門縣'],
-                    selectviewclass: [],
-                    viewclass: ['文化', '生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區', '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
+                showSchedule: [],
+                showBlog: [],
+                userKeepBlog: [],
+                drag: true,
+                selectcountry: ['臺南市', '高雄市', '屏東縣', '宜蘭縣',],
+                country: ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '苗栗縣', '臺中市', '彰化縣',
+                    '南投縣', '雲林縣', '嘉義縣', '嘉義市',  '花蓮縣',
+                    '臺東縣', '澎湖縣', '連江縣', '金門縣'],
+                selectviewclass: ['生態', '古蹟', '廟宇', '藝術', '小吃特產', '國家公園', '國家風景區',],
+                viewclass: ['文化',  '休閒農業', '溫泉', '自然風景', '遊憩', '體育健身', '其他'],
 
-                
+
             },
             computed: {
                 schedule() {
@@ -544,7 +556,7 @@
 
             },
             methods: {
-                addcountry(index) {                    
+                addcountry(index) {
                     this.selectcountry.push(this.country[index])
                     this.country.splice(index, 1);
                 },

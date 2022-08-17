@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
-       
+
         /*html {
-              
-              font-size: 20px;
-              
-            }*/
-        
+
+                      font-size: 20px;
+
+                    }*/
+
     </style>
     }
 
@@ -26,433 +26,463 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
- 
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" /> *@
+        @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" /> *@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
 
     <script>
-        $("body").attr('data-bs-spy','scroll')
-        $("body").attr('data-bs-target','#list-example')
-        $("body").attr('data-bs-offset','0')
-        $("body").attr('tabindex','0')
+        $("body").attr('data-bs-spy', 'scroll')
+        $("body").attr('data-bs-target', '#list-example')
+        $("body").attr('data-bs-offset', '0')
+        $("body").attr('tabindex', '0')
 
 
-    let id = 0;
-            let vm = new Vue({
-                el: `#bloginfo`,
-                data: {
-                    Details: [
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "北部1",
-                                p_tel: "07-123456",
-                                p_Add: "台北市",
-                                describe : "",
-                                score: 0,
-                                images: {Name:"",base64:"2208111103103186.jpg"},
-                                showError:'張數限制六張',
-                                errColor:"black",
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "高雄2",
-                                p_tel: "02-123456",
-                                p_Add: "高雄市",
-                                describe : "",
-                                score: 0,
-                                images: {Name:"",base64:"2208111103108543.png"},
-                                showError:'張數限制六張',
-                                errColor:"black",
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台中3",
-                                p_tel: "04-123456",
-                                p_Add: "台中市",
-                                describe : "",
-                                score: 0,
-                                images: {Name:"",base64:"2208111103108981.png"},
-                                showError:'張數限制六張',
-                                errColor:"black",
-                            }
+        let id = 0;
+        let vm = new Vue({
+            el: `#bloginfo`,
+            data: {
+                Details: [
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "北部1",
+                            p_tel: "07-123456",
+                            p_Add: "台北市",
+                            describe: "",
+                            score: 0,
+                            images: { Name: "", base64: "2208111103103186.jpg" },
+                            showError: '張數限制六張',
+                            errColor: "black",
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "高雄2",
+                            p_tel: "02-123456",
+                            p_Add: "高雄市",
+                            describe: "",
+                            score: 0,
+                            images: { Name: "", base64: "2208111103108543.png" },
+                            showError: '張數限制六張',
+                            errColor: "black",
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台中3",
+                            p_tel: "04-123456",
+                            p_Add: "台中市",
+                            describe: "",
+                            score: 0,
+                            images: { Name: "", base64: "2208111103108981.png" },
+                            showError: '張數限制六張',
+                            errColor: "black",
+                        }
 
-                        ],
-                        [
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "台南4",
-                                p_tel: "06-123456",
-                                p_Add: "台南市",
-                                describe : "",
-                                score: 0,
-                                images: {Name:"",base64:""},
-                                showError:'張數限制六張',
-                                errColor:"black",
-                            },
-                            {
-                                id: id++,
-                                startTime:null,
-                                endTime:null,
-                                placeId: 1,
-                                p_Name: "花蓮5",
-                                p_tel: "123456",
-                                p_Add: "花蓮市",
-                                describe : "",
-                                score: 0,
-                                images: {Name:"",base64:""},
-                                showError:'張數限制六張',
-                                errColor:"black",
-                            },
-
-
-                        ],
                     ],
-                    CoverImageName: {base64:"@Url.Content("~/blogImages")/"+"coverimage.jpg"},
-                    UserImage: "2208121714164777.jpg",
-                    UserName: "Alley",
-                    Title: '',
-                    describe: '',
-                    Like: 5,
-                    StartDate:null,
-                    EndDate:null,
-                    
-                    myscore: this.score,
-                    mytempscore: this.score,
-                    //圖片上傳狀態
-                    
-                   
+                    [
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "台南4",
+                            p_tel: "06-123456",
+                            p_Add: "台南市",
+                            describe: "",
+                            score: 0,
+                            images: { Name: "", base64: "" },
+                            showError: '張數限制六張',
+                            errColor: "black",
+                        },
+                        {
+                            id: id++,
+                            startTime: null,
+                            endTime: null,
+                            placeId: 1,
+                            p_Name: "花蓮5",
+                            p_tel: "123456",
+                            p_Add: "花蓮市",
+                            describe: "",
+                            score: 0,
+                            images: { Name: "", base64: "" },
+                            showError: '張數限制六張',
+                            errColor: "black",
+                        },
 
+
+                    ],
+                ],
+                CoverImageName: { base64: "@Url.Content("~/blogImages")/" + "coverimage.jpg" },
+                UserImage: "2208121714164777.jpg",
+                UserName: "Alley",
+                Title: '',
+                describe: '',
+                Like: 5,
+                StartDate: null,
+                EndDate: null,
+
+                myscore: this.score,
+                mytempscore: this.score,
+                //圖片上傳狀態
+
+
+
+            },
+            props: {
+                count: {
+                    type: Number,
+                    default: 5
                 },
-                props: {
-                    count: {
-                        type: Number,
-                        default: 5
-                    },
-                    score: {
-                        type: Number,
-                        default: 1
-                    },
-                    color: {
-                        type: String,
-                        default: '#FFC100'
+                score: {
+                    type: Number,
+                    default: 1
+                },
+                color: {
+                    type: String,
+                    default: '#FFC100'
+                }
+
+            },
+            methods: {
+                imageDisplay(image) {
+                    if (image.base64 == "") {
+                        return "@Url.Content("~/blogImages")/" + image.name
                     }
-
+                    return image.base64;
                 },
-                methods: {    
-                    //取消編輯
-                    canceledit() {                        
-                        return '@Url.Action("UserCatelog","Home")';
-                    },
-                    //編輯頁面圖檔顯示
-                    getImages(getimagesName){
-                        return "@Url.Content("~/blogImages")/"+getimagesName
-                    },
-                    //使用者照片
-                    userImageSrc(imageName) {
-                        return "@Url.Content("~/UserImages")/"+imageName                        
-                    },
-                    getdate(date) {                                        
-                        return moment(date).format('YYYY/MM/DD')
-                    },
-                    gettime(time) {
-                        return moment(time).format('A HH')
-                    },
-                    //左側list顯示
-                    gethref(dayIndex, viewIndex) {
-                        return "#list-item-" + dayIndex + "-" + viewIndex
-                    },
-                    getanchor(dayIndex, viewIndex) {
-                        return "list-item-" + dayIndex + "-" + viewIndex
-                    },
-                    saveBlog(e) {     
-                        e.preventDefault();
-                        if(this.CoverImage != null || this.Title != ""){
+                //取消編輯
+                canceledit() {
+                    return '@Url.Action("UserCatelog","Home")';
+                },
+                //編輯頁面圖檔顯示
+                getImages(getimagesName) {
+                    return "@Url.Content("~/blogImages")/" + getimagesName
+                },
+                //使用者照片
+                userImageSrc(imageName) {
+                    return "@Url.Content("~/UserImages")/" + imageName
+                },
+                getdate(date) {
+                    return moment(date).format('YYYY/MM/DD')
+                },
+                gettime(time) {
+                    return moment(time).format('A HH')
+                },
+                //左側list顯示
+                gethref(dayIndex, viewIndex) {
+                    return "#list-item-" + dayIndex + "-" + viewIndex
+                },
+                getanchor(dayIndex, viewIndex) {
+                    return "list-item-" + dayIndex + "-" + viewIndex
+                },
+                getmyimg(dayIndex, viewIndex, index) {
+                    return "myimg" + dayIndex + "-" + viewIndex + "-" + index
+                },
+                editmyimg(image, e) {
+                    let readFile = new FileReader()
+                    let file = e.target.files[0];
+                    readFile.readAsDataURL(file)
+                    readFile.onload = (e) => {
+                        console.log(readFile.result);
+                        image.base64 = readFile.result
+                    }
+                },
+                saveBlog(e) {
+                    e.preventDefault();
+                    if (this.CoverImage != null || this.Title != "") {
                         let blog = {
-                            CoverImage: { base64 : this.CoverImageName.base64,name:"" },
-                            Details:this.Details,
-                            Title:this.Title,
-                            describe:this.describe,
-                            StartDate:this.StartDate,
-                            EndDate:this.EndDate
+                            CoverImage: { base64: this.CoverImageName.base64, name: "" },
+                            Details: this.Details,
+                            Title: this.Title,
+                            describe: this.describe,
+                            StartDate: this.StartDate,
+                            EndDate: this.EndDate
                         }
                         axios.post("@Url.Action("setBlog","Blog")", blog)
-                                 .then(res => { if(res.data){window.location.href = '@Url.Action("UserCatelog","Home")'}})
-                                 .catch(err => console.log(""))       
-                       }else{
-                           alert("上傳失敗 請上傳封面照及標題")
-                       }
-                    },
-                    //封面圖上傳
-                    fileChange(e) {
-                        let file = e.target.files[0]
-                        let readFile = new FileReader()
-                        readFile.readAsDataURL(file)
-                        readFile.addEventListener('load', () => {
-                            //let image = document.getElementById('image')
-                            this.CoverImageName.base64 = readFile.result                            
-                            //this.Details.CoverImageName = this.CoverImageName
-                            //console.log(this.CoverImageName);
-                        })
+                            .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
+                            .catch(err => console.log(""))
+                    } else {
+                        alert("上傳失敗 請上傳封面照及標題")
+                    }
+                },
+                //封面圖上傳
+                fileChange(e) {
+                    let file = e.target.files[0]
+                    let readFile = new FileReader()
+                    readFile.readAsDataURL(file)
+                    readFile.addEventListener('load', () => {
+                        //let image = document.getElementById('image')
+                        this.CoverImageName.base64 = readFile.result
+                        //this.Details.CoverImageName = this.CoverImageName
+                        //console.log(this.CoverImageName);
+                    })
 
-                    },    
-                    //多圖上傳
-                    loadimg: function (dayIndex, viewIndex, e) {
-                    
-                        let input = e.target;                                        
-                        if (input.files) {                            
-                            this.Details[dayIndex][viewIndex].images = [];
-                            if (input.files.length < 7) {
-                                for (let i = 0; i < input.files.length; i++) {
-                                    const reader = new FileReader();
-                                    reader.readAsDataURL(input.files[i]);
-                                    reader.onload = (e) => {
-                                        let image = { name: "", base64: e.target.result }
-                                        this.Details[dayIndex][viewIndex].images.push(image);
-                                    }
+                },
+                //多圖上傳
+                loadimg: function(dayIndex, viewIndex, e) {
+
+                    let input = e.target;
+                    if (input.files) {
+                        this.Details[dayIndex][viewIndex].images = [];
+                        if (input.files.length < 7) {
+                            for (let i = 0; i < input.files.length; i++) {
+                                const reader = new FileReader();
+                                reader.readAsDataURL(input.files[i]);
+                                reader.onload = (e) => {
+                                    let image = { name: "", base64: e.target.result }
+                                    this.Details[dayIndex][viewIndex].images.push(image);
                                 }
-                              
-                                 this.Details[dayIndex][viewIndex].showError = "上傳成功!"
-                                 //this.Details[dayIndex][viewIndex].errColor= "black"
-                                 this.Details[dayIndex][viewIndex].errColor = 'black'
-                                
-
-                            } else {
-                                 //$("#showErr").css("color", "red");
-                                this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
-                                this.Details[dayIndex][viewIndex].errColor = 'red'
-
-                                
-                                
                             }
-                        }
-                    },
-                    //取消上傳
-                    reset: function (dayIndex, viewIndex, e) {
-                        this.Details[dayIndex][viewIndex].images.length = 0;
-                        this.Details[dayIndex][viewIndex].images=[];
-                        this.Details[dayIndex][viewIndex].showError = "張數限制6張"
-                        this.Details[dayIndex][viewIndex].errColor = 'black'
-                    },
-                    onChange(dayIndex) {
-                        for (let j = 0; j < this.Details.length; j++) {
-                            let timestamp = this.datetime[j]
-                            console.log(timestamp)
-                            for (let i = 0; i < this.Details[j].length; i++) {
-                                this.Details[j][i].starttime = timestamp
-                                let hr = timestamp.substring(0, 2)
-                                let min = timestamp.substring(3, 5)
-                                let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
 
-                                hr = Number(hr) + Number(addhr)
-                                min = (Number(min) + Number(this.Details[j][i].min)) % 60
+                            this.Details[dayIndex][viewIndex].showError = "上傳成功!"
+                            //this.Details[dayIndex][viewIndex].errColor= "black"
+                            this.Details[dayIndex][viewIndex].errColor = 'black'
 
-                                if (hr < 10) {
-                                    hr = '0' + hr
-                                }
-                                if (min < 10) {
-                                    min = '0' + min
-                                }
 
-                                timestamp = hr + ':' + min
-                                this.Details[j][i].endtime = timestamp
-                            }
-                        }
-                    },
-                    caltime(dayIndex) {
-                        for (let j = 0; j < this.Details.length; j++) {
-                            let timestamp = this.datetime[j]
-                            console.log(timestamp)
-                            for (let i = 0; i < this.Details[j].length; i++) {
-                                this.Details[j][i].starttime = timestamp
-                                let hr = timestamp.substring(0, 2)
-                                let min = timestamp.substring(3, 5)
-                                let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+                        } else {
+                            //$("#showErr").css("color", "red");
+                            this.Details[dayIndex][viewIndex].showError = "上傳失敗，張數限制6張"
+                            this.Details[dayIndex][viewIndex].errColor = 'red'
 
-                                hr = Number(hr) + Number(addhr)
-                                min = (Number(min) + Number(this.Details[j][i].min)) % 60
 
-                                if (hr < 10) {
-                                    hr = '0' + hr
-                                }
-                                if (min < 10) {
-                                    min = '0' + min
-                                }
 
-                                timestamp = hr + ':' + min
-                                this.Details[j][i].endtime = timestamp
-                            }
                         }
                     }
-                },             
-                 mounted() {                                       
-                     let hash = window.location.hash.substring(1).split("?")[0]
-                     let id = window.location.hash.substring(1).split("?")[1]
-                     console.log(id)
-                     console.log(hash);
-                     if (hash == "create") {
-                         if (id != "") {
-                             axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {
-                                 this.Details = res.data.details;                                 
-                                 this.EndDate = res.data.endDate;
-                                 this.StartDate = res.data.startDate;
-                                 //this.Title = res.data.Title;
-                                 this.Describe = res.data.describe;
-                                 this.StartDate = res.data.startDate;
-                                 this.EndDate = res.data.endDate;
-                                
+                },
+                //取消上傳
+                reset: function(dayIndex, viewIndex, e) {
+                    this.Details[dayIndex][viewIndex].images.length = 0;
+                    this.Details[dayIndex][viewIndex].images = [];
+                    this.Details[dayIndex][viewIndex].showError = "張數限制6張"
+                    this.Details[dayIndex][viewIndex].errColor = 'black'
+                },
+                onChange(dayIndex) {
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
 
-                             })
-                         }
-                     }
-                     else if(hash == "edit"){
-                         if (id != "") {
-                             axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
-                                 console.log(res.data);
-                                 this.Details = res.data.details;
-                                 this.EndDate = res.data.endDate;
-                                 this.StartDate = res.data.startDate;
-                                 //this.Title = res.data.Title;
-                                 this.Describe = res.data.describe;
-                                 
-                             })
-                         }
-                     }         
-                 },
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                },
+                caltime(dayIndex) {
+                    for (let j = 0; j < this.Details.length; j++) {
+                        let timestamp = this.datetime[j]
+                        console.log(timestamp)
+                        for (let i = 0; i < this.Details[j].length; i++) {
+                            this.Details[j][i].starttime = timestamp
+                            let hr = timestamp.substring(0, 2)
+                            let min = timestamp.substring(3, 5)
+                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+
+                            hr = Number(hr) + Number(addhr)
+                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+
+                            if (hr < 10) {
+                                hr = '0' + hr
+                            }
+                            if (min < 10) {
+                                min = '0' + min
+                            }
+
+                            timestamp = hr + ':' + min
+                            this.Details[j][i].endtime = timestamp
+                        }
+                    }
+                }
             },
-            )
+            mounted() {
+                let hash = window.location.hash.substring(1).split("?")[0]
+                let id = window.location.hash.substring(1).split("?")[1]
+                console.log(id)
+                console.log(hash);
+                if (hash == "create") {
+                    if (id != "") {
+                        axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {
+                            this.Details = res.data.details;
+                            this.EndDate = res.data.endDate;
+                            this.StartDate = res.data.startDate;
+                            //this.Title = res.data.Title;
+                            this.Describe = res.data.describe;
+                            this.StartDate = res.data.startDate;
+                            this.EndDate = res.data.endDate;
 
-            
-            $(window).scroll(function(){
-            height=$("body").height()-$(window).height()
-            if($(window).scrollTop()>=height){
-            $("#setting").hide()
+
+                        })
+                    }
+                }
+                else if (hash == "edit") {
+                    if (id != "") {
+                        axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
+                            console.log(res.data);
+                            this.Details = res.data.details;
+                            this.EndDate = res.data.endDate;
+                            this.StartDate = res.data.startDate;
+                            //this.Title = res.data.Title;
+                            this.Describe = res.data.describe;
+
+                        })
+                    }
+                }
+            },
+        },
+        )
+
+
+        $(window).scroll(function() {
+            height = $("body").height() - $(window).height()
+            if ($(window).scrollTop() >= height) {
+                $("#setting").hide()
             }
-            else{            
+            else {
                 $("#setting").show()
             }
-            })
+        })
 
 
 
     </script>
 
 }
-  
+
 
     <div id="bloginfo">
         <img :src="CoverImageName.base64" id="coverimg" alt="封面圖片">
         <div id="covertitle">
-            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="20" style="display:inline-block;vertical-align:central">
+            <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="25" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">
                 <input style="display:none;" type="file" @@change="fileChange($event)">
-                <i class="fa fa-photo" style="display:inline-block;">變更封面</i> 
+                <i class="fa fa-photo" style="display:inline-block;">變更封面</i>
             </label>
         </div>
         <!--左邊欄位-->
         <div class="container pb-3">
             <div class="row">
-                    <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
-                        <div class="sticky-top myshadow" style="top:10vh;z-index:0;" >
-                            <div class="py-3">
-                                <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
-                                @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
-                            </div>
-                            <div class="pt-2">{{UserName}}遊記</div>                           
-                            <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
-                            <ul class="list-group list-group-flush" id="hidden">
-                                <div v-for="(day,dayIndex) in Details" class="mt-2"><i class="fa-solid fa-calendar-days"
-                                        style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
-                                
-                                    <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
-                                        <a class="list-group-item list-group-item-action"
-                                            :href="gethref(dayIndex,viewIndex)">{{gettime(dayDetails.startTime)}}&nbsp; ▏
-                                            {{dayDetails.p_Name}}</a>
-                                    </li>
-                               
-                                </div>
-                            </ul>                         
+                <div class="col-lg-3 mt-4 mt-lg-2" id="sidebar">
+                    <div class="sticky-top" style="top:10vh;z-index:0;">
+                        <div class="py-3">
+                            <span><img :src="userImageSrc(UserImage)" id="userimg" alt=""></span>
+                            @*<span class="px-3 py-1">{{UserName[0]}}</span>*@
                         </div>
+                        <div class="pt-2">{{UserName}}遊記</div>
+                        <div class="mb-3">{{getdate(StartDate)}}~{{getdate(EndDate)}}</div>
+                        <ul class="list-group list-group-flush" id="hidden">
+                            <div v-for="(day,dayIndex) in Details" class="mt-2">
+                                <i class="fa-solid fa-calendar-days"
+                               style="color:var(--primary-bule-light)"></i>&nbsp;第{{dayIndex+1}}天
+
+                            <li v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="Details">
+                                <a class="list-group-item list-group-item-action"
+                               :href="gethref(dayIndex,viewIndex)">
+                                    {{gettime(dayDetails.startTime)}}&nbsp; ▏
+                                    {{dayDetails.p_Name}}
+                                </a>
+                            </li>
 
                     </div>
-                    <!--右邊欄位-->
-                    <div class="col-sm-8">                            
-                        <div class="myshadow mb-5">                    
-                            <textarea class="mb-2" rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;"></textarea>                                                    
-                        </div>
-                        <div>
-                            <div v-for="(day,dayIndex) in Details">
-                                <label id="day" class="mb-2">第{{dayIndex+1}}天</label>
-                                <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="myshadow mb-5">
-                                     <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><h3>{{dayDetails.p_Name}}</h3></div>
-                                        <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
-                                        <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
-                                        <div class="mb-1 d-inline"><div class="d-inline">評分</div>
-                                        <i class="fa fa-star mb-0" :style="{color:color}"
-                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                            @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
-                                            @@click="myscore=item"></i>
-                                    </div>
+                    </ul>
+                </div>
+
+            </div>
+            <!--右邊欄位-->
+            <div class="col-sm-8">
+                <div class="myshadow mb-4">
+                    <div style="background-color:#ebebf5;border-radius:10px;">
+                        <textarea rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;border-radius:10px"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div v-for="(day,dayIndex) in Details" class="myshadow">
+                        <label id="day" class="my-3">第{{dayIndex+1}}天</label>
+                        <div class="viewcolor">
+                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-5">
+                                <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><div style="font-size:2.2rem">{{dayDetails.p_Name}}</div></div>
+                                <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                                <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                                <div class="mb-1 d-inline">
+                                    <div class="d-inline">評分</div>
+                                    <i class="fa fa-star mb-0" :style="{color:color}"
+                                   :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                                   @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
+                                   @@click="myscore=item"></i>
+                                </div>
 
                                     @*上傳圖片*@
-                                    <div class="mb-3">
-                                        <label class="btn btn-primary">
-                                            <input type="file" accept="image/jpeg, image/png" multiple
-                                                @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
-                                                style="display:none;">
-                                            <i class="fa fa-photo"></i> 上傳圖片
-                                        </label>
-                                        <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
-                                            class="btn btn-outline-secondary">取消上傳</button>
-                                         <span style="vertical-align: bottom;font-size:12px" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
+                                <div class="mb-3">
+                                    <label class="btn btn-primary">
+                                        <input type="file" accept="image/jpeg, image/png" multiple
+                                           @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
+                                           style="display:none;">
+                                        <i class="fa fa-photo"></i> 上傳圖片
+                                    </label>
+                                    <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
+                                        class="btn btn-outline-secondary">
+                                        取消上傳
+                                    </button>
+                                    <span style="vertical-align: bottom;font-size:1.5rem;" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
 
                                         @*上傳圖片預覽*@
-                                        <div class="groupimg img-fluid" >
-                                           <template v-for="(image,index) in dayDetails.images">
-                                                    <img :src="image.base64">
-                                           </template>
-                                        </div>
-                                        <textarea rows="6" maxlength="400" v-model="dayDetails.describe"
-                                        placeholder="景點敘述 字數限制400字" class="mb-2" style="resize:none"></textarea>
-                                    </div>                        
+                                    <div style="margin-left:-10px" class="mb-2">
+                                        <template v-for="(image,index) in dayDetails.images">
+                                            <input :id="getmyimg(dayIndex,viewIndex,index)" type="file" accept="image/jpeg, image/png" @@change="(e)=>editmyimg(image,e)" style="display:none;">
+                                            <label :for="getmyimg(dayIndex,viewIndex,index)" class="groupimg imglabel">
+                                                <img :src="imageDisplay(image)" class="img-fluid">
+                                            </label>
+                                        </template>
+                                    </div>
+                                    <textarea rows="6" maxlength="400" v-model="dayDetails.describe"
+                                          placeholder="景點敘述 字數限制400字" style="resize:none;"></textarea>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
-                 </div>
+                </div>
             </div>
-            @*側邊功能按鍵*@
-            @*<i class="fa-solid fa-objects-align-right" id="setting">*@
-            <div class="dropdown" id="setting" >
-	            <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;font-size:1.5rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-	              <i class="fa-solid fa-list-check" ></i>
-	            </button>
-	              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	              <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" :href="canceledit()" >取消編輯</a></li>
-	              <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" @@click="saveBlog($event)">發布行程</a></li>
-                  <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" href="#" >返回頂部</a></li>   
-	            </ul>
-            </div>
-
-
-
-
         </div>
-    
+    </div>
+        @*側邊功能按鍵*@
+        @*<i class="fa-solid fa-objects-align-right" id="setting">*@
+    <div class="dropdown" id="setting">
+        <button class="btn btn-secondary dropdown-toggle" style="background-color:transparent;color: #084887;font-size:1.5rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-list-check"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" :href="canceledit()">取消編輯</a></li>
+            <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" @@click="saveBlog($event)">發布行程</a></li>
+            <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" href="#">返回頂部</a></li>
+        </ul>
+    </div>
+
+
+
+
+            </div>

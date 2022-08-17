@@ -481,9 +481,9 @@
                                         <div class="card card-body" style="width: 400px;">
                                             <div class="dragbox">
                                        
-                                                <span v-for="(item,index) in viewclass" :key="item" class="item Label_Style" @@click="addviewclass(index)">
+                                                <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
                                                     {{item}}
-                                                </span>
+                                                </div>
 
                                             </div>
                                         </div>

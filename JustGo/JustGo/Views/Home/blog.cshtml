@@ -100,6 +100,23 @@
             }
             ,
             methods: {
+                if (this.tagList.length > 3) {
+                    this.selectCounty.splice(0, 1)
+                }
+                switch (this.tagList) {
+                    case '1':
+                        this.selectType = '景點'
+                        this.display = ''
+                        break;
+                    case '餐飲':
+                        this.selectType = '餐飲'
+                        this.display = 'display:none'
+                        break;
+                    case '旅宿':
+                        this.selectType = '旅宿'
+                        this.display = 'display:none'
+                        break;
+                },
                 getImages(loadimagesName) {
                     return "@Url.Content("~/blogImages")/" + loadimagesName
                 },
@@ -369,7 +386,6 @@
                                            :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
                                            @@load="myscore=item"></i>
                                         </div>
-
 
                                         <div v-viewer class="groupimg img-fluid">
                                             <template v-for="(image,index) in dayDetails.images">

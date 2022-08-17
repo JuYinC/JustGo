@@ -518,6 +518,7 @@
             justify-content: space-between;
             overflow-x: hidden;
 
+
             &-tg{
                 flex-direction: column;
                 justify-content: space-between;
@@ -529,6 +530,18 @@
                 flex: 0 0 0;
                 margin: 0;
                 overflow-y: scroll;
+
+                
+            &::before{
+                content: "";
+                background: #f3d42e;
+                z-index: 30;
+                width: 30px;
+                height: 30px;
+                position:fixed;
+                transform: translateX(-46px);
+            }
+
                
                 &-tg{
                     flex: 0 0 330px;

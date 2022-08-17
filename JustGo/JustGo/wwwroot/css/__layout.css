@@ -184,6 +184,21 @@
       width: auto; }
       .sticky ul li a {
         filter: drop-shadow(2px 4px 6px black); }
+  .chat {
+    background: #fdc11d;
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    right: 100px;
+    bottom: 5%; }
+    .chat::before {
+      content: "";
+      transform: translateX(30px);
+      width: 300px;
+      height: 300px;
+      background: #3586ff;
+      position: absolute;
+      z-index: 50px; }
   .footer__waves {
     position: relative;
     width: 100%;

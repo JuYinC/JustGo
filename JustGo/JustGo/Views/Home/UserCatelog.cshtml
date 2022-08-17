@@ -430,22 +430,20 @@
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
                                 </div>
                                 <div class="col-md-7">
-                                    <p>喜好的城市</p>
+                                    <p>喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                            +
+                                        </button></p>
                                     <hr />
                                     <div>
-                                        <draggable v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
-                                            <transition-group>
-                                                
-                                                <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
+                                        <draggable style="display:flex" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
+                                            <transition-group >                                               
+                                                <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4 me-1"
                                                   @@dblclick="removecountry(index)">
                                                     {{item}}
                                                 </div>
-
-                                            </transition-group>
-                                            <button class="btn btn-primary mb-4 mt-4 ms-1 me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
-                                                +
-                                            </button>
+                                            </transition-group>                                            
                                         </draggable>
+                                        
                                     </div>
                                     <div style="min-height: 100px;">
                                         <div class="collapse collapse-horizontal" id="collapseWidthExample">
@@ -464,17 +462,15 @@
                              <div>
                                     <draggable v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
                                         <transition-group>
-
                                             <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
                                               @@dblclick="removeviewclass(index)">
                                                 {{item}}
-                                            </div>
-
-                                        </transition-group>
+                                            </div>                                            
+                                        </transition-group>                                        
+                                    </draggable>
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
-                                    </draggable>
                                 </div>
                                 <div style="min-height: 100px;">
                                     <div class="collapse collapse-horizontal" id="interest">

@@ -216,6 +216,7 @@
             border-radius: 3px;
             box-shadow: 0 0 3px;
             background-image: linear-gradient(to top left,#F0F0F0,#FFFF,#F0F0F0 );
+            padding:40px
         }
 
         .content {
@@ -270,7 +271,9 @@
             margin-bottom: 0;
             list-style: none;
         }
-
+        .dragbox{
+           margin:10px;
+        }
 
 
 
@@ -428,40 +431,42 @@
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     <label for="exampleInputPassword1" class="form-label mb-2 mt-2 ms-1 me-1">確認新密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
-                                    <hr class="mb-4 mt-4 ms-2 me-2" />
-                                    <button type="submit" class="btn btn-primary col-md-4 mb-2 mt-2  ">確定</button>
                                 </div>
-                                 <div class="col-md-7">
-                                    
-                                 
+                                <div class="col-md-7">
+                                    <p>喜好的城市</p>
+                                    <hr />
+                                    <span>
+                                        喜好:
+                                        <draggable v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
 
-
-
-
-                                 </div>
-
-
-
-
-                                <div class="dragbox">
-                                    喜好
-                                    <draggable v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
-                                        <transition-group>
-                                            <span v-for="(item,index) in selectcountry" :key="item" class="item"
-                                              @@dblclick="removecountry(index)">
-                                                {{item}}
-                                            </span>
-                                        </transition-group>
-                                    </draggable>
-                                </div>
-                                <div class="dragbox">
-                                    選擇
-                                    <span v-for="(item,index) in country" :key="item" class="item" @@click="addcountry(index)">
-                                        {{item}}
+                                            <transition-group>
+                                                <span v-for="(item,index) in selectcountry" :key="item" class="item"
+                                                  @@dblclick="removecountry(index)">
+                                                    {{item}}
+                                                </span>
+                                            </transition-group>
+                                            <button class="btn btn-primary mb-4 mt-4 ms-1 me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                                +
+                                            </button>
+                                        </draggable>
                                     </span>
-                                </div>
+                                    <div style="min-height: 100px;">
+                                        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                                            <div class="card card-body" style="width: 400px;">
+                                                <div class="dragbox">
+                                                    選擇
+                                                    <span v-for="(item,index) in country" :key="item" class="item" @@click="addcountry(index)">
+                                                        {{item}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
 
-                                <div class="dragbox">
+                                <p>喜好的項目</p>
+                                <hr />
+                             <span>
                                     喜好
                                     <draggable v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
                                         <transition-group>
@@ -470,14 +475,29 @@
                                                 {{item}}
                                             </span>
                                         </transition-group>
+                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
+                                            +
+                                        </button>
                                     </draggable>
+                                </span>
+                                <div style="min-height: 100px;">
+                                    <div class="collapse collapse-horizontal" id="interest">
+                                        <div class="card card-body" style="width: 400px;">
+                                            <div class="dragbox">
+                                                選擇
+                                                <span v-for="(item,index) in viewclass" :key="item" class="item" @@click="addviewclass(index)">
+                                                    {{item}}
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="dragbox">
-                                    選擇
-                                    <span v-for="(item,index) in viewclass" :key="item" class="item" @@click="addviewclass(index)">
-                                        {{item}}
-                                    </span>
                                 </div>
+
+
+
+
                             </div>
                         </div>
                     </div>

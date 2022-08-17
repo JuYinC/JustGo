@@ -212,11 +212,11 @@
         .member_box3 {
             margin: 30px 18px 30px 18px;
             border: 3px;
-            height: 80vh;
+            min-height: 80vh;
             border-radius: 3px;
             box-shadow: 0 0 3px;
             background-image: linear-gradient(to top left,#F0F0F0,#FFFF,#F0F0F0 );
-            padding:40px
+            padding: 40px
         }
 
         .content {
@@ -271,10 +271,12 @@
             margin-bottom: 0;
             list-style: none;
         }
+        .p_style{
+        font-size:20px;
+        }
 
-       
 
-      
+
 
 
         @@media screen and (max-width:600px) {
@@ -409,12 +411,10 @@
                 </div>
                 <div class="tab-pane fade" id="v-pills-member" role="tabpanel" aria-labelledby="v-pills-member-tab">
                     <div class="travel">會員</div>
-
-
-
                     <div class="member_box3">
                         <div class="container">
                             <div class="row">
+                                        <hr  class="mb-2 mt-5 ms-1 me-1"/>
                                 <div class="col-md-5">
                                     <label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改使用者名稱</label>
                                     <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">
@@ -430,24 +430,26 @@
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
                                 </div>
                                 <div class="col-md-7">
-                                    <p>喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                    <p>
+                                        喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
-                                        </button></p>
+                                        </button>
+                                    </p>
                                     <hr />
                                     <div>
                                         <draggable style="display:flex ; align-content: flex-start;" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
-                                            <transition-group >                                               
+                                            <transition-group>
                                                 <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4 me-1"
-                                                  @@dblclick="removecountry(index)">
+                                                 @@dblclick="removecountry(index)">
                                                     {{item}}
                                                 </div>
-                                            </transition-group>                                            
+                                            </transition-group>
                                         </draggable>
                                     </div>
-                                    <div style="min-height: 100px;">
+                                    <div style="min-height: 5vh;">
                                         <div class="collapse collapse-horizontal" id="collapseWidthExample">
-                                            <div class="card card-body" style="width: 400px;">
-                                                <div class="dragbox">                                       
+                                            <div class="card card-body" style="width: 35vw;">
+                                                <div class="dragbox">
                                                     <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
                                                         {{item}}
                                                     </div>
@@ -456,38 +458,37 @@
                                         </div>
                                     </div>
 
-
-
-
-                                <p>喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
+                                    <p>
+                                        喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
-                                        </button></p>
-                                <hr />
-                             <div>
-                                    <draggable style="display:flex ; align-content: flex-start;" v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
-                                        <transition-group>
-                                            <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
-                                              @@dblclick="removeviewclass(index)">
-                                                {{item}}
-                                            </div>                                            
-                                        </transition-group>                                        
-                                    </draggable>
-                                       
-                                </div>
-                                <div style="min-height: 100px;">
-                                    <div class="collapse collapse-horizontal" id="interest">
-                                        <div class="card card-body" style="width: 400px;">
-                                            <div class="dragbox">
-                                       
-                                                <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
+                                        </button>
+                                    </p>
+                                    <hr />
+                                    <div>
+                                        <draggable style="display:flex ; align-content: flex-start;" v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
+                                            <transition-group>
+                                                <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
+                                                 @@dblclick="removeviewclass(index)">
                                                     {{item}}
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
+
+                                    </div>
+                                    <div style="min-height: 5vh;">
+                                        <div class="collapse collapse-horizontal" id="interest">
+                                            <div class="card card-body" style="width: 35vw;">
+                                                <div class="dragbox">
+
+                                                    <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
+                                                        {{item}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-
+                                <hr  class="mb-5 mt-5 ms-1 me-1"/>
 
 
 

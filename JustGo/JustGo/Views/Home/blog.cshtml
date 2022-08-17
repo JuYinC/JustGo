@@ -362,7 +362,7 @@
 
                         <!-- Tag Result -->
                         <div class="mb-4">
-                            <div v-for="(item) in comTagBlog" class="d-flex align-items-center myshadow overflow-hidden" id="card" @@click="blogUrl(item.blogId)">                                 
+                            <div v-for="(item) in comTagBlog" class="d-flex align-items-center myshadow overflow-hidden" id="card" @@click="blogUrl(item.blogId)" type="button">                                 
                                 <div class="box">
                                     <img class="cover-fit" :src="getImages(item.coverImage.name)" alt="Image">
                                 </div>

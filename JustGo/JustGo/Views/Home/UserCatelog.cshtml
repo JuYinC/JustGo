@@ -430,7 +430,8 @@
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
                                 </div>
                                 <div class="col-md-7">
-                                    <p>
+                                    <div style="min-height:28vh">
+                                     <p style="margin-top:15px;">
                                         喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
@@ -448,7 +449,7 @@
                                     </div>
                                     <div style="min-height: 5vh;">
                                         <div class="collapse collapse-horizontal" id="collapseWidthExample">
-                                            <div class="card card-body" style="width: 35vw;">
+                                            <div class="card card-body" style="width: 44.5vw;">
                                                 <div class="dragbox">
                                                     <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
                                                         {{item}}
@@ -457,8 +458,9 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <p>
+                                    </div>
+                                    <div style="min-height:28vh">
+                                    <p style="margin-top:15px;">
                                         喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
@@ -477,7 +479,7 @@
                                     </div>
                                     <div style="min-height: 5vh;">
                                         <div class="collapse collapse-horizontal" id="interest">
-                                            <div class="card card-body" style="width: 35vw;">
+                                            <div class="card card-body" style="width: 44.5vw;">
                                                 <div class="dragbox">
 
                                                     <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
@@ -487,6 +489,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                                 <hr  class="mb-5 mt-5 ms-1 me-1"/>
 

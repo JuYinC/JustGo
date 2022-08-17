@@ -9,9 +9,9 @@
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    
+
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
-   
+
     }
 
 
@@ -130,7 +130,7 @@
 
                 myscore: this.score,
                 mytempscore: this.score,
-             
+
 
             },
             props: {
@@ -188,7 +188,7 @@
                     let file = e.target.files[0];
                     readFile.readAsDataURL(file)
                     readFile.onload = (e) => {
-                   
+
                         image.base64 = readFile.result
                     }
                 },
@@ -206,7 +206,7 @@
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                             .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
                             .catch(err => console.log(""))
-                            alert("發布成功")
+                        alert("發布成功")
                     } else {
                         alert("上傳失敗 請上傳封面照及標題")
                     }
@@ -311,7 +311,7 @@
             mounted() {
                 let hash = window.location.hash.substring(1).split("?")[0]
                 let id = window.location.hash.substring(1).split("?")[1]
-                
+
                 if (hash == "create") {
                     if (id != "") {
                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {
@@ -332,7 +332,7 @@
                 else if (hash == "edit") {
                     if (id != "") {
                         axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
-                           
+
                             this.CoverImageName = res.data.coverImage;
                             this.UserImage = res.data.userImage;
                             this.UserName = res.data.userName;
@@ -415,47 +415,47 @@
                 <div class="myshadow">
                     <div v-for="(day,dayIndex) in Details">
                         <label id="day" class="my-3">第{{dayIndex+1}}天</label>
-                        
-                            <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-3 viewcolor">
-                                <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><div style="font-weight: bold;font-size:2.5rem;">{{dayDetails.p_Name}}</div></div>
-                                <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
-                                <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
-                                <div class="mb-1 d-inline">
-                                    <div class="d-inline">評分</div>
-                                    <i class="fa fa-star mb-0" :style="{color:color}"
-                                   :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
-                                   @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
-                                   @@click="myscore=item"></i>
-                                </div>
 
-                                    @*上傳圖片*@
-                                <div class="mb-3">
-                                    <label class="btn btn-primary">
-                                        <input type="file" accept="image/jpeg, image/png" multiple
-                                           @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
-                                           style="display:none;">
-                                        <i class="fa fa-photo"></i> 上傳圖片
-                                    </label>
-                                    <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
-                                        class="btn btn-outline-secondary">
-                                        取消上傳
-                                    </button>
-                                    <span style="vertical-align: bottom;font-size:1.5rem;" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
-
-                                        @*上傳圖片預覽*@
-                                    <div style="margin-left:-20px" class="mb-2">
-                                        <template v-for="(image,index) in dayDetails.images">
-                                            <input :id="getmyimg(dayIndex,viewIndex,index)" type="file" accept="image/jpeg, image/png" @@change="(e)=>editmyimg(image,e)" style="display:none;">
-                                            <label :for="getmyimg(dayIndex,viewIndex,index)" class="groupimg imglabel">
-                                                <img :src="imageDisplay(image)" class="img-fluid">
-                                            </label>
-                                        </template>
-                                    </div>
-                                    <textarea rows="6" maxlength="400" v-model="dayDetails.describe"
-                                          placeholder="景點敘述 字數限制400字" style="resize:none;"></textarea>
-                                </div>
+                        <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-3 viewcolor">
+                            <div class="mb-1 pt-3" :id=getanchor(dayIndex,viewIndex)><div style="font-weight: bold;font-size:2.5rem;">{{dayDetails.p_Name}}</div></div>
+                            <div class="mb-1"><i class="fa-solid fa-house-crack" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_Add}}</div>
+                            <div class="mb-1"><i class="fa-solid fa-phone" style="color:var(--primary-bule-light)"></i>&nbsp;{{dayDetails.p_tel}}</div>
+                            <div class="mb-1 d-inline">
+                                <div class="d-inline">評分</div>
+                                <i class="fa fa-star mb-0" :style="{color:color}"
+                               :class="item<=dayDetails.score?'fa-star':'fa-star-o'" v-for="item in count"
+                               @@mouseenter="dayDetails.score=item" @@mouseleave="dayDetails.score=myscore"
+                               @@click="myscore=item"></i>
                             </div>
-                        
+
+                                @*上傳圖片*@
+                            <div class="mb-3">
+                                <label class="btn btn-primary">
+                                    <input type="file" accept="image/jpeg, image/png" multiple
+                                       @@change="(e)=>loadimg(dayIndex,viewIndex,e)" id="myimg"
+                                       style="display:none;">
+                                    <i class="fa fa-photo"></i> 上傳圖片
+                                </label>
+                                <button @@click="(e)=>reset(dayIndex,viewIndex,e)"
+                                    class="btn btn-outline-secondary">
+                                    取消上傳
+                                </button>
+                                <span style="vertical-align: bottom;font-size:1.5rem;" :class="dayDetails.errColor" id="showErr">{{dayDetails.showError}}</span>
+
+                                    @*上傳圖片預覽*@
+                                <div style="margin-left:-20px" class="mb-2">
+                                    <template v-for="(image,index) in dayDetails.images">
+                                        <input :id="getmyimg(dayIndex,viewIndex,index)" type="file" accept="image/jpeg, image/png" @@change="(e)=>editmyimg(image,e)" style="display:none;">
+                                        <label :for="getmyimg(dayIndex,viewIndex,index)" class="groupimg imglabel">
+                                            <img :src="imageDisplay(image)" class="img-fluid">
+                                        </label>
+                                    </template>
+                                </div>
+                                <textarea rows="6" maxlength="400" v-model="dayDetails.describe"
+                                      placeholder="景點敘述 字數限制400字" style="resize:none;"></textarea>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -474,4 +474,4 @@
         </ul>
     </div>
 
-            </div>
+                </div>

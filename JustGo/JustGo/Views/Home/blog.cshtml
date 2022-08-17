@@ -76,10 +76,10 @@
                 Like: 0,
                 daterange: null,
                 myscore: this.score,
-                mytempscore: this.score
+                mytempscore: this.score,
                  //TAG
-                //TagList:[],
-
+                TagList:[],
+                tagBlog:[]
             },
             props: {
                 count: {
@@ -98,55 +98,59 @@
             computed: {
                 copyDate() {
                     return this.daterange
+                },
+                comTagBlog(){
+                    return this.tagBlog.filter(e => e.blogId != this.blogId);
                 }
-            }
-            ,
+            },
             methods: {
-                //TAG
-                //switch (this.tagList) {
-                //    case '1':
-                //        this.tagList = '文化'
-                //        break;
-                //    case '2':
-                //        this.tagList = '生態'                      
-                //        break;
-                //    case '3':
-                //        this.tagList = '古蹟'
-                //        break;                       
-                //    case '4':
-                //        this.tagList = '廟宇'
-                //        break;
-                //    case '5':
-                //        this.this.tagList = '藝術'                      
-                //        break;
-                //    case '6':
-                //        this.tagList = '小吃特產'
-                //        break;                     
-                //    case '7':
-                //        this.tagList = '國家公園'
-                //        break;
-                //    case '8':
-                //        this.tagList = '國家風景區'                      
-                //        break;
-                //    case '9':
-                //        this.tagList = '休閒農業'
-                //        break;
-                //    case '10':
-                //        this.tagList = '溫泉'
-                //        break;
-                //    case '11':
-                //        this.tagList = '自然風景'                      
-                //        break;
-                //    case '12':
-                //        this.tagList = '遊憩'
-                //        break;
-                //    case '13':
-                //        this.tagList = '體育健身'
-                //        break;
-                //    case '14':
-                //        this.tagList = '其他'                      
-                //        break;                   
-                //},
+                TAG(tag){
+                 switch (tag) {
+                    case 1:
+                        return '文化';
+                        break;
+                    case 2:
+                        return '生態'                      
+                        break;
+                    case 3:
+                        return '古蹟'
+                        break;                       
+                    case 4:
+                        return '廟宇'
+                        break;
+                    case 5:
+                        return'藝術'                      
+                        break;
+                    case 6:
+                        return '小吃特產'
+                        break;                     
+                    case 7:
+                        return '國家公園'
+                        break;
+                    case 8:
+                        return '國家風景區'                      
+                        break;
+                    case 9:
+                        return '休閒農業'
+                        break;
+                    case 10:
+                        return '溫泉'
+                        break;
+                    case 11:
+                        return '自然風景'                      
+                        break;
+                    case 12:
+                        return'遊憩'
+                        break;
+                    case 13:
+                        return '體育健身'
+                        break;
+                    default:
+                        return '其他'                      
+                        break;                   
+                    }
+                }
+                ,                
                 getImages(loadimagesName) {
                     return "@Url.Content("~/blogImages")/" + loadimagesName
                 },
@@ -227,6 +231,9 @@
                         }
                     }
                 },
+                blogUrl(id) {
+                      window.location.href = "@Url.Action("Blog","Home")?" + id
+                },
                 caltime(dayIndex) {
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
@@ -257,7 +264,7 @@
                 let id = window.location.search.substring(1)
                 if (id != "") {
                     axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
-                        console.log(res.data);
+                        //console.log(res.data);
                         this.blogId = res.data.blogId;
                         this.CoverImageName = res.data.coverImage;
                         this.UserImage = res.data.userImage;
@@ -267,10 +274,14 @@
                         this.Title = res.data.title;
                         this.describe = res.data.describe;
                         this.UserName = res.data.userName;
+                        this.TagList = res.data.tagList;
                         //getIsKeep
                         this.Like = res.data.like;
                         axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
                             this.bool = res.data;
+                        })
+                        axios.post("@Url.Action("searchBlog","blog")",{ selectAcitivity: this.TagList }).then(res =>{
+                            this.tagBlog = res.data;
                         })
                     })
                 }
@@ -340,29 +351,25 @@
 
 
                         <!-- Tag -->
-                         @*<div v-for="(tag,tagIndex) in TagList" class="mt-2">
+                        <div  class="mt-2">
                             <div class="mb-4">
                                 <h2 class="mb-2">#Tag</h2>
                                 <div class="d-flex flex-wrap m-n1">
-                                    <button class="btn btn-primary m-1">溫泉</button>
-                                    <button class="btn btn-primary m-1">生態</button>
-                                    <button class="btn btn-primary m-1">小吃特產</button>
-                                    <button class="btn btn-primary m-1">國家公園</button>
-                                    <button class="btn btn-primary m-1">休閒農業</button>
+                                    <button v-for="(item) in TagList" class="btn btn-primary m-1">{{TAG(item)}}</button>                                    
                                 </div>
                             </div>
-                        </div>*@
+                        </div>
 
                         <!-- Tag Result -->
                         <div class="mb-4">
-                            <div class="d-flex align-items-center myshadow overflow-hidden" id="card">
+                            <div v-for="(item) in comTagBlog" class="d-flex align-items-center myshadow overflow-hidden" id="card" @@click="blogUrl(item.blogId)">                                 
                                 <div class="box">
-                                    <img class="cover-fit" src="https://unsplash.it/1800/1600/?random/view" alt="Image">
+                                    <img class="cover-fit" :src="getImages(item.coverImage.name)" alt="Image">
                                 </div>
                                 <div>
-                                    <div class="mx-1">{{Title}}</div>
-                                    <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i> {{UserName}}</small>
-                                </div>
+                                    <div class="mx-1">{{item.title}}</div>
+                                    <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i> {{item.userName}}</small>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -426,13 +433,11 @@
                                             </template>
                                         </div>
                                         <div style="text-indent: 3.6rem;">{{dayDetails.describe}}</div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

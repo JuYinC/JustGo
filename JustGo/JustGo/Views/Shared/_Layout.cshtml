@@ -29,7 +29,7 @@
             <div class="container-fluid">
 
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                  <img class="navbarC__logo" src="~/file/photo/logo.png" alt="JustGo" />
+                  <img class="navbarC__logo" src="~/file/photo/logo2.png" alt="JustGo" />
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -38,11 +38,11 @@
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarC__menu">
-                    <!-- <ul class="navbar-nav flex-grow-1 d-flex justify-content-end align-items-center "> -->
+                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-end align-items-center ">
                         <!-- <li class="nav-item">
-                            <a  asp-area="" asp-controller="Home" asp-action="itinerary">規劃行程</a>
-                        </li>
-                        <li class="nav-item">
+                            <a  href="#app">熱門遊記</a>
+                        </li> -->
+                        <!-- <li class="nav-item">
                             <a asp-area="" asp-controller="Home" asp-action="check">檢視行程</a>
                         </li>
                          <li >
@@ -51,7 +51,7 @@
                         
                             <partial name="_LoginPartial"/> 
                         
-                    <!-- </ul> -->
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -84,7 +84,17 @@
     </header>
 
     @RenderBody()
-
+    <div class="chat" id="chat" style="right: -520px">
+        <i class="fas fa-comment-dots" id="chatbtn"></i>
+        <div class="chat__box">
+            <div class="chat__box-main"> 
+                <div class="chat-top"></div>
+                <div class="chat-input"></div>
+            </div>
+            <div class="chat__box-targe"></div>
+        </div>
+      
+    </div>
 
     <footer class="footer__waves">
         <div class="waves">
@@ -99,12 +109,12 @@
             <li><a href="#"><ion-icon name="logo-discord"></ion-icon></a></li>
             <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
         </ul>
-        <ul class="menu">
+        <!-- <ul class="menu">
             <li> <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
             <li><a href="#">home</a></li>
             <li><a href="#">home</a></li>
             <li><a href="#">home</a></li>          
-        </ul>
+        </ul> -->
         <p>   &copy; 2022 - JustGo -</p>
          
       
@@ -112,10 +122,44 @@
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script> *@
+        
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
+            
+            let chatbtn1 = document.getElementById("chatbtn")
+            let y = 0
+            
+            chatbtn1.addEventListener("click", function(){
+                
+                if(y==0){
+                    document.getElementById("chat").style.right = '0'
+                    y = y+1
+                    console.log('y+')
+                }else{
+                    document.getElementById("chat").style.right = '-520px'
+                    y = y-1
+                     console.log('y-')
+                }
+               
+                
+                console.log(y)
+
+                
+                //  if(x='-520px'){
+                //       chatbtn1.currentStyle.right='0px'
+                //  }else{
+                //      chatbtn1.currentStyle.right='-520px'
+                //  }
+
+                
+ 
+                
+            })
+
+
             document.getElementById("forop").addEventListener("click", function(){
 
                 if (document.getElementById("op").style.height=='0px'){
@@ -133,13 +177,23 @@
                          }, 100)
                 
                 }
-                       
-
-             
-
-
-              
+      
             });
+    </script>
+    <script>
+    // Vue.createApp({
+    //         data(){
+    //             return {
+    //                 message: 'Hello, Vue3!'
+    //             }
+    //         },
+    //         methods: {
+    //             clicked(){
+    //                 alert(this.message)
+    //             }
+    //         },
+    //     }).mount('#chat')
+    
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     @await RenderSectionAsync("Scripts", required: false)

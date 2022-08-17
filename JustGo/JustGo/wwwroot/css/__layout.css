@@ -18,7 +18,7 @@
       font-size: 1.5rem;
       filter: drop-shadow(2px 4px 6px black); }
     .navbarC__logo {
-      height: 45px;
+      height: 16px;
       filter: drop-shadow(2px 4px 6px black); }
     .navbarC #check {
       display: none; }
@@ -123,9 +123,7 @@
       background-position-x: 1000px; } } }
 
 @media only screen and (min-width: 576px) {
-  .checkbox {
-    display: none; }
-  .checkbtn {
+  .checkbox, .checkbtn {
     display: none; }
   .op {
     width: 50px;
@@ -149,7 +147,7 @@
     .navbarC li {
       list-style: none; }
     .navbarC__logo {
-      height: 80px; }
+      height: 36px; }
     .navbarC ul li {
       list-style: none;
       display: inline-block;
@@ -184,6 +182,46 @@
       width: auto; }
       .sticky ul li a {
         filter: drop-shadow(2px 4px 6px black); }
+  .tohide {
+    right: 0; }
+  .chat {
+    position: fixed;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: right .2s; }
+    .chat i {
+      border-radius: 100%;
+      font-size: 3.5rem;
+      background: #fdc11d;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      padding-top: 12px;
+      transition: all .3s; }
+      .chat i:hover {
+        transform: translateX(-20px); }
+    .chat__box {
+      height: 500px;
+      width: 500px;
+      display: flex;
+      z-index: 3;
+      border: 1.5px solid #6c757d; }
+      .chat__box-main {
+        background: white;
+        width: 70%;
+        height: 100%; }
+        .chat__box-main .chat-top {
+          height: 93%;
+          background: #ffffff; }
+        .chat__box-main .chat-input {
+          height: 7%;
+          background: #6c757d36; }
+      .chat__box-targe {
+        background: #3586ff;
+        width: 30%;
+        height: 100%; }
   .footer__waves {
     position: relative;
     width: 100%;

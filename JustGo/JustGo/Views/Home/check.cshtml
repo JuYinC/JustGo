@@ -6,17 +6,19 @@
 }
 
 @section Style{
+    <style>
+        .footer__waves{
+            display: none;
+        }
+    </style>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/check.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" />
 }
 
-    <div id="app" style="height:100vh;">
+    <div id="app">
 
         <div class="container">
             <div class="checkbar">
@@ -58,13 +60,13 @@
                                     </div>
                                     <div class="daysBar fadein">
                                         <div v-for="(day,index) in schedule.details" @@click="showDaySchedule(index)" type="button"
-                                         class="days fs-4 col-1 m-2 text-center btn btn-outline-secondary">
+                                         class="days fs-4 col-1 m-2  btn btn-outline-secondary ">
                                             第{{index+1}}天
                                         </div>
                                     </div>
                                     <div class="daysinfo">
                                     <div class="date">{{duringDate[selectDay]}}</div>
-                                    <div v-for="(view,index) in daySchedule" class="fadein">
+                                    <div v-for="(view,index) in daySchedule" class="fadein ">
 
                                         <div class="row cols-2 viewinfo">
                                             <div class="col-4">{{view.startTime}}-{{view.endTime}}</div>
@@ -90,8 +92,8 @@
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="row ">
-                        <div v-for="(day,dayindex) in schedule.details" class="col scheduleDay" style="display:inline-block">
-                            <div class="viewbox  p-1">
+                        <div v-for="(day,dayindex) in schedule.details" class=" col-sm-4 " style="display:inline-block">
+                            <div class="viewbox ">
                                 <div class="date">{{duringDate[dayindex]}}</div>
                                 <div v-for="(view,index) in day">
                                         <div class="row cols-2 viewinfo">

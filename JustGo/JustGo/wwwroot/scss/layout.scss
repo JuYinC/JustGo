@@ -39,7 +39,7 @@
        
     
         &__logo {
-          height: 45px;
+          height: 16px;
           filter: drop-shadow(2px 4px 6px black);
         }
         #check{display:none}
@@ -206,12 +206,10 @@
     }
 
 @media only screen and (min-width: 576px) {
-.checkbox{
+.checkbox,.checkbtn{
     display: none;   
 }
-.checkbtn{
-    display: none;
-}
+
 
 
 
@@ -251,7 +249,7 @@
     }
 
     &__logo {
-      height: 80px;
+      height: 36px;
     }
 
     & ul li {
@@ -311,6 +309,89 @@
     }
    
     
+}
+.tohide{
+    right:0;
+}
+
+.chat{
+    
+    position: fixed;
+    // right: -520px;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: right .2s;
+
+    & i{
+        border-radius: 100%;
+        font-size: 3.5rem;
+        background: #fdc11d;
+        width: 60px;
+        height: 60px;
+        text-align:center;
+        padding-top:12px;
+        transition: all .3s;
+        
+        &:hover{
+           transform: translateX(-20px);
+        //    @keyframes ssss{
+        //     0%{
+        //         transform: skewX(5deg);
+        //     }
+        //     50%{
+        //         transform: skewX(-5deg);
+        //     } 
+        //     100%{
+        //         transform: skewX(5deg);
+        //     }
+        //  } 
+      
+        }
+   
+        
+    }
+    &__box{
+        height: 500px;
+        width: 500px;
+        display: flex;
+        z-index: 3;
+        border: 1.5px solid #6c757d;
+        
+       
+       
+
+        &-main{
+            background: white;
+            width: 70%;
+            height: 100%;
+            & .chat-top{
+                height: 93%;
+                background: #ffffff;
+            }
+            & .chat-input{
+                height: 7%;
+                background: #6c757d36;
+            }
+
+        }
+
+        &-targe{
+            background: #3586ff;
+            width: 30%;
+            height: 100%;
+            }
+        // &-targe{
+        //     background: rgb(0, 0, 0);
+        //     width: 10%;
+        //     height: 100%;
+        //     z-index: 5;
+           
+        // }
+    }
+    
+ 
 }
 
 
@@ -387,6 +468,9 @@
         margin: 15px 0;
         font-size: 1.1rem;
     }
+
+
+
 
     & .wave{
         position: absolute;

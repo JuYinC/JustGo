@@ -230,9 +230,10 @@
     & #sh{
       display: none;
     }
-
+ 
 
   }
+  
 
   .wrapper {
     display: flex;
@@ -677,7 +678,7 @@
   .idx__title {
     display: flex;
     position: relative;
-    margin: 6rem 10rem;
+    margin: 3rem 10rem;
 
     &-content h3 {
       // font-family: 'Noto Sans TC', sans-serif;
@@ -807,17 +808,22 @@
       cursor: pointer;
       transition: width .3s cubic-bezier(0.4, 0, 1, 1) 0s;;
       min-width: 100px;
+      
+    }
+
+    & .light{
+      background: #0e0e0f;
     }
 
 
+
     & .sh {
-      width: 30%;
+      width: 40%;
       font-size: 0;
       padding: 1.4rem 2rem 1.6rem;
       display: flex;
       flex-direction: row;
-      width: 100%;
-      // max-width: 200px;
+     
       border-radius: 2px;
       padding: 1.4rem 2rem 1.6rem;
       z-index: 50;
@@ -951,6 +957,8 @@
       grid-template-rows: 2fr 1fr 1fr;
       transition: all .2s;
 
+    
+
     }
 
     &:hover .info {
@@ -958,7 +966,7 @@
       transform: translateY(0px);
     }
 
-    & .info h1 {
+    & .info h2 {
       margin-left: 2rem;
       margin-top: 1rem;
     }
@@ -1148,8 +1156,9 @@
 
   .slider .items-group .item .block h2 {
     font-family: 'Oswald', sans-serif;
-    font-size: 130px;
+    font-size: 35px;
     margin-bottom: 0px;
+    background: #333;
 
   }
 

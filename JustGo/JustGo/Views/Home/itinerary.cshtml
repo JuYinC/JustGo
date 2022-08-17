@@ -928,6 +928,9 @@
                         startTime = startTime.setDate(startTime.getDate() + 1)
                         startTime = new Date(startTime)
                         //
+                        if (status.details[i].length > 0) {
+
+                        
                         datetime = new Date(status.details[i][0].startTime)
                         let time = ""
                         let hour = datetime.getHours()
@@ -942,8 +945,11 @@
                         if (Number(minute) < 10) {
                             minute = "0" + minute
                         }
-                        time = hour + ":" + minute
-                        this.state.datetime.push(time)
+                        time = hour + ":" + minute                       
+                        this.state.datetime.push(time)   
+                        }else{
+                            this.state.datetime.push("09:00")   
+                        }
 
                         for (let j = 0; j < status.details[i].length; j++) {
                             let startTime = new Date(status.details[i][j].startTime);

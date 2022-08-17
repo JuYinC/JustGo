@@ -9,15 +9,9 @@
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
     <link rel="stylesheet" href="~/css/editblog.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-
-        /*html {
-
-                      font-size: 20px;
-
-                    }*/
-
-    </style>
+    
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+   
     }
 
 
@@ -30,8 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-        @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" /> *@
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
 
@@ -46,6 +39,7 @@
         let vm = new Vue({
             el: `#bloginfo`,
             data: {
+                //配合狀態顯示  showError/errColor
                 Details: [
                     [
                         {
@@ -136,9 +130,7 @@
 
                 myscore: this.score,
                 mytempscore: this.score,
-                //圖片上傳狀態
-
-
+             
 
             },
             props: {
@@ -196,7 +188,7 @@
                     let file = e.target.files[0];
                     readFile.readAsDataURL(file)
                     readFile.onload = (e) => {
-                        console.log(readFile.result);
+                   
                         image.base64 = readFile.result
                     }
                 },
@@ -319,11 +311,12 @@
             mounted() {
                 let hash = window.location.hash.substring(1).split("?")[0]
                 let id = window.location.hash.substring(1).split("?")[1]
-                console.log(id)
-                console.log(hash);
+                
                 if (hash == "create") {
                     if (id != "") {
                         axios.post("@Url.Action("creatBlog","Blog")", { ScheduleId: id }).then(res => {
+                            this.UserName = res.data.userName;
+                            this.UserImage = res.data.userImage;
                             this.Details = res.data.details;
                             this.EndDate = res.data.endDate;
                             this.StartDate = res.data.startDate;
@@ -339,7 +332,10 @@
                 else if (hash == "edit") {
                     if (id != "") {
                         axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
-                            console.log(res.data);
+                           
+                            this.CoverImageName = res.data.coverImage;
+                            this.UserImage = res.data.userImage;
+                            this.UserName = res.data.userName;
                             this.Details = res.data.details;
                             this.EndDate = res.data.endDate;
                             this.StartDate = res.data.startDate;
@@ -477,8 +473,5 @@
             <li><a class="dropdown-item listcolor" style="font-size:1.5rem;" href="#">返回頂部</a></li>
         </ul>
     </div>
-
-
-
 
             </div>

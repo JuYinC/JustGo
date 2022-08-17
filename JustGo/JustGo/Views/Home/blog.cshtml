@@ -49,26 +49,6 @@
         $("body").attr('tabindex', '0')
     
         Vue.use(VueViewer.default)
-        //console.log(VueViewer.default)
-    
-    
-        //$(function () {
-        //              $('input[name="daterange"]').daterangepicker({
-        //                  locale: {
-        //                      format: 'YYYY/MM/DD',
-        //                  },
-        //                  opens: 'right'
-        //              }, function (start, end) {
-        //                  console.log("test " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-        //              });
-        //              $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
-        //                  $(this).val('');
-        //              }).on("hide.daterangepicker", function (ev) {
-        //                  this.dispatchEvent(new Event('input'))
-        //              });
-      
-        //          });
-    
     
         $(function () {
             $('input[name="daterange"]').daterangepicker({
@@ -83,76 +63,7 @@
         let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,
-            data: {
-                //Details: [
-                //    [
-                //        {
-                //            id: id++,
-                //            startTime: null,
-                //            endTime: null,
-                //            placeId: 1,
-                //            p_Name: "北部1",
-                //            p_tel: "07-123456",
-                //            p_Add: "台北市",
-                //            describe: "",
-                //            score: 5,
-                //            images: { Name: "2208111103103186.jpg", base64: "" },
-                //        },
-                //        {
-                //            id: id++,
-                //            startTime: null,
-                //            endTime: null,
-                //            placeId: 1,
-                //            p_Name: "高雄2",
-                //            p_tel: "02-123456",
-                //            p_Add: "高雄市",
-                //            describe: "",
-                //            score: 3,
-                //            images: { Name: "2208111103108543.png", base64: "" },
-                //        },
-                //        {
-                //            id: id++,
-                //            startTime: null,
-                //            endTime: null,
-                //            placeId: 1,
-                //            p_Name: "台中3",
-                //            p_tel: "04-123456",
-                //            p_Add: "台中市",
-                //            describe: "",
-                //            score: 4,
-                //            images: { Name: "2208111103108981.png", base64: "" },
-                //        }
-    
-                //    ],
-                //    [
-                //        {
-                //            id: id++,
-                //            startTime: null,
-                //            endTime: null,
-                //            placeId: 1,
-                //            p_Name: "台南4",
-                //            p_tel: "06-123456",
-                //            p_Add: "台南市",
-                //            describe: "",
-                //            score: 5,
-                //            images: { Name: "2208111103109487.jpg", base64: "" },
-                //        },
-                //        {
-                //            id: id++,
-                //            startTime: null,
-                //            endTime: null,
-                //            placeId: 1,
-                //            p_Name: "花蓮5",
-                //            p_tel: "123456",
-                //            p_Add: "花蓮市",
-                //            describe: "",
-                //            score: 1,
-                //            images: { Name: "2208111108357791.jpg", base64: "" },
-                //        },
-    
-    
-                //    ],
-                //],
+            data: {               
                 blogId : 0,
                 UserName: "Alley",
                 UserImage: "2208121714164777.jpg",

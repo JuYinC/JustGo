@@ -83,7 +83,7 @@ namespace JustGo.Controllers
         //Blog細項
         [HttpPost]
         public IActionResult selectblogDetails([FromBody] BlogVM vm)
-        {
+        {            
             return Json(_blog.selectBlog(vm.BlogId));
         }
 
@@ -99,7 +99,7 @@ namespace JustGo.Controllers
 
         //搜尋部落格
         public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
-        {
+        {            
             return Json(_blog.getBlogFilter(vm));
         }
 

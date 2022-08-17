@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "check";
+    ViewData["Title"] = "檢視行程 -";
 }
 @{
     Layout = "_Layout";
@@ -100,7 +100,7 @@
                                                 <div class="viewname">{{view.place.name}}</div>
                                                 
                                                 <div><h6>{{view.place.add}}</h6></div>
-                                                <div class="tagbar"><h6> <span class="tag">{{view.place.minT}}-{{view.place.maxT}}°C</span> <span class="tag">{{view.place.wx}}</span></h6></div>
+                                                <div class="tagbar"><h6> <span class="tag" v-if="view.place.minT==''">{{view.place.minT}}-{{view.place.maxT}}°C</span> <span class="tag" v-if="view.place.wx==''">{{view.place.wx}}</span></h6></div>
                                             </div>
                                         </div>
                                     <div class="row cols-2" v-if="index<day.length-1">

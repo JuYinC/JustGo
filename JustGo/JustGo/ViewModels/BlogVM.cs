@@ -10,6 +10,7 @@
         public string? Describe { get; set; }        
         public blogImage? CoverImage { get; set; }
         public int? Like { get; set; }
+        public IList<int>? TagList { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

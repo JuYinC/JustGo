@@ -435,7 +435,7 @@
                                         </button></p>
                                     <hr />
                                     <div>
-                                        <draggable style="display:flex" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
+                                        <draggable style="display:flex ; align-content: flex-start;" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
                                             <transition-group >                                               
                                                 <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4 me-1"
                                                   @@dblclick="removecountry(index)">
@@ -443,13 +443,11 @@
                                                 </div>
                                             </transition-group>                                            
                                         </draggable>
-                                        
                                     </div>
                                     <div style="min-height: 100px;">
                                         <div class="collapse collapse-horizontal" id="collapseWidthExample">
                                             <div class="card card-body" style="width: 400px;">
-                                                <div class="dragbox">
-                                       
+                                                <div class="dragbox">                                       
                                                     <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
                                                         {{item}}
                                                     </div>
@@ -457,10 +455,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                <p>喜好的項目</p>
+
+
+
+
+                                <p>喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
+                                            +
+                                        </button></p>
                                 <hr />
                              <div>
-                                    <draggable v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
+                                    <draggable style="display:flex ; align-content: flex-start;" v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
                                         <transition-group>
                                             <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
                                               @@dblclick="removeviewclass(index)">
@@ -468,9 +472,7 @@
                                             </div>                                            
                                         </transition-group>                                        
                                     </draggable>
-                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
-                                            +
-                                        </button>
+                                       
                                 </div>
                                 <div style="min-height: 100px;">
                                     <div class="collapse collapse-horizontal" id="interest">
@@ -480,7 +482,6 @@
                                                 <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
                                                     {{item}}
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

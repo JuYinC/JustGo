@@ -45,7 +45,7 @@
         .schedule {
             margin: 30px;
             /* margin: auto; */
-            border: 5px solid #ffff;
+            border: 2px solid #Ffff;
             height: 200px;
             border-radius: 5px;
             box-shadow: 0 0 3px;
@@ -53,6 +53,30 @@
             width: 270px;
             min-width: 245px;
             position: relative;
+        }
+
+            .schedulewarn {
+            margin: 30px;
+            /* margin: auto; */
+            border: 2px solid #FF6347;
+            height: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 3px;
+            background-image: linear-gradient(to top left,#F0F0F0,#FFFF,#F0F0F0 );
+            width: 270px;
+            min-width: 245px;
+            position: relative;
+
+
+        }
+             .schedulewarn:hover {
+            transition: all 1s ease;
+            transform: scale(1.05);
+            box-shadow: 0 0 5px;
+            opacity: 0.9;
+            border-radius: 10px;
+            /*cursor: grab;*/
+            border: 2px solid #FF6347;
         }
 
         .blog {
@@ -234,6 +258,7 @@
         }
 
         .imgbox {
+            margin-top:5px;
             height: 60%;
         }
 
@@ -330,10 +355,12 @@
 
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                    <div class="travel">行程</div>
+                    <div class="travel"><span style="margin:0px">行程</span>
+                        <span style="margin-left:30px;font-size:13px;border:2px solid #FF6347; color:#A9A9A9;border-radius:5px;">更新天氣示警，請注意行程天氣變化</span>
+                        </div>
                     <div class="block">
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                            <div class="schedule" v-for="(item) in nextSchedule" :key="scheduleId">
+                            <div  v-for="(item) in nextSchedule" :key="scheduleId" :class="item.weatherWarning==true?'schedulewarn':'schedule'">
                                 <div class="imgbox">
                                     <img src="~/file/photo/journal.jpg" class="picture" />
                                 </div>
@@ -361,7 +388,7 @@
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                             <div class="schedule" v-for="(item) in exSchedule" :key="scheduleId">
                                 <div class="imgbox">
-                                    <img src="~/file/photo/journal.jpg" class="picture" />
+                                    <img src="~/file/photo/cem.jpg" class="picture" />
                                 </div>
                                 <div class="title">{{item.title}}</div>
                                 <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>
@@ -451,7 +478,7 @@
                                         </draggable>
                                     </div>
                                     <div style="min-height: 5vh;">
-                                        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                                        <div class="collapse" id="collapseWidthExample">
                                             <div class="card card-body" style="width: 44.5vw;">
                                                 <div class="dragbox">
                                                     <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
@@ -467,7 +494,6 @@
                                         喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
-                                        </button>
                                     </p>
                                     <hr />
                                     <div>
@@ -482,7 +508,7 @@
 
                                     </div>
                                     <div style="min-height: 5vh;">
-                                        <div class="collapse collapse-horizontal" id="interest">
+                                        <div class="collapse" id="interest">
                                             <div class="card card-body" style="width: 44.5vw;">
                                                 <div class="dragbox">
 

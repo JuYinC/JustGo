@@ -320,7 +320,7 @@
                         }
                     }
                 }
-                this.$forceUpdate();
+                
             },
 
             initMap(state) {
@@ -1316,6 +1316,8 @@
             cultime() {
                 this.$store.commit('calcRoute')
                 this.$store.commit('cultime')
+                this.travel.push([]);
+                this.travel.pop();
             },
 
             //計算小時小數點

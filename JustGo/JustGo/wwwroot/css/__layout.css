@@ -5,8 +5,6 @@
   --primary-bule-light: #909CC2; }
 
 @media only screen and (max-width: 576px) {
-  .chat {
-    display: none; }
   .navbarC {
     z-index: 3;
     background-color: #fdc11d; }
@@ -189,6 +187,7 @@
   .tohide {
     right: 0; }
   .chat {
+    display: none;
     position: fixed;
     bottom: 5%;
     display: flex;

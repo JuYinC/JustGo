@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 <style>
-    .footer__waves {
+    .footer__waves , .chat {
         display: none;
     }
 </style>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="sift">
-                       <i class="fas fa-caret-left lbtn" id="sift-l" style="display:none"></i>                       
+                       <p class="lbtn" id="sift-l" style="display:none">篩選</p>                     
             </div>
 
             <div class="sidebar-hide" id="sidebar-hide">
@@ -68,7 +68,8 @@
                 </div>
               
                 <div class="sift" >
-                       <i class="fas fa-caret-right rbtn" id="sift-r"></i>                       
+                       @* <i class="fas fa-caret-right rbtn" id="sift-r"></i>                        *@
+                       <p class="rbtn" id="sift-r">篩選</p>
                 </div>
                 
                 <div class="mapbox" id="app3">

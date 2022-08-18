@@ -1,5 +1,7 @@
 @media only screen and (max-width: 576px) {
-  
+     .chat {
+        display: none;
+    }
     
     .arrange__contain {
     
@@ -407,6 +409,10 @@
 }
 
 @media only screen and (min-width: 576px) {
+    // .chat {
+    //     display: none;
+    // }
+
     .noscroll {
         position: fixed; 
         overflow-y: hidden;
@@ -958,13 +964,12 @@
 
     & .rbtn{
         position: absolute;
-        font-size: 26px;
         top: 15%;
         background: #636464;
         color: #f8f9fa;
-        border-radius: 0 7px 7px 0;
-        width: 19px;
-        height: 60px;
+        border-radius: 0 3px 3px 0;
+        width: 23px;
+        height: 62px;
         display: flex;
         align-items: center;
         z-index: 1;
@@ -977,14 +982,14 @@
     }
     & .lbtn{
         position: absolute;
-        font-size: 26px;
+       
         top: 15%;
         background: #636464;
         transform: translateX(-19px);
         color: #f8f9fa;
-        border-radius: 7px 0 0 7px;
-        width: 19px;
-        height: 60px;
+        border-radius: 3px 0 0 3px;
+        width: 23px;
+        height: 62px;
         display: flex;
         align-items: center;
         z-index: 1;

@@ -60,6 +60,8 @@
     }
 
   }
+s
+  
 
 
 
@@ -213,6 +215,10 @@
     display: flex;
     margin: 0 1rem;
     justify-content: center;
+
+    & .light{
+      background: #333;
+    }
 
     & div {
       background: #74abe3;
@@ -846,7 +852,7 @@
     }
 
     & .light{
-      background: #0e0e0f;
+      background: #333;
     }
 
 
@@ -1001,7 +1007,7 @@
          & p{
           font-size: 10px;
           margin: 1px 2px;
-          background: cadetblue;
+          background: #8078e9;
           border-radius: 5px;
           padding: 3px 6px;
 

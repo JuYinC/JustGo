@@ -9,9 +9,7 @@
 @media only screen and (max-width: 576px) {
     
 
-    .chat {
-        display: none;
-    }
+   
 
     
     .navbarC {
@@ -322,8 +320,10 @@ body{
 }
 
 .chat{
+    
     & *{
         font-family: cwTeXYen, sans-serif;
+        
     } 
     &__box-targe {
        & h2{
@@ -363,7 +363,7 @@ body{
             border-radius: 10px;
          }
     }
-    
+    display: none;
     position: fixed;
     // right: -520px;
     bottom: 5%;

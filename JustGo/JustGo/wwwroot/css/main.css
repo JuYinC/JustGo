@@ -42,7 +42,8 @@
         align-items: center;
         justify-content: center;
         font-weight: 100; }
-  .auto-type {
+  s
+.auto-type {
     font-family: 'Noto Sans TC', sans-serif;
     font-weight: 700; }
   .typer {
@@ -132,6 +133,8 @@
     display: flex;
     margin: 0 1rem;
     justify-content: center; }
+    .screnbox .light {
+      background: #333; }
     .screnbox div {
       background: #74abe3;
       width: 20%;
@@ -543,7 +546,7 @@
       transition: width 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
       min-width: 100px; }
     .screnbox .light {
-      background: #0e0e0f; }
+      background: #333; }
     .screnbox .sh {
       width: 40%;
       font-size: 0;
@@ -646,7 +649,7 @@
         .card .info .tag p {
           font-size: 10px;
           margin: 1px 2px;
-          background: cadetblue;
+          background: #8078e9;
           border-radius: 5px;
           padding: 3px 6px; }
     .card:hover .info {
@@ -842,6 +845,8 @@
     filter: blur(0px); } }
 
 @media only screen and (max-width: 576px) {
+  .chat {
+    display: none; }
   .arrange__contain {
     position: absolute;
     width: 100%;
@@ -1389,13 +1394,12 @@
   width: 0; }
   .sift .rbtn {
     position: absolute;
-    font-size: 26px;
     top: 15%;
     background: #636464;
     color: #f8f9fa;
-    border-radius: 0 7px 7px 0;
-    width: 19px;
-    height: 60px;
+    border-radius: 0 3px 3px 0;
+    width: 23px;
+    height: 62px;
     display: flex;
     align-items: center;
     z-index: 1;
@@ -1404,14 +1408,13 @@
       background: #7e7e7e; }
   .sift .lbtn {
     position: absolute;
-    font-size: 26px;
     top: 15%;
     background: #636464;
     transform: translateX(-19px);
     color: #f8f9fa;
-    border-radius: 7px 0 0 7px;
-    width: 19px;
-    height: 60px;
+    border-radius: 3px 0 0 3px;
+    width: 23px;
+    height: 62px;
     display: flex;
     align-items: center;
     z-index: 1;

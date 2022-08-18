@@ -405,11 +405,11 @@
                         <div class="myshadow mb-4">
                             <div style="background-color:#ebebf5;border-radius:10px;text-indent: 3.6rem;padding:10px">{{describe}}心得簡述</div>
                         </div>
-                        <div class="myshadow">
-                            <div v-for="(day,dayIndex) in Details">
-                                <label id="day" class="my-3">第{{dayIndex+1}}天</label>
+                        <div class="">
+                            <div v-for="(day,dayIndex) in Details" class="myshadow">
+                                <label id="day" class="my-3 ">第{{dayIndex+1}}天</label>
                                 <div class="viewcolor">
-                                    <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-5">
+                                    <div v-for="(dayDetails,viewIndex) in day" :key="dayDetails.id" class="mb-5 ">
                                         <div class="mb-1" :id=getanchor(dayIndex,viewIndex)><div style="font-weight: bold;font-size:2.5rem;">{{dayDetails.p_Name}}</div></div>
                                         <div class="mb-1">
                                             <i class="fa-solid fa-house-crack"

@@ -320,6 +320,7 @@
                         }
                     }
                 }
+                this.$forceUpdate();
             },
 
             initMap(state) {
@@ -1307,6 +1308,7 @@
             onEnd() {
                 this.drag = false;
                 this.$store.commit('setTravelMarker');
+                this.$store.commit('cultime')
 
             },
 
@@ -1346,10 +1348,10 @@
 
                                                             <div class="weather-info">
                                                                 <p>{{view.startTime}}-{{view.endTime}}</p>
-                                                                <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" title="高降雨率"/></div>
-                                                                <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" title="低溫"/></div>
-                                                                <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" title="高溫"/></div>
-                                                                <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" title="紫外線過量"/></div>
+                                                                <div v-if="view.pop12h>20"><img src="${wwwroot}/rain.gif" :title="'降雨機率:'+view.pop12h+'%'"/></div>
+                                                                <div v-if="view.minT<25"><img src="${wwwroot}/cold.gif" :title="'最低溫:'+view.minT+'°C'"/></div>
+                                                                <div v-if="view.maxT>34"><img src="${wwwroot}/hot.gif" :title="'最高溫:'+view.maxT+'°C'"/></div>
+                                                                <div v-if="view.uvi>9"><img src="${wwwroot}/sun.gif" :title="'紫外線指數:'+view.uvi"/></div>
                                                             </div>
 
 
@@ -1711,6 +1713,7 @@
 
             //儲存行程
             saveSchedule() {
+                this.saveData.length = 0
                 for (let i = 0; i < this.travel.length; i++) {
                     this.saveData.push([]);
                     for (let j = 0; j < this.travel[i].length; j++) {

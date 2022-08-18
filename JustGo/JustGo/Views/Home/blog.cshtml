@@ -69,7 +69,7 @@
                 UserImage: "2208121714164777.jpg",
                 CoverImageName: "coverimage.jpg",
                 Title: '三天兩夜台東之旅',
-                describe: '美好旅程的回憶從JustGO開始',
+                Describe: '美好旅程的回憶從JustGO開始',
                 StartDate: null,
                 EndDate: null,
                 bool: false,
@@ -355,7 +355,7 @@
                             <div class="mb-4">
                                 <h2 class="mb-2">#Tag</h2>
                                 <div class="d-flex flex-wrap m-n1">
-                                    <button v-for="(item) in TagList" class="btn btn-primary m-1">{{TAG(item)}}</button>                                    
+                                    <button v-for="(item) in TagList" class="btn btn-primary m-1" style="color:#8078e9">{{TAG(item)}}</button>                                    
                                 </div>
                             </div>
                         </div>
@@ -403,7 +403,7 @@
                     <div class="mb-4">
                         <img class="img-fluid rounded w-100 mb-4" :src="getImages(CoverImageName.name)" style="height:500px;object-fit:cover;" alt="Image" />
                         <div class="myshadow mb-4">
-                            <div style="background-color:#ebebf5;border-radius:10px;text-indent: 3.6rem;padding:10px">{{describe}}</div>
+                            <div style="background-color:#ebebf5;border-radius:10px;text-indent: 3.6rem;padding:10px">{{Describe}}</div>
                         </div>
                         <div class="myshadow">
                             <div v-for="(day,dayIndex) in Details">
@@ -437,6 +437,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div>留言</div>
+                       @* <div class="box">
+                            <img class="cover-fit"  src="https://i.picsum.photos/id/735/1800/1600.jpg?hmac=ORAvtQwonINqImN96j8kVd50jBUt6S0tTRjRKrLprNs" alt="Image">
+                        </div>
+                        <div>
+                            <div class="mx-1">{{Title}}</div>
+                            <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i> {{UserName}}</small>
+                        </div> *@  
+                            
+
                     </div>
                 </div>
             </div>

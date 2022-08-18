@@ -119,7 +119,7 @@
 
                     ],
                 ],
-                BlogId:'',
+                BlogId:0,
                 CoverImageName: { base64: "@Url.Content("~/blogImages")/" + "coverimage.jpg" },
                 UserImage: "2208121714164777.jpg",
                 UserName: "Alley",
@@ -198,13 +198,13 @@
                     if (this.CoverImage != null || this.Title != "") {
                         let blog = {
                             BlogId:this.BlogId,
-                            CoverImage: { base64: this.CoverImageName.base64, name: "" },
+                            CoverImage: this.CoverImageName,
                             Details: this.Details,
                             Title: this.Title,
                             Describe: this.Describe,
                             StartDate: this.StartDate,
                             EndDate: this.EndDate
-                        }
+                        }                        
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                             .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
                             .catch(err => console.log(""))
@@ -321,20 +321,14 @@
                             this.UserImage = res.data.userImage;
                             this.Details = res.data.details;
                             this.EndDate = res.data.endDate;
-                            this.StartDate = res.data.startDate;
-                            this.Title = res.data.title;
-                            this.Describe = res.data.describe;
-                            this.StartDate = res.data.startDate;
-                            this.EndDate = res.data.endDate;
-
-
+                            this.StartDate = res.data.startDate;                                                                                    
                         })
                     }
                 }
                 else if (hash == "edit") {
                     if (id != "") {
                         axios.post("@Url.Action("selectblogDetails","Blog")", { blogId: id }).then(res => {
-
+                            this.BlogId = res.data.blogId;
                             this.CoverImageName = res.data.coverImage;
                             this.UserImage = res.data.userImage;
                             this.UserName = res.data.userName;
@@ -343,7 +337,6 @@
                             this.StartDate = res.data.startDate;
                             this.Title = res.data.title;
                             this.Describe = res.data.describe;
-
                         })
                     }
                 }
@@ -413,7 +406,7 @@
             <div class="col-sm-8">
                 <div class="myshadow mb-4">
                     <div style="background-color:#ebebf5;border-radius:10px;">
-                        <textarea rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="describe" style="resize:none;border-radius:10px;padding:10px"></textarea>
+                        <textarea rows="4" maxlength="150" placeholder="分享心得 字數限制150字" v-model="Describe" style="resize:none;border-radius:10px;padding:10px"></textarea>
                     </div>
                 </div>
                 <div class="myshadow">

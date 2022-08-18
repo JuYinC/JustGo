@@ -1,6 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@*@{
+    ViewData["Title"] = "Just Go - 旅遊規劃網站";
+}*@
 
 @section Style{
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />  -->
@@ -41,13 +41,21 @@
                   const east = ['花蓮縣', '臺東縣', '澎湖縣', '連江縣', '金門縣'];
                   let searchNumber = 12;
                   const select = reactive({ selectCounty: [], selectAcitivity: [], searchNumber: 0, Search: "" })
+                  let active = ref('');                  
+                  function light(area){
+                         active.value = area
+                  }
                   function searchBlog(area) {
+                     
+                      light(area)
                       select.searchNumber = 0;
                       switch (area) {
                           case "北部":
                               if (select.selectCounty[0] != northern[0]) {
                                   select.selectCounty = northern;
                                   select.Search = "";
+                                 
+
                               }
                               else {
                                   select.selectCounty = []
@@ -99,6 +107,7 @@
                       return "@Url.Content("~/userImages")/" + userImage
                   }
                   function open(e) {
+                    active.value = ''
                       $("#sh").toggleClass("sh")
                       if ($('#sh')[0].clientWidth >= $('#findw')[0].clientWidth * 1.1) {
                           $('#shbox').addClass('tgshow')
@@ -117,6 +126,52 @@
                           select.searchNumber += searchNumber;
                           axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
                       }
+                  }
+                  function TAG(tag){
+                        switch (tag) {
+                            case 1:
+                                return '文化';
+                                break;
+                            case 2:
+                                return '生態'                      
+                                break;
+                            case 3:
+                                return '古蹟'
+                                break;                       
+                            case 4:
+                                return '廟宇'
+                                break;
+                            case 5:
+                                return'藝術'                      
+                                break;
+                            case 6:
+                                return '小吃特產'
+                                break;                     
+                            case 7:
+                                return '國家公園'
+                                break;
+                            case 8:
+                                return '國家風景區'                      
+                                break;
+                            case 9:
+                                return '休閒農業'
+                                break;
+                            case 10:
+                                return '溫泉'
+                                break;
+                            case 11:
+                                return '自然風景'                      
+                                break;
+                            case 12:
+                                return'遊憩'
+                                break;
+                            case 13:
+                                return '體育健身'
+                                break;
+                            default:
+                                return '其他'                      
+                                break;                   
+                    }
                   }
                  
                   function po() {
@@ -204,7 +259,7 @@
                       po();
                   })
                   return {
-                      search, northern, central, south, east, searchNumber,top4Blog,
+                      search, northern, central, south, east, searchNumber,top4Blog,active,TAG,
                       select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
                   }
               },
@@ -320,12 +375,12 @@
         </div>
 
         <div class="screnbox">
-            <div @@click="searchBlog('北部')">北部</div>
-            <div @@click="searchBlog('中部')">中部</div>
-            <div @@click="searchBlog('南部')">南部</div>
-            <div id="findw" @@click="searchBlog('東部')">東部</div>
+            <div @@click="searchBlog('北部')"  :class="{ light: active === '北部' }">北部</div>
+            <div @@click="searchBlog('中部')" :class="{ light: active === '中部'}">中部</div>
+            <div @@click="searchBlog('南部')" :class="{ light: active === '南部'}">南部</div>
+            <div id="findw" @@click="searchBlog('東部')" :class="{ light: active === '東部' }">東部</div>
             <div @@click="open($event)" id="sh" class="">
-                <i class="fa-solid fa-magnifying-glass"></i>篩選
+                <i class="fa-solid fa-magnifying-glass"></i>關鍵字
                 <input id="shbox" class="tgshow" type="text" placeholder="請輸入關鍵字" v-model="searchString" />
                 <button @@click="searchBlog('搜尋')" id="shbtn" class="tgshow"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
@@ -336,12 +391,22 @@
                 @*<img src="https://unsplash.it/1800/1600/?random/person" alt="">*@
                 <img :src="imageSrc(item.coverImage.name)" alt="">
                 <div class="info">
-                    <div><h1>{{item.title}}</h1></div>
+                    <div><h2 >{{item.title}}</h2></div>
                     <div style="display: flex;align-items: center;">
                         <img class="usimg" :src="userImageSrc('2208121714164777.jpg')" alt="">
                         <p style="display: contents">{{item.userName}}</p>
                     </div>
-                    <div><a :href="blogUrl(item.blogId)" class="btn">read me</a></div>
+                    <div>
+                        <div class="tag">
+                            <div v-for="(item,index) in item.tagList">
+                            <p v-if="index <3 ">{{TAG(item)}}</p>
+                            </div>
+                        </div>                     
+                    </div>
+                    <div>
+                        <a :href="blogUrl(item.blogId)" class="btn">read me</a>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

@@ -58,9 +58,7 @@ html {
         width: 0;
     }
     }
-.bg-line{
-    border-left: 1px groove;
-}
+
 
 
 
@@ -211,6 +209,10 @@ body {
 
 .infowindow i {
     width: 14px;
+}
+
+.infowindow td {
+    border-bottom: 1px solid #DCDCDC
 }
 
 .infowindow_bar_button:hover {

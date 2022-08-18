@@ -9,7 +9,9 @@
 @media only screen and (max-width: 576px) {
     
 
+   
 
+    
     .navbarC {
         z-index: 3;
         background-color: #fdc11d;
@@ -39,7 +41,7 @@
        
     
         &__logo {
-          height: 45px;
+          height: 16px;
           filter: drop-shadow(2px 4px 6px black);
         }
         #check{display:none}
@@ -206,12 +208,13 @@
     }
 
 @media only screen and (min-width: 576px) {
-.checkbox{
+.checkbox,.checkbtn{
     display: none;   
 }
-.checkbtn{
-    display: none;
+body{
+    overflow-x: hidden;
 }
+
 
 
 
@@ -251,7 +254,7 @@
     }
 
     &__logo {
-      height: 80px;
+      height: 36px;
     }
 
     & ul li {
@@ -311,6 +314,142 @@
     }
    
     
+}
+.tohide{
+    right:0;
+}
+
+.chat{
+    
+    & *{
+        font-family: cwTeXYen, sans-serif;
+        
+    } 
+    &__box-targe {
+       & h2{
+        margin: 10px 3px;
+        width: 100%;
+        min-height: 60px;
+        text-align: left;
+        padding-top: 20px;
+        color: #fff;
+        
+        
+        &:hover {
+            background: #2c6dcf;
+            z-index: 5;
+            cursor: pointer;
+        }
+             
+       
+        
+       }
+    }
+    &-top{
+        & img{
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 100%;
+            margin: 20px;
+            box-shadow: 3px 3px 10px #333;
+            border: 2px solid #767676;
+         }
+         & p{
+            border: 1px solid #767676;
+            padding: 5px;
+            width: 188px;
+            margin-top: 30px;
+            border-radius: 10px;
+         }
+    }
+    display: none;
+    position: fixed;
+    // right: -520px;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: right .2s;
+    z-index: 2;
+    
+    
+
+    & i{
+        border-radius: 100%;
+        font-size: 3.5rem;
+        background: #fdc11d;
+        width: 60px;
+        height: 60px;
+        text-align:center;
+        padding-top:12px;
+        transition: all .3s;
+        box-shadow: 3px 3px 10px #333;
+        
+        &:hover{
+           transform: translateX(-20px);
+        //    @keyframes ssss{
+        //     0%{
+        //         transform: skewX(5deg);
+        //     }
+        //     50%{
+        //         transform: skewX(-5deg);
+        //     } 
+        //     100%{
+        //         transform: skewX(5deg);
+        //     }
+        //  } 
+      
+        }
+   
+        
+    }
+    &__box{
+        height: 500px;
+        width: 500px;
+        display: flex;
+        z-index: 3;
+        border: 1.5px solid #6c757d;
+        box-shadow: 3px 3px 10px #333;
+        border-top: 20px solid #6c757d;
+        
+       
+       
+
+        &-main{
+            background: white;
+            width: 60%;
+            height: 100%;
+            & .chat-top{
+                height: 93%;
+                background: #ffffff;
+            }
+            & .chat-input{
+                height: 7%;
+                width: 100%;
+                background: #6c757d36;
+                outline: none;
+                border: none;
+                font-size: 18px;
+            }
+
+        }
+
+        &-targe{
+            background: rgb(43, 78, 95);
+            width: 40%;
+            height: 100%;
+            }
+        // &-targe{
+        //     background: rgb(0, 0, 0);
+        //     width: 10%;
+        //     height: 100%;
+        //     z-index: 5;
+           
+        // }
+    }
+    
+ 
 }
 
 
@@ -387,6 +526,9 @@
         margin: 15px 0;
         font-size: 1.1rem;
     }
+
+
+
 
     & .wave{
         position: absolute;

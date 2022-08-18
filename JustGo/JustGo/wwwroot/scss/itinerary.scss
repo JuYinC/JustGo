@@ -1,5 +1,7 @@
 @media only screen and (max-width: 576px) {
-  
+     .chat {
+        display: none;
+    }
     
     .arrange__contain {
     
@@ -67,6 +69,7 @@
                 flex: 0 0 330px;
                 margin: 0.6rem;
                 overflow-y: scroll;
+                overflow-x: hidden;
 
                 & button {
                     width: 100px;
@@ -406,6 +409,10 @@
 }
 
 @media only screen and (min-width: 576px) {
+    // .chat {
+    //     display: none;
+    // }
+
     .noscroll {
         position: fixed; 
         overflow-y: hidden;
@@ -480,6 +487,7 @@
                 font-weight: 700;
                 margin-left: 3rem;
                 min-width: 250px;
+                outline: none;
 
                 &:focus{
                     width:250px;
@@ -517,6 +525,7 @@
             justify-content: space-between;
             overflow-x: hidden;
 
+
             &-tg{
                 flex-direction: column;
                 justify-content: space-between;
@@ -528,6 +537,11 @@
                 flex: 0 0 0;
                 margin: 0;
                 overflow-y: scroll;
+                overflow-x: hidden;
+
+                
+      
+
                
                 &-tg{
                     flex: 0 0 330px;
@@ -689,6 +703,7 @@
                 height: 100%;
                 display: grid;
                 grid-template-rows: 12% 80% 1fr;
+                overflow: hidden;
 
                 & .grid-item {
                     &-t {
@@ -696,6 +711,12 @@
                         position: relative;
                         width: 96%;
                         overflow: hidden;
+                        & input{
+                            border: none;
+                            border-bottom: 1px solid;
+                            outline: none;
+                            margin-left: 16px;
+                        }
 
                         & .daysbox {
                             display: flex;
@@ -730,7 +751,7 @@
                             position: absolute;
                             top: 40%;
                             width: 25px;
-                            height: 60%;
+                            height: 50%;
                             display: flex;
                             align-items: center;
                             left: -3px;
@@ -754,7 +775,7 @@
                             position: absolute;
                             right: -5px;
                             width: 25px;
-                            height: 60%;
+                            height: 50%;
                             display: flex;
                             align-items: center;
                             top: 40%;
@@ -782,7 +803,6 @@
                     &-m {
                         // background-color: #ce9906;
                         height: inherit;
-                        width: 300px;
                         overflow-y: scroll;
 
 
@@ -790,8 +810,8 @@
                             flex: 1;
                             min-width: 280px;
                             max-width: 280px;
-                            border: solid 1px #6c757d;
-                            margin: 3px;
+                            border: solid 1px #6c757d91;
+                            margin: 6px;
                             vertical-align: top;
 
                             & *{
@@ -806,6 +826,7 @@
                                 width: 100%;
                                 color: #eee;
                                 display: inline-grid;
+                                text-align-last: center;
                                
     
                             }
@@ -819,6 +840,11 @@
                                 font-size: 1.4rem;
                                 display: inline;
                                 margin-top: 0.3rem;
+                            }
+                            & .bg-line{
+                                border-left: 1px dashed;
+                                // height: 30px;
+                                // align-items: center;
                             }
 
                         }
@@ -934,7 +960,50 @@
 
 .sift{
     background: #6c757d;
-    width: 1rem;
+    width: 0;
+
+    & .rbtn{
+        position: absolute;
+        top: 15%;
+        background: #636464;
+        color: #f8f9fa;
+        border-radius: 0 3px 3px 0;
+        width: 23px;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        padding: 1px;
+
+        &:hover{
+            background: rgb(126, 126, 126);
+        }
+   
+    }
+    & .lbtn{
+        position: absolute;
+       
+        top: 15%;
+        background: #636464;
+        transform: translateX(-19px);
+        color: #f8f9fa;
+        border-radius: 3px 0 0 3px;
+        width: 23px;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        padding: 3px;
+       
+        
+        &:hover{
+            background: rgb(126, 126, 126);
+        }
+
+    }
+
+
+ 
 
     &:hover{
         background: #333;

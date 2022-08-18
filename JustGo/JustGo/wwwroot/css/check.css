@@ -4,8 +4,8 @@
   font-size: 1.7rem; }
 
 .navbarC {
-  content: "";
-  background-color: #0000005e;
+ 
+  background-color: #32be9b;
   position: inherit; }
 
 .map-pag3 {
@@ -52,6 +52,7 @@
     border-left-color: black;
     border-left-width: 1px;
     align-items: center;
+    display: flex;
 }
 
 .skeltonbox{
@@ -63,7 +64,7 @@
 
 .skeltonbar {
     width: 100%;
-    height: 80px;
+    height: 120px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -93,7 +94,7 @@
     animation:fadein 1.5s;
 }
 .date {
-    background-color: #808080;
+    background-color: #32be9b;
     color: #FFFAFA;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -107,6 +108,8 @@
     margin-top:20px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 5px;
+    padding-bottom: 1.5rem;
+    
 }
 .viewinfo {
     background-color: #FFFAFA;
@@ -117,7 +120,7 @@
 }
 .tag {
     border-radius: 5px;
-    background-color: #B0C4DE;
+    background-color: #336149;
     color:snow;
     padding: 5px;
     font-size: 14px;

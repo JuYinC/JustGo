@@ -181,11 +181,11 @@
                 copyblog() {
                     let startDate = new Date(this.copyDate);
                     if (startDate < new Date()) {
-                        alert("日期輸入錯誤")
+                        Swal.fire("日期輸入錯誤")
                         return;
                     }
                     axios.post("@Url.Action("copySchedule","Schedule")", { BlogId: this.blogId, startDate })
-                        .then(() => { alert("複製行程成功") })
+                        .then(() => { Swal.fire("複製行程成功") })
                 },
                 likeblog: function() {
                     if (!this.bool) {
@@ -355,6 +355,10 @@
                             <div class="mb-4">
                                 <h2 class="mb-2">#Tag</h2>
                                 <div class="d-flex flex-wrap m-n1">
+
+                                 @*   <div v-for="(item,index) in 7">
+                                        <div v-if="index <5 ">{{item}}</div>
+                                    </div>*@
                                     <button v-for="(item) in TagList" class="btn btn-primary m-1">{{TAG(item)}}</button>                                    
                                 </div>
                             </div>

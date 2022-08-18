@@ -519,7 +519,6 @@
                         this.setMarker();
                         this.calcRoute();
                         this.calroam();
-
                     })
                     .then(() => axios.post("@Url.Action("selectWeather","Schedule")")
                         .then(res => {
@@ -529,7 +528,6 @@
                         this.calWeather();
                         this.loading = false
                     })
-
                     .catch(err => console.log(err))
                 }
 

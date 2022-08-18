@@ -206,9 +206,9 @@
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                             .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
                             .catch(err => console.log(""))
-                        alert("發布成功")
+                        Swal.fire("發布成功")
                     } else {
-                        alert("上傳失敗 請上傳封面照及標題")
+                        Swal.fire("上傳失敗 請上傳封面照及標題")
                     }
                 },
                 //封面圖上傳

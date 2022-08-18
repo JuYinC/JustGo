@@ -5,6 +5,8 @@
   --primary-bule-light: #909CC2; }
 
 @media only screen and (max-width: 576px) {
+  .chat {
+    display: none; }
   .navbarC {
     z-index: 3;
     background-color: #fdc11d; }
@@ -125,6 +127,8 @@
 @media only screen and (min-width: 576px) {
   .checkbox, .checkbtn {
     display: none; }
+  body {
+    overflow-x: hidden; }
   .op {
     width: 50px;
     height: 0px;
@@ -190,7 +194,35 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    transition: right .2s; }
+    transition: right .2s;
+    z-index: 2; }
+    .chat * {
+      font-family: cwTeXYen, sans-serif; }
+    .chat__box-targe h2 {
+      margin: 10px 3px;
+      width: 100%;
+      min-height: 60px;
+      text-align: left;
+      padding-top: 20px;
+      color: #fff; }
+      .chat__box-targe h2:hover {
+        background: #2c6dcf;
+        z-index: 5;
+        cursor: pointer; }
+    .chat-top img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 100%;
+      margin: 20px;
+      box-shadow: 3px 3px 10px #333;
+      border: 2px solid #767676; }
+    .chat-top p {
+      border: 1px solid #767676;
+      padding: 5px;
+      width: 188px;
+      margin-top: 30px;
+      border-radius: 10px; }
     .chat i {
       border-radius: 100%;
       font-size: 3.5rem;
@@ -199,7 +231,8 @@
       height: 60px;
       text-align: center;
       padding-top: 12px;
-      transition: all .3s; }
+      transition: all .3s;
+      box-shadow: 3px 3px 10px #333; }
       .chat i:hover {
         transform: translateX(-20px); }
     .chat__box {
@@ -207,20 +240,26 @@
       width: 500px;
       display: flex;
       z-index: 3;
-      border: 1.5px solid #6c757d; }
+      border: 1.5px solid #6c757d;
+      box-shadow: 3px 3px 10px #333;
+      border-top: 20px solid #6c757d; }
       .chat__box-main {
         background: white;
-        width: 70%;
+        width: 60%;
         height: 100%; }
         .chat__box-main .chat-top {
           height: 93%;
           background: #ffffff; }
         .chat__box-main .chat-input {
           height: 7%;
-          background: #6c757d36; }
+          width: 100%;
+          background: #6c757d36;
+          outline: none;
+          border: none;
+          font-size: 18px; }
       .chat__box-targe {
-        background: #3586ff;
-        width: 30%;
+        background: #2b4e5f;
+        width: 40%;
         height: 100%; }
   .footer__waves {
     position: relative;

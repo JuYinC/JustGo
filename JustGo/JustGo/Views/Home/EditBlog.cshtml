@@ -119,11 +119,12 @@
 
                     ],
                 ],
+                BlogId:'',
                 CoverImageName: { base64: "@Url.Content("~/blogImages")/" + "coverimage.jpg" },
                 UserImage: "2208121714164777.jpg",
                 UserName: "Alley",
                 Title: '',
-                describe: '',
+                Describe: '',
                 Like: 5,
                 StartDate: null,
                 EndDate: null,
@@ -196,10 +197,11 @@
                     e.preventDefault();
                     if (this.CoverImage != null || this.Title != "") {
                         let blog = {
+                            BlogId:this.BlogId,
                             CoverImage: { base64: this.CoverImageName.base64, name: "" },
                             Details: this.Details,
                             Title: this.Title,
-                            describe: this.describe,
+                            Describe: this.Describe,
                             StartDate: this.StartDate,
                             EndDate: this.EndDate
                         }
@@ -368,7 +370,9 @@
 
 
     <div id="bloginfo">   
+        <div style="width: 100%;height: 350px;margin-bottom: 3%;">
         <img :src="imageDisplay(CoverImageName)" id="coverimg" alt="封面圖片">
+        </div>
         <div id="covertitle">
             <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="25" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">

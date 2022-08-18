@@ -38,62 +38,40 @@ namespace JustGo.Repository
         public bool Keep(UserKeepVM vm)
         {
             UserKeep? keep;
-            try
-            {
+            
                 keep = _context.UserKeep.SingleOrDefault(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
-                if (keep != null)
+            if (keep != null)
+            {
+                _context.Remove(keep);
+                _context.SaveChanges();
+                var blog = _context.Blog.SingleOrDefault(e => e.BlogId == keep.KeepNumber);
+                if (blog != null)
                 {
-                    _context.Remove(keep);
+                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == 0 && e.KeepNumber == vm.Id).Count();
+                    _context.Update(blog);
                     _context.SaveChanges();
-                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == keep.KeepNumber);
-                    if (blog != null)
-                    {
-                        blog.Like -= 1;
-                        _context.Update(blog);
-                        _context.SaveChanges();
-                        return true;
-                    }
-                }
-                else
-                {
-                    UserKeep userKeep = new UserKeep()
-                    {
-                        KeepClass = vm.KeepClass ?? 0,
-                        UserId = vm.UserId ?? "",
-                        KeepNumber = vm.Id ?? 0
-                    };
-                    _context.Add(userKeep);
-                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == userKeep.KeepNumber);
-                    if (blog != null)
-                    {
-                        blog.Like += 1;
-                        _context.Update(blog);
-                        _context.SaveChanges();
-                        return true;
-                    }
+                    return true;
                 }
             }
-            catch
+            else
             {
-                var catchKeep = _context.UserKeep.Where(e => e.UserId == vm.UserId && e.KeepClass == vm.KeepClass && e.KeepNumber == vm.Id);
-                _context.RemoveRange(catchKeep);
+                UserKeep userKeep = new UserKeep()
+                {
+                    KeepClass = vm.KeepClass ?? 0,
+                    UserId = vm.UserId ?? "",
+                    KeepNumber = vm.Id ?? 0
+                };
+                _context.Add(userKeep);
                 _context.SaveChanges();
-                try
+                var blog = _context.Blog.SingleOrDefault(e => e.BlogId == vm.Id);
+                if (blog != null)
                 {
-                    var blog = _context.Blog.SingleOrDefault(e => e.BlogId == catchKeep.First().KeepNumber);
-                    if (blog != null)
-                    {
-                        blog.Like -= 1;
-                        _context.Update(blog);
-                        _context.SaveChanges();
-                        return true;
-                    }                   
-                }               
-                catch
-                {
-                    return false;
-                }                
-            }            
+                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == 0 && e.KeepNumber == vm.Id).Count();
+                    _context.Update(blog);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }                        
             return false;
         }
     }

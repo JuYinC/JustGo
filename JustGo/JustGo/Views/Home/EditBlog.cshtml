@@ -158,7 +158,7 @@
             },
             methods: {
                 imageDisplay(image) {
-                    if (image.base64 == "") {
+                    if (image.base64 == "" || image.base64==null) {
                         return "@Url.Content("~/blogImages")/" + image.name
                     }
                     return image.base64;

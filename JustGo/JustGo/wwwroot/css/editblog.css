@@ -8,6 +8,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius:10px;
     padding:10px;
+    margin-bottom:20px;
 }
 
 #bloginfo {
@@ -224,3 +225,8 @@ textarea::-webkit-scrollbar-thumb {
     --btn-color: rgb(255, 255, 255);
 
     */
+:target:before {
+    content: "";
+    display: block;
+    height: 120px;
+}

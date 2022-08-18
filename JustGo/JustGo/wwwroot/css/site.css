@@ -211,6 +211,10 @@ body {
     width: 14px;
 }
 
+.infowindow td {
+    border-bottom: 1px solid #DCDCDC
+}
+
 .infowindow_bar_button:hover {
     text-shadow: 0 0 2px #FDC11D;
 }

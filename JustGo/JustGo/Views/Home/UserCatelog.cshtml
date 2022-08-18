@@ -379,8 +379,8 @@
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                             <div class="schedule" v-for="(item,index) in blog" :key="blogId">
                                 <div class="imgbox">
-                                    <img src="~/file/photo/journal.jpg" class="picture" />
-                                    @*<img :src="getImages(item.coverImage.name)" class="picture"/>*@
+                                    @*<img src="~/file/photo/journal.jpg" class="picture" />*@
+                                    <img :src="getImages(item.coverImage.name)" class="picture"/>
                                 </div>
                                 <div class="title">{{item.title}}</div>
                                 <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>
@@ -399,8 +399,8 @@
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
                             <div class="schedule" v-for="(item,index) in keepBlog" :key="blogId">
                                 <div class="imgbox">
-                                    <img src="~/file/photo/journal.jpg" class="picture" />
-                                    @*<img :src="getImages(item.coverImage.name)" class="picture"/>*@
+                                    @*<img src="~/file/photo/journal.jpg" class="picture" />*@
+                                    <img :src="getImages(item.coverImage.name)" class="picture"/>
                                 </div>
                                 <div class="title">{{item.title}}</div>
                                 <div class="timestamp">{{item.startDate}}-{{item.endDate}}</div>

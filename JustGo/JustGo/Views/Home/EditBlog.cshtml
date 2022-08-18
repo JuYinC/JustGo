@@ -367,8 +367,8 @@
 }
 
 
-    <div id="bloginfo">
-        <img :src="CoverImageName.base64" id="coverimg" alt="封面圖片">
+    <div id="bloginfo">   
+        <img :src="imageDisplay(CoverImageName)" id="coverimg" alt="封面圖片">
         <div id="covertitle">
             <input type="text" id="TitleId" v-model="Title" placeholder="請輸入標題" maxlength="15" size="25" style="display:inline-block;vertical-align:central">
             <label class="btn btn-primary">

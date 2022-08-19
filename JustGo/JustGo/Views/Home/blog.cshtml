@@ -10,8 +10,7 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -32,6 +31,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
     <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
@@ -63,7 +65,7 @@
         let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,
-            data: {
+            data: {                
                 blogId: 0,
                 UserName: "Alley",
                 UserImage: "2208121714164777.jpg",
@@ -426,7 +428,6 @@
                                            @@load="myscore=item"></i>
                                         </div>
 
-
                                         <div v-viewer class="groupimg img-fluid">
                                             <template v-for="(image,index) in dayDetails.images">
                                                 <img :src="getImages(image.name)">
@@ -448,7 +449,7 @@
                                         <img class="chatimg" src="~/file/photo/user2.jpg"  alt="Image">
                                     </div>
                                     <div  class="viewcolor" style="flex:auto">                                   
-                                        <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i>綠水獺</small>
+                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>綠水獺</small>
                                         <div class="mx-1">景色很漂亮耶❤️ 謝謝小水獺推薦~~~~~~~~~~</div>
                                     </div>                                
                                 </div>
@@ -459,7 +460,7 @@
                                         <img class="chatimg" src="~/file/photo/user3.jpg"  alt="Image">
                                     </div>
                                     <div class="viewcolor" style="flex:auto">                                   
-                                        <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i> 不知名水獺</small>
+                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>不知名水獺</small>
                                         <div class="mx-1">我去過這邊 很值得去耶😃</div>
                                     </div>
                             </div>

@@ -140,8 +140,7 @@
    
    
     $('#open').click(function () {
-        if ($('#sidebar')[0].clientWidth < 301) {
-            console.log("1234")
+        if ($('#sidebar')[0].clientWidth < 301) {            
             $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
             $('.btnbox-r').css('display', 'none')
             $('.btnbox-l').css('display', 'none')
@@ -158,14 +157,6 @@
 
         }
     })
-
-    $(function () {
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function (start, end, label) {
-            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-    });
 
 </script>
 
@@ -246,7 +237,7 @@
 
             //計算行程表時間
             cultime() {
-                console.log("cult")
+                //console.log("cult")
                 let hr
                 let min
                 let addhr
@@ -844,7 +835,7 @@
                     state.directionsRenderer.setMap(null)
                     state.directionsRenderer = null
                 }
-                console.log("calcRoute")
+                //console.log("calcRoute")
                 let request = null;
                 let route = [];
                 let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
@@ -885,7 +876,7 @@
                             });
                         }
                         //儲存行程時間陣列
-                        console.log("Service")
+                        //console.log("Service")
                         let dayList = result.routes[0].legs
                         let n = 0
                         for (let i = 0; i < state.travel.length; i++) {
@@ -1032,8 +1023,10 @@
             //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
             axiosSave(context, payload) {
                 axios.post("@Url.Action("setSchedule","Schedule")", payload)
-                    .then(console.log("success"))
-                    .catch(err => console.log("err"))
+                    .then(() => {
+                        Swal.fire("儲存成功").then(() => { window.location.href = '@Url.Action("UserCatelog","Home")'; });
+                    })//跳頁修改
+                    .catch(err => console.log("err"))                   
             },
 
             //由組件傳入條件呼叫後端搜尋
@@ -1068,7 +1061,6 @@
                 selectDatelocal: [],
                 selectDateEndlocal: [],
                 saveData: [],
-
             }
         },
         computed: {
@@ -1081,30 +1073,18 @@
             duringDate() {
                 return this.$store.state.duringDate
             },
-
-
         },
-        mounted() {
-            console.log("mounted")
+        mounted() {            
             let id = window.location.search.substring(1)
             if (id != "") {
                 this.$store.state.isTravel = true
                 this.$store.dispatch('axiosLoad', { ScheduleId: id })
                 //this.$store.commit('setTravelMarker')
-            }
-            console.log(this.duringDates)
-            //let arr = this.duringDate[0].split('/');
-
-            //this.selectDatelocal=new Date(arr[0],arr[1],arr[2])
-
-
-            this.selectDateEndlocal = this.duringDate[this.duringDate.length - 1]
-            console.log(this.selectDatelocal)
+            }                        
+            this.selectDateEndlocal = this.duringDate[this.duringDate.length - 1]            
             if (this.duringDate.length > 0) {
 
-
             }
-
         },
         methods: {
             moveTime() {
@@ -1214,7 +1194,7 @@
                             title: "123",
                             details: this.saveData,
                         })
-                    Swal.fire("儲存成功")
+                    
                 },
             },
         })
@@ -1739,8 +1719,7 @@
                         WeatherWarning: false,
                         title: this.$store.state.title,
                         details: this.saveData,
-                    })
-                Swal.fire("儲存成功")
+                    })                               
             },
         },
     })

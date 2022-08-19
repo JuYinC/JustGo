@@ -213,9 +213,8 @@
                             EndDate: this.EndDate
                         }                        
                         axios.post("@Url.Action("setBlog","Blog")", blog)
-                            .then(res => { if (res.data) { window.location.href = '@Url.Action("UserCatelog","Home")' } })
-                            .catch(err => console.log(""))
-                        Swal.fire("發布成功")
+                            .then(res => { if (res.data) { Swal.fire("發布成功").then(() => { window.location.href = '@Url.Action("UserCatelog","Home")'})}})
+                            .catch(err => console.log(""))                        
                     } else {
                         Swal.fire("上傳失敗 請上傳封面照及標題")
                     }

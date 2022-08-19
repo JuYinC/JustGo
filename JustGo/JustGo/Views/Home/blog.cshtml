@@ -54,7 +54,7 @@
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left'
             }, function(start, end, label) {
-                console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                //console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             }).on("hide.daterangepicker", function(ev) {
                 this.dispatchEvent(new Event('input'))
             });
@@ -209,7 +209,7 @@
                 onChange(dayIndex) {
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
-                        console.log(timestamp)
+                        //console.log(timestamp)
                         for (let i = 0; i < this.Details[j].length; i++) {
                             this.Details[j][i].starttime = timestamp
                             let hr = timestamp.substring(0, 2)
@@ -237,7 +237,7 @@
                 caltime(dayIndex) {
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
-                        console.log(timestamp)
+                        //console.log(timestamp)
                         for (let i = 0; i < this.Details[j].length; i++) {
                             this.Details[j][i].starttime = timestamp
                             let hr = timestamp.substring(0, 2)

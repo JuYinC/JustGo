@@ -9,20 +9,20 @@ namespace JustGo.Controllers
 {
     public class ScheduleController : BaseController
     {
-        readonly IPlaceWeatherRepostiory _place;
-        readonly IScheduleRepostioy _schedule;
+        
         readonly ILogger _logger;
-        public ScheduleController(IScheduleRepostioy schedule, IPlaceWeatherRepostiory place, ILogger<ScheduleController> logger)
+        readonly IUnitOfWork _unit;
+        public ScheduleController(ILogger<ScheduleController> logger, IUnitOfWork unit)
         {
-            _place = place;
-            _schedule = schedule;
-            _logger = logger;            
+            
+            _logger = logger;
+            _unit = unit;
         }
 
         [HttpPost]
         public IActionResult getPlace([FromBody] SelectPlaceVM select)
         {            
-            return Json(_place.getPlace(select));
+            return Json(_unit.place.getPlace(select));
         }
 
         [HttpPost]
@@ -31,11 +31,11 @@ namespace JustGo.Controllers
             vm.selectType = (vm.selectType=="") ? "景點" : vm.selectType;
             if ((vm.selectCounty!=null && vm.selectCounty.Length > 0) || (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0) || vm.selectType != "景點")
             {
-                return Json(_place.getPlaceFilter(vm));
+                return Json(_unit.place.getPlaceFilter(vm));
             }
             else
             {
-                return Json(_place.getPlace(vm));
+                return Json(_unit.place.getPlace(vm));
             }
         }
 
@@ -44,7 +44,7 @@ namespace JustGo.Controllers
         public IActionResult copySchedule([FromBody]BlogVM vm)
         {
             vm.UserId = GetUserId();
-            if (_schedule.copyScheduleByBlog(vm))
+            if (_unit.schedule.copyScheduleByBlog(vm))
             {
                 return Json("複製成功");
             }
@@ -55,7 +55,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult selectUserSchedule()
         {
-            return Json(_schedule.selectUserSchedule(GetUserId()));
+            return Json(_unit.schedule.selectUserSchedule(GetUserId()));
         }
 
         //搜尋行程細項
@@ -63,7 +63,7 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult selectDetail([FromBody] ScheduleVM vm)
         {
-            return Json(_schedule.selectScedule(vm.ScheduleId,GetUserId()));
+            return Json(_unit.schedule.selectScedule(vm.ScheduleId,GetUserId()));
         }
 
         //新增行程 修改行程
@@ -74,10 +74,10 @@ namespace JustGo.Controllers
             if (vm.ScheduleId != 0)
             {
                 vm.UserId = GetUserId();
-                return Json(_schedule.editScedule(vm));
+                return Json(_unit.schedule.editScedule(vm));
             }
             vm.UserId = GetUserId();
-            return Json(_schedule.createScedule(vm));            
+            return Json(_unit.schedule.createScedule(vm));            
         }
 
         //刪除行程
@@ -86,16 +86,17 @@ namespace JustGo.Controllers
         public IActionResult deleteSchedule([FromBody] ScheduleVM vm)
         {
             vm.UserId = GetUserId();
-            if(_schedule.deleteScedule(vm))
+            if(_unit.schedule.deleteScedule(vm))
             {
                 return Json(vm.ScheduleId);
             }
             return Json(0);
         }
+        
 
         public IActionResult selectWeather()
         {
-            return Json(_place.getWeatherByLocation("dd"));
+            return Json(_unit.place.getWeatherByLocation("dd"));
         }
     }
 }

@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 <style>
-    .footer__waves , .chat {
+    .footer__waves,
+    .chat {
         display: none;
     }
 </style>
@@ -59,27 +60,27 @@
             </div>
 
             <div class="sift">
-                       <p class="lbtn" id="sift-l" style="display:none">篩選</p>                     
+                <p class="lbtn" id="sift-l" style="display:none">篩選</p>
             </div>
 
             <div class="sidebar-hide" id="sidebar-hide">
 
-                    <div id="app2"></div>
-                </div>
-              
-                <div class="sift" >
-                       @* <i class="fas fa-caret-right rbtn" id="sift-r"></i>                        *@
-                       <p class="rbtn" id="sift-r">篩選</p>
-                </div>
-                
-                <div class="mapbox" id="app3">
-                    <div id="floating-panel">
-                        <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
-                        <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="50" alt="map" type="button">
-                    </div>
-                    <div id="map" class="map-pag2"></div>
-                </div>
+                <div id="app2"></div>
             </div>
+
+            <div class="sift">
+                @* <i class="fas fa-caret-right rbtn" id="sift-r"></i> *@
+                <p class="rbtn" id="sift-r">篩選</p>
+            </div>
+
+            <div class="mapbox" id="app3">
+                <div id="floating-panel">
+                    <img v-if="isTravel == false" @@click="changeView" :src="gpsURL" width="50" alt="gps" type="button">
+                    <img v-if="isTravel == true" @@click="changeView" :src="mapURL" width="50" alt="map" type="button">
+                </div>
+                <div id="map" class="map-pag2"></div>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -104,44 +105,43 @@
 <script src="~/js/site.js"></script>
 <script>
 
-     let id = window.location.search.substring(1)
-            if (id != "") {
-              $('.arrange__contain-video').css('height','0')
-                 setTimeout(function(){
-                       $('.arrange__contain-video').css('display','none')  
-                 },200);
-                 $('#navbarC').addClass("sticky")
-                $('.datepicker').css('display', 'none')
-                $('.datepicker__content').css({
-                    'top': '5%',
-                    'left': '30%',
-                    'z-index': '5',
-                    'width': '30%',
-                    'display': 'unset',
-                })
-     
-                $('#app input').css('display','none')
-                 $('#app button').css('display','none')
-            }
+    let id = window.location.search.substring(1)
+    if (id != "") {
+        $('.arrange__contain-video').css('height', '0')
+        setTimeout(function () {
+            $('.arrange__contain-video').css('display', 'none')
+        }, 200);
+        $('#navbarC').addClass("sticky")
+        $('.datepicker').css('display', 'none')
+        $('.datepicker__content').css({
+            'top': '5%',
+            'left': '30%',
+            'z-index': '5',
+            'width': '30%',
+            'display': 'unset',
+        })
+
+        $('#app input').css('display', 'none')
+        $('#app button').css('display', 'none')
+    }
 
 
 
     let wwwroot = "@Url.Content("~/file/photo")"
     document.getElementById("sift-l").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
-        
-    
+
+
     })
 
     document.getElementById("sift-r").addEventListener('click', function () {
         document.getElementById("sidebar-hide").classList.toggle("sidebar-hide-tg")
     })
 
-   
-   
+
+
     $('#open').click(function () {
         if ($('#sidebar')[0].clientWidth < 301) {
-            console.log("1234")
             $('#sidebar').addClass('sidebar-tg').removeClass('sidebar')
             $('.btnbox-r').css('display', 'none')
             $('.btnbox-l').css('display', 'none')
@@ -149,23 +149,15 @@
             $('.daysbox').css('left', '0px')
             $('#sift-l').css('display', '')
 
-            } else {
-                $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
-                $('.btnbox-r').css('display', '')
-                $('.btnbox-l').css('display', '')
-                $('.col').css('display', '')
-                $('#sift-l').css('display', 'none')
+        } else {
+            $('#sidebar').removeClass('sidebar-tg').addClass('sidebar')
+            $('.btnbox-r').css('display', '')
+            $('.btnbox-l').css('display', '')
+            $('.col').css('display', '')
+            $('#sift-l').css('display', 'none')
 
         }
     })
-
-    $(function () {
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function (start, end, label) {
-            console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-    });
 
 </script>
 
@@ -246,7 +238,6 @@
 
             //計算行程表時間
             cultime() {
-                console.log("cult")
                 let hr
                 let min
                 let addhr
@@ -323,7 +314,7 @@
                         }
                     }
                 }
-                
+
             },
 
             initMap(state) {
@@ -807,12 +798,10 @@
 
                     // 總行程數 = 1 離開方程式
                     if (route.length < 2) {
-                        //console.log(`行程數<2 行程數為 ${route.length}`)
                         state.map.fitBounds(bounds);
                         return
                     } else {
-                        // 總行程數 >=  2 加入停靠站
-                        //console.log(`行程數>2 行程數為 ${route.length}`)
+                        // 總行程數 >=  2 加入停靠站                        
                         const waypts = [];
                         for (i = 1; i < route.length - 1; i++) {
                             waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
@@ -844,7 +833,6 @@
                     state.directionsRenderer.setMap(null)
                     state.directionsRenderer = null
                 }
-                console.log("calcRoute")
                 let request = null;
                 let route = [];
                 let directionsService = new google.maps.DirectionsService();  // 宣告google行程服務
@@ -857,11 +845,9 @@
                 }
                 // 總行程數 = 1 離開方程式
                 if (route.length < 2) {
-                    //console.log(`行程數<2 行程數為 ${route.length}`)
                     return
                 } else {
-                    // 總行程數 >= 2 加入停靠站
-                    //console.log(`行程數>2 行程數為 ${route.length}`)
+                    // 總行程數 >= 2 加入停靠站                    
                     const waypts = [];
                     for (i = 1; i < route.length - 1; i++) {
                         waypts.push({ location: { lat: route[i].lat, lng: route[i].lng } })
@@ -884,8 +870,7 @@
                                 map: state.map
                             });
                         }
-                        //儲存行程時間陣列
-                        console.log("Service")
+                        //儲存行程時間陣列                        
                         let dayList = result.routes[0].legs
                         let n = 0
                         for (let i = 0; i < state.travel.length; i++) {
@@ -917,21 +902,21 @@
                 }
             },
 
-                updateSchedule(state, status) {
-                    let startTime = new Date(status.startDate)
-                    let endTime = new Date(status.endDate)
-                    let endTime2 = new Date(status.details[0][0].startTime)
-                    state.scheduleId = status.scheduleId
-                    state.title = status.title
-                    for (let i = 0; i < status.details.length; i++) {
-                        this.state.travel.push([])
-                        this.state.duringDate.push(startTime.toLocaleDateString())
-                        startTime = startTime.setDate(startTime.getDate() + 1)
-                        startTime = new Date(startTime)
-                        //
-                        if (status.details[i].length > 0) {
+            updateSchedule(state, status) {
+                let startTime = new Date(status.startDate)
+                let endTime = new Date(status.endDate)
+                let endTime2 = new Date(status.details[0][0].startTime)
+                state.scheduleId = status.scheduleId
+                state.title = status.title
+                for (let i = 0; i < status.details.length; i++) {
+                    this.state.travel.push([])
+                    this.state.duringDate.push(startTime.toLocaleDateString())
+                    startTime = startTime.setDate(startTime.getDate() + 1)
+                    startTime = new Date(startTime)
+                    //
+                    if (status.details[i].length > 0) {
 
-                        
+
                         datetime = new Date(status.details[i][0].startTime)
                         let time = ""
                         let hour = datetime.getHours()
@@ -946,11 +931,11 @@
                         if (Number(minute) < 10) {
                             minute = "0" + minute
                         }
-                        time = hour + ":" + minute                       
-                        this.state.datetime.push(time)   
-                        }else{
-                            this.state.datetime.push("09:00")   
-                        }
+                        time = hour + ":" + minute
+                        this.state.datetime.push(time)
+                    } else {
+                        this.state.datetime.push("09:00")
+                    }
 
                     for (let j = 0; j < status.details[i].length; j++) {
                         let startTime = new Date(status.details[i][j].startTime);
@@ -1025,14 +1010,15 @@
                 axios.post("@Url.Action("selectDetail","Schedule")", payload)
                     .then(res => {
                         context.commit('updateSchedule', res.data)
-                        context.commit('setTravelMarker')
                     })
                     .catch(err => console.log(err))
             },
             //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
             axiosSave(context, payload) {
                 axios.post("@Url.Action("setSchedule","Schedule")", payload)
-                    .then(console.log("success"))
+                    .then(() => {
+                        Swal.fire("儲存成功").then(() => { window.location.href = '@Url.Action("UserCatelog","Home")'; });
+                    })//跳頁修改
                     .catch(err => console.log("err"))
             },
 
@@ -1068,7 +1054,6 @@
                 selectDatelocal: [],
                 selectDateEndlocal: [],
                 saveData: [],
-
             }
         },
         computed: {
@@ -1081,30 +1066,16 @@
             duringDate() {
                 return this.$store.state.duringDate
             },
-
-
         },
         mounted() {
-            console.log("mounted")
             let id = window.location.search.substring(1)
             if (id != "") {
-                this.$store.state.isTravel = true
                 this.$store.dispatch('axiosLoad', { ScheduleId: id })
-                //this.$store.commit('setTravelMarker')
             }
-            console.log(this.duringDates)
-            //let arr = this.duringDate[0].split('/');
-
-            //this.selectDatelocal=new Date(arr[0],arr[1],arr[2])
-
-
             this.selectDateEndlocal = this.duringDate[this.duringDate.length - 1]
-            console.log(this.selectDatelocal)
             if (this.duringDate.length > 0) {
 
-
             }
-
         },
         methods: {
             moveTime() {
@@ -1187,10 +1158,10 @@
                         this.$store.commit("cultime")
                     }
 
-                    } else {
-                        Swal.fire('重新選擇日期')
-                    }
-                },
+                } else {
+                    Swal.fire('重新選擇日期')
+                }
+            },
 
             //儲存行程
             saveSchedule() {
@@ -1206,18 +1177,18 @@
                     }
                 }
 
-                    this.$store.dispatch('axiosSave',
-                        {
-                            StartDate: new Date(this.duringDate[0]),
-                            EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
-                            WeatherWarning: false,
-                            title: "123",
-                            details: this.saveData,
-                        })
-                    Swal.fire("儲存成功")
-                },
+                this.$store.dispatch('axiosSave',
+                    {
+                        StartDate: new Date(this.duringDate[0]),
+                        EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
+                        WeatherWarning: false,
+                        title: "123",
+                        details: this.saveData,
+                    })
+
             },
-        })
+        },
+    })
 
     //地圖vue
     new Vue({
@@ -1311,8 +1282,8 @@
             onEnd() {
                 this.drag = false;
                 this.$store.commit('setTravelMarker');
+                this.$store.commit('calcRoute')
                 this.$store.commit('cultime')
-
             },
 
             //計算時間
@@ -1603,17 +1574,17 @@
                         for (let i = 0; i < this.travel.length - day; i++) {
                             let lastIndex = this.travel.length - 1
 
-                                for (let j = 0; j < this.travel[lastIndex].length; j++) {
-                                    this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
-                                }
-                                this.travel.pop()
+                            for (let j = 0; j < this.travel[lastIndex].length; j++) {
+                                this.travel[lastIndex - 1].push(this.travel[lastIndex][j])
                             }
+                            this.travel.pop()
                         }
-                        this.$store.commit("cultime")
-                    } else {
-                        Swal.fire('重新選擇日期')
                     }
-                },
+                    this.$store.commit("cultime")
+                } else {
+                    Swal.fire('重新選擇日期')
+                }
+            },
 
             tol() {
                 let x = document.getElementsByClassName('daysbox')[0].clientWidth
@@ -1652,12 +1623,12 @@
                 }
 
 
-                    for (i = 0; i < d; i++) {
-                       
-                        document.getElementsByClassName('title')[i].style.backgroundColor = ""
-                        document.getElementsByClassName('title')[i].style.color = "#fff"
-                    }
-                    
+                for (i = 0; i < d; i++) {
+
+                    document.getElementsByClassName('title')[i].style.backgroundColor = ""
+                    document.getElementsByClassName('title')[i].style.color = "#fff"
+                }
+
 
                 document.getElementsByClassName('title')[k].style.backgroundColor = "#FBCB0A"
 
@@ -1714,7 +1685,7 @@
 
         },
         methods: {
-        
+
 
             //儲存行程
             saveSchedule() {
@@ -1740,7 +1711,6 @@
                         title: this.$store.state.title,
                         details: this.saveData,
                     })
-                Swal.fire("儲存成功")
             },
         },
     })

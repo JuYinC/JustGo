@@ -11,15 +11,13 @@ namespace JustGo.Controllers
     public class BlogController : BaseController
     {
         readonly ILogger _logger;
-        readonly IWebHostEnvironment _webHostEnvironment;
-        readonly IBlogRepostioy _blog;
-        readonly IUserKeepRepostiory _userKeep;
-        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment, IBlogRepostioy blog, IUserKeepRepostiory userKeepRepostiory)
+        readonly IWebHostEnvironment _webHostEnvironment;        
+        readonly IUnitOfWork _unit;
+        public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment,IUnitOfWork unit)
         {
             _logger = logger;
-            _webHostEnvironment = webHostEnvironment;
-            _blog = blog;
-            _userKeep = userKeepRepostiory;
+            _webHostEnvironment = webHostEnvironment;            
+            _unit = unit;
         }
 
         [HttpPost]
@@ -52,10 +50,10 @@ namespace JustGo.Controllers
                     if (vm.BlogId != 0)
                     {
                         vm.UserId = GetUserId();
-                        return Json(_blog.editBlog(vm));
+                        return Json(_unit.blog.editBlog(vm));
                     }
                     vm.UserId = GetUserId();
-                    return Json(_blog.createBlog(vm));
+                    return Json(_unit.blog.createBlog(vm));
                 }
             }
             return Json(false);
@@ -65,26 +63,26 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult creatBlog([FromBody] ScheduleVM vm)
         {
-            return Json(_blog.createScheduleToBlog(vm.ScheduleId,GetUserId()));
+            return Json(_unit.blog.createScheduleToBlog(vm.ScheduleId,GetUserId()));
         }
 
         public IActionResult deleteBlog([FromBody]BlogVM vm)
         {
-            return Json(_blog.deleteBlog(vm));
+            return Json(_unit.blog.deleteBlog(vm));
         }
 
         //查詢使用者部落格(無細項)        
         [Authorize]
         public IActionResult selectUserBlog()
         {
-            return Json(_blog.selectUserBlog(GetUserId()));
+            return Json(_unit.blog.selectUserBlog(GetUserId()));
         }
 
         //Blog細項
         [HttpPost]
         public IActionResult selectblogDetails([FromBody] BlogVM vm)
         {            
-            return Json(_blog.selectBlog(vm.BlogId));
+            return Json(_unit.blog.selectBlog(vm.BlogId));
         }
 
         //查詢使用者是否有收藏
@@ -94,13 +92,13 @@ namespace JustGo.Controllers
         {
             vm.KeepClass = 0;
             vm.UserId = GetUserId();
-            return Json(_userKeep.IsKeep(vm));
+            return Json(_unit.keep.IsKeep(vm));
         }
 
         //搜尋部落格
         public IActionResult searchBlog([FromBody] SelectPlaceVM vm)
         {            
-            return Json(_blog.getBlogFilter(vm));
+            return Json(_unit.blog.getBlogFilter(vm));
         }
 
         [Authorize]
@@ -108,7 +106,7 @@ namespace JustGo.Controllers
         {
             var vm = new UserKeepVM();
             vm.UserId = GetUserId();
-            return Json(_blog.getKeepBlog(vm));
+            return Json(_unit.blog.getKeepBlog(vm));
         }
 
         //加入收藏或移除 回傳bool
@@ -118,12 +116,12 @@ namespace JustGo.Controllers
         {
             vm.KeepClass = 0;
             vm.UserId = GetUserId();
-            return Json(_userKeep.Keep(vm));
+            return Json(_unit.keep.Keep(vm));
         }
 
         public IActionResult getBlogTop4()
         {
-            return Json(_blog.getBlogRank());
+            return Json(_unit.blog.getBlogRank());
         }
 
         //圖片儲存

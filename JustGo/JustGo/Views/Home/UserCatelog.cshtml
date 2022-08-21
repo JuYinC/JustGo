@@ -522,6 +522,10 @@
                                 </div>
                                 </div>
                                 <hr  class="mb-5 mt-5 ms-1 me-1"/>
+                                 <button type="button" class="btn btn-primary col-md-4" onclick="myFunction()">儲存</button>
+
+
+
 
 
 
@@ -547,6 +551,9 @@
     <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
 
     <script>
+         function myFunction() {
+  alert("儲存成功");
+}
         new Vue({
             el: "#app",
             data: {

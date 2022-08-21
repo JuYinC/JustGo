@@ -1,0 +1,9 @@
+ <button type="button" class="btn btn-primary" onclick="myFunction()">Primary</button>
+
+
+
+
+
+ function myFunction() {
+  alert("儲存成功");
+}

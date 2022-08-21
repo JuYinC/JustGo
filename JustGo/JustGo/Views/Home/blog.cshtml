@@ -10,8 +10,7 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -32,6 +31,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
     <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
@@ -63,7 +65,7 @@
         let id = 0;
         let vm = new Vue({
             el: `#bloginfo`,
-            data: {
+            data: {                
                 blogId: 0,
                 UserName: "Alley",
                 UserImage: "2208121714164777.jpg",
@@ -355,7 +357,7 @@
                             <div class="mb-4">
                                 <h2 class="mb-2">#Tag</h2>
                                 <div class="d-flex flex-wrap m-n1">
-                                    <button v-for="(item) in TagList" class="btn btn-primary m-1" style="color:#8078e9">{{TAG(item)}}</button>                                    
+                                    <button v-for="(item) in TagList" class="btn btn-secondary m-1">{{TAG(item)}}</button>                                    
                                 </div>
                             </div>
                         </div>
@@ -426,7 +428,6 @@
                                            @@load="myscore=item"></i>
                                         </div>
 
-
                                         <div v-viewer class="groupimg img-fluid">
                                             <template v-for="(image,index) in dayDetails.images">
                                                 <img :src="getImages(image.name)">
@@ -438,15 +439,33 @@
                             </div>
                         </div>
 
-                        <div>留言</div>
-                       @* <div class="box">
-                            <img class="cover-fit"  src="https://i.picsum.photos/id/735/1800/1600.jpg?hmac=ORAvtQwonINqImN96j8kVd50jBUt6S0tTRjRKrLprNs" alt="Image">
+                        <div class="myshadow">
+                            <div style="font-size:2.8rem;">留言</div>
+                            @*留言1*@
+                          
+                                <div class="d-flex align-items-center overflow-hidden">                                 
+                                    <div>
+                                        @*<img class="cover-fit" :src="getImages(CoverImage.name)" alt="Image">*@
+                                        <img class="chatimg" src="~/file/photo/user2.jpg"  alt="Image">
+                                    </div>
+                                    <div  class="viewcolor" style="flex:auto">                                   
+                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>綠水獺</small>
+                                        <div class="mx-1">景色很漂亮耶❤️ 謝謝小水獺推薦~~~~~~~~~~</div>
+                                    </div>                                
+                                </div>
+                                @*留言2*@
+                                <div class="d-flex align-items-center overflow-hidden" >                                 
+                                    <div>
+                                        @*<img class="cover-fit" :src="getImages(CoverImage.name)" alt="Image">*@
+                                        <img class="chatimg" src="~/file/photo/user3.jpg"  alt="Image">
+                                    </div>
+                                    <div class="viewcolor" style="flex:auto">                                   
+                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>不知名水獺</small>
+                                        <div class="mx-1">我去過這邊 很值得去耶😃</div>
+                                    </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="mx-1">{{Title}}</div>
-                            <small class="mx-1"><i class="fa fa-user" style="color:var(--primary-bule-light);"></i> {{UserName}}</small>
-                        </div> *@  
-                            
+                        
 
                     </div>
                 </div>

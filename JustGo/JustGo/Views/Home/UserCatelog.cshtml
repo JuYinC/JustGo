@@ -301,7 +301,7 @@
         }
 
         .Lable_size{
-            font-size:18px;
+            font-size:20px;
              font-weight: bold;
         }
 
@@ -458,11 +458,14 @@
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     <label for="exampleInputPassword1" class="form-label mb-2 mt-2 ms-1 me-1">確認新密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
+                                    <button type="button" class="btn btn-primary col-md-4 fs-4 btn-lg" style="margin-top:120px;" @@click="myFunction">儲存</button>
+
+
                                 </div>
                                 <div class="col-md-7">
                                     <div style="min-height:28vh"class="Lable_size">
                                      <p style="margin-top:8px;" >
-                                        喜好的城市 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                        喜好的城市 <button class="btn btn-primary btn-lg fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
                                     </p>
@@ -470,7 +473,7 @@
                                     <div>
                                         <draggable style="display:flex ; align-content: flex-start;" v-model="selectcountry" group="site" @@start="onStart" @@end="onEnd">
                                             <transition-group>
-                                                <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary mb-4 mt-4 me-1"
+                                                <div v-for="(item,index) in selectcountry" :key="item" class="item btn btn-primary fs-4 mb-4 mt-4 me-1 btn-lg"
                                                  @@dblclick="removecountry(index)">
                                                     {{item}}
                                                 </div>
@@ -481,7 +484,7 @@
                                         <div class="collapse" id="collapseWidthExample">
                                             <div class="card card-body" style="width:100%;">
                                                 <div class="dragbox">
-                                                    <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4  me-1" @@click="addcountry(index)">
+                                                    <div v-for="(item,index) in country" :key="item" class="item btn btn-primary mb-4 mt-4 fs-4 me-1 btn-lg" @@click="addcountry(index)">
                                                         {{item}}
                                                     </div>
                                                 </div>
@@ -491,7 +494,7 @@
                                     </div>
                                     <div class="Lable_size" style="min-height:28vh ">
                                     <p style="margin-top:15px;">
-                                        喜好的項目 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
+                                        喜好的項目 <button class="btn btn-primary btn-lg fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#interest" aria-expanded="false" aria-controls="collapseWidthExample">
                                             +
                                         </button>
                                     </p>
@@ -499,7 +502,7 @@
                                     <div>
                                         <draggable style="display:flex ; align-content: flex-start;" v-model="selectviewclass" group="viewclass" @@start="onStart" @@end="onEnd">
                                             <transition-group>
-                                                <div v-for="(item,index) in selectviewclass" :key="item" class="item btn btn-primary mb-4 mt-4  me-1"
+                                                <div v-for="(item,index) in selectviewclass" :key="item" class="item btn fs-4 btn-primary mb-4 mt-4  me-1 btn-lg "
                                                  @@dblclick="removeviewclass(index)">
                                                     {{item}}
                                                 </div>
@@ -512,7 +515,7 @@
                                             <div class="card card-body" style="width: 100%;">
                                                 <div class="dragbox">
 
-                                                    <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1" @@click="addviewclass(index)">
+                                                    <div v-for="(item,index) in viewclass" :key="item" class="item Label_Style btn btn-primary mb-4 mt-4  me-1 btn-lg" @@click="addviewclass(index)">
                                                         {{item}}
                                                     </div>
                                                 </div>
@@ -522,9 +525,6 @@
                                 </div>
                                 </div>
                                 <hr  class="mb-5 mt-5 ms-1 me-1"/>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -547,6 +547,10 @@
     <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
 
     <script>
+        
+
+
+
         new Vue({
             el: "#app",
             data: {
@@ -679,6 +683,9 @@
                 getImages(loadimagesName) {
                     return "@Url.Content("~/blogImages")/" + loadimagesName
                 },
+                myFunction() {
+                    Swal.fire("儲存成功");
+                }
             },
             mounted() {
                 axios.get("@Url.Action("selectUserSchedule","Schedule")")

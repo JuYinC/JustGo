@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary utility scripts
+HashPassword/
+PasswordHasher.cs
+
+# Private files and notes
+.private/

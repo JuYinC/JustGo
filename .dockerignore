@@ -1,0 +1,9 @@
+**/.vscode
+**/bin
+**/obj
+**/.git
+**/.gitignore
+**/node_modules
+**/.DS_Store
+**/wwwroot/UserImages
+**/wwwroot/blogImages

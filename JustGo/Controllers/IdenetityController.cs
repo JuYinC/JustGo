@@ -36,14 +36,14 @@ namespace JustGo.Controllers
 
         public async Task<IActionResult> Register(RegisterVM vm)
         {
-            string returnUrl = Url.Content("~/");            
+            string returnUrl = Url.Content("~/");
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
 
                 user.Name = vm.Name;
-
-                user.City = vm.City;
+                user.City = vm.City ?? "";
 
                 await _userStore.SetUserNameAsync(user, vm.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, vm.Email, CancellationToken.None);
@@ -53,46 +53,63 @@ namespace JustGo.Controllers
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(vm.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = vm.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    // Skip email confirmation for now and sign in directly
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User logged in after registration.");
+                    return LocalRedirect(returnUrl);
                 }
+
+                // Add errors to ModelState
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            
-            return View("Login");
+
+            // Return to login view with errors
+            return View("Login", new UserVM());
         }
 
         public async Task<IActionResult> Login(UserVM vm)
         {
-            var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, lockoutOnFailure: false);
             string returnUrl = Url.Content("~/");
-            if (result.Succeeded)
-            {                
-                return LocalRedirect(returnUrl);
+
+            // Check if email and password are provided
+            if (string.IsNullOrEmpty(vm?.Email) || string.IsNullOrEmpty(vm?.Password))
+            {
+                ModelState.AddModelError(string.Empty, "請輸入信箱和密碼 (Please enter email and password)");
+                return View("Login", vm);
             }
-            return View("Login");
+
+            if (ModelState.IsValid)
+            {
+                // Find user by email first, then use their username for sign-in
+                var user = await _userManager.FindByEmailAsync(vm.Email);
+                if (user != null)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, vm.Password, vm.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        ModelState.AddModelError(string.Empty, "此帳號已被鎖定，請稍後再試 (Account locked, try again later)");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "登入失敗，請檢查信箱和密碼 (Invalid email or password)");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "登入失敗，請檢查信箱和密碼 (Invalid email or password)");
+                }
+            }
+
+            return View("Login", vm);
         }
 
         public async Task<IActionResult> Logout()

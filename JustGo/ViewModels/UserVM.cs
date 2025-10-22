@@ -3,11 +3,18 @@
 namespace JustGo.ViewModels
 {
     public class UserVM
-    {        
+    {
+        [Required(ErrorMessage = "請輸入信箱")]
+        [EmailAddress(ErrorMessage = "信箱格式不正確")]
+        [Display(Name = "信箱")]
         public string? Email { get; set; }
 
+        [Required(ErrorMessage = "請輸入密碼")]
+        [DataType(DataType.Password)]
+        [Display(Name = "密碼")]
         public string? Password { get; set; }
-        
+
+        [Display(Name = "記住我")]
         public bool RememberMe { get; set; }
     }
 

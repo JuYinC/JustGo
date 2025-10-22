@@ -15,15 +15,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 var TravelWindows = builder.Configuration.GetConnectionString("TravelWindows");
 var TravelPssP = builder.Configuration.GetConnectionString("TravelPssP");
+var TravelDocker = builder.Configuration.GetConnectionString("TravelDocker");
+
+// Use Docker connection string by default, can be changed via environment variable
+var connectionString = TravelDocker;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(TravelPssP));
-builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(TravelPssP));
+    options.UseSqlServer(connectionString));
+builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(connectionString));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(TravelPssP));
+builder.Services.AddDbContext<TravelContext>(o => o.UseSqlServer(connectionString));
 //連線字串替換
-//地端連線字串TravelWindows,雲端連線字串TravelPssP
+//地端連線字串TravelWindows,雲端連線字串TravelPssP,Docker連線字串TravelDocker
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

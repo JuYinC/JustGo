@@ -4,11 +4,11 @@ using System.Data;
 
 namespace JustGo.Repository
 {
-    public class UserKeepRepostiory : IUserKeepRepostiory
+    public class UserKeepRepository : IUserKeepRepository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
-        public UserKeepRepostiory(IDbConnection con, TravelContext context)
+        public UserKeepRepository(IDbConnection con, TravelContext context)
         {
             _con = con;
             _context = context;

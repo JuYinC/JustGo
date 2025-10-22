@@ -10,11 +10,11 @@ using System.Data;
 
 namespace JustGo.Repository
 {
-    public class PlaceWeatherRepostiory : IPlaceWeatherRepostiory
+    public class PlaceWeatherRepository : IPlaceWeatherRepository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
-        public PlaceWeatherRepostiory(TravelContext context, IDbConnection con)
+        public PlaceWeatherRepository(TravelContext context, IDbConnection con)
         {
             _con = con;
             _context = context;

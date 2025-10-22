@@ -3,7 +3,7 @@ using JustGo.ViewModels;
 
 namespace JustGo.Repository
 {
-    public interface IPlaceWeatherRepostiory
+    public interface IPlaceWeatherRepository
     {
 
         public ICollection<Place> getPlace(SelectPlaceVM vm);

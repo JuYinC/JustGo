@@ -1,4 +1,4 @@
-﻿using JustGo.Data;
+using JustGo.Data;
 using JustGo.Models;
 using System.Data;
 
@@ -9,6 +9,13 @@ namespace JustGo.Repository
         readonly IDbConnection _con;
         readonly TravelContext _context;
         readonly ApplicationDbContext _UserComtext;
+
+        // Lazy initialization for repositories (singleton per UnitOfWork instance)
+        private IBlogRepository? _blog;
+        private IPlaceWeatherRepository? _place;
+        private IScheduleRepository? _schedule;
+        private IUserKeepRepository? _keep;
+
         public UnitOfWork(IDbConnection con, TravelContext context, ApplicationDbContext applicationDbContext)
         {
             _con = con;
@@ -16,12 +23,53 @@ namespace JustGo.Repository
             _UserComtext = applicationDbContext;
         }
 
-        public IBlogRepostioy blog => new BlogRepostioy(_con, _context, _UserComtext);
+        // Properties now return singleton instances instead of creating new ones each time
+        public IBlogRepository blog
+        {
+            get
+            {
+                if (_blog == null)
+                {
+                    _blog = new BlogRepository(_con, _context, _UserComtext);
+                }
+                return _blog;
+            }
+        }
 
-        public IPlaceWeatherRepostiory place => new PlaceWeatherRepostiory(_context, _con);
+        public IPlaceWeatherRepository place
+        {
+            get
+            {
+                if (_place == null)
+                {
+                    _place = new PlaceWeatherRepository(_context, _con);
+                }
+                return _place;
+            }
+        }
 
-        public IScheduleRepostioy schedule => new ScheduleRepostioy(_context, _con);
+        public IScheduleRepository schedule
+        {
+            get
+            {
+                if (_schedule == null)
+                {
+                    _schedule = new ScheduleRepository(_context, _con);
+                }
+                return _schedule;
+            }
+        }
 
-        public IUserKeepRepostiory keep => new UserKeepRepostiory(_con,_context);
+        public IUserKeepRepository keep
+        {
+            get
+            {
+                if (_keep == null)
+                {
+                    _keep = new UserKeepRepository(_con, _context);
+                }
+                return _keep;
+            }
+        }
     }
 }

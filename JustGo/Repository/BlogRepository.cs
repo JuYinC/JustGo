@@ -13,12 +13,12 @@ using JustGo.Data;
 
 namespace JustGo.Repository
 {
-    public class BlogRepostioy : IBlogRepostioy
+    public class BlogRepository : IBlogRepository
     {
         readonly IDbConnection _con;
         readonly TravelContext _context;
         readonly ApplicationDbContext _UserComtext;
-        public BlogRepostioy(IDbConnection con, TravelContext context ,ApplicationDbContext applicationDbContext)
+        public BlogRepository(IDbConnection con, TravelContext context ,ApplicationDbContext applicationDbContext)
         {
             _con = con;
             _context = context;
@@ -27,15 +27,28 @@ namespace JustGo.Repository
 
         public bool createBlog(BlogVM vm)
         {
-            try{
+            try
+            {
                 _context.Blog.Add(VMtoModel(vm));
                 _context.SaveChanges();
+                return true;
             }
-            catch
+            catch (DbUpdateException ex)
             {
+                // Log the error with details for debugging
+                Console.WriteLine($"Error creating blog: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
                 return false;
-            }           
-            return true;
+            }
+            catch (Exception ex)
+            {
+                // Log unexpected errors
+                Console.WriteLine($"Unexpected error creating blog: {ex.Message}");
+                return false;
+            }
         }
 
         public BlogVM createScheduleToBlog(int scheduleId ,string userId)
@@ -101,37 +114,53 @@ namespace JustGo.Repository
 
         public ICollection<BlogVM> getBlogFilter(SelectPlaceVM vm)
         {
-            string strSerarch = "";            
-            if (vm.Search!=null && vm.Search.Length > 0)
+            // Use EF Core LINQ with proper joins to prevent SQL injection
+            var query = _context.Blog
+                .Include(b => b.BlogDetails)
+                .AsQueryable();
+
+            // Apply search filter (Title or Describe contains search term)
+            if (!string.IsNullOrEmpty(vm.Search))
             {
-                strSerarch = "(Title like '%'+@Search+'%' or Describe like '%'+@Search+'%') and";                
+                query = query.Where(b =>
+                    EF.Functions.Like(b.Title, $"%{vm.Search}%") ||
+                    EF.Functions.Like(b.Describe, $"%{vm.Search}%"));
             }
-            string filterCounty = "";            
-            if (vm.selectCounty!=null && vm.selectCounty.Length > 0)
+
+            // Apply county filter (join with Place table via PlaceId)
+            if (vm.selectCounty != null && vm.selectCounty.Length > 0)
             {
-                filterCounty = "and Region in @selectCounty";
+                query = query.Where(b =>
+                    b.BlogDetails.Any(bd =>
+                        _context.Place.Any(p => p.PlaceId == bd.PlaceId && vm.selectCounty.Contains(p.Region))));
             }
-            string filterAcitivity = "";
+
+            // Apply activity filter (join with Place table via PlaceId for Class property)
             if (vm.selectAcitivity != null && vm.selectAcitivity.Length > 0)
             {
-                filterAcitivity = "and Class in @selectAcitivity";
+                query = query.Where(b =>
+                    b.BlogDetails.Any(bd =>
+                        _context.Place.Any(p => p.PlaceId == bd.PlaceId && vm.selectAcitivity.Contains(p.Class))));
             }
-            string offset = "12";
-            if (vm.SearchNumber == null)
+
+            // Determine page size based on whether it's initial load or search
+            int pageSize = vm.SearchNumber == null ? 3 : 12;
+            int skipCount = vm.SearchNumber ?? 0;
+
+            // Apply pagination and order
+            var mList = query
+                .OrderBy(b => b.BlogId)
+                .Skip(skipCount)
+                .Take(pageSize)
+                .ToList();
+
+            // Convert to ViewModels
+            var vmList = new List<BlogVM>();
+            foreach (var item in mList)
             {
-                vm.SearchNumber = 0;
-                offset = "3";
+                vmList.Add(modeltoVM(item));
             }
-            string strSQL = $"select * from Blog as b where {strSerarch} exists(Select DetailsID from BlogDetails as bd where b.BlogID = BlogID and exists(select PlaceID from Place where bd.PlaceID = PlaceID {filterCounty} {filterAcitivity})) order by BlogId offset @SearchNumber rows fetch next {offset} rows only";
-            List<Blog> mList = _con.Query<Blog>(strSQL, vm).ToList();
-            List<BlogVM> vmList = new List<BlogVM>();
-            if (mList.Count > 0)
-            {                
-                foreach (var item in mList)
-                {
-                    vmList.Add(modeltoVM(item));
-                }
-            }            
+
             return vmList;
         }
 

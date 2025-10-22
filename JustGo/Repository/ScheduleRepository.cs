@@ -11,28 +11,41 @@ using System.Diagnostics;
 
 namespace JustGo.Repository
 {
-    public class ScheduleRepostioy : IScheduleRepostioy
+    public class ScheduleRepository : IScheduleRepository
     {
         readonly IDbConnection _con;
-        readonly TravelContext _context;        
+        readonly TravelContext _context;
 
-        public ScheduleRepostioy(TravelContext context, IDbConnection con)
+        public ScheduleRepository(TravelContext context, IDbConnection con)
         {
             _con = con;
             _context = context;            
         }
 
         public bool createScedule(ScheduleVM vm)
-        {            
-            try{
+        {
+            try
+            {
                 _context.Add(viewToModel(vm));
                 _context.SaveChanges();
+                return true;
             }
-            catch
+            catch (DbUpdateException ex)
             {
+                // Log database-specific errors
+                Console.WriteLine($"Error creating schedule: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
                 return false;
-            }            
-            return true;
+            }
+            catch (Exception ex)
+            {
+                // Log unexpected errors
+                Console.WriteLine($"Unexpected error creating schedule: {ex.Message}");
+                return false;
+            }
         }
 
         public bool copyScheduleByBlog(BlogVM vm)

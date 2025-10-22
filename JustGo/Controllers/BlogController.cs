@@ -66,9 +66,33 @@ namespace JustGo.Controllers
             return Json(_unit.blog.createScheduleToBlog(vm.ScheduleId,GetUserId()));
         }
 
+        [HttpPost]
+        [Authorize]
         public IActionResult deleteBlog([FromBody]BlogVM vm)
         {
-            return Json(_unit.blog.deleteBlog(vm));
+            // Security: Verify the blog belongs to the current user
+            var userId = GetUserId();
+            var existingBlog = _unit.blog.selectBlog(vm.BlogId);
+
+            if (existingBlog == null || existingBlog.BlogId == 0)
+            {
+                _logger.LogWarning("Attempt to delete non-existent blog. BlogId: {BlogId}", vm.BlogId);
+                return NotFound(new { message = "部落格不存在" });
+            }
+
+            if (existingBlog.UserId != userId)
+            {
+                _logger.LogWarning("Unauthorized delete attempt. UserId: {UserId}, BlogId: {BlogId}", userId, vm.BlogId);
+                return Forbid(); // 403 Forbidden
+            }
+
+            var result = _unit.blog.deleteBlog(vm);
+            if (result)
+            {
+                _logger.LogInformation("Blog deleted successfully. BlogId: {BlogId}, UserId: {UserId}", vm.BlogId, userId);
+            }
+
+            return Json(result);
         }
 
         //查詢使用者部落格(無細項)        
@@ -129,25 +153,42 @@ namespace JustGo.Controllers
         {
             string[] imageString;
             byte[] bytes;
+
             if (blogImage.base64 == null)
             {
+                _logger.LogWarning("Image base64 is null, skipping save");
                 return;
             }
+
             try
             {
                 imageString = blogImage.base64.Split(",");
+                if (imageString.Length < 2)
+                {
+                    _logger.LogError("Invalid base64 format for image: {ImageName}. Expected format 'data:image/type;base64,data'", blogImage.name);
+                    return;
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error splitting base64 string for image: {ImageName}", blogImage.name);
                 return;
             }
+
             blogImage.base64 = "";
+
             try
             {
                 bytes = Convert.FromBase64String(imageString[1]);
             }
-            catch
+            catch (FormatException ex)
             {
+                _logger.LogError(ex, "Invalid base64 data for image: {ImageName}", blogImage.name);
+                return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error converting base64 for image: {ImageName}", blogImage.name);
                 return;
             }
             Image image;
@@ -177,10 +218,20 @@ namespace JustGo.Controllers
                     {
                         image.Save(TargetFilename, ImageFormat.Jpeg);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        var i = new Bitmap(image);
-                        i.Save(TargetFilename, ImageFormat.Jpeg);
+                        _logger.LogWarning(ex, "Failed to save JPEG directly, converting to Bitmap. File: {FileName}", TargetFilename);
+                        try
+                        {
+                            var i = new Bitmap(image);
+                            i.Save(TargetFilename, ImageFormat.Jpeg);
+                            _logger.LogInformation("Successfully saved JPEG after Bitmap conversion. File: {FileName}", TargetFilename);
+                        }
+                        catch (Exception bitmapEx)
+                        {
+                            _logger.LogError(bitmapEx, "Failed to save JPEG even after Bitmap conversion. File: {FileName}", TargetFilename);
+                            throw;
+                        }
                     }
                     break;
                 //case "data:image/gif;base64":

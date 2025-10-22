@@ -2,9 +2,9 @@
 {
     public interface IUnitOfWork
     {
-        IBlogRepostioy blog { get;}
-        IPlaceWeatherRepostiory place { get;}
-        IScheduleRepostioy schedule { get;}
-        IUserKeepRepostiory keep { get;}        
+        IBlogRepository blog { get;}
+        IPlaceWeatherRepository place { get;}
+        IScheduleRepository schedule { get;}
+        IUserKeepRepository keep { get;}
     }
 }

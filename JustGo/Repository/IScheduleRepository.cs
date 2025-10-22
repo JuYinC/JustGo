@@ -3,7 +3,7 @@ using JustGo.ViewModels;
 
 namespace JustGo.Repository
 {
-    public interface IScheduleRepostioy
+    public interface IScheduleRepository
     {
         //搜尋使用者行程表
         public IList<ScheduleVM> selectUserSchedule(string UserId);

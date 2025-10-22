@@ -91,8 +91,8 @@
 3. **設定 User Secrets**
    ```bash
    cd JustGo
-   dotnet user-secrets set "Google:MapsApiKey" "your-google-maps-api-key"
-   dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True"
+   dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+   dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True"
    cd ..
    ```
 
@@ -249,10 +249,10 @@ dotnet test
 
 ```bash
 # 連線到 SQL Server
-docker exec -it justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C
+docker exec -it justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C
 
 # 執行 SQL 查詢
-docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C -Q "SELECT COUNT(*) FROM Travel.dbo.Blog"
+docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C -Q "SELECT COUNT(*) FROM Travel.dbo.Blog"
 ```
 
 ---

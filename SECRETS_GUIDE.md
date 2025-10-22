@@ -48,8 +48,8 @@ dotnet user-secrets list
 
 輸出：
 ```
-Google:MapsApiKey = AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk
-ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True
+Google:MapsApiKey = YOUR_GOOGLE_MAPS_API_KEY_HERE
+ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True
 ```
 
 ### 📍 儲存位置
@@ -192,7 +192,7 @@ User Secrets 會在執行時**自動覆蓋**這些空值。
 2. **編輯 .env 填入實際值**:
    ```bash
    # SQL Server Configuration (Docker)
-   SA_PASSWORD=YourStrong@Passw0rd
+   SA_PASSWORD=YOUR_SQL_PASSWORD_HERE
    DB_SERVER=localhost
    DB_PORT=1433
    DB_NAME=Travel
@@ -257,9 +257,9 @@ volumes:
 
 **範例**:
 ```bash
-dotnet user-secrets set "Google:MapsApiKey" "AIza..."
-dotnet user-secrets set "SendGrid:ApiKey" "SG...."
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=..."
+dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+dotnet user-secrets set "SendGrid:ApiKey" "YOUR_SENDGRID_API_KEY_HERE"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;..."
 ```
 
 ### 使用 .env 的情況
@@ -272,7 +272,7 @@ dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=..."
 
 **範例 (.env)**:
 ```bash
-SA_PASSWORD=YourStrong@Passw0rd
+SA_PASSWORD=YOUR_SQL_PASSWORD_HERE
 DB_SERVER=localhost
 DB_PORT=1433
 COMPOSE_PROJECT_NAME=justgo
@@ -316,8 +316,8 @@ cp .env.example .env
 
 # 3. 設定 User Secrets（給 .NET 用）
 cd JustGo
-dotnet user-secrets set "Google:MapsApiKey" "AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True"
+dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True"
 
 # 4. 驗證設定
 dotnet user-secrets list
@@ -339,8 +339,8 @@ dotnet run
 ```bash
 # 1. 設定 User Secrets
 cd JustGo
-dotnet user-secrets set "Google:MapsApiKey" "AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;..."
+dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;..."
 
 # 2. 清空 appsettings.json 的敏感資訊
 # 編輯 appsettings.json，將密碼改為空字串 ""
@@ -420,8 +420,8 @@ cp .env.example .env
 
 # 3. 設定 User Secrets（.NET 用）
 cd JustGo
-dotnet user-secrets set "Google:MapsApiKey" "AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True"
+dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True"
 
 # 4. 驗證
 dotnet user-secrets list
@@ -486,8 +486,8 @@ cat JustGo.csproj | grep "UserSecretsId"
 # 重新設定 User Secrets
 cd JustGo
 dotnet user-secrets clear
-dotnet user-secrets set "Google:MapsApiKey" "AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk"
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True"
+dotnet user-secrets set "Google:MapsApiKey" "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True"
 ```
 
 ---
@@ -561,8 +561,8 @@ git log -p -- JustGo/appsettings.json | grep -i "password"
 # https://rtyley.github.io/bfg-repo-cleaner/
 
 # 2. 建立檔案 passwords.txt，列出要刪除的密碼
-echo "YourStrong@Passw0rd" > passwords.txt
-echo "AIzaSyBtVnIXm-IWFLMzIL_XlbCjLyQjSuEVVhk" >> passwords.txt
+echo "YOUR_ACTUAL_LEAKED_PASSWORD" > passwords.txt
+echo "YOUR_ACTUAL_LEAKED_API_KEY" >> passwords.txt
 
 # 3. 執行 BFG
 bfg --replace-text passwords.txt
@@ -612,7 +612,7 @@ git push --force
 az webapp config appsettings set \
   --name justgo-app \
   --resource-group justgo-rg \
-  --settings "Google__MapsApiKey=AIza..." "ConnectionStrings__TravelDb=Server=..."
+  --settings "Google__MapsApiKey=YOUR_API_KEY" "ConnectionStrings__TravelDb=YOUR_CONNECTION_STRING"
 ```
 
 或使用 **Azure Key Vault**:

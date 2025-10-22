@@ -6,7 +6,7 @@ services:
     container_name: justgo-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong@Passw0rd
+      - SA_PASSWORD=${SA_PASSWORD}
       - MSSQL_PID=Developer
     ports:
       - "1433:1433"

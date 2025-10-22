@@ -2,6 +2,14 @@
 
 # JustGo Database Setup Script for Docker SQL Server
 
+# Load environment variables from .env file
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# Default password if not set in .env
+SA_PASSWORD=${SA_PASSWORD:-"JustGo2025!DevSQL#Secure"}
+
 echo "================================================"
 echo "  JustGo - Database Setup Script"
 echo "================================================"
@@ -35,7 +43,7 @@ echo "================================================"
 echo "Server: localhost,1433"
 echo "Database: Travel (will be created by migrations)"
 echo "User: sa"
-echo "Password: YourStrong@Passw0rd"
+echo "Password: (set in .env file)"
 echo ""
 
 # Check if .NET is installed

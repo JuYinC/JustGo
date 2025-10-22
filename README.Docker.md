@@ -81,7 +81,7 @@ Docker 連線字串已在 User Secrets 中設定：
 ```bash
 dotnet user-secrets list
 # 輸出:
-# ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True
+# ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True
 ```
 
 > 💡 **注意**: 連線字串現在使用 User Secrets 管理，不再硬編碼在 `appsettings.json` 中。詳見 [SECRETS_GUIDE.md](SECRETS_GUIDE.md)
@@ -93,14 +93,14 @@ dotnet user-secrets list
 - **伺服器**: localhost,1433
 - **驗證方式**: SQL Server Authentication
 - **登入名稱**: sa
-- **密碼**: YourStrong@Passw0rd
+- **密碼**: YOUR_SQL_PASSWORD_HERE (請參考 .env 檔案)
 - **資料庫**: Travel
 
 ### 使用 Docker CLI
 
 ```bash
 docker exec -it justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C
 ```
 
 執行 SQL 查詢範例：
@@ -172,12 +172,12 @@ dotnet user-secrets list
 
 應該看到：
 ```
-ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True
+ConnectionStrings:TravelDocker = Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True
 ```
 
 如果沒有，請設定：
 ```bash
-dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=True"
+dotnet user-secrets set "ConnectionStrings:TravelDocker" "Server=localhost,1433;Database=Travel;User Id=sa;Password=YOUR_SQL_PASSWORD_HERE;TrustServerCertificate=True;MultipleActiveResultSets=True"
 ```
 
 ### 重置所有設定
@@ -285,7 +285,7 @@ cd ..
 
 # 匯入種子資料
 docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C < database/seed-all-data.sql
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C < database/seed-all-data.sql
 ```
 
 ### 測試資料內容
@@ -306,7 +306,7 @@ docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
 ```bash
 # 建立備份
 docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C \
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C \
   -Q "BACKUP DATABASE [Travel] TO DISK = N'/var/opt/mssql/data/Travel.bak' WITH FORMAT"
 
 # 複製備份檔到本機
@@ -321,7 +321,7 @@ docker cp ./Travel.bak justgo-sqlserver:/var/opt/mssql/data/Travel.bak
 
 # 還原資料庫
 docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C \
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C \
   -Q "RESTORE DATABASE [Travel] FROM DISK = N'/var/opt/mssql/data/Travel.bak' WITH REPLACE"
 ```
 
@@ -335,7 +335,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: justgo-sqlserver
     environment:
-      - SA_PASSWORD=${SA_PASSWORD:-YourStrong@Passw0rd}
+      - SA_PASSWORD=${SA_PASSWORD:-YOUR_SQL_PASSWORD_HERE}
       - ACCEPT_EULA=Y
     ports:
       - "1433:1433"
@@ -352,7 +352,7 @@ volumes:
 
 ```bash
 # .env
-SA_PASSWORD=YourStrong@Passw0rd
+SA_PASSWORD=YOUR_SQL_PASSWORD_HERE
 DB_PORT=1433
 ```
 
@@ -425,7 +425,7 @@ A: 使用以下連線資訊：
 - Host: `localhost` 或 `127.0.0.1`
 - Port: `1433`
 - User: `sa`
-- Password: `YourStrong@Passw0rd`
+- Password: `YOUR_SQL_PASSWORD_HERE` (設定在 .env 檔案)
 - Database: `Travel`
 
 ### Q: 可以使用其他資料庫嗎？

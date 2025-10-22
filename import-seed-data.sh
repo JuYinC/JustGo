@@ -3,6 +3,14 @@
 # JustGo - Import Seed Data Script
 # 匯入台灣旅遊測試資料
 
+# Load environment variables from .env file
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# Default password if not set in .env
+SA_PASSWORD=${SA_PASSWORD:-"JustGo2025!DevSQL#Secure"}
+
 echo "================================================"
 echo "  JustGo - 匯入測試資料"
 echo "================================================"
@@ -21,7 +29,7 @@ echo ""
 # Wait for SQL Server to be ready
 echo "⏳ Checking SQL Server connection..."
 for i in {1..10}; do
-    if docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C -Q "SELECT 1" > /dev/null 2>&1; then
+    if docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -C -Q "SELECT 1" > /dev/null 2>&1; then
         echo "✓ SQL Server is ready"
         break
     fi
@@ -80,7 +88,7 @@ echo "================================================"
 echo ""
 
 # Import all seed data from consolidated file
-docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C < database/seed-all-data.sql
+docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -C < database/seed-all-data.sql
 
 if [ $? -ne 0 ]; then
     echo "❌ Error: Failed to import seed data"

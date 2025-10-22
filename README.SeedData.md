@@ -39,7 +39,7 @@ cd ..
 
 # 3. 匯入所有測試資料
 docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C < database/seed-all-data.sql
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C < database/seed-all-data.sql
 ```
 
 ## 測試帳號
@@ -196,7 +196,7 @@ docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
 ```bash
 # 連接到 SQL Server
 docker exec -it justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C
 
 # 檢查景點數量
 SELECT COUNT(*) as PlaceCount FROM Travel.dbo.Place;
@@ -225,7 +225,7 @@ JOIN Travel.dbo.AspNetUsers ON Blog.UserID = AspNetUsers.Id;
 ```bash
 # 方法 1: 刪除資料庫重新建立
 docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C \
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C \
   -Q "DROP DATABASE Travel"
 
 # 重新匯入
@@ -234,7 +234,7 @@ docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
 # 方法 2: 只清除資料保留架構
 # SQL 腳本已經包含 DELETE 語句，直接重新執行即可
 docker exec -i justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C < database/seed-all-data.sql
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C < database/seed-all-data.sql
 ```
 
 ## 注意事項
@@ -279,7 +279,7 @@ docker-compose restart
 ```bash
 # 檢查資料庫是否存在
 docker exec justgo-sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P "YourStrong@Passw0rd" -C \
+  -S localhost -U sa -P "YOUR_SQL_PASSWORD_HERE" -C \
   -Q "SELECT name FROM sys.databases"
 
 # 手動建立資料庫

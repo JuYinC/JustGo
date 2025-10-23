@@ -234,17 +234,34 @@
                               imageSrc(top4Blog.results[3].coverImage.name)
                           ];
 
+                      let isHovering = false;
+                      let animationFrameId = null;
+
+                      $('.block').on('mouseenter', function() {
+                          isHovering = true;
+                          if (!animationFrameId) {
+                              animateBlock();
+                          }
+                      });
+
                       $('.block').on('mousemove', function(e) {
                           mouse.X = (e.pageX - $(this).offset().left) - $('.block').width() / 2;
                           mouse.Y = (e.pageY - $(this).offset().top) - $('.block').height() / 2;
                       })
 
                       $('.block').on('mouseleave', function(e) {
+                          isHovering = false;
                           mouse.X = mouse.CX;
                           mouse.Y = mouse.CY;
                       })
 
-                      setInterval(function() {
+                      // Use requestAnimationFrame instead of setInterval for better performance
+                      function animateBlock() {
+                          if (!isHovering && Math.abs(block.CX - mouse.X) < 0.1 && Math.abs(block.CY - mouse.Y) < 0.1) {
+                              // Stop animation when not hovering and movement has settled
+                              animationFrameId = null;
+                              return;
+                          }
 
                           block.CY += (mouse.Y - block.CY) / 12;
                           block.CX += (mouse.X - block.CX) / 12;
@@ -254,7 +271,8 @@
                               transform: 'scale(1.03) translate(' + (block.CX * 0.05) + 'px, ' + (block.CY * 0.05) + 'px) rotateX(' + (block.CY * 0.05) + 'deg) rotateY(' + (block.CX * 0.05) + 'deg)'
                           })
 
-                      }, 20);
+                          animationFrameId = requestAnimationFrame(animateBlock);
+                      }
 
                       $('.slider .item').each(function(i) {
 

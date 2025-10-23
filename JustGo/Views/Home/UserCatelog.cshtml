@@ -450,12 +450,12 @@
                                     <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">
                                     @*<label for="inputNamel4" class="form-label mb-2 mt-2 ms-1 me-1">更改居住地</label>
                                     <input type="text" class="form-control mb-2 mt-2 ms-1 me-1" id="inputNamel4">*@
-                                    <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">修改電話號碼</label>
-                                    <input type="text" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入舊密碼</label>
-                                    <input type="password" class="form-control mb-2 mt-2 ms-1 me-1 " id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    <label for="exampleInputEmail1" class="form-label mb-2 mt-2 ms-1 me-1">輸入新密碼</label>
-                                    <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <label for="phoneInput" class="form-label mb-2 mt-2 ms-1 me-1">修改電話號碼</label>
+                                    <input type="text" class="form-control mb-2 mt-2 ms-1 me-1 " id="phoneInput" aria-describedby="phoneHelp">
+                                    <label for="oldPasswordInput" class="form-label mb-2 mt-2 ms-1 me-1">輸入舊密碼</label>
+                                    <input type="password" class="form-control mb-2 mt-2 ms-1 me-1 " id="oldPasswordInput" aria-describedby="oldPasswordHelp">
+                                    <label for="newPasswordInput" class="form-label mb-2 mt-2 ms-1 me-1">輸入新密碼</label>
+                                    <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="newPasswordInput" aria-describedby="newPasswordHelp">
                                     <label for="exampleInputPassword1" class="form-label mb-2 mt-2 ms-1 me-1">確認新密碼</label>
                                     <input type="password" class="form-control mb-2 mt-2 ms-1 me-1" id="exampleInputPassword1">
                                     <button type="button" class="btn btn-primary col-md-4 fs-4 btn-lg" style="margin-top:120px;" @@click="myFunction">儲存</button>
@@ -586,6 +586,13 @@
 
             },
             methods: {
+                // Draggable event handlers
+                onStart() {
+                    // Called when drag starts
+                },
+                onEnd() {
+                    // Called when drag ends
+                },
                 addcountry(index) {
                     this.selectcountry.push(this.country[index])
                     this.country.splice(index, 1);

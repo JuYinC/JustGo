@@ -21,8 +21,22 @@ namespace JustGo.Controllers
 
         [HttpPost]
         public IActionResult getPlace([FromBody] SelectPlaceVM select)
-        {            
-            return Json(_unit.place.getPlace(select));
+        {
+            try
+            {
+                if (select == null)
+                {
+                    return BadRequest(new { success = false, message = "無效的搜尋條件" });
+                }
+
+                var result = _unit.place.getPlace(select);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in getPlace");
+                return StatusCode(500, new { success = false, message = "搜尋景點時發生錯誤" });
+            }
         }
 
         [HttpPost]
@@ -71,6 +85,11 @@ namespace JustGo.Controllers
         [Authorize]
         public IActionResult setSchedule([FromBody] ScheduleVM vm)
         {
+            if (vm == null)
+            {
+                return BadRequest(new { success = false, message = "無效的行程資料" });
+            }
+
             if (vm.ScheduleId != 0)
             {
                 vm.UserId = GetUserId();

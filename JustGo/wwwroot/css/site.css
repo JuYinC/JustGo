@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import url('https://fonts.googleapis.com/earlyaccess/cwtexyen.css');
+/*
+ * Font imports moved to HTML <head> with preconnect for better performance
+ * See _Layout.cshtml for font loading optimization
+ */
 html {
   /* width: 1800px;  */
   font-size: 10px;

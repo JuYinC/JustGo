@@ -144,24 +144,47 @@
             el: '#app',
             data() {
                 return {
-                    schedule: [],
+                    schedule: {
+                        details: [] // Initialize with empty details array
+                    },
                     daySchedule: [],
                     map: null,
-                    icon: {
-                        url: "@Url.Content("~/file/photo/placeholder.png")",
-                        scaledSize: new google.maps.Size(45, 45),
-                        labelOrigin: new google.maps.Point(22, 17)
-                    },
+                    icon: null, // Will be initialized after Google Maps loads
                     markers: [],
                     roam: [],
                     duringDate: [],
                     selectWeather: [],
                     loading: true,
-                    selectDay:0,
+                    selectDay: 0,
+                }
+            },
+            created() {
+                // Initialize icon after Google Maps is loaded
+                if (typeof google !== 'undefined' && google.maps) {
+                    this.icon = {
+                        url: "@Url.Content("~/file/photo/placeholder.png")",
+                        scaledSize: new google.maps.Size(45, 45),
+                        labelOrigin: new google.maps.Point(22, 17)
+                    };
                 }
             },
             methods: {
                 initMap() {
+                    // Ensure Google Maps is loaded
+                    if (typeof google === 'undefined') {
+                        console.error('Google Maps not loaded');
+                        return;
+                    }
+
+                    // Initialize icon if not already done
+                    if (!this.icon) {
+                        this.icon = {
+                            url: "@Url.Content("~/file/photo/placeholder.png")",
+                            scaledSize: new google.maps.Size(45, 45),
+                            labelOrigin: new google.maps.Point(22, 17)
+                        };
+                    }
+
                     this.map = new google.maps.Map(document.getElementById("map"), {
                         center: { lat: 23.573837, lng: 120.97969 },
                         zoom: 8,  // 0-20

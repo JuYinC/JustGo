@@ -93,10 +93,14 @@
 <script async src="https://maps.googleapis.com/maps/api/js?key=@Configuration["Google:MapsApiKey"]"></script>
 <script src="https://unpkg.com/@@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-<script src="https://unpkg.com/vuex@3"></script>
-<script src="https://www.itxst.com/package/sortable/Sortable.min.js"></script>
-<script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"
+        onerror="console.error('Failed to load Vue 2');"></script>
+<script src="https://unpkg.com/vuex@3"
+        onerror="console.error('Failed to load Vuex');"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
+        onerror="console.error('Failed to load Sortable.js'); alert('無法載入拖拽功能，請重新整理頁面');"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"
+        onerror="console.error('Failed to load vuedraggable'); alert('無法載入拖拽功能，請重新整理頁面');"></script>
 @* tiempicker *@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -1219,7 +1223,18 @@
     })
 
     //行程組件vue
-    Vue.component('vuedraggable', window.vuedraggable.name)
+    // Check if vuedraggable loaded successfully
+    if (typeof window.vuedraggable !== 'undefined' && window.vuedraggable) {
+        Vue.component('vuedraggable', window.vuedraggable);
+    } else {
+        console.error('vuedraggable failed to load. Drag-and-drop functionality will not work.');
+        // Provide a fallback empty component
+        Vue.component('vuedraggable', {
+            template: '<div><slot></slot></div>',
+            props: ['list', 'options']
+        });
+    }
+
     new Vue({
         store,
         el: '#app4',

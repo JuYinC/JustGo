@@ -221,13 +221,44 @@
                 };
 
                 const copyblog = () => {
-                    let startDate = new Date(copyDate.value);
-                    if (startDate < new Date()) {
-                        Swal.fire("日期輸入錯誤");
+                    // Validate date is selected
+                    if (!copyDate.value) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '請選擇日期',
+                            text: '請先選擇行程開始日期'
+                        });
                         return;
                     }
+
+                    let startDate = new Date(copyDate.value);
+                    let today = new Date();
+                    today.setHours(0, 0, 0, 0); // Reset time to compare only dates
+
+                    if (startDate < today) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '日期輸入錯誤',
+                            text: '開始日期不能早於今天'
+                        });
+                        return;
+                    }
+
                     axios.post("@Url.Action("copySchedule","Schedule")", { BlogId: blogId.value, startDate })
-                        .then(() => { Swal.fire("複製行程成功") });
+                        .then(() => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '複製行程成功',
+                                text: '已複製到您的行程列表'
+                            });
+                        })
+                        .catch(err => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '複製失敗',
+                                text: '請稍後再試'
+                            });
+                        });
                 };
 
                 const likeblog = () => {
@@ -508,30 +539,12 @@
                             </div>
                         </div>
 
+                        <!-- Comments section - placeholder for future implementation -->
                         <div class="myshadow">
                             <div style="font-size:2.8rem;">留言</div>
-                            @*留言1*@
-                          
-                                <div class="d-flex align-items-center overflow-hidden">                                 
-                                    <div>
-                                        @*<img class="cover-fit" :src="getImages(CoverImage.name)" alt="Image">*@
-                                        <img class="chatimg" src="~/file/photo/user2.jpg"  alt="Image">
-                                    </div>
-                                    <div  class="viewcolor" style="flex:auto">                                   
-                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>綠水獺</small>
-                                        <div class="mx-1">景色很漂亮耶❤️ 謝謝小水獺推薦~~~~~~~~~~</div>
-                                    </div>                                
-                                </div>
-                                @*留言2*@
-                                <div class="d-flex align-items-center overflow-hidden" >                                 
-                                    <div>
-                                        @*<img class="cover-fit" :src="getImages(CoverImage.name)" alt="Image">*@
-                                        <img class="chatimg" src="~/file/photo/user3.jpg"  alt="Image">
-                                    </div>
-                                    <div class="viewcolor" style="flex:auto">                                   
-                                        <small><i class="fa fa-user mx-1" style="color:var(--primary-bule-light);"></i>不知名水獺</small>
-                                        <div class="mx-1">我去過這邊 很值得去耶😃</div>
-                                    </div>
+                            <div style="padding: 20px; text-align: center; color: #666;">
+                                <i class="fa fa-comments" style="font-size: 48px; color: #ddd; margin-bottom: 10px;"></i>
+                                <p>留言功能開發中，敬請期待！</p>
                             </div>
                         </div>
                         

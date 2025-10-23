@@ -90,62 +90,58 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script> *@
         
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"
+            onerror="console.error('Failed to load SweetAlert2'); window.Swal = { fire: (msg) => alert(typeof msg === 'string' ? msg : msg.title || 'Alert') };"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+            onerror="console.error('Failed to load jQuery from CDN'); this.onerror=null; this.src='~/lib/jquery/dist/jquery.min.js';"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-            
-            let chatbtn1 = document.getElementById("chatbtn")
-            let y = 0
-            
-            chatbtn1.addEventListener("click", function(){
-                
-                if(y==0){
-                    document.getElementById("chat").style.right = '0'
-                    y = y+1
-                    console.log('y+')
-                }else{
-                    document.getElementById("chat").style.right = '-520px'
-                    y = y-1
-                     console.log('y-')
-                }
-               
-                
-                console.log(y)
 
-                
-                //  if(x='-520px'){
-                //       chatbtn1.currentStyle.right='0px'
-                //  }else{
-                //      chatbtn1.currentStyle.right='-520px'
-                //  }
+            let chatbtn1 = document.getElementById("chatbtn");
+            let y = 0;
 
-                
- 
-                
-            })
+            // Only add listener if element exists
+            if (chatbtn1) {
+                chatbtn1.addEventListener("click", function(){
+                    const chatEl = document.getElementById("chat");
+                    if (!chatEl) return;
 
+                    if(y==0){
+                        chatEl.style.right = '0';
+                        y = y+1;
+                    }else{
+                        chatEl.style.right = '-520px';
+                        y = y-1;
+                    }
+                });
+            }
 
-            document.getElementById("forop").addEventListener("click", function(){
+            const forop = document.getElementById("forop");
+            if (forop) {
+                forop.addEventListener("click", function(){
+                    const opEl = document.getElementById("op");
+                    const outbtnEl = document.getElementById('outbtn');
 
-                if (document.getElementById("op").style.height=='0px'){
-                         document.getElementById("op").style.height = "50px"
-                           
-                         setTimeout(() => {
-                             document.getElementById('outbtn').style.display=''
-                         }, 100)
- 
-                }else{
-                        document.getElementById("op").style.height="0px"
+                    if (!opEl) return;
 
-                          setTimeout(() => {
-                             document.getElementById('outbtn').style.display='none'
-                         }, 100)
-                
-                }
-      
-            });
+                    if (opEl.style.height=='0px'){
+                        opEl.style.height = "50px";
+                        if (outbtnEl) {
+                            setTimeout(() => {
+                                outbtnEl.style.display='';
+                            }, 100);
+                        }
+                    }else{
+                        opEl.style.height="0px";
+                        if (outbtnEl) {
+                            setTimeout(() => {
+                                outbtnEl.style.display='none';
+                            }, 100);
+                        }
+                    }
+                });
+            }
     </script>
     <script>
     // Vue.createApp({

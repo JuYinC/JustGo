@@ -29,88 +29,92 @@
     @section Scripts{
     <script src="~/js/site.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js" onerror="console.error('Failed to load Vue from unpkg'); this.onerror=null; this.src='https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js';"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src='https://unpkg.com/viewerjs/dist/viewer.js'></script>
-    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src='https://unpkg.com/viewerjs/dist/viewer.js'
+            onerror="console.error('Failed to load Viewer.js');"></script>
+    <script src='https://unpkg.com/v-viewer/dist/v-viewer.js'
+            onerror="console.error('Failed to load v-viewer');"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'
+            onerror="console.error('Failed to load Moment.js'); window.moment = { format: () => 'N/A' };"></script>
+    <script src="https://unpkg.com/axios@1.5.0/dist/axios.min.js"
+            onerror="console.error('Failed to load Axios'); alert('無法載入必要資源，請檢查網路連線並重新整理頁面');"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            onerror="console.error('Failed to load Bootstrap');"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+            onerror="console.error('Failed to load DateRangePicker');"></script>
 
 
     <script>
+
+        // Check if Vue is loaded
+        if (typeof Vue === 'undefined') {
+            console.error('Vue is not loaded! Check your internet connection or CDN availability.');
+            alert('Vue.js failed to load. Please refresh the page or check your internet connection.');
+        }
 
         $("body").attr('data-bs-spy', 'scroll')
         $("body").attr('data-bs-target', '#list-example')
         $("body").attr('data-bs-offset', '0')
         $("body").attr('tabindex', '0')
 
-        Vue.use(VueViewer.default)
+        // Initialize v-viewer for Vue 3
+        if (typeof VueViewer !== 'undefined' && VueViewer.default) {
+            // v-viewer will be registered in the app
+        }
 
         $(function() {
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left'
             }, function(start, end, label) {
-                //console.log(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                // Date range selected
             }).on("hide.daterangepicker", function(ev) {
                 this.dispatchEvent(new Event('input'))
             });
         });
 
-        let id = 0;
-        let vm = new Vue({
-            el: `#bloginfo`,
-            data: {                
-                blogId: 0,
-                UserName: "Alley",
-                UserImage: "2208121714164777.jpg",
-                CoverImageName: "coverimage.jpg",
-                Title: '三天兩夜台東之旅',
-                Describe: '美好旅程的回憶從JustGO開始',
-                StartDate: null,
-                EndDate: null,
-                bool: false,
-                Like: 0,
-                daterange: null,
-                myscore: this.score,
-                mytempscore: this.score,
-                 //TAG
-                TagList:[],
-                tagBlog:[]
-            },
-            props: {
-                count: {
-                    type: Number,
-                    default: 5
-                },
-                score: {
-                    type: Number,
-                    default: 1
-                },
-                color: {
-                    type: String,
-                    default: '#FFC100'
-                }
-            },
-            computed: {
-                copyDate() {
-                    return this.daterange
-                },
-                comTagBlog(){
-                    return this.tagBlog.filter(e => e.blogId != this.blogId);
-                }
-            },
-            methods: {
-                TAG(tag){
-                 switch (tag) {
-                    case 1:
-                        return '文化';
-                        break;
+        const { reactive, ref, computed, onMounted } = Vue;
+
+        const BlogApp = {
+            setup() {
+                // Reactive data
+                const blogId = ref(0);
+                const UserName = ref("Alley");
+                const UserImage = ref("2208121714164777.jpg");
+                const CoverImageName = ref({ name: "coverimage.jpg" });
+                const Title = ref('三天兩夜台東之旅');
+                const Describe = ref('美好旅程的回憶從JustGO開始');
+                const StartDate = ref(null);
+                const EndDate = ref(null);
+                const bool = ref(false);
+                const Like = ref(0);
+                const daterange = ref(null);
+                const Details = ref([]);
+                const TagList = ref([]);
+                const tagBlog = ref([]);
+
+                // Props-like constants
+                const count = 5;
+                const score = 1;
+                const color = '#FFC100';
+                const myscore = ref(score);
+                const mytempscore = ref(score);
+
+                // Computed properties
+                const copyDate = computed(() => daterange.value);
+                const comTagBlog = computed(() =>
+                    tagBlog.value.filter(e => e.blogId != blogId.value)
+                );
+
+                // Methods
+                const TAG = (tag) => {
+                    switch (tag) {
+                        case 1:
+                            return '文化';
                     case 2:
                         return '生態'                      
                         break;
@@ -151,145 +155,198 @@
                         return '其他'                      
                         break;                   
                     }
-                }
-                ,                
-                getImages(loadimagesName) {
-                    return "@Url.Content("~/blogImages")/" + loadimagesName
-                },
-                userImageSrc(imageName) {
-                    return "@Url.Content("~/UserImages")/" + imageName
-                },
-                getdate(date) {
-                    return moment(date).format('YYYY/MM/DD')
-                },
-                gettime(time) {
-                    return moment(time).format('A HH')
-                },
-                gethref(dayIndex, viewIndex) {
-                    return "#list-item-" + dayIndex + "-" + viewIndex
-                },
-                getanchor(dayIndex, viewIndex) {
-                    return "list-item-" + dayIndex + "-" + viewIndex
-                },
-                copyURL: function() {
-                    let myurl = document.createElement('input')
-                    geturl = window.location.toString()
-                    document.body.appendChild(myurl);
-                    myurl.value = geturl;
-                    myurl.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(myurl);
-                },
-                copyblog() {
-                    let startDate = new Date(this.copyDate);
+                };
+
+                const getImages = (loadimagesName) => {
+                    return "@Url.Content("~/blogImages")/" + loadimagesName;
+                };
+
+                const userImageSrc = (imageName) => {
+                    return "@Url.Content("~/UserImages")/" + imageName;
+                };
+
+                const getdate = (date) => {
+                    return moment(date).format('YYYY/MM/DD');
+                };
+
+                const gettime = (time) => {
+                    return moment(time).format('A HH');
+                };
+
+                const gethref = (dayIndex, viewIndex) => {
+                    return "#list-item-" + dayIndex + "-" + viewIndex;
+                };
+
+                const getanchor = (dayIndex, viewIndex) => {
+                    return "list-item-" + dayIndex + "-" + viewIndex;
+                };
+
+                const copyURL = () => {
+                    const geturl = window.location.toString();
+
+                    // Use modern Clipboard API if available
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(geturl)
+                            .then(() => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '已複製網址',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy:', err);
+                                Swal.fire('複製失敗', '請手動複製網址', 'error');
+                            });
+                    } else {
+                        // Fallback for older browsers
+                        let myurl = document.createElement('input');
+                        document.body.appendChild(myurl);
+                        myurl.value = geturl;
+                        myurl.select();
+                        try {
+                            document.execCommand('copy');
+                            Swal.fire({
+                                icon: 'success',
+                                title: '已複製網址',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                        } catch (err) {
+                            console.error('Failed to copy:', err);
+                            Swal.fire('複製失敗', '請手動複製網址', 'error');
+                        }
+                        document.body.removeChild(myurl);
+                    }
+                };
+
+                const copyblog = () => {
+                    let startDate = new Date(copyDate.value);
                     if (startDate < new Date()) {
-                        Swal.fire("日期輸入錯誤")
+                        Swal.fire("日期輸入錯誤");
                         return;
                     }
-                    axios.post("@Url.Action("copySchedule","Schedule")", { BlogId: this.blogId, startDate })
-                        .then(() => { Swal.fire("複製行程成功") })
-                },
-                likeblog: function() {
-                    if (!this.bool) {
-                        this.bool = true;
-                        this.Like++;
+                    axios.post("@Url.Action("copySchedule","Schedule")", { BlogId: blogId.value, startDate })
+                        .then(() => { Swal.fire("複製行程成功") });
+                };
+
+                const likeblog = () => {
+                    if (!bool.value) {
+                        bool.value = true;
+                        Like.value++;
                     } else {
-                        this.bool = false;
-                        this.Like--;
+                        bool.value = false;
+                        Like.value--;
                     }
-                    axios.post("@Url.Action("userKeepBlog","Blog")", { id: this.blogId }).then(() => {
+                    axios.post("@Url.Action("userKeepBlog","Blog")", { id: blogId.value }).then(() => {
                     }).catch(() => {
-                        if (!this.bool) {
-                            this.bool = true;
-                            this.Like++;
+                        if (!bool.value) {
+                            bool.value = true;
+                            Like.value++;
                         } else {
-                            this.bool = false;
-                            this.Like--;
+                            bool.value = false;
+                            Like.value--;
                         }
-                    })
-                },
-                onChange(dayIndex) {
-                    for (let j = 0; j < this.Details.length; j++) {
-                        let timestamp = this.datetime[j]
-                        //console.log(timestamp)
-                        for (let i = 0; i < this.Details[j].length; i++) {
-                            this.Details[j][i].starttime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+                    });
+                };
 
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+                const onChange = (dayIndex) => {
+                    for (let j = 0; j < Details.value.length; j++) {
+                        let timestamp = Details.value[j].datetime || '09:00';
+                        for (let i = 0; i < Details.value[j].length; i++) {
+                            Details.value[j][i].starttime = timestamp;
+                            let hr = timestamp.substring(0, 2);
+                            let min = timestamp.substring(3, 5);
+                            let addhr = parseInt((Number(min) + Number(Details.value[j][i].min)) / 60);
+
+                            hr = Number(hr) + Number(addhr);
+                            min = (Number(min) + Number(Details.value[j][i].min)) % 60;
 
                             if (hr < 10) {
-                                hr = '0' + hr
+                                hr = '0' + hr;
                             }
                             if (min < 10) {
-                                min = '0' + min
+                                min = '0' + min;
                             }
 
-                            timestamp = hr + ':' + min
-                            this.Details[j][i].endtime = timestamp
+                            timestamp = hr + ':' + min;
+                            Details.value[j][i].endtime = timestamp;
                         }
                     }
-                },
-                blogUrl(id) {
-                      window.location.href = "@Url.Action("Blog","Home")?" + id
-                },
-                caltime(dayIndex) {
-                    for (let j = 0; j < this.Details.length; j++) {
-                        let timestamp = this.datetime[j]
-                        //console.log(timestamp)
-                        for (let i = 0; i < this.Details[j].length; i++) {
-                            this.Details[j][i].starttime = timestamp
-                            let hr = timestamp.substring(0, 2)
-                            let min = timestamp.substring(3, 5)
-                            let addhr = parseInt((Number(min) + Number(this.Details[j][i].min)) / 60)
+                };
 
-                            hr = Number(hr) + Number(addhr)
-                            min = (Number(min) + Number(this.Details[j][i].min)) % 60
+                const blogUrl = (id) => {
+                    window.location.href = "@Url.Action("Blog","Home")?" + id;
+                };
+
+                const caltime = (dayIndex) => {
+                    for (let j = 0; j < Details.value.length; j++) {
+                        let timestamp = Details.value[j].datetime || '09:00';
+                        for (let i = 0; i < Details.value[j].length; i++) {
+                            Details.value[j][i].starttime = timestamp;
+                            let hr = timestamp.substring(0, 2);
+                            let min = timestamp.substring(3, 5);
+                            let addhr = parseInt((Number(min) + Number(Details.value[j][i].min)) / 60);
+
+                            hr = Number(hr) + Number(addhr);
+                            min = (Number(min) + Number(Details.value[j][i].min)) % 60;
 
                             if (hr < 10) {
-                                hr = '0' + hr
+                                hr = '0' + hr;
                             }
                             if (min < 10) {
-                                min = '0' + min
+                                min = '0' + min;
                             }
 
-                            timestamp = hr + ':' + min
-                            this.Details[j][i].endtime = timestamp
+                            timestamp = hr + ':' + min;
+                            Details.value[j][i].endtime = timestamp;
                         }
                     }
-                },
-            },
-            mounted() {
-                let id = window.location.search.substring(1)
-                if (id != "") {
-                    axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id, }).then(res => {
-                        //console.log(res.data);
-                        this.blogId = res.data.blogId;
-                        this.CoverImageName = res.data.coverImage;
-                        this.UserImage = res.data.userImage;
-                        this.Details = res.data.details;
-                        this.EndDate = res.data.endDate;
-                        this.StartDate = res.data.startDate;
-                        this.Title = res.data.title;
-                        this.Describe = res.data.describe;
-                        this.UserName = res.data.userName;
-                        this.TagList = res.data.tagList;
-                        //getIsKeep
-                        this.Like = res.data.like;
-                        axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
-                            this.bool = res.data;
-                        })
-                        axios.post("@Url.Action("searchBlog","blog")",{ selectAcitivity: this.TagList }).then(res =>{
-                            this.tagBlog = res.data;
-                        })
-                    })
-                }
-            },
-        },
-        )
+                };
+
+                // Mounted lifecycle
+                onMounted(() => {
+                    let id = window.location.search.substring(1);
+                    if (id != "") {
+                        axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id }).then(res => {
+                            blogId.value = res.data.blogId;
+                            CoverImageName.value = res.data.coverImage;
+                            UserImage.value = res.data.userImage;
+                            Details.value = res.data.details;
+                            EndDate.value = res.data.endDate;
+                            StartDate.value = res.data.startDate;
+                            Title.value = res.data.title;
+                            Describe.value = res.data.describe;
+                            UserName.value = res.data.userName;
+                            TagList.value = res.data.tagList;
+                            Like.value = res.data.like;
+
+                            axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
+                                bool.value = res.data;
+                            });
+
+                            axios.post("@Url.Action("searchBlog","blog")", { selectAcitivity: TagList.value }).then(res => {
+                                tagBlog.value = res.data;
+                            });
+                        });
+                    }
+                });
+
+                // Return all reactive properties and methods
+                return {
+                    blogId, UserName, UserImage, CoverImageName, Title, Describe,
+                    StartDate, EndDate, bool, Like, daterange, Details, TagList, tagBlog,
+                    count, score, color, myscore, mytempscore,
+                    copyDate, comTagBlog,
+                    TAG, getImages, userImageSrc, getdate, gettime, gethref, getanchor,
+                    copyURL, copyblog, likeblog, onChange, blogUrl, caltime
+                };
+            }
+        };
+
+        // Create and mount the Vue 3 app
+        Vue.createApp(BlogApp).mount('#bloginfo');
 
     </script>
     }

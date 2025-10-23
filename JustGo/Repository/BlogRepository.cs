@@ -10,6 +10,7 @@ using JustGo.ViewModels;
 using System.Data;
 using System.Diagnostics;
 using JustGo.Data;
+using JustGo.Constants;
 
 namespace JustGo.Repository
 {
@@ -62,7 +63,7 @@ namespace JustGo.Repository
             BlogVM blogVm = new BlogVM()
             {
                 UserName = user.Name,
-                UserImage = "2208121714164777.jpg",
+                UserImage = AppConstants.DefaultUserImage,
                 Like = 0,
                 StartDate = schedule.StartDate,
                 EndDate = schedule.EndDate
@@ -232,6 +233,26 @@ namespace JustGo.Repository
                     foreach (BlogDetails item in model.BlogDetails.Where(e => e.StartTime.Day == model.StartDate.Day + i))
                     {                        
                         var p = _context.Place.SingleOrDefault(e => e.PlaceId == item.PlaceId)??new Place();
+                        List<blogImage>? images = null;
+                        if (!string.IsNullOrEmpty(item.Images))
+                        {
+                            try
+                            {
+                                // Try to deserialize as JSON array
+                                images = JsonConvert.DeserializeObject<List<blogImage>>(item.Images);
+                            }
+                            catch (JsonReaderException)
+                            {
+                                // If it fails, assume it's a plain filename string
+                                // This handles legacy data like "miyahara-icecream.jpg"
+                                images = new List<blogImage>
+                                {
+                                    new blogImage { name = item.Images }
+                                };
+                                // Silently convert - this is expected for legacy data
+                            }
+                        }
+
                         vm.Details[i].Add(new BlogDetailsVM()
                         {
                             StartTime = item.StartTime,
@@ -241,7 +262,7 @@ namespace JustGo.Repository
                             P_Add = p.Add,
                             P_tel = p.Tel,
                             Describe = item.Describe,
-                            Images = JsonConvert.DeserializeObject<List<blogImage>>(item.Images),
+                            Images = images ?? new List<blogImage>(),
                             Score = item.Score
                         });
                     }
@@ -257,7 +278,7 @@ namespace JustGo.Repository
                 UserId = vm.UserId,
                 Describe = vm.Describe,
                 ImageName = "",
-                Like = _context.UserKeep.Where(e=>e.KeepClass==1&&e.KeepId==vm.BlogId).Count(),
+                Like = _context.UserKeep.Where(e=>e.KeepClass==AppConstants.KeepClass.Blog&&e.KeepId==vm.BlogId).Count(),
                 Title = vm.Title,
                 StartDate=vm.StartDate,
                 EndDate = vm.EndDate,

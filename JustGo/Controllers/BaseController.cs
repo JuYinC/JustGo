@@ -7,16 +7,20 @@ namespace JustGo.Controllers
 {
     public class BaseController : Controller
     {
+        protected ILogger? _logger;
+
         [Authorize]
         protected string GetUserId()
         {
-#pragma warning disable CS8600 
-            var user = (ClaimsIdentity)User.Identity;
-#pragma warning restore CS8600 
-#pragma warning disable CS8602 
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
-#pragma warning restore CS8602 
-            return userId.ToString();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                _logger?.LogError("Unable to get user ID from claims");
+                throw new UnauthorizedAccessException("使用者身份驗證失敗");
+            }
+
+            return userId;
         }
     }
 }

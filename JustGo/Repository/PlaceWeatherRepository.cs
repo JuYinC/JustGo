@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using JustGo.Constants;
 
 namespace JustGo.Repository
 {
@@ -24,16 +25,16 @@ namespace JustGo.Repository
         {
             if (vm.Distance != null)
             {
-                if(vm.Distance <= 15)
+                if(vm.Distance <= AppConstants.Distance.NearbyDistanceKm)
                 {
-                    return _con.Query<Place>("select top(500) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) where Class < 15 order by Distance", vm).ToList();
+                    return _con.Query<Place>($"select top({AppConstants.SearchDefaults.NearbyPlacesLimit}) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) where Class < {AppConstants.PlaceClass.AttractionMaxClass} order by Distance", vm).ToList();
                 }
                 else
                 {
-                    return _con.Query<Place>("select top(200) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) where Class < 15 order by NEWID()", vm).ToList();
+                    return _con.Query<Place>($"select top({AppConstants.SearchDefaults.RandomPlacesLimit}) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) where Class < {AppConstants.PlaceClass.AttractionMaxClass} order by NEWID()", vm).ToList();
                 }
-            }            
-            return _con.Query<Place>("select top(200) * from fn_selePlaceDistance(@Lat,@Lng,15) where Class < 15 order by NEWID()", vm).ToList();            
+            }
+            return _con.Query<Place>($"select top({AppConstants.SearchDefaults.RandomPlacesLimit}) * from fn_selePlaceDistance(@Lat,@Lng,{AppConstants.Distance.DefaultDistanceKm}) where Class < {AppConstants.PlaceClass.AttractionMaxClass} order by NEWID()", vm).ToList();
         }
 
         public ICollection<Place> getPlaceFilter(SelectPlaceVM vm)
@@ -41,11 +42,11 @@ namespace JustGo.Repository
             string sqlStr;
             //sqlStr = $"select * from Place ";
             //sqlStr = $"select * from fn_selePlaceDistance(22.6397082860113,120.30264837097221,40) ";
-            sqlStr = $"select top(500) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
+            sqlStr = $"select top({AppConstants.SearchDefaults.NearbyPlacesLimit}) * from fn_selePlaceDistance(@Lat,@Lng,@Distance) ";
             bool i = true;
             if (vm.selectCounty != null && vm.selectCounty.Length > 0)
-            {                
-                sqlStr = "select top(500) * from Place Where Region in @selectCounty";
+            {
+                sqlStr = $"select top({AppConstants.SearchDefaults.NearbyPlacesLimit}) * from Place Where Region in @selectCounty";
                 i = false;
 
             }
@@ -63,33 +64,33 @@ namespace JustGo.Repository
                             sqlStr += " and Class in @selectAcitivity ";
                         }
                     }
-                    sqlStr += " and Class <15";                    
+                    sqlStr += $" and Class <{AppConstants.PlaceClass.AttractionMaxClass}";
                     break;
                 case "餐飲":
                     if (i)
                     {
-                        sqlStr += "Where Class = '15' ";
+                        sqlStr += $"Where Class = '{AppConstants.PlaceClass.RestaurantMaxClass}' ";
                     }
                     else
                     {
-                        sqlStr += " and Class = '15' ";
+                        sqlStr += $" and Class = '{AppConstants.PlaceClass.RestaurantMaxClass}' ";
                     }
                     break;
                 case "旅宿":
                     if (i)
                     {
-                        sqlStr += "Where Class = '16' ";
+                        sqlStr += $"Where Class = '{AppConstants.PlaceClass.HotelClass}' ";
                     }
                     else
                     {
-                        sqlStr += " and Class = '16' ";
+                        sqlStr += $" and Class = '{AppConstants.PlaceClass.HotelClass}' ";
                     }
                     break;
                 default:
-                    sqlStr += "Where Class <15";
+                    sqlStr += $"Where Class <{AppConstants.PlaceClass.AttractionMaxClass}";
                     break;
             }
-            if (vm.selectCounty != null && vm.selectCounty.Length > 0 || vm.Distance>15)
+            if (vm.selectCounty != null && vm.selectCounty.Length > 0 || vm.Distance>AppConstants.Distance.NearbyDistanceKm)
             {
                 sqlStr += " order by NEWID()";
             }

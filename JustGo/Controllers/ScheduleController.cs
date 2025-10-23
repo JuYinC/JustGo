@@ -9,8 +9,8 @@ namespace JustGo.Controllers
 {
     public class ScheduleController : BaseController
     {
-        
-        readonly ILogger _logger;
+
+        new readonly ILogger _logger;
         readonly IUnitOfWork _unit;
         public ScheduleController(ILogger<ScheduleController> logger, IUnitOfWork unit)
         {
@@ -94,9 +94,24 @@ namespace JustGo.Controllers
         }
         
 
-        public IActionResult selectWeather()
+        [HttpGet]
+        public IActionResult selectWeather([FromQuery] string? location)
         {
-            return Json(_unit.place.getWeatherByLocation("dd"));
+            if (string.IsNullOrWhiteSpace(location))
+            {
+                _logger.LogWarning("Weather location parameter is empty or null");
+                return BadRequest(new { message = "地點參數不能為空" });
+            }
+
+            var weather = _unit.place.getWeatherByLocation(location);
+
+            if (weather == null || !weather.Any())
+            {
+                _logger.LogWarning("No weather data found for location: {Location}", location);
+                return NotFound(new { message = $"找不到 {location} 的天氣資料" });
+            }
+
+            return Json(weather);
         }
     }
 }

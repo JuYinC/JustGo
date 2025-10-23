@@ -1,6 +1,7 @@
 ﻿using JustGo.Models;
 using JustGo.ViewModels;
 using System.Data;
+using JustGo.Constants;
 
 namespace JustGo.Repository
 {
@@ -47,7 +48,7 @@ namespace JustGo.Repository
                 var blog = _context.Blog.SingleOrDefault(e => e.BlogId == keep.KeepNumber);
                 if (blog != null)
                 {
-                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == 0 && e.KeepNumber == vm.Id).Count();
+                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == AppConstants.KeepClass.Blog && e.KeepNumber == vm.Id).Count();
                     _context.Update(blog);
                     _context.SaveChanges();
                     return true;
@@ -66,7 +67,7 @@ namespace JustGo.Repository
                 var blog = _context.Blog.SingleOrDefault(e => e.BlogId == vm.Id);
                 if (blog != null)
                 {
-                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == 0 && e.KeepNumber == vm.Id).Count();
+                    blog.Like = _context.UserKeep.Where(e => e.KeepClass == AppConstants.KeepClass.Blog && e.KeepNumber == vm.Id).Count();
                     _context.Update(blog);
                     _context.SaveChanges();
                     return true;

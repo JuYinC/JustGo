@@ -1,16 +1,17 @@
-﻿using JustGo.ViewModels;
+using JustGo.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using JustGo.Repository;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
+using JustGo.Constants;
 
 namespace JustGo.Controllers
 {
     public class BlogController : BaseController
     {
-        readonly ILogger _logger;
+        new readonly ILogger _logger;
         readonly IWebHostEnvironment _webHostEnvironment;        
         readonly IUnitOfWork _unit;
         public BlogController(ILogger<BlogController> logger, IWebHostEnvironment webHostEnvironment,IUnitOfWork unit)
@@ -154,10 +155,11 @@ namespace JustGo.Controllers
             string[] imageString;
             byte[] bytes;
 
-            if (blogImage.base64 == null)
+            // Validate base64 is not null
+            if (string.IsNullOrEmpty(blogImage.base64))
             {
-                _logger.LogWarning("Image base64 is null, skipping save");
-                return;
+                _logger.LogWarning("Image base64 is null or empty, skipping save");
+                throw new ArgumentException("圖片資料為空");
             }
 
             try
@@ -166,13 +168,22 @@ namespace JustGo.Controllers
                 if (imageString.Length < 2)
                 {
                     _logger.LogError("Invalid base64 format for image: {ImageName}. Expected format 'data:image/type;base64,data'", blogImage.name);
-                    return;
+                    throw new ArgumentException("圖片格式錯誤");
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not ArgumentException)
             {
                 _logger.LogError(ex, "Error splitting base64 string for image: {ImageName}", blogImage.name);
-                return;
+                throw new ArgumentException("圖片格式錯誤", ex);
+            }
+
+            // Validate MIME type before processing
+            var mimeType = imageString[0];
+            if (mimeType != AppConstants.FileUpload.MimeTypes.Png &&
+                mimeType != AppConstants.FileUpload.MimeTypes.Jpeg)
+            {
+                _logger.LogWarning("Unsupported image MIME type: {MimeType}", mimeType);
+                throw new ArgumentException($"不支援的圖片格式: {mimeType}");
             }
 
             blogImage.base64 = "";
@@ -184,65 +195,88 @@ namespace JustGo.Controllers
             catch (FormatException ex)
             {
                 _logger.LogError(ex, "Invalid base64 data for image: {ImageName}", blogImage.name);
-                return;
+                throw new ArgumentException("圖片資料格式錯誤", ex);
             }
-            catch (Exception ex)
+
+            // Validate file size
+            if (bytes.Length > AppConstants.FileUpload.MaxFileSizeBytes)
             {
-                _logger.LogError(ex, "Unexpected error converting base64 for image: {ImageName}", blogImage.name);
-                return;
+                _logger.LogWarning("Image file size {FileSize} exceeds maximum allowed size {MaxSize}",
+                    bytes.Length, AppConstants.FileUpload.MaxFileSizeBytes);
+                throw new ArgumentException($"檔案大小超過限制 ({AppConstants.FileUpload.MaxFileSizeMB}MB)");
             }
             Image image;
             string WebRootPatch = _webHostEnvironment.WebRootPath;
 #pragma warning disable CA1416 // 驗證平台相容性
-            using (MemoryStream ms = new MemoryStream(bytes))
+            try
             {
-                image = Image.FromStream(ms);
-                if (blogImage.name == "" || blogImage.name == null)
+                using (MemoryStream ms = new MemoryStream(bytes))
                 {
-                    Random random = new Random();
-                    blogImage.name = DateTime.Now.ToString("yyMMdHHmmss") + random.Next(1000, 10000).ToString();
+                    // Validate it's actually a valid image by loading it
+                    image = Image.FromStream(ms);
+
+                    // Generate secure filename using GUID to prevent predictable filenames
+                    if (string.IsNullOrEmpty(blogImage.name))
+                    {
+                        blogImage.name = Guid.NewGuid().ToString();
+                    }
                 }
             }
-            string TargetFilename = Path.Combine(WebRootPatch, "blogImages", blogImage.name);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Invalid image data - could not load image from stream");
+                throw new ArgumentException("圖片資料無效", ex);
+            }
+
+            string extension = "";
+            ImageFormat format;
+
             switch (imageString[0])
             {
                 case "data:image/png;base64":
-                    TargetFilename += ".png";
-                    blogImage.name += ".png";
-                    image.Save(TargetFilename, ImageFormat.Png);
+                    extension = ".png";
+                    format = ImageFormat.Png;
                     break;
                 case "data:image/jpeg;base64":
-                    TargetFilename += ".jpg";
-                    blogImage.name += ".jpg";
-                    try
-                    {
-                        image.Save(TargetFilename, ImageFormat.Jpeg);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning(ex, "Failed to save JPEG directly, converting to Bitmap. File: {FileName}", TargetFilename);
-                        try
-                        {
-                            var i = new Bitmap(image);
-                            i.Save(TargetFilename, ImageFormat.Jpeg);
-                            _logger.LogInformation("Successfully saved JPEG after Bitmap conversion. File: {FileName}", TargetFilename);
-                        }
-                        catch (Exception bitmapEx)
-                        {
-                            _logger.LogError(bitmapEx, "Failed to save JPEG even after Bitmap conversion. File: {FileName}", TargetFilename);
-                            throw;
-                        }
-                    }
+                    extension = ".jpg";
+                    format = ImageFormat.Jpeg;
                     break;
-                //case "data:image/gif;base64":
-                //    TargetFilename += ".gif";
-                //    blogImage.name += ".gif";
-                //    image.Save(TargetFilename, ImageFormat.Gif);
-                //    break;
-#pragma warning restore CA1416 // 驗證平台相容性
                 default:
-                    return;
+                    _logger.LogWarning("Unsupported image format: {Format}", imageString[0]);
+                    throw new ArgumentException($"不支援的圖片格式: {imageString[0]}");
             }
+
+            // Validate extension
+            if (!AppConstants.FileUpload.AllowedImageExtensions.Contains(extension.ToLower()))
+            {
+                _logger.LogWarning("File extension {Extension} not in allowed list", extension);
+                throw new ArgumentException($"不支援的圖片格式: {extension}");
+            }
+
+            blogImage.name += extension;
+            string TargetFilename = Path.Combine(WebRootPatch, "blogImages", blogImage.name);
+
+            try
+            {
+                image.Save(TargetFilename, format);
+                _logger.LogInformation("Image saved successfully: {FileName}", TargetFilename);
+            }
+            catch (Exception ex) when (format == ImageFormat.Jpeg)
+            {
+                _logger.LogWarning(ex, "Failed to save JPEG directly, converting to Bitmap. File: {FileName}", TargetFilename);
+                try
+                {
+                    var bitmap = new Bitmap(image);
+                    bitmap.Save(TargetFilename, ImageFormat.Jpeg);
+                    _logger.LogInformation("Successfully saved JPEG after Bitmap conversion. File: {FileName}", TargetFilename);
+                }
+                catch (Exception bitmapEx)
+                {
+                    _logger.LogError(bitmapEx, "Failed to save JPEG even after Bitmap conversion. File: {FileName}", TargetFilename);
+                    throw;
+                }
+            }
+#pragma warning restore CA1416 // 驗證平台相容性
         }
     }
 }

@@ -1175,10 +1175,10 @@
                     this.saveData.push([]);
                     for (let j = 0; j < this.travel[i].length; j++) {
                         this.saveData[i].push({
-                            startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
-                            endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
-                            weatherWarning: false,
-                            place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
+                            StartTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                            EndTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                            WeatherWarning: false,
+                            Place: { PlaceId: this.travel[i][j].placeId, Town: this.travel[i][j].town }
                         })
                     }
                 }
@@ -1188,8 +1188,8 @@
                         StartDate: new Date(this.duringDate[0]),
                         EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
                         WeatherWarning: false,
-                        title: "123",
-                        details: this.saveData,
+                        Title: "123",
+                        Details: this.saveData,
                     })
 
             },
@@ -1336,7 +1336,7 @@
                                             <transition-group>
 
 
-                                                          <div class="item" v-for="(view,veiwIndex) in day" :key="view">
+                                                          <div class="item" v-for="(view,veiwIndex) in day" :key="veiwIndex">
 
 
                                                             <div class="weather-info">
@@ -1711,10 +1711,10 @@
                     this.saveData.push([]);
                     for (let j = 0; j < this.travel[i].length; j++) {
                         this.saveData[i].push({
-                            startTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
-                            endTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
-                            weatherWarning: false,
-                            place: { placeId: this.travel[i][j].placeId, town: this.travel[i][j].town }
+                            StartTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].startTime),
+                            EndTime: new Date(this.duringDate[i] + ' ' + this.travel[i][j].endTime),
+                            WeatherWarning: false,
+                            Place: { PlaceId: this.travel[i][j].placeId, Town: this.travel[i][j].town }
                         })
                     }
                 }
@@ -1725,8 +1725,8 @@
                         StartDate: new Date(this.duringDate[0]),
                         EndDate: new Date(this.duringDate[this.duringDate.length - 1]),
                         WeatherWarning: false,
-                        title: this.$store.state.title,
-                        details: this.saveData,
+                        Title: this.$store.state.title,
+                        Details: this.saveData,
                     })
             },
         },

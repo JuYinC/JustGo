@@ -360,7 +360,7 @@
                         </div>
                     <div class="block">
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                            <div  v-for="(item) in nextSchedule" :key="scheduleId" :class="item.weatherWarning==true?'schedulewarn':'schedule'">
+                            <div  v-for="(item) in nextSchedule" :key="item.scheduleId" :class="item.weatherWarning==true?'schedulewarn':'schedule'">
                                 <div class="imgbox">
                                     <img src="~/file/photo/journal.jpg" class="picture" />
                                 </div>
@@ -386,7 +386,7 @@
                     <div class="travel">過往行程</div>
                     <div class="block">
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                            <div class="schedule" v-for="(item) in exSchedule" :key="scheduleId">
+                            <div class="schedule" v-for="(item) in exSchedule" :key="item.scheduleId">
                                 <div class="imgbox">
                                     <img src="~/file/photo/cem.jpg" class="picture" />
                                 </div>
@@ -404,7 +404,7 @@
                     <div class="travel">遊記</div>
                     <div class="block">
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                            <div class="schedule" v-for="(item,index) in blog" :key="blogId">
+                            <div class="schedule" v-for="(item,index) in blog" :key="item.blogId">
                                 <div class="imgbox">
                                     @*<img src="~/file/photo/journal.jpg" class="picture" />*@
                                     <img :src="getImages(item.coverImage.name)" class="picture"/>
@@ -424,7 +424,7 @@
                     <div class="travel">收藏</div>
                     <div class="block">
                         <div class="schedules row row-cols-2 row-cols-md-3 row-cols-xl-5 ">
-                            <div class="schedule" v-for="(item,index) in keepBlog" :key="blogId">
+                            <div class="schedule" v-for="(item,index) in keepBlog" :key="item.blogId">
                                 <div class="imgbox">
                                     @*<img src="~/file/photo/journal.jpg" class="picture" />*@
                                     <img :src="getImages(item.coverImage.name)" class="picture"/>

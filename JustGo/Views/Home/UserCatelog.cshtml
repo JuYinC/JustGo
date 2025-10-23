@@ -608,7 +608,7 @@
                 deleteSchedule(scheduleId) {
                     axios.post("@Url.Action("deleteSchedule","Schedule")", { ScheduleId: scheduleId })
                         .then(res => { this.showSchedule.splice(this.showSchedule.findIndex(e => e.scheduleId == res.data), 1) })
-                        .catch(err => console.log("err"))
+                        .catch(err => Swal.fire("刪除失敗", "請稍後再試", "error"))
                 },
                 createBlog(scheduleId) {
                     window.location.href = '@Url.Action("EditBlog","Home")#create?' + scheduleId
@@ -619,12 +619,12 @@
                 deleteBlog(blogId) {
                     axios.post("@Url.Action("deleteBlog","blog")", { blogId: blogId })
                         .then(res => { this.showBlog.splice(this.showBlog.findIndex(e => e.blogId == blogId), 1) })
-                        .catch(err => console.log("err"))
+                        .catch(err => Swal.fire("刪除失敗", "請稍後再試", "error"))
                 },
                 deleteKeep(blogId) {
                     axios.post("@Url.Action("userKeepBlog","blog")", { id: blogId })
                         .then(res => { this.userKeepBlog.splice(this.userKeepBlog.findIndex(e => e.blogId == blogId), 1) })
-                        .catch(err => console.log("err"))
+                        .catch(err => Swal.fire("操作失敗", "請稍後再試", "error"))
                 },
                 checkBlog(blogId) {
                     window.location.href = '@Url.Action("Blog","Home")?' + blogId
@@ -645,7 +645,6 @@
                         month = day.getMonth() + 1;
                         date = day.getDate();
                         this.showSchedule[i].endDate = year + "/" + month + "/" + date
-                        console.log("for")
                     }
                 },
                 formateTime2() {
@@ -661,7 +660,6 @@
                         month = day.getMonth() + 1;
                         date = day.getDate();
                         this.showBlog[i].endDate = year + "/" + month + "/" + date
-                        console.log("for")
                     }
                 },
                 formateTime3() {
@@ -677,7 +675,6 @@
                         month = day.getMonth() + 1;
                         date = day.getDate();
                         this.userKeepBlog[i].endDate = year + "/" + month + "/" + date
-                        console.log("for")
                     }
                 },
                 getImages(loadimagesName) {
@@ -690,13 +687,13 @@
             mounted() {
                 axios.get("@Url.Action("selectUserSchedule","Schedule")")
                     .then(res => { this.showSchedule = res.data; this.formateTime(); })
-                    .catch(err => console.log(err));
+                    .catch(err => Swal.fire("載入失敗", "無法載入行程資料", "error"));
                 axios.get("@Url.Action("selectUserBlog","Blog")")
                     .then(res => { this.showBlog = res.data; this.formateTime2(); })
-                    .catch(err => console.log(err));
+                    .catch(err => Swal.fire("載入失敗", "無法載入遊記資料", "error"));
                 axios.get("@Url.Action("getUserKeepBlog","Blog")")
                     .then(res => { this.userKeepBlog = res.data; this.formateTime3(); })
-                    .catch(err => console.log(err));
+                    .catch(err => Swal.fire("載入失敗", "無法載入收藏資料", "error"));
             },
         })
     </script>

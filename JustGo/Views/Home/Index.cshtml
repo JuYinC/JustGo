@@ -12,8 +12,7 @@
 }
 
     @section Scripts{
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-            onerror="console.error('Failed to load jQuery');"></script>
+    <!-- jQuery is loaded in _Layout.cshtml -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             onerror="console.error('Failed to load Bootstrap');"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"
@@ -38,12 +37,14 @@
             console.error('Vue is not loaded! Check your internet connection or CDN availability.');
             alert('Vue.js failed to load. Please refresh the page or check your internet connection.');
         }
-        const {reactive, ref ,onMounted} = Vue;      
+        const {reactive, ref ,onMounted} = Vue;
           const App = {
               setup() {
                   const search = reactive({ results: [] })
                   let searchString = ref("")
                   const top4Blog = reactive({ results: [] })
+                  const isLoadingBlogs = ref(false)
+                  const isLoadingTop4 = ref(true)
                   const northern = ['基隆市', '新北市', '臺北市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'];
                   const central = ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣',];
                   const south = ['嘉義縣', '嘉義市', '臺南市', '高雄市', '屏東縣',];
@@ -106,8 +107,17 @@
                               select.selectCounty = [];
                               select.Search = "";
                               break;
-                      }                      
-                      axios.post("@Url.Action("searchBlog","Blog")", select).then(res => search.results = res.data)
+                      }
+                      isLoadingBlogs.value = true;
+                      axios.post("@Url.Action("searchBlog","Blog")", select)
+                          .then(res => {
+                              search.results = res.data;
+                              isLoadingBlogs.value = false;
+                          })
+                          .catch(err => {
+                              console.error('Failed to search blogs:', err);
+                              isLoadingBlogs.value = false;
+                          });
                   }
                   function imageSrc(imageName) {
                       return "@Url.Content("~/blogImages")/" + imageName
@@ -130,10 +140,25 @@
                   function blogUrl(id) {
                       return "@Url.Action("Blog","Home")?" + id
                   }
+                  // Throttle flag to prevent multiple simultaneous requests
+                  let isLoadingMore = false;
+
                   function scroll() {
-                      if (window.scrollY + window.screen.height >= document.body.scrollHeight) {
+                      // Throttle: prevent multiple simultaneous requests
+                      if (isLoadingMore) return;
+
+                      if (window.scrollY + window.screen.height >= document.body.scrollHeight - 100) {
+                          isLoadingMore = true;
                           select.searchNumber += searchNumber;
-                          axios.post("@Url.Action("searchBlog","Blog")", select).then(res => Array.prototype.push.apply(search.results, res.data))
+                          axios.post("@Url.Action("searchBlog","Blog")", select)
+                              .then(res => {
+                                  Array.prototype.push.apply(search.results, res.data);
+                                  isLoadingMore = false;
+                              })
+                              .catch(err => {
+                                  console.error('Failed to load more blogs:', err);
+                                  isLoadingMore = false;
+                              });
                       }
                   }
                   function TAG(tag){
@@ -184,6 +209,12 @@
                   }
                  
                   function po() {
+                      // Guard against unloaded data
+                      if (!top4Blog.results || top4Blog.results.length < 4) {
+                          console.warn('Top 4 blogs not loaded yet');
+                          return;
+                      }
+
                       var mouse = {
                           X: 0,
                           Y: 0,
@@ -261,37 +292,31 @@
                           )
                       })
                   }
-                  axios.get("@Url.Action("getBlogTop4","blog")").then(res => top4Blog.results = res.data);
                   onMounted(() => {
                       window.addEventListener('scroll', scroll);
                       searchBlog("");
-                      po();
+
+                      // Load top 4 blogs and initialize slider after data is loaded
+                      axios.get("@Url.Action("getBlogTop4","blog")")
+                          .then(res => {
+                              top4Blog.results = res.data;
+                              isLoadingTop4.value = false;
+                              // Initialize slider after data is loaded
+                              po();
+                          })
+                          .catch(err => {
+                              console.error('Failed to load top 4 blogs:', err);
+                              isLoadingTop4.value = false;
+                          });
                   })
                   return {
                       search, northern, central, south, east, searchNumber,top4Blog,active,TAG,
-                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl
+                      select, searchString, searchBlog, imageSrc, userImageSrc, open, blogUrl,
+                      isLoadingBlogs, isLoadingTop4
                   }
               },
         }
-        Vue.createApp(App).mount("#app")    
-            
-                  
-                  
-        
-    </script>
-    <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36251023-1']);
-        _gaq.push(['_setDomainName', 'jqueryscript.net']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
+        Vue.createApp(App).mount("#app")
     </script>
 
 
@@ -320,7 +345,11 @@
     </div>
     @*<a :href="blogUrl(top4Blog.results[0].blogId)">*@
     <div id="app">
-    <div class="slider">
+    <!-- Loading state for slider -->
+    <div v-if="isLoadingTop4" style="text-align: center; padding: 100px;">
+        <div style="font-size: 24px; color: #666;">載入熱門遊記中...</div>
+    </div>
+    <div v-else class="slider">
         <div class="items-group">
             <div class="item">
                 <a class="photolink" :href="blogUrl(top4Blog.results[0].blogId)">
@@ -395,6 +424,11 @@
             </div>
         </div>
         <div class="wrapper">
+            <!-- Loading state -->
+            <div v-if="isLoadingBlogs" style="text-align: center; padding: 40px; width: 100%;">
+                <div style="font-size: 24px; color: #666;">載入中...</div>
+            </div>
+            <!-- Blog cards -->
             <div v-for="(item) in search.results" class="card">
                 @*{{item}}*@
                 @*<img src="https://unsplash.it/1800/1600/?random/person" alt="">*@

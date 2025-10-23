@@ -214,7 +214,7 @@
                         }                        
                         axios.post("@Url.Action("setBlog","Blog")", blog)
                             .then(res => { if (res.data) { Swal.fire("發布成功").then(() => { window.location.href = '@Url.Action("UserCatelog","Home")'})}})
-                            .catch(err => console.log(""))                        
+                            .catch(err => Swal.fire("發布失敗", "請稍後再試", "error"))                        
                     } else {
                         Swal.fire("上傳失敗 請上傳封面照及標題")
                     }
@@ -267,7 +267,6 @@
                 onChange(dayIndex) {
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
-                        console.log(timestamp)
                         for (let i = 0; i < this.Details[j].length; i++) {
                             this.Details[j][i].starttime = timestamp
                             let hr = timestamp.substring(0, 2)
@@ -292,7 +291,6 @@
                 caltime(dayIndex) {
                     for (let j = 0; j < this.Details.length; j++) {
                         let timestamp = this.datetime[j]
-                        console.log(timestamp)
                         for (let i = 0; i < this.Details[j].length; i++) {
                             this.Details[j][i].starttime = timestamp
                             let hr = timestamp.substring(0, 2)

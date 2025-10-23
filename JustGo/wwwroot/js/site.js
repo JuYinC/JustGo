@@ -4,8 +4,15 @@
 // Write your JavaScript code.
 
 window.onscroll = function() {
-    if (window.pageYOffset >= navbarC__menu.offsetTop) {
+    const navbarC = document.getElementById("navbarC");
+    const navbarC__menu = document.getElementById("navbarC__menu");
 
+    // Guard against missing elements
+    if (!navbarC || !navbarC__menu) {
+        return;
+    }
+
+    if (window.pageYOffset >= navbarC__menu.offsetTop) {
         navbarC.classList.add("sticky");
     }
     else {

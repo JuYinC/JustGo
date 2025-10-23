@@ -7,10 +7,8 @@
     @section Style{
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/showblog.css" asp-append-version="true" />
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS is already loaded in _Layout.cshtml -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
-    
     <link rel='stylesheet' href='https://unpkg.com/viewerjs/dist/viewer.css'>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -96,6 +94,7 @@
                 const Details = ref([]);
                 const TagList = ref([]);
                 const tagBlog = ref([]);
+                const isLoading = ref(true);
 
                 // Props-like constants
                 const count = 5;
@@ -309,27 +308,36 @@
                 onMounted(() => {
                     let id = window.location.search.substring(1);
                     if (id != "") {
-                        axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id }).then(res => {
-                            blogId.value = res.data.blogId;
-                            CoverImageName.value = res.data.coverImage;
-                            UserImage.value = res.data.userImage;
-                            Details.value = res.data.details;
-                            EndDate.value = res.data.endDate;
-                            StartDate.value = res.data.startDate;
-                            Title.value = res.data.title;
-                            Describe.value = res.data.describe;
-                            UserName.value = res.data.userName;
-                            TagList.value = res.data.tagList;
-                            Like.value = res.data.like;
+                        axios.post("@Url.Action("selectblogdetails","blog")", { BlogId: id })
+                            .then(res => {
+                                blogId.value = res.data.blogId;
+                                CoverImageName.value = res.data.coverImage;
+                                UserImage.value = res.data.userImage;
+                                Details.value = res.data.details;
+                                EndDate.value = res.data.endDate;
+                                StartDate.value = res.data.startDate;
+                                Title.value = res.data.title;
+                                Describe.value = res.data.describe;
+                                UserName.value = res.data.userName;
+                                TagList.value = res.data.tagList;
+                                Like.value = res.data.like;
+                                isLoading.value = false;
 
-                            axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
-                                bool.value = res.data;
-                            });
+                                axios.post("@Url.Action("getIsKeep","blog")", { id }).then(res => {
+                                    bool.value = res.data;
+                                });
 
-                            axios.post("@Url.Action("searchBlog","blog")", { selectAcitivity: TagList.value }).then(res => {
-                                tagBlog.value = res.data;
+                                axios.post("@Url.Action("searchBlog","blog")", { selectAcitivity: TagList.value }).then(res => {
+                                    tagBlog.value = res.data;
+                                });
+                            })
+                            .catch(err => {
+                                console.error('Failed to load blog:', err);
+                                isLoading.value = false;
+                                Swal.fire("載入失敗", "無法載入遊記資料", "error");
                             });
-                        });
+                    } else {
+                        isLoading.value = false;
                     }
                 });
 
@@ -338,7 +346,7 @@
                     blogId, UserName, UserImage, CoverImageName, Title, Describe,
                     StartDate, EndDate, bool, Like, daterange, Details, TagList, tagBlog,
                     count, score, color, myscore, mytempscore,
-                    copyDate, comTagBlog,
+                    copyDate, comTagBlog, isLoading,
                     TAG, getImages, userImageSrc, getdate, gettime, gethref, getanchor,
                     copyURL, copyblog, likeblog, onChange, blogUrl, caltime
                 };
@@ -375,8 +383,12 @@
                 </div>
             </div>
             <!-- Header End -->
+            <!-- Loading state -->
+            <div v-if="isLoading" style="text-align: center; padding: 100px;">
+                <div style="font-size: 24px; color: #666;">載入遊記中...</div>
+            </div>
             <!-- 右側欄位Detail Start -->
-            <div class="container py-3">
+            <div v-else class="container py-3">
                 <div class="row pt-5">
                     <div class="col-lg-4 mt-4 mt-lg-2 ">
                         <div class="sticky-top" style="top:10vh;z-index:0">

@@ -531,7 +531,7 @@
                     .then(() => {                        
                         this.loading = false
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => { this.loading = false; Swal.fire("載入失敗", "無法載入資料", "error"); })
                 }
 
                 }

@@ -1013,7 +1013,7 @@
                     .then(res => {
                         context.commit('updateSchedule', res.data)
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => Swal.fire("操作失敗", "請稍後再試", "error"))
             },
             //由組件傳入行程資料呼叫後端存入資料庫,payload存放行程資料
             axiosSave(context, payload) {
@@ -1021,14 +1021,14 @@
                     .then(() => {
                         Swal.fire("儲存成功").then(() => { window.location.href = '@Url.Action("UserCatelog","Home")'; });
                     })//跳頁修改
-                    .catch(err => console.log("err"))
+                    .catch(err => Swal.fire("儲存失敗", "請稍後再試", "error"))
             },
 
             //由組件傳入條件呼叫後端搜尋
             axiosSearch(context) {
                 axios.post("@Url.Action("selectPlaceFilter","Schedule")", context.state.searchPlace)
                     .then(res => { context.commit('updateData', res.data) }).then(() => { context.commit('setPlaceMarker') })
-                    .catch(err => console.log(err))
+                    .catch(err => Swal.fire("操作失敗", "請稍後再試", "error"))
             },
 
             //載入地圖 設置中心點
